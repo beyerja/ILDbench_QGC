@@ -1,0 +1,165 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+E	EventInformation.h	/^		float E;$/;"	m	class:ISR
+E	EventInformation.h	/^		float E;$/;"	m	class:JetInfo
+E	EventInformation.h	/^		float E;$/;"	m	class:QuarkInfo
+EVENT_INFORMATION_H	EventInformation.h	2;"	d
+E_10cone_EmaxTrack	EventInformation.h	/^		float E_10cone_EmaxTrack;$/;"	m	class:Observables
+E_T_vis	EventInformation.h	/^		float E_T_vis;$/;"	m	class:Observables
+E_fcn	TrueJet_Parser.h	/^  double E_fcn(int ifcn){return finalcns->at(ifcn)->getEnergy(); } ; $/;"	f	class:TrueJet_Parser
+E_icn	TrueJet_Parser.h	/^  double E_icn(int iicn) { return initialcns->at(iicn)->getEnergy();}; $/;"	f	class:TrueJet_Parser
+Equark	TrueJet_Parser.h	/^  double Equark(int ijet) {return ( final_elementon(ijet) != NULL ? final_elementon(ijet)->getEnergy() : 0.);}; $/;"	f	class:TrueJet_Parser
+Eseen	TrueJet_Parser.h	/^  double Eseen(int ijet) { return jets->at(ijet)->getEnergy(); };$/;"	f	class:TrueJet_Parser
+EventInfo	EventInformation.h	/^class EventInfo {$/;"	c
+FILE_INFORMATION_H	FileInformation.h	2;"	d
+FcnIndex	TrueJet_Parser.h	/^struct FcnIndex : LCIntExtension<FcnIndex> {} ;$/;"	s
+FileInfo	FileInformation.h	/^class FileInfo {$/;"	c
+ISR	EventInformation.h	/^class ISR {$/;"	c
+ISR_tlv	EventInformation.h	/^		TLorentzVector ISR_tlv;$/;"	m	class:ISR
+IcnIndex	TrueJet_Parser.h	/^struct IcnIndex : LCIntExtension<IcnIndex> {} ;$/;"	s
+JakobsVBSProcessor	JakobsVBSProcessor.h	/^class JakobsVBSProcessor : public Processor , public TrueJet_Parser {$/;"	c
+JakobsVBSProcessor_h	JakobsVBSProcessor.h	2;"	d
+JetIndex	TrueJet_Parser.h	/^struct JetIndex : LCIntExtension<JetIndex> {} ;$/;"	s
+JetInfo	EventInformation.h	/^class JetInfo {$/;"	c
+JetLevelComparison	EventInformation.h	/^class JetLevelComparison {$/;"	c
+MCPpyjet	TrueJet_Parser.h	/^struct MCPpyjet : LCIntExtension<MCPpyjet> {} ;$/;"	s
+M_fcn	TrueJet_Parser.h	/^  double M_fcn(int ifcn){return finalcns->at(ifcn)->getMass();} ;$/;"	f	class:TrueJet_Parser
+M_icn	TrueJet_Parser.h	/^  double M_icn(int iicn) {; return initialcns->at(iicn)->getMass();};$/;"	f	class:TrueJet_Parser
+Mquark	TrueJet_Parser.h	/^  double Mquark(int ijet) {return ( final_elementon(ijet) != NULL ? final_elementon(ijet)->getMass() : 0 );};$/;"	f	class:TrueJet_Parser
+Mseen	TrueJet_Parser.h	/^  double Mseen(int ijet) { return jets->at(ijet)->getMass(); };$/;"	f	class:TrueJet_Parser
+N_PFOs_inLevel1	EventInformation.h	/^		int N_PFOs_inLevel1;$/;"	m	class:JetLevelComparison
+N_PFOs_inLevel1_notinLevel2	EventInformation.h	/^		int N_PFOs_inLevel1_notinLevel2;$/;"	m	class:JetLevelComparison
+N_PFOs_inLevel2	EventInformation.h	/^		int N_PFOs_inLevel2;$/;"	m	class:JetLevelComparison
+N_PFOs_inLevel2_notinLevel1	EventInformation.h	/^		int N_PFOs_inLevel2_notinLevel1;$/;"	m	class:JetLevelComparison
+Observables	EventInformation.h	/^class Observables {$/;"	c
+QuarkInfo	EventInformation.h	/^class QuarkInfo {$/;"	c
+RecoTruthLink	EventInformation.h	/^class RecoTruthLink {$/;"	c
+TrueJet_Parser	TrueJet_Parser.h	/^class TrueJet_Parser {$/;"	c
+TrueJet_Parser_h	TrueJet_Parser.h	2;"	d
+Truth	EventInformation.h	/^class Truth {$/;"	c
+VpairFinder_h	VpairFinder.h	2;"	d
+Vpair_link	EventInformation.h	/^		RecoTruthLink Vpair_link;$/;"	m	class:EventInfo
+_COUNT_FSR	TrueJet_Parser.h	/^  int _COUNT_FSR;$/;"	m	class:TrueJet_Parser
+_colAllPFOs	JakobsVBSProcessor.h	/^  std::string _colAllPFOs;$/;"	m	class:JakobsVBSProcessor
+_colFastJets	JakobsVBSProcessor.h	/^  std::string _colFastJets;$/;"	m	class:JakobsVBSProcessor
+_colIsoleps	JakobsVBSProcessor.h	/^  std::string _colIsoleps;$/;"	m	class:JakobsVBSProcessor
+_colMC	JakobsVBSProcessor.h	/^  std::string _colMC;$/;"	m	class:JakobsVBSProcessor
+_colPFOsFromFastJet	JakobsVBSProcessor.h	/^  std::string _colPFOsFromFastJet;$/;"	m	class:JakobsVBSProcessor
+_datatrain	JakobsVBSProcessor.h	/^  TTree* _datatrain; $/;"	m	class:JakobsVBSProcessor
+_finalColourNeutralCollectionName	TrueJet_Parser.h	/^  std::string _finalColourNeutralCollectionName;$/;"	m	class:TrueJet_Parser
+_finalColourNeutralLink	TrueJet_Parser.h	/^  std::string _finalColourNeutralLink ;$/;"	m	class:TrueJet_Parser
+_finalElementonLink	TrueJet_Parser.h	/^  std::string _finalElementonLink ;$/;"	m	class:TrueJet_Parser
+_initialColourNeutralCollectionName	TrueJet_Parser.h	/^  std::string _initialColourNeutralCollectionName;$/;"	m	class:TrueJet_Parser
+_initialColourNeutralLink	TrueJet_Parser.h	/^  std::string _initialColourNeutralLink;$/;"	m	class:TrueJet_Parser
+_initialElementonLink	TrueJet_Parser.h	/^  std::string _initialElementonLink ;$/;"	m	class:TrueJet_Parser
+_nEvt	JakobsVBSProcessor.h	/^  int _nEvt ;$/;"	m	class:JakobsVBSProcessor
+_nRun	JakobsVBSProcessor.h	/^  int _nRun ;$/;"	m	class:JakobsVBSProcessor
+_otfile	JakobsVBSProcessor.h	/^  TFile* _otfile;$/;"	m	class:JakobsVBSProcessor
+_recoMCTruthLink	JakobsVBSProcessor.h	/^  std::string _recoMCTruthLink;$/;"	m	class:JakobsVBSProcessor
+_recoMCTruthLink	TrueJet_Parser.h	/^  std::string _recoMCTruthLink;$/;"	m	class:TrueJet_Parser
+_rootfilename	JakobsVBSProcessor.h	/^  std::string _rootfilename;$/;"	m	class:JakobsVBSProcessor
+_trueJetCollectionName	TrueJet_Parser.h	/^  std::string _trueJetCollectionName ;$/;"	m	class:TrueJet_Parser
+_trueJetMCParticleLink	TrueJet_Parser.h	/^  std::string _trueJetMCParticleLink ;$/;"	m	class:TrueJet_Parser
+_trueJetPFOLink	TrueJet_Parser.h	/^  std::string _trueJetPFOLink ;$/;"	m	class:TrueJet_Parser
+correctRecoJets_to_ownClusteredJets	EventInformation.h	/^		JetLevelComparison correctRecoJets_to_ownClusteredJets;$/;"	m	class:EventInfo
+cosTheta_EmaxTrack	EventInformation.h	/^		float cosTheta_EmaxTrack;$/;"	m	class:Observables
+cosTheta_miss	EventInformation.h	/^		float cosTheta_miss;$/;"	m	class:Observables
+e_polarization_sign	FileInformation.h	/^		float e_polarization_sign;$/;"	m	class:FileInfo
+eventType	EventInformation.h	/^		int eventType;$/;"	m	class:Truth
+evt	TrueJet_Parser.h	/^  LCEvent* evt ;$/;"	m	class:TrueJet_Parser
+evtN	EventInformation.h	/^		int evtN;$/;"	m	class:EventInfo
+fcncol	TrueJet_Parser.h	/^    LCCollection* fcncol ;$/;"	m	class:TrueJet_Parser
+file_info	JakobsVBSProcessor.h	/^  FileInfo file_info;$/;"	m	class:JakobsVBSProcessor
+fillVPairInformation	VpairFinder.h	/^void JakobsVBSProcessor::fillVPairInformation( 	std::vector<LCIOParticleType*> V1, std::vector<LCIOParticleType*> V2, $/;"	f	class:JakobsVBSProcessor
+finalcns	TrueJet_Parser.h	/^    ReconstructedParticleVec* finalcns;$/;"	m	class:TrueJet_Parser
+findIndexBestPairInVVCandidates	VpairFinder.h	/^int JakobsVBSProcessor::findIndexBestPairInVVCandidates( std::vector<std::vector<std::vector<LCIOParticleType*>>> VV_candidates ) {$/;"	f	class:JakobsVBSProcessor
+findVpair	VpairFinder.h	/^void JakobsVBSProcessor::findVpair(std::vector<LCIOParticleType*> particles, Observables &observ) {$/;"	f	class:JakobsVBSProcessor
+gen_level	EventInformation.h	/^		Truth gen_level;$/;"	m	class:EventInfo
+getAllVVTo4ParticleCombinations	VpairFinder.h	/^void JakobsVBSProcessor::getAllVVTo4ParticleCombinations ( std::vector<LCIOParticleType*> particles, std::vector<std::vector<std::vector<LCIOParticleType*>>> &VV_candidates ) {$/;"	f	class:JakobsVBSProcessor
+getVVCandidatesMasses	VpairFinder.h	/^void JakobsVBSProcessor::getVVCandidatesMasses( std::vector<std::vector<std::vector<LCIOParticleType*>>> VV_candidates, $/;"	f	class:JakobsVBSProcessor
+get_recoMCTruthLink	JakobsVBSProcessor.h	/^  std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ; } ;$/;"	f	class:JakobsVBSProcessor
+get_recoMCTruthLink	TrueJet_Parser.h	/^  virtual    std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ;};$/;"	f	class:TrueJet_Parser
+icncol	TrueJet_Parser.h	/^    LCCollection* icncol ;$/;"	m	class:TrueJet_Parser
+info	JakobsVBSProcessor.h	/^  EventInfo info;$/;"	m	class:JakobsVBSProcessor
+init	EventInformation.h	/^		void init() {$/;"	f	class:EventInfo
+init	EventInformation.h	/^		void init() {$/;"	f	class:ISR
+init	EventInformation.h	/^		void init() {$/;"	f	class:JetInfo
+init	EventInformation.h	/^		void init() {$/;"	f	class:JetLevelComparison
+init	EventInformation.h	/^		void init() {$/;"	f	class:Observables
+init	EventInformation.h	/^		void init() {$/;"	f	class:QuarkInfo
+init	EventInformation.h	/^		void init() {$/;"	f	class:RecoTruthLink
+init	EventInformation.h	/^		void init() {$/;"	f	class:Truth
+init	FileInformation.h	/^		void init() {$/;"	f	class:FileInfo
+initialcns	TrueJet_Parser.h	/^    ReconstructedParticleVec* initialcns;$/;"	m	class:TrueJet_Parser
+intvec	TrueJet_Parser.h	/^  IntVec* intvec;$/;"	m	class:TrueJet_Parser
+isr	EventInformation.h	/^		ISR isr;$/;"	m	class:Truth
+isr_inJets	EventInformation.h	/^		ISR isr_inJets;$/;"	m	class:Truth
+jetindex	TrueJet_Parser.h	/^  int jetindex(ReconstructedParticle* jet ) { return jet->ext<JetIndex>() ; };$/;"	f	class:TrueJet_Parser
+jets	EventInformation.h	/^		JetInfo jets[4];$/;"	m	class:Observables
+jets	TrueJet_Parser.h	/^    ReconstructedParticleVec* jets;$/;"	m	class:TrueJet_Parser
+mass	EventInformation.h	/^		float mass;$/;"	m	class:JetInfo
+mcpartvec	TrueJet_Parser.h	/^  MCParticleVec* mcpartvec;$/;"	m	class:TrueJet_Parser
+min_Ejet	EventInformation.h	/^		float min_Ejet;$/;"	m	class:Observables
+min_num_chargedparticles_jet	EventInformation.h	/^		int min_num_chargedparticles_jet;$/;"	m	class:Observables
+min_num_particles_jet	EventInformation.h	/^		int min_num_particles_jet;$/;"	m	class:Observables
+miss_mass	EventInformation.h	/^		float miss_mass; \/\/ Also called: recoil mass$/;"	m	class:Observables
+miss_tlv	EventInformation.h	/^		TLorentzVector miss_tlv;$/;"	m	class:Observables
+newProcessor	JakobsVBSProcessor.h	/^  virtual Processor*  newProcessor() { return new JakobsVBSProcessor ; }$/;"	f	class:JakobsVBSProcessor
+nfcn	TrueJet_Parser.h	/^  int nfcn() { return fcncol->getNumberOfElements(); };$/;"	f	class:TrueJet_Parser
+nicn	TrueJet_Parser.h	/^  int nicn() { return icncol->getNumberOfElements(); };$/;"	f	class:TrueJet_Parser
+njets	TrueJet_Parser.h	/^  int njets() { return tjcol->getNumberOfElements(); };$/;"	f	class:TrueJet_Parser
+num_isolated_leptons	EventInformation.h	/^		int num_isolated_leptons;$/;"	m	class:Observables
+observ	EventInformation.h	/^		Observables observ;$/;"	m	class:EventInfo
+observ	EventInformation.h	/^		Observables observ;$/;"	m	class:Truth
+p	EventInformation.h	/^		float p;$/;"	m	class:ISR
+p3	TrueJet_Parser.h	/^  double p3[3]; $/;"	m	class:TrueJet_Parser
+p4	TrueJet_Parser.h	/^  double p4[4];$/;"	m	class:TrueJet_Parser
+p_T_vis	EventInformation.h	/^		float p_T_vis;$/;"	m	class:Observables
+p_fcn	TrueJet_Parser.h	/^  const double* p_fcn(int ifcn){return finalcns->at(ifcn)->getMomentum(); } ;$/;"	f	class:TrueJet_Parser
+p_icn	TrueJet_Parser.h	/^  const double* p_icn(int iicn){ return initialcns->at(iicn)->getMomentum();} ;$/;"	f	class:TrueJet_Parser
+p_polarization_sign	FileInformation.h	/^		float p_polarization_sign;$/;"	m	class:FileInfo
+pair1_mass	EventInformation.h	/^		float pair1_mass;$/;"	m	class:Observables
+pair1_p	EventInformation.h	/^		float pair1_p;$/;"	m	class:Observables
+pair1_theta	EventInformation.h	/^		float pair1_theta;$/;"	m	class:Observables
+pair1_tlv	EventInformation.h	/^		TLorentzVector pair1_tlv;$/;"	m	class:Observables
+pair2_mass	EventInformation.h	/^		float pair2_mass;$/;"	m	class:Observables
+pair2_p	EventInformation.h	/^		float pair2_p;$/;"	m	class:Observables
+pair2_theta	EventInformation.h	/^		float pair2_theta;$/;"	m	class:Observables
+pair2_tlv	EventInformation.h	/^		TLorentzVector pair2_tlv;$/;"	m	class:Observables
+partner_of_truthpair1	EventInformation.h	/^		int partner_of_truthpair1;$/;"	m	class:RecoTruthLink
+partner_of_truthpair2	EventInformation.h	/^		int partner_of_truthpair2;$/;"	m	class:RecoTruthLink
+pass_dijet_mass_cuts	EventInformation.h	/^		int pass_dijet_mass_cuts;$/;"	m	class:EventInfo
+pdg_fcn_parent	TrueJet_Parser.h	/^  int pdg_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getPDG() ; };$/;"	f	class:TrueJet_Parser
+pdg_icn_parent	TrueJet_Parser.h	/^  int pdg_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getPDG() ; };$/;"	f	class:TrueJet_Parser
+pdg_id	EventInformation.h	/^		int pdg_id;$/;"	m	class:QuarkInfo
+processTLV	EventInformation.h	/^		void processTLV() {$/;"	f	class:ISR
+processTLVs	EventInformation.h	/^		void processTLVs() {$/;"	f	class:Observables
+process_tlv	EventInformation.h	/^		void process_tlv() {$/;"	f	class:JetInfo
+process_tlv	EventInformation.h	/^		void process_tlv() {$/;"	f	class:QuarkInfo
+pseen	TrueJet_Parser.h	/^  const double* pseen(int ijet) { return jets->at(ijet)->getMomentum(); };$/;"	f	class:TrueJet_Parser
+quark_tlv	EventInformation.h	/^		TLorentzVector quark_tlv;$/;"	m	class:QuarkInfo
+quarks	EventInformation.h	/^		QuarkInfo quarks[4];$/;"	m	class:Truth
+relfcn	TrueJet_Parser.h	/^    LCRelationNavigator* relfcn ;$/;"	m	class:TrueJet_Parser
+relfp	TrueJet_Parser.h	/^    LCRelationNavigator* relfp ;$/;"	m	class:TrueJet_Parser
+relicn	TrueJet_Parser.h	/^    LCRelationNavigator* relicn ;$/;"	m	class:TrueJet_Parser
+relip	TrueJet_Parser.h	/^    LCRelationNavigator* relip ;$/;"	m	class:TrueJet_Parser
+reltjmcp	TrueJet_Parser.h	/^    LCRelationNavigator* reltjmcp ;$/;"	m	class:TrueJet_Parser
+reltjreco	TrueJet_Parser.h	/^    LCRelationNavigator* reltjreco ;$/;"	m	class:TrueJet_Parser
+reltrue_tj	TrueJet_Parser.h	/^    LCRelationNavigator* reltrue_tj ;$/;"	m	class:TrueJet_Parser
+seen_partics	TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:TrueJet_Parser
+sum_E_q	EventInformation.h	/^		float sum_E_q; \/\/ should be called sum_E_vis ...$/;"	m	class:Observables
+theta	EventInformation.h	/^		float theta;$/;"	m	class:ISR
+theta	EventInformation.h	/^		float theta;$/;"	m	class:JetInfo
+theta	EventInformation.h	/^		float theta;$/;"	m	class:QuarkInfo
+tjcol	TrueJet_Parser.h	/^    LCCollection* tjcol ;$/;"	m	class:TrueJet_Parser
+tlv	EventInformation.h	/^		TLorentzVector tlv;$/;"	m	class:JetInfo
+type_fcn_parent	TrueJet_Parser.h	/^  int type_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
+type_icn_parent	TrueJet_Parser.h	/^  int type_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
+type_jet	TrueJet_Parser.h	/^  int type_jet(int ijet) { return jets->at(ijet)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
+visible_tlv	EventInformation.h	/^		TLorentzVector visible_tlv;$/;"	m	class:Observables
+xsection	FileInformation.h	/^		float xsection;$/;"	m	class:FileInfo
+y_34	EventInformation.h	/^		float y_34;$/;"	m	class:Observables

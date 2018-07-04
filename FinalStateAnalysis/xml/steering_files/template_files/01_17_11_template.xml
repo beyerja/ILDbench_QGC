@@ -1,0 +1,127 @@
+<marlin>
+	<execute>
+		<processor name="MyAdd4MomCovMatrixCharged"/>
+		<processor name="MyThrustReconstruction"/>
+		<processor name="MyTrueJet"/>
+		<processor name="MyIsolatedLeptonTaggingProcessor"/>	
+		<processor name="MyOverlayRemovalFastJetProcessor"/>
+		<processor name="MyFastJetProcessor"/>
+		<processor name="MyVBSProcessor"/>
+	</execute>
+
+	<global>
+		<parameter name="LCIOInputFiles">
+		<!-- Line replaced by set_xml.sh, becomes input file -->
+		</parameter>
+		<parameter name="GearXMLFile"> GearOutput.xml </parameter> 
+		<parameter name="MaxRecordNumber" value="0" />  
+		<parameter name="SkipNEvents" value="0" />  
+		<parameter name="SupressCheck" value="false" />  
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING</parameter>
+		<parameter name="AllowToModifyEvent" value="true" />
+	</global>
+
+
+	<!-- TODO Ask someone what this does -->
+	<processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+		<parameter name="InputPandoraPFOsCollection" type="string"> PandoraPFOs </parameter>
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+	</processor>
+
+	<!-- TODO Ask someone what this does -->
+	<processor name="MyThrustReconstruction" type="ThrustReconstruction">
+		<parameter name="Verbosity"> SILENT </parameter>
+		<parameter name="inputCollectionName" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="typeOfThrustFinder" type="int">2 </parameter>
+	</processor>
+
+	<!-- Processor that constructs correct jets from PFO links to generator level particles -->
+	<processor name="MyTrueJet" type="TrueJet">
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING1</parameter>
+	</processor>
+
+	<processor name="MyIsolatedLeptonTaggingProcessor" type="IsolatedLeptonTaggingProcessor">
+		<parameter name="CosConeLarge" type="float">0.95 </parameter>
+		<parameter name="CosConeSmall" type="float">0.98 </parameter>
+		<parameter name="CutOnTheISOElectronMVA" type="float"> 0.5 </parameter>
+		<parameter name="CutOnTheISOMuonMVA" type="float">0.7 </parameter>
+		<parameter name="DirOfISOElectronWeights" type="string"> /afs/desy.de/project/ilcsoft/sw/x86_64_gcc48_sl6/v01-17-09/MarlinReco/v01-14/Analysis/IsolatedLeptonTagging/example/isolated_electron_weights </parameter>
+		<parameter name="DirOfISOMuonWeights" type="string"> /afs/desy.de/project/ilcsoft/sw/x86_64_gcc48_sl6/v01-17-09/MarlinReco/v01-14/Analysis/IsolatedLeptonTagging/example/isolated_muon_weights </parameter>
+		<parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="IsSelectingOneIsoLep" type="bool"> false </parameter>
+		<parameter name="MinPForElectron" type="float">5 </parameter>
+		<parameter name="MinPForMuon" type="float">5 </parameter>
+		<parameter name="MinEOverPForElectron" type="float">0.5 </parameter>
+		<parameter name="MaxEOverPForElectron" type="float">1.3 </parameter>
+		<parameter name="MaxEOverPForMuon" type="float">0.3 </parameter>
+		<parameter name="MinEecalOverTotEForElectron" type="float">0.9 </parameter>
+		<parameter name="MinEyokeForMuon" type="float">1.2 </parameter>
+		<parameter name="MaxD0SigForElectron" type="float">50 </parameter>
+		<parameter name="MaxD0SigForMuon" type="float">5 </parameter>
+		<parameter name="MaxZ0SigForElectron" type="float">5 </parameter>
+		<parameter name="MaxZ0SigForMuon" type="float">5 </parameter>
+		<parameter name="OutputIsoLeptonsCollection" type="string" lcioOutType="ReconstructedParticle"> Isoleps </parameter>
+		<parameter name="OutputPFOsWithoutIsoLepCollection" type="string" lcioOutType="ReconstructedParticle"> PFOsWithoutIsoleps </parameter>
+		<parameter name="Verbosity" type="string"> SILENT </parameter>
+	</processor>
+
+	<!-- Using the overlay removal of the FastJetProcessor, only interested in the PFO output -->
+	<processor name="MyOverlayRemovalFastJetProcessor" type="FastJetProcessor">
+	  <!--Using the FastJet library to identify jets-->
+	  <!--a list of all reconstructed particles we are searching for jets in.-->
+	  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+	  <!--The identified jets, not interesting, only using this processor for overlay removal-->
+      <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> WrongJetsDoNotUse </parameter>
+	  <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+	  <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
+	  <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+	  <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+	  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+	  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	  <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+     <parameter name="algorithm" type="StringVec"> kt_algorithm 1.3 </parameter>     
+	  <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+     <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4 </parameter>     
+	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+   </processor>
+
+	<!-- This processor is actually used for jet clustering -->
+	<processor name="MyFastJetProcessor" type="FastJetProcessor">
+	  <!--Using the FastJet library to identify jets-->
+	  <!--a list of all reconstructed particles we are searching for jets in.-->
+	  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
+	  <!--The identified jets-->
+      <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+	  <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+	  <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+	  <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+	  <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+	  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+	  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	  <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+	  <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+	  <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+	  <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+   </processor>
+
+	<processor name="MyVBSProcessor" type="JakobsVBSProcessor">
+		<parameter name="InputAllPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="InputFastJetsCollection" type="string" lcioInType="ReconstructedParticle"> FastJets </parameter>
+		<parameter name="InputPFOsFromFastJetCollection" type="string" lcioInType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+		<parameter name="InputIsolepsCollection" type="string" lcioInType="ReconstructedParticle"> Isoleps </parameter>
+        <parameter name="RootFileName"> 
+		<!-- Line replaced by set_xml.sh, becomes output file -->
+		</parameter>
+	</processor>
+
+
+</marlin>
+
+
+
+
+
+

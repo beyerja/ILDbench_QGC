@@ -1,0 +1,203 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AllSelectedPlotter	plotters/all_selected_plotter.cpp	/^class AllSelectedPlotter : public Plotter {$/;"	c	file:
+CutflowPlotter	plotters/cutflow_plotter.cpp	/^class CutflowPlotter : public Plotter {$/;"	c	file:
+E_10cone_EmaxTrack	include/plotter.h	/^	float E_10cone_EmaxTrack;$/;"	m	class:Plotter
+E_T_vis	include/plotter.h	/^	float E_T_vis;$/;"	m	class:Plotter
+INFOSTORAGE_h	include/InfoStorage.h	2;"	d
+IndividualJetsPlotter	plotters/individual_quarks_plotter.cpp	/^class IndividualJetsPlotter : public Plotter {$/;"	c	file:
+InfoStorage	include/InfoStorage.h	/^class InfoStorage {$/;"	c
+MjjMjjPlotter	plotters/mjjmjj_plotter.cpp	/^class MjjMjjPlotter : public Plotter {$/;"	c	file:
+NPFOs_inClusteredJets	include/plotter.h	/^	int NPFOs_inClusteredJets;$/;"	m	class:Plotter
+NPFOs_inClusteredJets_notinCorrectJets	include/plotter.h	/^	int NPFOs_inClusteredJets_notinCorrectJets;$/;"	m	class:Plotter
+NPFOs_inCorrectJets	include/plotter.h	/^	int NPFOs_inCorrectJets;	$/;"	m	class:Plotter
+NPFOs_inCorrectJets_notinClusteredJets	include/plotter.h	/^	int NPFOs_inCorrectJets_notinClusteredJets;$/;"	m	class:Plotter
+PLOTTER_h	include/plotter.h	2;"	d
+Plotter	include/plotter.h	/^class Plotter {$/;"	c
+RecoMjjVSQuarkPDGPlotter	plotters/mjj_reco_quark_pdg_plotter.cpp	/^class RecoMjjVSQuarkPDGPlotter : public Plotter {$/;"	c	file:
+TH1D_map	include/plotter.h	/^	map<string, int> TH1D_map;$/;"	m	class:Plotter
+TH1D_vector	include/plotter.h	/^	vector<TH1D*> TH1D_vector;$/;"	m	class:Plotter
+TH2D_map	include/plotter.h	/^	map<string, int> TH2D_map;$/;"	m	class:Plotter
+TH2D_vector	include/plotter.h	/^	vector<TH2D*> TH2D_vector;$/;"	m	class:Plotter
+TJJetLevelsPlotter	plotters/TJ_jet_level_plotter.cpp	/^class TJJetLevelsPlotter : public Plotter {$/;"	c	file:
+TJJetMassInvestigationPlotter	plotters/TJ_jet_mass_investigation_plotter.cpp	/^class TJJetMassInvestigationPlotter : public Plotter {$/;"	c	file:
+TJ_jets_detected_E	include/plotter.h	/^	float TJ_jets_detected_E[max_Njets];$/;"	m	class:Plotter
+TJ_jets_detected_mass	include/plotter.h	/^	float TJ_jets_detected_mass[max_Njets];$/;"	m	class:Plotter
+TJ_jets_detected_p	include/plotter.h	/^	float TJ_jets_detected_p[max_Njets];$/;"	m	class:Plotter
+TJ_jets_exists	include/plotter.h	/^	int TJ_jets_exists[max_Njets];$/;"	m	class:Plotter
+TJ_jets_final_elementon_E	include/plotter.h	/^	float TJ_jets_final_elementon_E[max_Njets];$/;"	m	class:Plotter
+TJ_jets_final_elementon_mass	include/plotter.h	/^	float TJ_jets_final_elementon_mass[max_Njets];$/;"	m	class:Plotter
+TJ_jets_final_elementon_p	include/plotter.h	/^	float TJ_jets_final_elementon_p[max_Njets];$/;"	m	class:Plotter
+TJ_jets_final_elementon_pdgID	include/plotter.h	/^	int TJ_jets_final_elementon_pdgID[max_Njets];$/;"	m	class:Plotter
+TJ_jets_true_E_of_detectable_jet	include/plotter.h	/^	float TJ_jets_true_E_of_detectable_jet[max_Njets];$/;"	m	class:Plotter
+TJ_jets_true_mass_of_detectable_jet	include/plotter.h	/^	float TJ_jets_true_mass_of_detectable_jet[max_Njets];$/;"	m	class:Plotter
+TJ_jets_true_p_of_detectable_jet	include/plotter.h	/^	float TJ_jets_true_p_of_detectable_jet[max_Njets];$/;"	m	class:Plotter
+TProfile_map	include/plotter.h	/^	map<string, int> TProfile_map;$/;"	m	class:Plotter
+TProfile_vector	include/plotter.h	/^	vector<TProfile*> TProfile_vector;$/;"	m	class:Plotter
+TailPlotter	plotters/tail_plotter.cpp	/^class TailPlotter : public Plotter {$/;"	c	file:
+TestPlotter	plotters/test_plotter.cpp	/^class TestPlotter : public Plotter {$/;"	c	file:
+ThetaMPlotter	plotters/theta_m_plotter.cpp	/^class ThetaMPlotter : public Plotter {$/;"	c	file:
+TrueISRvsMjjPlotter	plotters/trueISR_E_over_jetmass.cpp	/^class TrueISRvsMjjPlotter : public Plotter {$/;"	c	file:
+add_file_info	include/InfoStorage.h	/^		void add_file_info(string filename, string class_name, string final_state, string polarization, float xsection) {$/;"	f	class:InfoStorage
+add_new_TH1D	include/plotter.h	/^	void add_new_TH1D (string name, TH1D* hist) {$/;"	f	class:Plotter
+add_new_TH2D	include/plotter.h	/^	void add_new_TH2D (string name, TH2D* hist) {$/;"	f	class:Plotter
+add_new_TProfile	include/plotter.h	/^	void add_new_TProfile (string name, TProfile* hist) {$/;"	f	class:Plotter
+calculate_weight_i	include/InfoStorage.h	/^	void calculate_weight_i (int i) {$/;"	f	class:InfoStorage
+class_names	include/InfoStorage.h	/^	vector<string> 	class_names;$/;"	m	class:InfoStorage
+cosTheta_EmaxTrack	include/plotter.h	/^	float cosTheta_EmaxTrack;$/;"	m	class:Plotter
+cosTheta_miss	include/plotter.h	/^	float cosTheta_miss;$/;"	m	class:Plotter
+current_event_number	include/plotter.h	/^	int current_event_number;	$/;"	m	class:Plotter
+current_tree	include/plotter.h	/^	TTree* current_tree;$/;"	m	class:Plotter
+current_weight	include/plotter.h	/^	float current_weight;$/;"	m	class:Plotter
+define_plots	plotters/TJ_jet_level_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+define_plots	plotters/TJ_jet_mass_investigation_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+define_plots	plotters/all_selected_plotter.cpp	/^	void define_plots(){$/;"	f	class:AllSelectedPlotter	file:
+define_plots	plotters/cutflow_plotter.cpp	/^	void define_plots(){$/;"	f	class:CutflowPlotter	file:
+define_plots	plotters/individual_quarks_plotter.cpp	/^	void define_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+define_plots	plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void define_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+define_plots	plotters/mjjmjj_plotter.cpp	/^	void define_plots(){$/;"	f	class:MjjMjjPlotter	file:
+define_plots	plotters/tail_plotter.cpp	/^	void define_plots(){$/;"	f	class:TailPlotter	file:
+define_plots	plotters/test_plotter.cpp	/^	void define_plots(){$/;"	f	class:TestPlotter	file:
+define_plots	plotters/theta_m_plotter.cpp	/^	void define_plots(){$/;"	f	class:ThetaMPlotter	file:
+define_plots	plotters/trueISR_E_over_jetmass.cpp	/^	void define_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+draw_mass_line	include/plotter.h	/^	void draw_mass_line ( string particle, string measurement_version, string direction ) {$/;"	f	class:Plotter
+draw_plots	plotters/TJ_jet_level_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+draw_plots	plotters/TJ_jet_mass_investigation_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+draw_plots	plotters/all_selected_plotter.cpp	/^	void draw_plots(){$/;"	f	class:AllSelectedPlotter	file:
+draw_plots	plotters/cutflow_plotter.cpp	/^	void draw_plots(){$/;"	f	class:CutflowPlotter	file:
+draw_plots	plotters/individual_quarks_plotter.cpp	/^	void draw_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+draw_plots	plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void draw_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+draw_plots	plotters/mjjmjj_plotter.cpp	/^	void draw_plots(){$/;"	f	class:MjjMjjPlotter	file:
+draw_plots	plotters/tail_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TailPlotter	file:
+draw_plots	plotters/test_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TestPlotter	file:
+draw_plots	plotters/theta_m_plotter.cpp	/^	void draw_plots(){$/;"	f	class:ThetaMPlotter	file:
+draw_plots	plotters/trueISR_E_over_jetmass.cpp	/^	void draw_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+e_beam_polarization	include/InfoStorage.h	/^	float e_beam_polarization;$/;"	m	class:InfoStorage
+evt	include/plotter.h	/^	int evt;$/;"	m	class:Plotter
+file_weights	include/InfoStorage.h	/^	vector<float>	file_weights;$/;"	m	class:InfoStorage
+fileinfo_input_splitting	src/run_plotting_framework.cpp	/^vector<vector<string>> fileinfo_input_splitting (string fileinfo_input) {$/;"	f
+filenames	include/InfoStorage.h	/^	vector<string> 	filenames;$/;"	m	class:InfoStorage
+fill_info_storage	src/run_plotting_framework.cpp	/^void fill_info_storage (string _luminosity, string _e_beam_polarization, string _p_beam_polarization, $/;"	f
+fill_plots	plotters/TJ_jet_level_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+fill_plots	plotters/TJ_jet_mass_investigation_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+fill_plots	plotters/all_selected_plotter.cpp	/^	void fill_plots(){$/;"	f	class:AllSelectedPlotter	file:
+fill_plots	plotters/cutflow_plotter.cpp	/^	void fill_plots(){$/;"	f	class:CutflowPlotter	file:
+fill_plots	plotters/individual_quarks_plotter.cpp	/^	void fill_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+fill_plots	plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void fill_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+fill_plots	plotters/mjjmjj_plotter.cpp	/^	void fill_plots(){$/;"	f	class:MjjMjjPlotter	file:
+fill_plots	plotters/tail_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TailPlotter	file:
+fill_plots	plotters/test_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TestPlotter	file:
+fill_plots	plotters/theta_m_plotter.cpp	/^	void fill_plots(){$/;"	f	class:ThetaMPlotter	file:
+fill_plots	plotters/trueISR_E_over_jetmass.cpp	/^	void fill_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+final_states	include/InfoStorage.h	/^	vector<string> 	final_states;$/;"	m	class:InfoStorage
+get_TH1D	include/plotter.h	/^	TH1D* get_TH1D (string name) {$/;"	f	class:Plotter
+get_TH1D_i	include/plotter.h	/^	TH1D* get_TH1D_i (int i) { return TH1D_vector[i]; }$/;"	f	class:Plotter
+get_TH2D	include/plotter.h	/^	TH2D* get_TH2D (string name) {$/;"	f	class:Plotter
+get_TH2D_i	include/plotter.h	/^	TH2D* get_TH2D_i (int i) { return TH2D_vector[i]; }$/;"	f	class:Plotter
+get_TProfile	include/plotter.h	/^	TProfile* get_TProfile (string name) {$/;"	f	class:Plotter
+get_TProfile_i	include/plotter.h	/^	TProfile* get_TProfile_i (int i) { return TProfile_vector[i]; }$/;"	f	class:Plotter
+get_class_name_i	include/InfoStorage.h	/^		string get_class_name_i (int i) {$/;"	f	class:InfoStorage
+get_current_tree	include/plotter.h	/^	TTree* get_current_tree(){$/;"	f	class:Plotter
+get_current_weight	include/plotter.h	/^	float get_current_weight() { return current_weight; }$/;"	f	class:Plotter
+get_e_polarization_sign_i	include/InfoStorage.h	/^		int get_e_polarization_sign_i (int i) {$/;"	f	class:InfoStorage
+get_file_name_i	include/InfoStorage.h	/^		string get_file_name_i (int i) {$/;"	f	class:InfoStorage
+get_file_path_i	include/InfoStorage.h	/^		string get_file_path_i (int i) {$/;"	f	class:InfoStorage
+get_file_weight_i	include/InfoStorage.h	/^		float get_file_weight_i (int i) {$/;"	f	class:InfoStorage
+get_final_state_i	include/InfoStorage.h	/^		string get_final_state_i (int i) {$/;"	f	class:InfoStorage
+get_next_event	include/plotter.h	/^	bool get_next_event() {$/;"	f	class:Plotter
+get_number_TH1Ds	include/plotter.h	/^	int get_number_TH1Ds() { return TH1D_vector.size(); }$/;"	f	class:Plotter
+get_number_TH2Ds	include/plotter.h	/^	int get_number_TH2Ds() { return TH2D_vector.size(); }$/;"	f	class:Plotter
+get_number_TProfiles	include/plotter.h	/^	int get_number_TProfiles() { return TProfile_vector.size(); }$/;"	f	class:Plotter
+get_number_of_files	include/InfoStorage.h	/^		int get_number_of_files () {$/;"	f	class:InfoStorage
+get_output_directory	include/InfoStorage.h	/^		string get_output_directory() {$/;"	f	class:InfoStorage
+get_output_directory	include/plotter.h	/^	string get_output_directory() {$/;"	f	class:Plotter
+get_output_folder_name	include/plotter.h	/^	string get_output_folder_name() { return output_folder_name; }$/;"	f	class:Plotter
+get_p_polarization_sign_i	include/InfoStorage.h	/^		int get_p_polarization_sign_i (int i) {$/;"	f	class:InfoStorage
+get_polarization_string_i	include/InfoStorage.h	/^		string get_polarization_string_i (int i) {$/;"	f	class:InfoStorage
+get_tree_name	include/InfoStorage.h	/^		string get_tree_name () {$/;"	f	class:InfoStorage
+get_xsection_i	include/InfoStorage.h	/^		float get_xsection_i (int i) {$/;"	f	class:InfoStorage
+info_storage	include/plotter.h	/^	InfoStorage info_storage;$/;"	m	class:Plotter
+init	include/plotter.h	/^	void init ( InfoStorage _info_storage ) {$/;"	f	class:Plotter
+input_directory	include/InfoStorage.h	/^	string input_directory;	$/;"	m	class:InfoStorage
+jets_E	include/plotter.h	/^	float jets_E[4];$/;"	m	class:Plotter
+jets_mass	include/plotter.h	/^	float jets_mass[4];$/;"	m	class:Plotter
+jets_theta	include/plotter.h	/^	float jets_theta[4];$/;"	m	class:Plotter
+loop_over_files	include/plotter.h	/^	void loop_over_files() {$/;"	f	class:Plotter
+luminosity	include/InfoStorage.h	/^	float luminosity;$/;"	m	class:InfoStorage
+mW_DBD	include/plotter.h	/^	float mW_DBD = 80.419000;$/;"	m	class:Plotter
+mZ_DBD	include/plotter.h	/^	float mZ_DBD = 91.188200;$/;"	m	class:Plotter
+main	src/run_plotting_framework.cpp	/^int main() {$/;"	f
+max_Njets	include/plotter.h	/^	static const int max_Njets = 20;$/;"	m	class:Plotter
+min_Ejet	include/plotter.h	/^	float min_Ejet;$/;"	m	class:Plotter
+min_num_chargedparticles_jet	include/plotter.h	/^	int min_num_chargedparticles_jet;$/;"	m	class:Plotter
+min_num_particles_jet	include/plotter.h	/^	int min_num_particles_jet;$/;"	m	class:Plotter
+miss_mass	include/plotter.h	/^	float miss_mass;$/;"	m	class:Plotter
+num_isolated_leptons	include/plotter.h	/^	int num_isolated_leptons;$/;"	m	class:Plotter
+output_directory	include/InfoStorage.h	/^	string output_directory;	$/;"	m	class:InfoStorage
+output_folder_name	include/plotter.h	/^	string output_folder_name;$/;"	m	class:Plotter
+p_T_vis	include/plotter.h	/^	float p_T_vis;$/;"	m	class:Plotter
+p_beam_polarization	include/InfoStorage.h	/^	float p_beam_polarization;$/;"	m	class:InfoStorage
+pair1_mass	include/plotter.h	/^	float pair1_mass;	$/;"	m	class:Plotter
+pair1_p	include/plotter.h	/^	float pair1_p;	$/;"	m	class:Plotter
+pair1_theta	include/plotter.h	/^	float pair1_theta;	$/;"	m	class:Plotter
+pair2_mass	include/plotter.h	/^	float pair2_mass;	$/;"	m	class:Plotter
+pair2_p	include/plotter.h	/^	float pair2_p;	$/;"	m	class:Plotter
+pair2_theta	include/plotter.h	/^	float pair2_theta;	$/;"	m	class:Plotter
+partner_of_truthV1	include/plotter.h	/^	int partner_of_truthV1;$/;"	m	class:Plotter
+partner_of_truthV2	include/plotter.h	/^	int partner_of_truthV2;$/;"	m	class:Plotter
+pass_E_10cone_EmaxTrack_cut	include/plotter.h	/^		pass_E_10cone_EmaxTrack_cut;$/;"	m	class:Plotter
+pass_E_T_vis_cut	include/plotter.h	/^		pass_min_Ejet_cut, pass_y_34_cut, pass_miss_mass_cut, pass_E_T_vis_cut,$/;"	m	class:Plotter
+pass_cosTheta_EmaxTrack_cut	include/plotter.h	/^		pass_p_T_vis_cut, pass_cosTheta_miss_cut, pass_cosTheta_EmaxTrack_cut,$/;"	m	class:Plotter
+pass_cosTheta_miss_cut	include/plotter.h	/^		pass_p_T_vis_cut, pass_cosTheta_miss_cut, pass_cosTheta_EmaxTrack_cut,$/;"	m	class:Plotter
+pass_isolep_cut	include/plotter.h	/^	int pass_isolep_cut, pass_min_chargedparticles_jet_cut, pass_min_particles_jet_cut,$/;"	m	class:Plotter
+pass_min_Ejet_cut	include/plotter.h	/^		pass_min_Ejet_cut, pass_y_34_cut, pass_miss_mass_cut, pass_E_T_vis_cut,$/;"	m	class:Plotter
+pass_min_chargedparticles_jet_cut	include/plotter.h	/^	int pass_isolep_cut, pass_min_chargedparticles_jet_cut, pass_min_particles_jet_cut,$/;"	m	class:Plotter
+pass_min_particles_jet_cut	include/plotter.h	/^	int pass_isolep_cut, pass_min_chargedparticles_jet_cut, pass_min_particles_jet_cut,$/;"	m	class:Plotter
+pass_miss_mass_cut	include/plotter.h	/^		pass_min_Ejet_cut, pass_y_34_cut, pass_miss_mass_cut, pass_E_T_vis_cut,$/;"	m	class:Plotter
+pass_p_T_vis_cut	include/plotter.h	/^		pass_p_T_vis_cut, pass_cosTheta_miss_cut, pass_cosTheta_EmaxTrack_cut,$/;"	m	class:Plotter
+pass_selection	include/plotter.h	/^	int pass_selection;$/;"	m	class:Plotter
+pass_y_34_cut	include/plotter.h	/^		pass_min_Ejet_cut, pass_y_34_cut, pass_miss_mass_cut, pass_E_T_vis_cut,$/;"	m	class:Plotter
+polarizations	include/InfoStorage.h	/^	vector<string> 	polarizations;$/;"	m	class:InfoStorage
+run	include/plotter.h	/^	void run() {$/;"	f	class:Plotter
+run_plotting_framework	src/run_plotting_framework.cpp	/^void run_plotting_framework(string luminosity, string e_beam_polarization, string p_beam_polarization, $/;"	f
+save_all_TH1Ds_in_rootfile	include/plotter.h	/^	void save_all_TH1Ds_in_rootfile() {$/;"	f	class:Plotter
+save_all_TH2Ds_in_rootfile	include/plotter.h	/^	void save_all_TH2Ds_in_rootfile() {$/;"	f	class:Plotter
+save_all_TProfiles_in_rootfile	include/plotter.h	/^	void save_all_TProfiles_in_rootfile() {$/;"	f	class:Plotter
+save_all_histograms_in_rootfiles	include/plotter.h	/^	void save_all_histograms_in_rootfiles() {$/;"	f	class:Plotter
+set_environment	include/InfoStorage.h	/^		void set_environment(string _input_directory, string _output_directory, string _tree_name) {$/;"	f	class:InfoStorage
+set_output_folder	plotters/TJ_jet_level_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TJJetLevelsPlotter	file:
+set_output_folder	plotters/TJ_jet_mass_investigation_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TJJetMassInvestigationPlotter	file:
+set_output_folder	plotters/all_selected_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:AllSelectedPlotter	file:
+set_output_folder	plotters/cutflow_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:CutflowPlotter	file:
+set_output_folder	plotters/individual_quarks_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:IndividualJetsPlotter	file:
+set_output_folder	plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+set_output_folder	plotters/mjjmjj_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:MjjMjjPlotter	file:
+set_output_folder	plotters/tail_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TailPlotter	file:
+set_output_folder	plotters/test_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TestPlotter	file:
+set_output_folder	plotters/theta_m_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:ThetaMPlotter	file:
+set_output_folder	plotters/trueISR_E_over_jetmass.cpp	/^	void set_output_folder() {$/;"	f	class:TrueISRvsMjjPlotter	file:
+set_output_folder_name	include/plotter.h	/^	void set_output_folder_name(string _output_folder_name) {$/;"	f	class:Plotter
+set_setup	include/InfoStorage.h	/^		void set_setup (float _luminosity, float _e_beam_polarization, float _p_beam_polarization) {$/;"	f	class:InfoStorage
+set_tree_adresses	include/plotter.h	/^	void set_tree_adresses () {$/;"	f	class:Plotter
+sum_E_q	include/plotter.h	/^	float sum_E_q;$/;"	m	class:Plotter
+tree_name	include/InfoStorage.h	/^	string tree_name;$/;"	m	class:InfoStorage
+true_ISR_inJets_E	include/plotter.h	/^	float true_ISR_inJets_E;$/;"	m	class:Plotter
+true_ISR_inJets_p	include/plotter.h	/^	float true_ISR_inJets_p;$/;"	m	class:Plotter
+true_ISR_inJets_theta	include/plotter.h	/^	float true_ISR_inJets_theta;$/;"	m	class:Plotter
+true_evt_type	include/plotter.h	/^	int true_evt_type;$/;"	m	class:Plotter
+true_miss_mass	include/plotter.h	/^	float true_miss_mass;$/;"	m	class:Plotter
+true_pair1_mass	include/plotter.h	/^	float true_pair1_mass;	$/;"	m	class:Plotter
+true_pair1_theta	include/plotter.h	/^	float true_pair1_theta;	$/;"	m	class:Plotter
+true_pair2_mass	include/plotter.h	/^	float true_pair2_mass;	$/;"	m	class:Plotter
+true_pair2_theta	include/plotter.h	/^	float true_pair2_theta;	$/;"	m	class:Plotter
+true_quarks_E	include/plotter.h	/^	float true_quarks_E[4];$/;"	m	class:Plotter
+true_quarks_pdg_id	include/plotter.h	/^	int true_quarks_pdg_id[4];$/;"	m	class:Plotter
+true_quarks_theta	include/plotter.h	/^	float true_quarks_theta[4];$/;"	m	class:Plotter
+true_sum_E_q	include/plotter.h	/^	float true_sum_E_q;$/;"	m	class:Plotter
+xsection	include/plotter.h	/^	float xsection;$/;"	m	class:Plotter
+xsections	include/InfoStorage.h	/^	vector<float>	xsections;$/;"	m	class:InfoStorage
+y_34	include/plotter.h	/^	float y_34;$/;"	m	class:Plotter

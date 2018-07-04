@@ -1,0 +1,61 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AllSelectedPlotter	all_selected_plotter.cpp	/^class AllSelectedPlotter : public Plotter {$/;"	c	file:
+CutflowPlotter	cutflow_plotter.cpp	/^class CutflowPlotter : public Plotter {$/;"	c	file:
+IndividualJetsPlotter	individual_quarks_plotter.cpp	/^class IndividualJetsPlotter : public Plotter {$/;"	c	file:
+MjjMjjPlotter	mjjmjj_plotter.cpp	/^class MjjMjjPlotter : public Plotter {$/;"	c	file:
+RecoMjjVSQuarkPDGPlotter	mjj_reco_quark_pdg_plotter.cpp	/^class RecoMjjVSQuarkPDGPlotter : public Plotter {$/;"	c	file:
+TJJetLevelsPlotter	TJ_jet_level_plotter.cpp	/^class TJJetLevelsPlotter : public Plotter {$/;"	c	file:
+TJJetMassInvestigationPlotter	TJ_jet_mass_investigation_plotter.cpp	/^class TJJetMassInvestigationPlotter : public Plotter {$/;"	c	file:
+TailPlotter	tail_plotter.cpp	/^class TailPlotter : public Plotter {$/;"	c	file:
+TestPlotter	test_plotter.cpp	/^class TestPlotter : public Plotter {$/;"	c	file:
+ThetaMPlotter	theta_m_plotter.cpp	/^class ThetaMPlotter : public Plotter {$/;"	c	file:
+TrueISRvsMjjPlotter	trueISR_E_over_jetmass.cpp	/^class TrueISRvsMjjPlotter : public Plotter {$/;"	c	file:
+define_plots	TJ_jet_level_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+define_plots	TJ_jet_mass_investigation_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+define_plots	all_selected_plotter.cpp	/^	void define_plots(){$/;"	f	class:AllSelectedPlotter	file:
+define_plots	cutflow_plotter.cpp	/^	void define_plots(){$/;"	f	class:CutflowPlotter	file:
+define_plots	individual_quarks_plotter.cpp	/^	void define_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+define_plots	mjj_reco_quark_pdg_plotter.cpp	/^	void define_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+define_plots	mjjmjj_plotter.cpp	/^	void define_plots(){$/;"	f	class:MjjMjjPlotter	file:
+define_plots	tail_plotter.cpp	/^	void define_plots(){$/;"	f	class:TailPlotter	file:
+define_plots	test_plotter.cpp	/^	void define_plots(){$/;"	f	class:TestPlotter	file:
+define_plots	theta_m_plotter.cpp	/^	void define_plots(){$/;"	f	class:ThetaMPlotter	file:
+define_plots	trueISR_E_over_jetmass.cpp	/^	void define_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+draw_plots	TJ_jet_level_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+draw_plots	TJ_jet_mass_investigation_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+draw_plots	all_selected_plotter.cpp	/^	void draw_plots(){$/;"	f	class:AllSelectedPlotter	file:
+draw_plots	cutflow_plotter.cpp	/^	void draw_plots(){$/;"	f	class:CutflowPlotter	file:
+draw_plots	individual_quarks_plotter.cpp	/^	void draw_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+draw_plots	mjj_reco_quark_pdg_plotter.cpp	/^	void draw_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+draw_plots	mjjmjj_plotter.cpp	/^	void draw_plots(){$/;"	f	class:MjjMjjPlotter	file:
+draw_plots	tail_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TailPlotter	file:
+draw_plots	test_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TestPlotter	file:
+draw_plots	theta_m_plotter.cpp	/^	void draw_plots(){$/;"	f	class:ThetaMPlotter	file:
+draw_plots	trueISR_E_over_jetmass.cpp	/^	void draw_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+fill_plots	TJ_jet_level_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
+fill_plots	TJ_jet_mass_investigation_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
+fill_plots	all_selected_plotter.cpp	/^	void fill_plots(){$/;"	f	class:AllSelectedPlotter	file:
+fill_plots	cutflow_plotter.cpp	/^	void fill_plots(){$/;"	f	class:CutflowPlotter	file:
+fill_plots	individual_quarks_plotter.cpp	/^	void fill_plots(){$/;"	f	class:IndividualJetsPlotter	file:
+fill_plots	mjj_reco_quark_pdg_plotter.cpp	/^	void fill_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+fill_plots	mjjmjj_plotter.cpp	/^	void fill_plots(){$/;"	f	class:MjjMjjPlotter	file:
+fill_plots	tail_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TailPlotter	file:
+fill_plots	test_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TestPlotter	file:
+fill_plots	theta_m_plotter.cpp	/^	void fill_plots(){$/;"	f	class:ThetaMPlotter	file:
+fill_plots	trueISR_E_over_jetmass.cpp	/^	void fill_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
+set_output_folder	TJ_jet_level_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TJJetLevelsPlotter	file:
+set_output_folder	TJ_jet_mass_investigation_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TJJetMassInvestigationPlotter	file:
+set_output_folder	all_selected_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:AllSelectedPlotter	file:
+set_output_folder	cutflow_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:CutflowPlotter	file:
+set_output_folder	individual_quarks_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:IndividualJetsPlotter	file:
+set_output_folder	mjj_reco_quark_pdg_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+set_output_folder	mjjmjj_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:MjjMjjPlotter	file:
+set_output_folder	tail_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TailPlotter	file:
+set_output_folder	test_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TestPlotter	file:
+set_output_folder	theta_m_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:ThetaMPlotter	file:
+set_output_folder	trueISR_E_over_jetmass.cpp	/^	void set_output_folder() {$/;"	f	class:TrueISRvsMjjPlotter	file:

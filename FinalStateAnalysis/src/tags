@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+JakobsVBSProcessor	JakobsVBSProcessor.cc	/^JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {$/;"	f	class:JakobsVBSProcessor
+analyseEvent	VBSAnalysis.cc	/^void JakobsVBSProcessor::analyseEvent(	$/;"	f	class:JakobsVBSProcessor
+analyseGeneratorLevelISR	GeneratorLevelChecks.cc	/^void JakobsVBSProcessor::analyseGeneratorLevelISR(std::vector<ReconstructedParticleVec> TJ_jetPFOs_fromISR, EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
+analyseGeneratorLevelQuarks	GeneratorLevelChecks.cc	/^void  JakobsVBSProcessor::analyseGeneratorLevelQuarks(std::vector<MCParticle*> MCparticles, EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
+calculateCutParameters	CutParameterCalculation.cc	/^void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticle*> PFOs, std::vector<ReconstructedParticle*> jets, $/;"	f	class:JakobsVBSProcessor
+check	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::check( LCEvent * evt ) { $/;"	f	class:JakobsVBSProcessor
+checkMCFinalState	CollectionReaders.cc	/^std::vector<MCParticle*> JakobsVBSProcessor::checkMCFinalState(LCCollection* AllMC) {$/;"	f	class:JakobsVBSProcessor
+checkPOFinalState	CollectionReaders.cc	/^std::vector<ReconstructedParticle*> JakobsVBSProcessor::checkPOFinalState(LCCollection* AllPOs) {$/;"	f	class:JakobsVBSProcessor
+compareActualToClusteredJets	CompareActualWithClusteredJets.cc	/^void JakobsVBSProcessor::compareActualToClusteredJets( std::vector<ReconstructedParticle*> jets_clustered, $/;"	f	class:JakobsVBSProcessor
+end	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::end(){ $/;"	f	class:JakobsVBSProcessor
+findAllowedVVCandidates	GeneratorLevelChecks.cc	/^void JakobsVBSProcessor::findAllowedVVCandidates ( $/;"	f	class:JakobsVBSProcessor
+findBestGeneratorToRecoVPairing	LinkRecoAndTrueVPairs.cc	/^void JakobsVBSProcessor::findBestGeneratorToRecoVPairing(EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
+findTrueEventType	GeneratorLevelChecks.cc	/^void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles, EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
+findTrueGenLevelNeutrinos	GeneratorLevelChecks.cc	/^std::vector<MCParticle*> JakobsVBSProcessor::findTrueGenLevelNeutrinos(std::vector<MCParticle*> MCparticles) {$/;"	f	class:JakobsVBSProcessor
+findTrueGenLevelQuarks	GeneratorLevelChecks.cc	/^std::vector<MCParticle*> JakobsVBSProcessor::findTrueGenLevelQuarks(std::vector<MCParticle*> MCparticles) {$/;"	f	class:JakobsVBSProcessor
+findVectorDifferences	CompareActualWithClusteredJets.cc	/^void JakobsVBSProcessor::findVectorDifferences(	std::vector<Type> vector1, std::vector<Type> vector2, $/;"	f	class:JakobsVBSProcessor
+init	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::init() { $/;"	f	class:JakobsVBSProcessor
+makeNTuple	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::makeNTuple() {$/;"	f	class:JakobsVBSProcessor
+processEvent	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::processEvent( LCEvent * evt ) { $/;"	f	class:JakobsVBSProcessor
+processRunHeader	JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::processRunHeader( LCRunHeader* run) { $/;"	f	class:JakobsVBSProcessor

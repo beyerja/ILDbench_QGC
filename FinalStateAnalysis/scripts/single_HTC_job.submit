@@ -1,0 +1,26 @@
+##########################################
+# Settings file for one HTCondor run.
+#
+##########################################
+
+
+# Script that is supposed to be run
+Executable          = $ENV(PWD)/single_HTC_run.sh 
+
+# Default universe for normal jobs
+universe            = vanilla
+
+# Where to write output from HTCondor
+output              = BIRD_output/$(Cluster).$(Process).out
+error               = BIRD_output/$(Cluster).$(Process).err
+log                 = BIRD_output/$(Cluster).$(Process).log
+
+# Should files be transfered to remote machine? 
+should_transfer_files   = NO
+
+# When should the user be notified? Options: Always / Complete / Error / Never
+Notification = Error
+
+
+
+Queue 1

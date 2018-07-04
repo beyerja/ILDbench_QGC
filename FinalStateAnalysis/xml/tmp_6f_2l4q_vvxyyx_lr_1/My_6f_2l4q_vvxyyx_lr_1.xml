@@ -1,0 +1,259 @@
+<marlin>
+	<execute>
+		<processor name="MyAdd4MomCovMatrixCharged"/>
+		<processor name="MyThrustReconstruction"/>
+ <!--		<processor name="MyTrueJet"/>  -->
+		<processor name="MyIsolatedLeptonTaggingProcessor"/>	
+		<processor name="MyOverlayRemovalFastJetProcessor"/>
+		<processor name="MyFastJetProcessor"/>
+		<processor name="MyVBSProcessor"/>
+
+		<!-- LCTuple -->
+		<processor name="MyAIDAProcessor"/>
+		<processor name="MergeTrackerHits"/>
+		<XXXXprocessor name="MyCreateRecoRelations"/>
+		<processor name="MyLCTuple"/>
+	</execute>
+
+	<global>
+		<parameter name="LCIOInputFiles">
+ /nfs/dust/ilc/user/berggren/I35867p1_DST_w_truejet/sv01-19-05.mILD_l5_v02.LQGSP_BERT.E1000-B1b_ws.Pvvxyyx.Gwhizard-1.95.eL.pR.I35867.001_evt0-10000_DSTwtj.slcio
+		</parameter>
+		<parameter name="GearXMLFile"> GearOutput.xml </parameter> 
+		<parameter name="MaxRecordNumber" value="0" />  
+		<parameter name="SkipNEvents" value="0" />  
+		<parameter name="SupressCheck" value="false" />  
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING</parameter>
+		<parameter name="AllowToModifyEvent" value="true" />
+	</global>
+
+
+	<!-- TODO Ask someone what this does -->
+	<processor name="MyAdd4MomCovMatrixCharged" type="Add4MomCovMatrixCharged">
+		<parameter name="InputPandoraPFOsCollection" type="string"> PandoraPFOs </parameter>
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+	</processor>
+
+	<!-- TODO Ask someone what this does -->
+	<processor name="MyThrustReconstruction" type="ThrustReconstruction">
+		<parameter name="Verbosity"> SILENT </parameter>
+		<parameter name="inputCollectionName" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="typeOfThrustFinder" type="int">2 </parameter>
+	</processor>
+
+	<!-- Processor that constructs correct jets from PFO links to generator level particles -->
+	<processor name="MyTrueJet" type="TrueJet">
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING1</parameter>
+	</processor>
+
+	<processor name="MyIsolatedLeptonTaggingProcessor" type="IsolatedLeptonTaggingProcessor">
+		<parameter name="CosConeLarge" type="float">0.95 </parameter>
+		<parameter name="CosConeSmall" type="float">0.98 </parameter>
+		<parameter name="CutOnTheISOElectronMVA" type="float"> 0.5 </parameter>
+		<parameter name="CutOnTheISOMuonMVA" type="float">0.7 </parameter>
+		<parameter name="DirOfISOElectronWeights" type="string"> /afs/desy.de/project/ilcsoft/sw/x86_64_gcc48_sl6//v01-19/MarlinReco/v01-16/Analysis/IsolatedLeptonTagging/weights/e1e1h_gg_qqqq_250 </parameter>
+		<parameter name="DirOfISOMuonWeights" type="string"> /afs/desy.de/project/ilcsoft/sw/x86_64_gcc48_sl6/v01-19/MarlinReco/v01-16/Analysis/IsolatedLeptonTagging/weights/e2e2h_gg_qqqq_250 </parameter>
+		<parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="IsSelectingOneIsoLep" type="bool"> false </parameter>
+		<parameter name="MinPForElectron" type="float">5 </parameter>
+		<parameter name="MinPForMuon" type="float">5 </parameter>
+		<parameter name="MinEOverPForElectron" type="float">0.5 </parameter>
+		<parameter name="MaxEOverPForElectron" type="float">1.3 </parameter>
+		<parameter name="MaxEOverPForMuon" type="float">0.3 </parameter>
+		<parameter name="MinEecalOverTotEForElectron" type="float">0.9 </parameter>
+		<parameter name="MinEyokeForMuon" type="float">1.2 </parameter>
+		<parameter name="MaxD0SigForElectron" type="float">50 </parameter>
+		<parameter name="MaxD0SigForMuon" type="float">5 </parameter>
+		<parameter name="MaxZ0SigForElectron" type="float">5 </parameter>
+		<parameter name="MaxZ0SigForMuon" type="float">5 </parameter>
+		<parameter name="OutputIsoLeptonsCollection" type="string" lcioOutType="ReconstructedParticle"> Isoleps </parameter>
+		<parameter name="OutputPFOsWithoutIsoLepCollection" type="string" lcioOutType="ReconstructedParticle"> PFOsWithoutIsoleps </parameter>
+		<parameter name="Verbosity" type="string"> SILENT </parameter>
+	</processor>
+
+	<!-- Using the overlay removal of the FastJetProcessor, only interested in the PFO output -->
+	<processor name="MyOverlayRemovalFastJetProcessor" type="FastJetProcessor">
+	  <!--Using the FastJet library to identify jets-->
+	  <!--a list of all reconstructed particles we are searching for jets in.-->
+	  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+	  <!--The identified jets, not interesting, only using this processor for overlay removal-->
+      <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> WrongJetsDoNotUse </parameter>
+	  <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+	  <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
+	  <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+	  <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+	  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+	  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	  <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+     <parameter name="algorithm" type="StringVec"> kt_algorithm 1.3 </parameter>     
+	  <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+     <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4 </parameter>     
+	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+   </processor>
+
+	<!-- This processor is actually used for jet clustering -->
+	<processor name="MyFastJetProcessor" type="FastJetProcessor">
+	  <!--Using the FastJet library to identify jets-->
+	  <!--a list of all reconstructed particles we are searching for jets in.-->
+	  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
+	  <!--The identified jets-->
+      <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+	  <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+	  <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+	  <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+	  <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+	  <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+	  <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	  <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+	  <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+	  <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+	  <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+   </processor>
+
+	<processor name="MyVBSProcessor" type="JakobsVBSProcessor">
+		<parameter name="InputAllPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+		<parameter name="InputFastJetsCollection" type="string" lcioInType="ReconstructedParticle"> FastJets </parameter>
+		<parameter name="InputPFOsFromFastJetCollection" type="string" lcioInType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+		<parameter name="InputIsolepsCollection" type="string" lcioInType="ReconstructedParticle"> Isoleps </parameter>
+        <parameter name="RootFileName"> 
+ /nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/tmp_rootfiles/6f_2l4q_vvxyyx_lr_1.root 
+		</parameter>
+	</processor>
+
+
+	<!-- LCTuple TTree --> 
+
+	<processor name="MyAIDAProcessor" type="AIDAProcessor">
+		<parameter name="FileName" type="string">
+ /nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/tmp_rootfiles/6f_2l4q_vvxyyx_lr_1_lctuple 
+		</parameter>
+		<parameter name="FileType" type="string">root </parameter>
+	</processor>
+	
+	<processor name="MergeSimTrackerHits" type="MergeCollections">
+		<!--MergeCollections creates a transient subset collection that merges all input collections -->
+		<!--Names of all input collections-->
+		<parameter name="InputCollections" type="StringVec"> 
+		  VXDCollection ETDCollection FTDCollection SETCollection SITCollection TPCCollection
+		</parameter>
+		<!--Optional IDs for input collections - if given id will be added to all objects in merged collections as ext<CollID>()-->
+		<parameter name="InputCollectionIDs" type="IntVec"> 
+		  1  6  3  5  2  4
+		</parameter>
+		<!--Name of output collection-->
+		<parameter name="OutputCollection" type="string">SimTrackerHits </parameter>
+		<!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+		<!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	</processor>
+	
+	<processor name="MergeTrackerHits" type="MergeCollections">
+		<!--MergeCollections creates a transient subset collection that merges all input collections -->
+		<!--Names of all input collections-->
+		<parameter name="InputCollections" type="StringVec"> 
+		  VXDTrackerHits ETDTrackerHits FTDTrackerHits SETTrackerHits SITTrackerHits TPCTrackerHits
+		</parameter>
+		<!--Optional IDs for input collections - if given id will be added to all objects in merged collections as ext<CollID>()-->
+		<parameter name="InputCollectionIDs" type="IntVec"> 
+		  1  6  3  5  2  4
+		</parameter>
+		<!--Name of output collection-->
+		<parameter name="OutputCollection" type="string">TrackerHits </parameter>
+		<!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+		<!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	</processor>
+	
+	<processor name="MyMergeRPCollections" type="MergeCollections">
+	 	<!--MergeCollections creates a transient subset collection that merges all input collections -->
+	 	<!--Names of all input collections-->
+	 	<parameter name="InputCollections" type="StringVec"> 
+	 	  PandoraPFOs     
+	 	  BCALParticles   
+	 	  BuildUpVertex_RP
+	 	  PrimaryVertex_RP
+	 	</parameter>
+	 	<!--Optional IDs for input collections - if given id will be added to all objects in merged collections as ext<CollID>()-->
+	 	<parameter name="InputCollectionIDs" type="IntVec"> 
+	 	   101  102  103  104 
+	 	</parameter>
+	 	<!--Name of output collection-->
+	 	<parameter name="OutputCollection" type="string">MergedRPCollection </parameter>
+	 	<!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+	 	<!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	</processor>
+	
+	<processor name="MyCreateRecoRelations" type="CreateRecoRelations">
+	<!--CreateRecoRelations creates transient collections with realtions from  ReconstructedParticles to Tracks and Clusters-->
+		<!--Name of output collection for relation ReconstructedParticles to Clusters-->
+		<parameter name="Reco2ClusterRelationName" type="string" lcioOutType="LCRelation">Reco2ClustersRelation </parameter>
+		<!--Name of output collection for relation ReconstructedParticles to ReconstructedParticles-->
+		<parameter name="Reco2RecoRelationName" type="string" lcioOutType="LCRelation">Reco2RecoRelation </parameter>
+		<!--Name of output collection for relation ReconstructedParticles to Tracks-->
+		<parameter name="Reco2TracksRelationName" type="string" lcioOutType="LCRelation">Reco2TracksRelation </parameter>
+		<!--Names of ReconstructedParticles input collections-->
+		<parameter name="RecoCollection" type="string" lcioInType="ReconstructedParticle">MergedRPCollection </parameter>
+		<!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+		<!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+	</processor>
+	
+	
+	<processor name="MyLCTuple" type="LCTuple">
+	<!--LCTuple creates a ROOT TTRee with a column wise ntuple from LCIO collections ....-->
+	
+		<!--Name of the Cluster collection-->
+		<parameter name="ClusterCollection" type="string" lcioInType="Cluster"> PandoraClusters </parameter>
+		
+		<!--Names of LCRelation collections - need parallel prefix names in RelPrefixes-->
+		<parameter name="LCRelationCollections" type="StringVec" lcioInType="LCRelation">
+		  RecoMCTruthLink 
+		  Reco2ClustersRelation
+		  Reco2TracksRelation
+		  Reco2RecoRelation
+		</parameter>
+		
+		<!-- Names of prefixes for variables from LCRelation collections - needs to be parallel to LCRelationCollections (one prefix per collection)-->
+		<parameter name="LCRelationPrefixes" type="StringVec">  
+		  r2m  
+		  r2c  
+		  r2t  
+		  r2r  
+		</parameter>
+		
+		<!--Name of the Vertex collection-->
+		<parameter name="VertexCollection" type="string" lcioInType="Vertex"> BuildUpVertex </parameter>
+		
+		<!--Name of the MCParticle collection-->
+		<parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticlesSkimmed</parameter>
+		
+		<!--Name of the ReconstructedParticle collection-->
+		<parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> MergedRPCollection</parameter>
+		
+		<!--Name of the SimCalorimeterHit collection-->
+		<parameter name="SimCalorimeterHitCollection" type="string" lcioInType="SimCalorimeterHit"> </parameter>
+		
+		<!--Name of the SimTrackerHit collection-->
+		<parameter name="SimTrackerHitCollection" type="string" lcioInType="SimTrackerHit"> </parameter>
+		
+		<!--Name of the TrackerHit collection-->
+		<parameter name="TrackerHitCollection" type="string" lcioInType="TrackerHit">TrackerHits</parameter>
+		
+		<!--Name of the Track collection-->
+		<parameter name="TrackCollection" type="string" lcioInType="Track"> MarlinTrkTracks </parameter>
+		
+		<!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+		<parameter name="Verbosity" type="string">DEBUG </parameter>
+	</processor>
+
+
+
+
+
+</marlin>
+
+
+
+
+
+
