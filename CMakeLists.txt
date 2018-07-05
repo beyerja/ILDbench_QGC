@@ -1,15 +1,15 @@
 ########################################################
-# cmake file for building your analysis package
+# cmake file for building %(repository)s analysis package
 # @author Ete Remi, DESY
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 ########################################################
 
 # project name
-PROJECT( YourProjectName )
+PROJECT( %(repository)s )
 
 # project version
 SET( ${PROJECT_NAME}_VERSION_MAJOR 1 )
-SET( ${PROJECT_NAME}_VERSION_MINOR 5 )
+SET( ${PROJECT_NAME}_VERSION_MINOR 0 )
 SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
 
 ### DEPENDENCIES ############################################################

@@ -1,7 +1,7 @@
 
-## ILD Analysis skeleton
+## %(repository)s
 
-Please give a short description of your package
+%(description)s
 
 ### Installation
 
@@ -29,11 +29,10 @@ Explain here:
    - Shell scripts ?
    - Run the analysis on grid if you provide scripts for that
 
-Example for the skeleton:
+Example:
 
-From the top-level directory of the repository:
 ```shell
-export MARLIN_DLL=./lib/libYourProjectName.so
+export MARLIN_DLL=./lib/lib%(repository)s.so
 Marlin ./scripts/ExampleProcessor.xml
 ```
 
@@ -45,7 +44,7 @@ More documentation available here in [doc/Readme.md](doc/Readme.md) !
 
 Explain here how can people reach you:
 
-- via the Github issue interface. For the skeleton package: https://github.com/ILDAnaSoft/Skeleton/issues
+- via the Github issue interface. For the skeleton package: https://github.com/ILDAnaSoft/%(repository)s/issues
 - **not mandatory**:
     - email address
     - working institute
