@@ -1,11 +1,11 @@
 ########################################################
-# cmake file for building %(repository)s analysis package
+# cmake file for building ILDbench_QGC analysis package
 # @author Ete Remi, DESY
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 ########################################################
 
 # project name
-PROJECT( %(repository)s )
+PROJECT( ILDbench_QGC )
 
 # project version
 SET( ${PROJECT_NAME}_VERSION_MAJOR 1 )
