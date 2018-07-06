@@ -1,7 +1,7 @@
 
 ## ILDbench_QGC
 
-Quartic gauge coupling measurement
+Anomalous quartic gauge coupling measurement
 
 ### Installation
 
