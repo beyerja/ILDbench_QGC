@@ -1,22 +1,18 @@
 
 // -- your process header
-#include "ExampleProcessor.h"
+#include "aQGCObservablesProcessor.h"
 
-// -- lcio headers
-#include "EVENT/LCCollection.h"
-#include "EVENT/ReconstructedParticle.h"
-#include "UTIL/LCTOOLS.h"
 
 // This line allows to register your processor in marlin when calling "Marlin steeringFile.xml"
-ExampleProcessor anExampleProcessor;
+aQGCObservablesProcessor anaQGCObservablesProcessor;
 
 //-------------------------------------------------------------------------------------------------
 
-ExampleProcessor::ExampleProcessor() : marlin::Processor("ILDExampleProcessor") {
-  // _description comes from marlin::Processor
-  _description = "An example processor for ILD analysis";
+aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservablesProcessor") {
+  // _description comes from Processor
+  _description = "Processor searching the event for variables relevant for an aQGC analysis";
   
-  // Register an input collection 
+  // Register input collections
   registerInputCollection( 
     LCIO::RECONSTRUCTEDPARTICLE,         // The collection type. Checkout the LCIO documentation for other types
     "PfoCollection",                     // The parameter name to read from steering file 
@@ -24,23 +20,25 @@ ExampleProcessor::ExampleProcessor() : marlin::Processor("ILDExampleProcessor") 
     m_pfoCollectionName,                 // Your variable to store the result after steering file parsing
     std::string("PandoraPFOs") );        // That's the default value, in case 
          
-  // Register a parameter
-  registerProcessorParameter("PfoEnergyCut",
-    "A cut on pfo energy to apply",
-    m_pfoEnergyCut,
-    0.f);
+  // Register input parameters
+  registerProcessorParameter("OutputRootFileName",
+    "Path of output rootfile",
+    m_rootfilename,
+    "test.root");
+    
+    
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void ExampleProcessor::init() {
+void aQGCObservablesProcessor::init() {
   // Usually a good idea to print parameters
-  printParameters(); // method from marlin::Processor
+  printParameters(); // method from Processor
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void ExampleProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
+void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
   streamlog_out(MESSAGE) << "Starting run no " << run->getRunNumber() << std::endl;
   // LCRunHeader objects can be printed using LCTOOLS class
   UTIL::LCTOOLS::dumpRunHeader(run);
@@ -48,7 +46,7 @@ void ExampleProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 
 //-------------------------------------------------------------------------------------------------
 
-void ExampleProcessor::processEvent( EVENT::LCEvent * event ) {
+void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   streamlog_out(DEBUG) << "Processing event no " << event->getEventNumber() << " - run " << event->getEventNumber() << std::endl;
   
   try {
@@ -84,7 +82,7 @@ void ExampleProcessor::processEvent( EVENT::LCEvent * event ) {
 
 //-------------------------------------------------------------------------------------------------
 
-void ExampleProcessor::end() {
+void aQGCObservablesProcessor::end() {
   // Cleanup your mess here !
 }
 

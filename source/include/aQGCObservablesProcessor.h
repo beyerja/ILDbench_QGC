@@ -1,29 +1,29 @@
 
 
-#ifndef _EXAMPLE_PROCESSOR_H_
-#define _EXAMPLE_PROCESSOR_H_
+#ifndef _aQGC_PROCESSOR_H_
+#define _aQGC_PROCESSOR_H_ 1
 
-#include "marlin/Processor.h"
+#include "StandardIncludes.h"
 
-class ExampleProcessor : public marlin::Processor {
+class aQGCObservablesProcessor : public Processor {
 public:
   /**
    *  @brief  Factory method to create a processor
    *
    *  This method is called internally by Marlin to create an instance of your processor
    */
-  marlin::Processor* newProcessor() { return new ExampleProcessor(); }
+  Processor* newProcessor() { return new aQGCObservablesProcessor(); }
   
   /**
    *  @brief  Constructor
    *
-   *  Regiter your parameters in there. See ExampleProcessor.cc
+   *  Regiter your parameters in there. See aQGCObservablesProcessor.cc
    */
-  ExampleProcessor();
+  aQGCObservablesProcessor();
   
   // These two lines avoid frequent compiler warnings when using -Weffc++
-  ExampleProcessor( const ExampleProcessor& ) = delete;
-  ExampleProcessor& operator=( const ExampleProcessor& ) = delete;
+  aQGCObservablesProcessor( const aQGCObservablesProcessor& ) = delete;
+  aQGCObservablesProcessor& operator=( const aQGCObservablesProcessor& ) = delete;
   
   /** 
    *  @brief  Called once at the begin of the job before anything is read.
@@ -45,7 +45,7 @@ public:
    *  @brief  Called for every event - the working horse.
    *
    *  Analyze your reconstructed particle objects from the event object here.
-   *  See ExampleProcessor.cc for an example
+   *  See aQGCObservablesProcessor.cc for an example
    */
   void processEvent( EVENT::LCEvent * event );
   
@@ -61,9 +61,8 @@ private:
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
 
-  /// The reconstructed particle collection name
-  std::string            m_pfoCollectionName = {""};
-  float                  m_pfoEnergyCut = {0.f};
+  std::string            m_pfoCollectionName {};
+  std::string            m_rootfilename {};
 };
 
 #endif
