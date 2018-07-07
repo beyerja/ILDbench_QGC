@@ -1,5 +1,3 @@
-
-
 #ifndef _aQGC_PROCESSOR_H_
 #define _aQGC_PROCESSOR_H_ 1
 
@@ -58,11 +56,49 @@ public:
   void end();
   
 private:
+  // Additional class member functions for analysis
+  void setObservablesBranches( TTree* tree );
+  void setTreeBranches();
+  
+  void CleanEvent();
+  
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
-
-  std::string            m_pfoCollectionName {};
-  std::string            m_rootfilename {};
+  std::string         m_pfoCollectionName {};
+  std::string         m_mcCollectionName {};
+  
+  TTree*              m_mctree {};
+  TTree*              m_recotree {};
+  
+  TFile*              m_rootfile {};
+  std::string         m_rootfilename {};
+  
+  
+  // Observables 
+  float m_m_recoil {};
+  float m_vis_ET {};
+  float m_vis_pT {};
+  
+  int   m_V1_type {};
+  float m_V1_m {};
+  float m_V1_pT {};
+  float m_V1_cosTheta {};
+  
+  int   m_V2_type {};
+  float m_V2_m {};
+  float m_V2_pT {};
+  float m_V2_cosTheta {};
+  
+  float m_VV_m {};
+  float m_VV_pT {};
+  
+  float m_y_34 {};
+  float m_min_jetE {};
+  float m_min_jetNparticles {};
+  float m_min_jetNcharged {};
+  
+  float m_leadEtrack_cosTheta {};
+  float m_leadEtrack_coneE {};
 };
 
 #endif

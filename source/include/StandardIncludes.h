@@ -28,6 +28,9 @@
 #include <EVENT/Vertex.h>
 #include "UTIL/LCTOOLS.h"
 
+//Marlin
+#include "marlin/Processor.h"
+
 //----- include for verbosity dependend logging ---------
 #include "marlin/VerbosityLevels.h"
 

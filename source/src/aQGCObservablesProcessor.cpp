@@ -19,12 +19,19 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
     "The Pandora PFO collection name",   // A parameter description. Please fill this correctly
     m_pfoCollectionName,                 // Your variable to store the result after steering file parsing
     std::string("PandoraPFOs") );        // That's the default value, in case 
+    
+  registerInputCollection( LCIO::MCPARTICLE,
+    "MCParticleCollection",
+    "Name of the MC particle collection",
+    m_mcCollectionName,
+    std::string("MCParticle")
+  );
          
   // Register input parameters
   registerProcessorParameter("OutputRootFileName",
     "Path of output rootfile",
     m_rootfilename,
-    "test.root");
+    std::string("test.root"));
     
     
 }
@@ -34,9 +41,19 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
 void aQGCObservablesProcessor::init() {
   // Usually a good idea to print parameters
   printParameters(); // method from Processor
+  
+  //TODO Fill meta info in TNamed!!
+  
+  m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
+  m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
+  m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
+  
+  this->setTreeBranches();
 }
 
 //-------------------------------------------------------------------------------------------------
+
+
 
 void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
   streamlog_out(MESSAGE) << "Starting run no " << run->getRunNumber() << std::endl;
@@ -47,6 +64,20 @@ void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
+  
+  // Basic idea: perform same analysis first on MC then on Recos
+  // -> will have some obvious differences, but will in same output observables
+  // So running structure: 
+  //  Empty variables -> Fill & Write MC -> Empty variables -> Fill & Write Reco
+  
+  this->CleanEvent();
+  // MC
+  m_mctree->Fill();
+  this->CleanEvent();
+  // Reco
+  m_recotree->Fill();
+  
+  
   streamlog_out(DEBUG) << "Processing event no " << event->getEventNumber() << " - run " << event->getEventNumber() << std::endl;
   
   try {
@@ -65,13 +96,6 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
         continue;
       }
       
-      // Start analysing your particle here ! Enjoy !
-      // Example:
-      if(particle->getEnergy() < m_pfoEnergyCut) {
-        continue;
-      }
-      
-      streamlog_out(DEBUG) << "Particle passes the energy cut !" << std::endl;
     }
   }
   catch(EVENT::DataNotAvailableException &) {
@@ -84,5 +108,18 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
 
 void aQGCObservablesProcessor::end() {
   // Cleanup your mess here !
+  
+  std::cout << "aQGCAnalysis: end() " << this->name() // << " processed " << m_nEvtSum << " events in " << m_nRunSum << " runs " << std::endl
+  << "Rootfile: " << m_rootfilename.c_str() << std::endl;
+
+  m_rootfile->cd();
+  m_mctree->Write();
+  m_recotree->Write();
+  m_rootfile->Close();
+  
+  delete m_rootfile;
+  
+  delete m_mctree;
+  delete m_recotree;
 }
 
