@@ -48,7 +48,7 @@ void aQGCObservablesProcessor::init() {
   m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
   m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
   
-  this->setTreeBranches();
+  this->setTFileContent();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -65,6 +65,8 @@ void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 
 void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   
+  m_event = event;
+  
   // Basic idea: perform same analysis first on MC then on Recos
   // -> will have some obvious differences, but will in same output observables
   // So running structure: 
@@ -78,11 +80,11 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   m_recotree->Fill();
   
   
-  streamlog_out(DEBUG) << "Processing event no " << event->getEventNumber() << " - run " << event->getEventNumber() << std::endl;
+  streamlog_out(DEBUG) << "Processing event no " << m_event->getEventNumber() << " - run " << m_event->getEventNumber() << std::endl;
   
   try {
     // Get the reconstructed particle collection from the current event
-    EVENT::LCCollection* collection = event->getCollection(m_pfoCollectionName);
+    EVENT::LCCollection* collection = m_event->getCollection(m_pfoCollectionName);
     streamlog_out(DEBUG) << "Number of reco particles: " << collection->getNumberOfElements() << std::endl;
     
     for(int e=0 ; e<collection->getNumberOfElements() ; e++) {
@@ -112,9 +114,20 @@ void aQGCObservablesProcessor::end() {
   std::cout << "aQGCAnalysis: end() " << this->name() // << " processed " << m_nEvtSum << " events in " << m_nRunSum << " runs " << std::endl
   << "Rootfile: " << m_rootfilename.c_str() << std::endl;
 
+  // Write to .root file
   m_rootfile->cd();
+  
+  m_detector_model.Write();
+  m_e_polarization.Write();
+  m_p_polarization.Write();
+  m_process_name.Write();
+  m_cross_section.Write();
+  m_cross_section_error.Write();
+  
+  
   m_mctree->Write();
   m_recotree->Write();
+  
   m_rootfile->Close();
   
   delete m_rootfile;

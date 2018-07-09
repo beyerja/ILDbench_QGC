@@ -57,13 +57,16 @@ public:
   
 private:
   // Additional class member functions for analysis
+  void setInputInfoStrings();
   void setObservablesBranches( TTree* tree );
-  void setTreeBranches();
+  void setTFileContent();
   
   void CleanEvent();
   
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
+  LCEvent*  m_event {};
+  
   std::string         m_pfoCollectionName {};
   std::string         m_mcCollectionName {};
   
@@ -72,6 +75,13 @@ private:
   
   TFile*              m_rootfile {};
   std::string         m_rootfilename {};
+  
+  TNamed  m_detector_model {};
+  TNamed  m_e_polarization {};
+  TNamed  m_p_polarization {};
+  TNamed  m_process_name {};
+  TNamed  m_cross_section {};
+  TNamed  m_cross_section_error {};
   
   
   // Observables 

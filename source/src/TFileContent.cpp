@@ -2,6 +2,17 @@
 
 //-------------------------------------------------------------------------------------------------
 
+void aQGCObservablesProcessor::setInputInfoStrings() {
+  m_detector_model        = TNamed( "m_detector_model",       m_event->getParameters().getStringVal( "detector" )         );
+  m_e_polarization        = TNamed( "m_e_polarization",       m_event->getParameters().getFloatVal( "Pol0" )              );
+  m_p_polarization        = TNamed( "m_p_polarization",       m_event->getParameters().getFloatVal( "Pol1" )              );
+  m_process_name          = TNamed( "m_process_name",         m_event->getParameters().getStringVal( "processName" )      );
+  m_cross_section         = TNamed( "m_cross_section",        m_event->getParameters().getFloatVal( "crossSection" )      );
+  m_cross_section_error   = TNamed( "m_cross_section_error",  m_event->getParameters().getFloatVal( "crossSectionError" ) );
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // Total event observables
   tree->Branch( "m_recoil", &m_m_recoil,  "m_recoil" );
@@ -31,13 +42,13 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // Properties of most energetic track
   tree->Branch( "leadEtrack_cosTheta",  &m_leadEtrack_cosTheta, "leadEtrack_cosTheta/F");
   tree->Branch( "leadEtrack_coneE",     &m_leadEtrack_coneE,    "leadEtrack_coneE/F");
-  
-  
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void aQGCObservablesProcessor::setTreeBranches() {
+void aQGCObservablesProcessor::setTFileContent() {
+  this->setInputInfoStrings();
+
   this->setObservablesBranches(m_mctree);
   this->setObservablesBranches(m_recotree);
 }
