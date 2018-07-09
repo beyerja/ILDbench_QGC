@@ -2,14 +2,14 @@
   
   <execute>
     <!-- List the processors to execute here ! -->
-    <processor name="MyILDExampleProcessor" />
+    <processor name="MyaQGCObservablesProcessor" />
   </execute>
   
   <global>
     <!-- Change the input file here or by command line -->
-    <parameter name="LCIOInputFiles"> input.slcio </parameter>
+    <parameter name="LCIOInputFiles"> /nfs/dust/ilc/group/ild/beyerjac/tmp/rv02-00.sv02-00.mILD_l5_o1_v02.E500-TDR_ws.I108161.Pffh_mumu.eL.pL.n001.d_dstm_9903_0.slcio </parameter>
     <!-- The maximum number of events + runs to process -->
-    <parameter name="MaxRecordNumber" value="0"/>
+    <parameter name="MaxRecordNumber" value="100"/>
     <!-- The number of events to skip on start -->
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
@@ -20,11 +20,7 @@
   </global>
   
   <!-- Your processor configuration here after -->
-  <processor name="MyILDExampleProcessor" type="ILDExampleProcessor">
-    <!-- The Pandora PFO collection name -->
-    <parameter name="PfoCollection" lcioInType="ReconstructedParticle"> PandoraPfos </parameter>
-    <!-- A cut on pfo energy to apply -->
-    <parameter name="PfoEnergyCut" type="float"> 2 </parameter>
+  <processor name="MyaQGCObservablesProcessor" type="aQGCObservablesProcessor">
   </processor>
   
 </marlin>

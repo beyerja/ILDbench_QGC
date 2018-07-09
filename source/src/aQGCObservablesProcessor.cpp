@@ -72,38 +72,17 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   // So running structure: 
   //  Empty variables -> Fill & Write MC -> Empty variables -> Fill & Write Reco
   
-  this->CleanEvent();
-  // MC
-  m_mctree->Fill();
-  this->CleanEvent();
-  // Reco
-  m_recotree->Fill();
-  
-  
   streamlog_out(DEBUG) << "Processing event no " << m_event->getEventNumber() << " - run " << m_event->getEventNumber() << std::endl;
   
-  try {
-    // Get the reconstructed particle collection from the current event
-    EVENT::LCCollection* collection = m_event->getCollection(m_pfoCollectionName);
-    streamlog_out(DEBUG) << "Number of reco particles: " << collection->getNumberOfElements() << std::endl;
-    
-    for(int e=0 ; e<collection->getNumberOfElements() ; e++) {
-      // Get an object from the collection and convert it to a reconstructed particle
-      EVENT::ReconstructedParticle* particle = static_cast<EVENT::ReconstructedParticle*>(collection->getElementAt(e));
-      
-      // If the collection type is wrong you end up with a null pointer here.
-      // Always check it !
-      if(nullptr == particle) {
-        streamlog_out(ERROR) << "Wrong object type in collection '" << m_pfoCollectionName << "'" << std::endl;
-        continue;
-      }
-      
-    }
-  }
-  catch(EVENT::DataNotAvailableException &) {
-    // You end up here if the collection m_pfoCollectionName is not available in this event
-    streamlog_out(WARNING) << "Pfo collection '" << m_pfoCollectionName << "' is not available !" << std::endl;
-  }
+  this->CleanEvent();
+  streamlog_out(DEBUG) << "Processing MC info " << std::endl;
+  m_mctree->Fill();
+  
+  this->CleanEvent();
+  streamlog_out(DEBUG) << "Processing reconstructed info " << std::endl;
+  this->analyseReconstructed();
+  m_recotree->Fill();
+  
 }
 
 //-------------------------------------------------------------------------------------------------

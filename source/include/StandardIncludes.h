@@ -12,6 +12,7 @@
 #include <set>
 #include <algorithm> // for std::find
 #include <iterator> // for std::begin, std::end
+#include <limits> // for getting maximum value that class (e.g. float) can have
 
 #include "CalorimeterHitType.h"
 

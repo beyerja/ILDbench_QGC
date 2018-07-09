@@ -2,6 +2,8 @@
 #define _aQGC_PROCESSOR_H_ 1
 
 #include "StandardIncludes.h"
+#include "VBPairFindingTemplates.h"
+
 
 class aQGCObservablesProcessor : public Processor {
 public:
@@ -57,11 +59,16 @@ public:
   
 private:
   // Additional class member functions for analysis
-  void setInputInfoStrings();
   void setObservablesBranches( TTree* tree );
   void setTTreeBranches();
+  void setInputInfoStrings();
   
   void CleanEvent();
+  void getRecoParticleVector( ReconstructedParticleVec &output_vector );
+  void analyseReconstructed();
+  
+  // Member function templates -> definitions need to be included at end of this file
+  template <class ParticleClass> void findObservables( std::vector<ParticleClass*> &particle_vector );
   
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
@@ -110,5 +117,8 @@ private:
   float m_leadEtrack_cosTheta {};
   float m_leadEtrack_coneE {};
 };
+
+// Include here headers with definitions of templates
+#include "ObservableExtractionTemplates.tpp"
 
 #endif
