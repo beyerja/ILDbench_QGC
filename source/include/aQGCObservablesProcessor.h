@@ -59,7 +59,7 @@ private:
   // Additional class member functions for analysis
   void setInputInfoStrings();
   void setObservablesBranches( TTree* tree );
-  void setTFileContent();
+  void setTTreeBranches();
   
   void CleanEvent();
   

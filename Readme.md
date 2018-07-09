@@ -12,10 +12,9 @@ Explain here:
 
 ```shell
 source /path/to/ilcsoft/init_ilcsoft.sh
-mkdir build
-cd build
-cmake -C $ILCSOFT/ILCSoft.cmake ..
-make install
+cd macros
+chmod u+x run_make.sh
+./run_make
 ```
 
 ### How to run the analysis

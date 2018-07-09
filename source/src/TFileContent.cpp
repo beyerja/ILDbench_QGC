@@ -1,15 +1,5 @@
 #include "aQGCObservablesProcessor.h"
 
-//-------------------------------------------------------------------------------------------------
-
-void aQGCObservablesProcessor::setInputInfoStrings() {
-  m_detector_model        = TNamed( "m_detector_model",       m_event->getParameters().getStringVal( "detector" )         );
-  m_e_polarization        = TNamed( "m_e_polarization",       m_event->getParameters().getFloatVal( "Pol0" )              );
-  m_p_polarization        = TNamed( "m_p_polarization",       m_event->getParameters().getFloatVal( "Pol1" )              );
-  m_process_name          = TNamed( "m_process_name",         m_event->getParameters().getStringVal( "processName" )      );
-  m_cross_section         = TNamed( "m_cross_section",        m_event->getParameters().getFloatVal( "crossSection" )      );
-  m_cross_section_error   = TNamed( "m_cross_section_error",  m_event->getParameters().getFloatVal( "crossSectionError" ) );
-}
 
 //-------------------------------------------------------------------------------------------------
 
@@ -46,11 +36,28 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
 
 //-------------------------------------------------------------------------------------------------
 
-void aQGCObservablesProcessor::setTFileContent() {
-  this->setInputInfoStrings();
-
+void aQGCObservablesProcessor::setTTreeBranches() {
   this->setObservablesBranches(m_mctree);
   this->setObservablesBranches(m_recotree);
 }
 
 //-------------------------------------------------------------------------------------------------
+
+void aQGCObservablesProcessor::setInputInfoStrings() {
+  m_detector_model        = TNamed( "detector_model",       m_event->getDetectorName()  );
+  m_process_name          = TNamed( "process_name",         m_event->getParameters().getStringVal( "processName" )                      );
+  
+  m_e_polarization        = TNamed( "e_polarization",       std::to_string(m_event->getParameters().getFloatVal( "Pol0" ))              );
+  m_p_polarization        = TNamed( "p_polarization",       std::to_string(m_event->getParameters().getFloatVal( "Pol1" ))              );
+  m_cross_section         = TNamed( "cross_section",        std::to_string(m_event->getParameters().getFloatVal( "crossSection" ))      );
+  m_cross_section_error   = TNamed( "cross_section_error",  std::to_string(m_event->getParameters().getFloatVal( "crossSectionError" )) );
+}
+
+//-------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
