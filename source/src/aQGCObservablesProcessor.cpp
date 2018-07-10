@@ -89,6 +89,8 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   
   streamlog_out(DEBUG) << "Processing event no " << m_event->getEventNumber() << " - run " << m_event->getEventNumber() << std::endl;
   
+  m_com_E = m_event->getParameters().getFloatVal( "Energy" );
+  
   this->CleanEvent();
   streamlog_out(DEBUG) << "Processing MC info " << std::endl;
   m_mctree->Fill();

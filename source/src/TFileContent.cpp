@@ -21,7 +21,7 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   tree->Branch( "VV_m",   &m_VV_m,  "VV_m/F");
   tree->Branch( "VV_pT",  &m_VV_pT, "VV_pT/F");
   tree->Branch( "VV_ET",   &m_VV_ET,    "VV_ET/F" );
-  tree->Branch( "m_recoil", &m_m_recoil,  "m_recoil/F" );
+  tree->Branch( "m_recoil", &m_recoil_m,  "m_recoil/F" );
 
   // Jet property variables
   tree->Branch( "y_34",               &m_y_34,              "y_34/F");

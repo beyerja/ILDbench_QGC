@@ -65,10 +65,13 @@ private:
   
   void CleanEvent();
   void getJetVector( ReconstructedParticleVec &output_vector );
+  void getRecoParticleVector( ReconstructedParticleVec &output_vector );
   void analyseReconstructed();
   
   // Member function templates -> definitions need to be included at end of this file
-  template <class ParticleClass> void findBosonPairObservables( std::vector<ParticleClass*> &particle_vector );
+  template <class ParticleClass> void findJetObservables( std::vector<ParticleClass*> &jet_vector );
+  template <class ParticleClass> void findParticleObservables( std::vector<ParticleClass*> &particle_vector );
+
   
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
@@ -92,6 +95,7 @@ private:
   TNamed  m_cross_section {};
   TNamed  m_cross_section_error {};
   
+  float m_com_E {};
   
   // Observables 
   
@@ -108,7 +112,7 @@ private:
   float m_VV_m {};
   float m_VV_pT {};
   float m_VV_ET {};
-  float m_m_recoil {};
+  float m_recoil_m {};
   
   float m_y_34 {};
   float m_min_jetE {};

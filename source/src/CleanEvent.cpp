@@ -15,7 +15,7 @@ void aQGCObservablesProcessor::CleanEvent() {
   m_VV_m  = -999;
   m_VV_pT = 0;
   m_VV_ET    = -999;
-  m_m_recoil  = -999;
+  m_recoil_m  = -999;
 
   m_y_34              = -999;
   m_min_jetE          = -999;
