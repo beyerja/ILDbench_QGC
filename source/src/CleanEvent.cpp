@@ -1,9 +1,6 @@
 #include "aQGCObservablesProcessor.h"
 
 void aQGCObservablesProcessor::CleanEvent() {
-  m_m_recoil  = -999;
-  m_vis_ET    = -999;
-  m_vis_pT    = 0;
 
   m_V1_type     = 0;
   m_V1_m        = -999;
@@ -17,6 +14,8 @@ void aQGCObservablesProcessor::CleanEvent() {
 
   m_VV_m  = -999;
   m_VV_pT = 0;
+  m_VV_ET    = -999;
+  m_m_recoil  = -999;
 
   m_y_34              = -999;
   m_min_jetE          = -999;

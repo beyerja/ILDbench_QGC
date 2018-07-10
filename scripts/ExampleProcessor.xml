@@ -2,6 +2,7 @@
   
   <execute>
     <!-- List the processors to execute here ! -->
+    <processor name="MyFastJetProcessor" />
     <processor name="MyaQGCObservablesProcessor" />
   </execute>
   
@@ -9,7 +10,7 @@
     <!-- Change the input file here or by command line -->
     <parameter name="LCIOInputFiles"> /nfs/dust/ilc/group/ild/beyerjac/tmp/rv02-00.sv02-00.mILD_l5_o1_v02.E500-TDR_ws.I108161.Pffh_mumu.eL.pL.n001.d_dstm_9903_0.slcio </parameter>
     <!-- The maximum number of events + runs to process -->
-    <parameter name="MaxRecordNumber" value="100"/>
+    <parameter name="MaxRecordNumber" value="1000"/>
     <!-- The number of events to skip on start -->
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
@@ -18,6 +19,27 @@
     <!-- A user random seed -->
     <parameter name="RandomSeed" value="1234567890" />
   </global>
+  
+  <!-- Jet clustering here -->
+  <processor name="MyFastJetProcessor" type="FastJetProcessor">
+    <!--Using the FastJet library to identify jets-->
+    <!--a list of all reconstructed particles we are searching for jets in.-->
+    <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG5 </parameter> -->
+    <!--The identified jets-->
+    <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+    <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+    <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+    <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+    <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+    <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+    <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+    <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+    <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+    <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+    <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+  </processor>
   
   <!-- Your processor configuration here after -->
   <processor name="MyaQGCObservablesProcessor" type="aQGCObservablesProcessor">

@@ -4,10 +4,8 @@
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
-  // Total event observables
-  tree->Branch( "m_recoil", &m_m_recoil,  "m_recoil" );
-  tree->Branch( "vis_ET",   &m_vis_ET,    "vis_ET" );
-  tree->Branch( "vis_pT",   &m_vis_pT,    "vis_pT" );
+  
+  // If new variable is added remember to clean it up in the CleanEvent function!!
   
   // Vector boson observables
   tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
@@ -22,6 +20,8 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // Combined VB (= WW/ZZ) properties
   tree->Branch( "VV_m",   &m_VV_m,  "VV_m/F");
   tree->Branch( "VV_pT",  &m_VV_pT, "VV_pT/F");
+  tree->Branch( "VV_ET",   &m_VV_ET,    "VV_ET/F" );
+  tree->Branch( "m_recoil", &m_m_recoil,  "m_recoil/F" );
 
   // Jet property variables
   tree->Branch( "y_34",               &m_y_34,              "y_34/F");

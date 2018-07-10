@@ -5,27 +5,11 @@
 
 
 
-// // Total event observables
-// tree->Branch( "m_recoil", &m_m_recoil,  "m_recoil" );
-// tree->Branch( "vis_ET",   &m_vis_ET,    "vis_ET" );
-// tree->Branch( "vis_pT",   &m_vis_pT,    "vis_pT" );
-// 
 // // Vector boson observables
 // tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
-// tree->Branch( "V1_m",         &m_V1_m,        "V1_m/F");
-// tree->Branch( "V1_pT",        &m_V1_pT,       "V1_pT/F");
-// tree->Branch( "V1_cosTheta",  &m_V1_cosTheta, "V1_cosTheta/F");
 // tree->Branch( "V2_type",      &m_V2_type,     "V2_type/I"); 
-// tree->Branch( "V2_m",         &m_V2_m,        "V2_m/F");
-// tree->Branch( "V2_pT",        &m_V2_pT,       "V2_pT/F");
-// tree->Branch( "V2_cosTheta",  &m_V2_cosTheta, "V2_cosTheta/F");
-// 
-// // Combined VB (= WW/ZZ) properties
-// tree->Branch( "VV_m",   &m_VV_m,  "VV_m/F");
-// tree->Branch( "VV_pT",  &m_VV_pT, "VV_pT/F");
 // 
 // // Jet property variables
-// tree->Branch( "y_34",               &m_y_34,              "y_34/F");
 // tree->Branch( "min_jetE",           &m_min_jetE,          "min_jetE/F"); // minimum over all four jets
 // tree->Branch( "min_jetNparticles",  &m_min_jetNparticles, "min_jetNparticles/F");
 // tree->Branch( "min_jetNcharged",    &m_min_jetNcharged,   "min_jetNcharged/F");
@@ -35,7 +19,39 @@
 // tree->Branch( "leadEtrack_coneE",     &m_leadEtrack_coneE,    "leadEtrack_coneE/F");
 
 
-template <class ParticleClass> void aQGCObservablesProcessor::findObservables( std::vector<ParticleClass*> &particle_vector ) {
+template <class ParticleClass> void aQGCObservablesProcessor::findBosonPairObservables( std::vector<ParticleClass*> &particle_vector ) {
+  VectorBosonPairFinder <ParticleClass> VBpair_finder;
+  VBpair_finder.setParticleVector(particle_vector);
+  VBpair_finder.findBestCandidate();
+          
+  ParticleClass* boson1_p1 = VBpair_finder.getBoson1Particle1();
+  ParticleClass* boson1_p2 = VBpair_finder.getBoson1Particle2();
+  ParticleClass* boson2_p1 = VBpair_finder.getBoson2Particle1();
+  ParticleClass* boson2_p2 = VBpair_finder.getBoson2Particle2();
+  
+  TLorentzVector V1_p1_tlv ( boson1_p1->getMomentum(),  boson1_p1->getEnergy() );
+	TLorentzVector V1_p2_tlv ( boson1_p2->getMomentum(), 	boson1_p2->getEnergy() );
+	TLorentzVector V2_p1_tlv ( boson2_p1->getMomentum(), 	boson2_p1->getEnergy() );
+	TLorentzVector V2_p2_tlv ( boson2_p2->getMomentum(), 	boson2_p2->getEnergy() );
+  
+  TLorentzVector V1_tlv = V1_p1_tlv + V1_p2_tlv;
+  TLorentzVector V2_tlv = V2_p1_tlv + V2_p2_tlv;
+  TLorentzVector VV_tlv = V1_tlv + V2_tlv;
+  
+  m_V1_m        = V1_tlv.M();
+  m_V1_pT       = V1_tlv.Pt();
+  m_V1_cosTheta = V1_tlv.CosTheta();
+  
+  m_V2_m        = V2_tlv.M();
+  m_V2_pT       = V2_tlv.Pt();
+  m_V2_cosTheta = V2_tlv.CosTheta();
+  
+  //TODO Extract CMS
+  
+  m_VV_m      = VV_tlv.M();
+  m_VV_pT     = VV_tlv.Pt();
+  m_VV_ET     = VV_tlv.Et();
+  //m_m_recoil  = VV_tlv
   
 }
 

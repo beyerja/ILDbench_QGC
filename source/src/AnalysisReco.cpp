@@ -2,11 +2,11 @@
 
 //-------------------------------------------------------------------------------------------------
 
-void aQGCObservablesProcessor::getRecoParticleVector( ReconstructedParticleVec &output_vector ) {
+void aQGCObservablesProcessor::getJetVector( ReconstructedParticleVec &output_vector ) {
   try {
-    // Get the reconstructed particle collection from the current event
-    LCCollection* collection = m_event->getCollection(m_pfoCollectionName);
-    streamlog_out(DEBUG) << "Number of reco particles: " << collection->getNumberOfElements() << std::endl;
+    // Get the jet collection from the current event
+    LCCollection* collection = m_event->getCollection(m_jetsCollectionName);
+    streamlog_out(DEBUG) << "Number of jets: " << collection->getNumberOfElements() << std::endl;
     
     for(int e=0 ; e<collection->getNumberOfElements() ; e++) {
       // Get an object from the collection and convert it to a reconstructed particle
@@ -15,7 +15,7 @@ void aQGCObservablesProcessor::getRecoParticleVector( ReconstructedParticleVec &
       // If the collection type is wrong you end up with a null pointer here.
       // Always check it !
       if(nullptr == particle) {
-        streamlog_out(ERROR) << "Wrong object type in collection '" << m_pfoCollectionName << "'" << std::endl;
+        streamlog_out(ERROR) << "Wrong object type in collection '" << m_jetsCollectionName << "'" << std::endl;
         continue;
       }
       
@@ -24,16 +24,20 @@ void aQGCObservablesProcessor::getRecoParticleVector( ReconstructedParticleVec &
   }
   catch(EVENT::DataNotAvailableException &) {
     // You end up here if the collection m_pfoCollectionName is not available in this event
-    streamlog_out(WARNING) << "Pfo collection '" << m_pfoCollectionName << "' is not available !" << std::endl;
+    streamlog_out(WARNING) << "Jet collection '" << m_jetsCollectionName << "' is not available !" << std::endl;
   }
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::analyseReconstructed() {
-  ReconstructedParticleVec reco_particles{};
-  this->getRecoParticleVector( reco_particles );
-  this->findObservables( reco_particles );
+  ReconstructedParticleVec jets{};
+  this->getJetVector( jets );
+  if ( ! jets.empty() ){
+    this->findBosonPairObservables( jets );
+    
+    m_y_34 = m_event->getCollection(m_jetsCollectionName)->getParameters().getFloatVal( "y_{n-1,n}" );
+  }
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -24,9 +24,24 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
     "MCParticleCollection",
     "Name of the MC particle collection",
     m_mcCollectionName,
-    std::string("MCParticle")
-  );
-         
+    std::string("MCParticle") );
+  
+  registerInputCollection( 
+    LCIO::RECONSTRUCTEDPARTICLE,         
+    "ClusteredJets",                     
+    "The collection name for the clustered jets from reco",   
+    m_jetsCollectionName,                 
+    std::string("FastJets") );        
+  
+  registerInputCollection( 
+    LCIO::RECONSTRUCTEDPARTICLE,         
+    "PFOsFromClusteredJets",                     
+    "The collection name for PFOs from clustered jets",   
+    m_jetPFOsCollectionName,                 
+    std::string("PFOsFromFastJet") );        
+
+
+    
   // Register input parameters
   registerProcessorParameter("OutputRootFileName",
     "Path of output rootfile",

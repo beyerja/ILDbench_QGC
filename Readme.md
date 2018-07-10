@@ -28,12 +28,19 @@ Explain here:
    - Shell scripts ?
    - Run the analysis on grid if you provide scripts for that
 
-Example:
+Example for how to run processor:
 
 ```shell
 export MARLIN_DLL=./lib/libILDbench_QGC.so
 Marlin ./scripts/ExampleProcessor.xml
 ```
+
+This creates a .root file in the scripts directory which can be open e.g. using
+
+```shell
+rootbrowse test.root
+```
+
 
 If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
 

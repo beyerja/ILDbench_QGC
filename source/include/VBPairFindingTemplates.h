@@ -8,10 +8,6 @@ template<class ParticleClass> class VectorBosonPairFinder {
 			particles or given vector of candidates
 	*/
 	
-	// These two lines avoid frequent compiler warnings when using -Weffc++
-	VectorBosonPairFinder( const VectorBosonPairFinder& ) = delete;
-	VectorBosonPairFinder& operator=( const VectorBosonPairFinder& ) = delete;
-	
 	// Typedefs for better readablitity
 	typedef std::vector <ParticleClass*> 	ParticleVec;
 	typedef std::vector <float>						FloatVec;
@@ -24,6 +20,12 @@ template<class ParticleClass> class VectorBosonPairFinder {
 	typedef std::vector <MassPair> 			MassPairVec;
 	
 	public:
+		
+		// // These three lines avoid frequent compiler warnings when using -Weffc++
+		VectorBosonPairFinder<ParticleClass>() = default;
+		VectorBosonPairFinder<ParticleClass>( const VectorBosonPairFinder<ParticleClass>& ) = delete;
+		VectorBosonPairFinder<ParticleClass>& operator=( const VectorBosonPairFinder<ParticleClass>& ) = delete;
+		
 		void setMinimizationCriterium( std::string criterium="mass_difference" );
 		void setParticleVector( const ParticleVec &particle_vector );
 		void setVBPairCandidateVector( const VBPairVec &VBpair_candidates );
@@ -35,17 +37,14 @@ template<class ParticleClass> class VectorBosonPairFinder {
 		ParticleClass* getBoson2Particle1() const;
 		ParticleClass* getBoson2Particle2() const;
 
-		//TODO Separation of minimization criterium allows for different minimization criteria!!!!
-		// -> Add SetCriterium(std::string) function! 
-
 	private:
 
 		// Member variables
-		std::string			m_minimization_criterium {};
+		std::string			m_minimization_criterium {"mass_difference"};
 		
 		ParticleVec 		m_particle_vector {};
 		VBPairVec 			m_VBpair_candidates {};
-		VBPairVec 			m_VBpair_candidate_masses {};
+		MassPairVec 		m_VBpair_candidate_masses {};
 		int							m_best_pair_index {};
 		
 		ParticleClass* 	m_boson1_p1 {};
@@ -58,11 +57,6 @@ template<class ParticleClass> class VectorBosonPairFinder {
 		void getMassesToVBPairCandidates();
 		void minimizeMassDifference();
 
-		// void fillVPairInformation( 	ParticleVec V1, ParticleVec V2, Observables &observ );
-		// void getAllVVTo4ParticleCombinations();
-		// void getVVCandidatesMasses( Float2DMatrix &candidates_masses );
-		// int findIndexBestPairInVVCandidates();
-		
 };
 
 #include "VBPairFindingTemplates.tpp"

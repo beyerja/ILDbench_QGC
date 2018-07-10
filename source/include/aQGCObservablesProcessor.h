@@ -64,11 +64,11 @@ private:
   void setInputInfoStrings();
   
   void CleanEvent();
-  void getRecoParticleVector( ReconstructedParticleVec &output_vector );
+  void getJetVector( ReconstructedParticleVec &output_vector );
   void analyseReconstructed();
   
   // Member function templates -> definitions need to be included at end of this file
-  template <class ParticleClass> void findObservables( std::vector<ParticleClass*> &particle_vector );
+  template <class ParticleClass> void findBosonPairObservables( std::vector<ParticleClass*> &particle_vector );
   
   // Initialize your members in the class definition to 
   // be more efficient and avoid compiler warnings
@@ -76,6 +76,8 @@ private:
   
   std::string         m_pfoCollectionName {};
   std::string         m_mcCollectionName {};
+  std::string         m_jetsCollectionName {};
+  std::string         m_jetPFOsCollectionName {};
   
   TTree*              m_mctree {};
   TTree*              m_recotree {};
@@ -92,9 +94,6 @@ private:
   
   
   // Observables 
-  float m_m_recoil {};
-  float m_vis_ET {};
-  float m_vis_pT {};
   
   int   m_V1_type {};
   float m_V1_m {};
@@ -108,6 +107,8 @@ private:
   
   float m_VV_m {};
   float m_VV_pT {};
+  float m_VV_ET {};
+  float m_m_recoil {};
   
   float m_y_34 {};
   float m_min_jetE {};
