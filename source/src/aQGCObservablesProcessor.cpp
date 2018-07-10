@@ -93,6 +93,7 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   
   this->CleanEvent();
   streamlog_out(DEBUG) << "Processing MC info " << std::endl;
+  this->analyseMC();
   m_mctree->Fill();
   
   this->CleanEvent();

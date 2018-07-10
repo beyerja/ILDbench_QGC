@@ -64,6 +64,8 @@ private:
   void setInputInfoStrings();
   
   void CleanEvent();
+  void getMCParticleVector( MCParticleVec &output_vector );
+  void analyseMC();
   void getJetVector( ReconstructedParticleVec &output_vector );
   void getRecoParticleVector( ReconstructedParticleVec &output_vector );
   void analyseReconstructed();
