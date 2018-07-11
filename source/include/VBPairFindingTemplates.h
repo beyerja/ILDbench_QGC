@@ -11,6 +11,7 @@ template<class ParticleClass> class VectorBosonPairFinder {
 	// Typedefs for better readablitity
 	typedef std::vector <ParticleClass*> 	ParticleVec;
 	typedef std::vector <float>						FloatVec;
+	typedef std::vector <int>							IntVec;
 	
 	typedef std::pair 	<ParticleClass*, ParticleClass*> 	VB; // = VectorBoson
 	typedef std::pair 	<VB, VB> 													VBPair;
@@ -36,6 +37,8 @@ template<class ParticleClass> class VectorBosonPairFinder {
 		ParticleClass* getBoson1Particle2() const;
 		ParticleClass* getBoson2Particle1() const;
 		ParticleClass* getBoson2Particle2() const;
+		
+		int getVBPairType() const;
 
 	private:
 
@@ -47,6 +50,8 @@ template<class ParticleClass> class VectorBosonPairFinder {
 		MassPairVec 		m_VBpair_candidate_masses {};
 		int							m_best_pair_index {};
 		
+		int	m_VBpair_type {};
+		
 		ParticleClass* 	m_boson1_p1 {};
 		ParticleClass*	m_boson1_p2 {};
 		ParticleClass*	m_boson2_p1 {};
@@ -55,6 +60,8 @@ template<class ParticleClass> class VectorBosonPairFinder {
 		// Member functions
 		void getAllVBPairCandidates();
 		void getMassesToVBPairCandidates();
+
+		void findSignalMCVBPair();
 		void minimizeMassDifference();
 
 };

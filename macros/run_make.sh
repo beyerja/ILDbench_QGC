@@ -31,23 +31,22 @@ fi
 
 echo "begin to config"
 echo
-cmake -C $ILCSOFT/ILCSoft.cmake ..    &> make.output
+cmake -C $ILCSOFT/ILCSoft.cmake ..    >> make.output 2>&1
 wait
 echo "begin to make"
 echo
-make &> make.output
+make >> make.output  2>&1
 wait
 echo "begin to make install"
 echo
-make install &> make.output
+make install >> make.output 2>&1
+echo 
 WARNINGMESSAGE=$(grep "warning" -irn ./make.output)
 echo "check for warning message"
-echo
 echo ${WARNINGMESSAGE}
 echo 
 ERRORMESSAGE=$(grep "error" -irn ./make.output)
 echo "check for error message"
-echo
 echo ${ERRORMESSAGE}
-echo 
+echo
 echo "end"

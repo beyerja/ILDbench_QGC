@@ -58,14 +58,26 @@ public:
   void end();
   
 private:
+  
+  // Typedefs for easier readability
+  typedef std::set<MCParticle*> MCParticleSet;
+  
   // Additional class member functions for analysis
   void setObservablesBranches( TTree* tree );
   void setTTreeBranches();
   void setInputInfoStrings();
   
   void CleanEvent();
+
+
+  
   void getMCParticleVector( MCParticleVec &output_vector );
+  MCParticleVec findLastInitialee( MCParticleVec mc_particles );
+  MCParticleVec findInitial4q2nu( MCParticleVec mc_particles );
+  MCParticleVec getQuarks( MCParticleVec mc_particles );
+  MCParticleVec getNeutrinos( MCParticleVec mc_particles );
   void analyseMC();
+  
   void getJetVector( ReconstructedParticleVec &output_vector );
   void getRecoParticleVector( ReconstructedParticleVec &output_vector );
   void analyseReconstructed();

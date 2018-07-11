@@ -24,6 +24,7 @@
 
 //LCIO
 #include <EVENT/LCCollection.h>
+#include <IMPL/LCParametersImpl.h>
 #include <EVENT/MCParticle.h>
 #include <EVENT/ReconstructedParticle.h>
 #include <EVENT/Vertex.h>
@@ -31,6 +32,9 @@
 
 //Marlin
 #include "marlin/Processor.h"
+
+// Local
+#include "PDGIDChecks.h"
 
 //----- include for verbosity dependend logging ---------
 #include "marlin/VerbosityLevels.h"

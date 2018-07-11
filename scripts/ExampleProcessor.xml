@@ -8,14 +8,16 @@
   
   <global>
     <!-- Change the input file here or by command line -->
-    <parameter name="LCIOInputFiles"> /nfs/dust/ilc/group/ild/beyerjac/tmp/rv02-00.sv02-00.mILD_l5_o1_v02.E500-TDR_ws.I108161.Pffh_mumu.eL.pL.n001.d_dstm_9903_0.slcio </parameter>
+    <parameter name="LCIOInputFiles"> 
+      /nfs/dust/ilc/group/ild/beyerjac/tmp/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I108617.Pvvxyyx.eL.pR.n001.d_dstm_10354_2.slcio
+    </parameter>
     <!-- The maximum number of events + runs to process -->
     <parameter name="MaxRecordNumber" value="1000"/>
     <!-- The number of events to skip on start -->
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
     <!-- Global verbosity -->
-    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE </parameter>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG </parameter>
     <!-- A user random seed -->
     <parameter name="RandomSeed" value="1234567890" />
   </global>

@@ -8,11 +8,8 @@
 // // Vector boson observables
 // tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
 // tree->Branch( "V2_type",      &m_V2_type,     "V2_type/I"); 
-// 
-// // Properties of most energetic track
-// tree->Branch( "leadEtrack_cosTheta",  &m_leadEtrack_cosTheta, "leadEtrack_cosTheta/F");
-// tree->Branch( "leadEtrack_coneE",     &m_leadEtrack_coneE,    "leadEtrack_coneE/F");
 
+//-------------------------------------------------------------------------------------------------
 
 template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables( std::vector<ParticleClass*> &jet_vector ) {
   VectorBosonPairFinder <ParticleClass> VBpair_finder;
@@ -27,6 +24,7 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   TLorentzVector V1_p1_tlv ( boson1_p1->getMomentum(),  boson1_p1->getEnergy() );
 	TLorentzVector V1_p2_tlv ( boson1_p2->getMomentum(), 	boson1_p2->getEnergy() );
 	TLorentzVector V2_p1_tlv ( boson2_p1->getMomentum(), 	boson2_p1->getEnergy() );
+  
 	TLorentzVector V2_p2_tlv ( boson2_p2->getMomentum(), 	boson2_p2->getEnergy() );
   
   // Single VB observables
@@ -58,7 +56,7 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   m_min_jetNparticles = std::numeric_limits<float>::infinity();
   m_min_jetNcharged   = std::numeric_limits<float>::infinity();
   
-  for(int i_jet=0; i_jet<jet_vector.size(); i_jet++){
+  for(unsigned int i_jet=0; i_jet<jet_vector.size(); i_jet++){
     TLorentzVector jet_tlv = TLorentzVector( jet_vector[i_jet]->getMomentum(), jet_vector[i_jet]->getEnergy() );
   
     float jet_E = jet_tlv.E();
@@ -89,12 +87,14 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   }
 }
 
+//-------------------------------------------------------------------------------------------------
+
 template <class ParticleClass> void aQGCObservablesProcessor::findParticleObservables( std::vector<ParticleClass*> &particle_vector ) {
-  int n_particles = particle_vector.size();
+  unsigned int n_particles = particle_vector.size();
   
   // Find highest energy track of the event
   TLorentzVector leadEtrack_tlv (-1, 0, 0, 0);
-  for(int i_particle=0; i_particle<n_particles; i_particle++){
+  for(unsigned int i_particle=0; i_particle<n_particles; i_particle++){
     TLorentzVector particle_tlv ( particle_vector[i_particle]->getMomentum(), particle_vector[i_particle]->getEnergy() );
     
     if ( particle_tlv.E() > leadEtrack_tlv.E() ) {
@@ -108,7 +108,7 @@ template <class ParticleClass> void aQGCObservablesProcessor::findParticleObserv
   // Find all particles within 10degree cone around highest energy track,
   // cluster them together and save the combined energy
   TLorentzVector leadEtrack_10cone_tlv {};
-  for(int i_particle=0; i_particle<n_particles; i_particle++){
+  for(unsigned int i_particle=0; i_particle<n_particles; i_particle++){
     TLorentzVector particle_tlv ( particle_vector[i_particle]->getMomentum(), particle_vector[i_particle]->getEnergy() );
     float angle_to_leadEtrack = leadEtrack_tlv.Angle(particle_tlv.Vect());
   
@@ -122,6 +122,6 @@ template <class ParticleClass> void aQGCObservablesProcessor::findParticleObserv
   m_leadEtrack_coneE = leadEtrack_10cone_tlv.E();
 }
 
-
+//-------------------------------------------------------------------------------------------------
 
   #endif
