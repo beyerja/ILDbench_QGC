@@ -3,6 +3,8 @@
 
 #include "StandardIncludes.h"
 #include "VBPairFindingTemplates.h"
+#include "JetClusteringTemplate.h"
+
 
 
 class aQGCObservablesProcessor : public Processor {
@@ -72,10 +74,13 @@ private:
 
   
   void getMCParticleVector( MCParticleVec &output_vector );
-  MCParticleVec findLastInitialee( MCParticleVec mc_particles );
-  MCParticleVec findInitial4q2nu( MCParticleVec mc_particles );
-  MCParticleVec getQuarks( MCParticleVec mc_particles );
-  MCParticleVec getNeutrinos( MCParticleVec mc_particles );
+  MCParticleVec findLastInitialee( MCParticleVec &mc_particles );
+  MCParticleVec findInitial4q2nu( MCParticleVec &mc_particles );
+  MCParticleVec getQuarks( MCParticleVec &mc_particles );
+  MCParticleVec getNeutrinos( MCParticleVec &mc_particles );
+  void checkMCSignalLikeness( MCParticleVec &mc_particles );
+  MCParticleVec findVisibleMC( MCParticleVec &mc_particles );
+  void calculateMCObservables( MCParticleVec &mc_particles );
   void analyseMC();
   
   void getJetVector( ReconstructedParticleVec &output_vector );
@@ -135,6 +140,8 @@ private:
   
   float m_leadEtrack_cosTheta {};
   float m_leadEtrack_coneE {};
+  
+  int   m_signal_type {};
 };
 
 // Include here headers with definitions of templates

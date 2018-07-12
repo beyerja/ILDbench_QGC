@@ -126,14 +126,17 @@ void VectorBosonPairFinder<ParticleClass>::minimizeMassDifference() {
 
 template<class ParticleClass>
 void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
+		/** Search whether the quarks are signal-like, including flavour checks
+				and mass checks
+		*/
 
 		IntVec ZZ_candidates{};
 		IntVec WW_candidates{};
 		
 		// Find possible WW or ZZ candidates
 		for (unsigned int i_pair=0; i_pair<m_VBpair_candidates.size(); i_pair++) {
-			// float m_VB1 = m_VBpair_candidate_masses[i_pair].first;
-			// float m_VB2 = m_VBpair_candidate_masses[i_pair].second;
+			float m_VB1 = m_VBpair_candidate_masses[i_pair].first;
+			float m_VB2 = m_VBpair_candidate_masses[i_pair].second;
 			VBPair VBpair_candidate = m_VBpair_candidates[i_pair];
 			
 			int VB1_p1_pdgID,VB1_p2_pdgID, VB2_p1_pdgID, VB2_p2_pdgID;
@@ -150,28 +153,28 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 			}
 			
 			// Check that V masses are not more than 20GeV apart
-			// if ( fabs( m_VB1 - m_VB2 ) > 20 ) { 
-			// 	streamlog_out(DEBUG) << "In findMCVBPair: Failed mass difference cut" << std::endl; 
-			// 	continue;
-			// }
+			if ( fabs( m_VB1 - m_VB2 ) > 20 ) { 
+				streamlog_out(DEBUG) << "In findMCVBPair: Failed mass difference cut" << std::endl; 
+				continue;
+			}
 			
 			// Is ZZ candidate if each pair consists of q and qbar of same flavour
 			if ( PDGIDChecks::isZZDecayLike( VB1_p1_pdgID, VB1_p2_pdgID, VB2_p1_pdgID, VB2_p2_pdgID ) ) {
 		  	// Check if V within Z mass window
-		    // if ( ( m_VB1 + m_VB2 > 171.0 ) && ( m_VB1 + m_VB2 < 195 ) ) { 
-				streamlog_out(DEBUG) << "In findMCVBPair: Found as ZZ!" << std::endl; 
-				ZZ_candidates.push_back( i_pair );  
-	      // }
+		    if ( ( m_VB1 + m_VB2 > 171.0 ) && ( m_VB1 + m_VB2 < 195 ) ) { 
+					streamlog_out(DEBUG) << "In findMCVBPair: Found as ZZ!" << std::endl; 
+					ZZ_candidates.push_back( i_pair );  
+	      }
 	    }
 		
 		  // Is WW candidate if pair consists of (q anti-q) (q anti-q) and in each 
 		  // (q anti-q) pair one is up-type and one down-type
 		  if ( PDGIDChecks::isWWDecayLike( VB1_p1_pdgID, VB1_p2_pdgID, VB2_p1_pdgID, VB2_p2_pdgID ) ) {
-	      // // Check if V within W mass window
-	      // if ( ( m_VB1 + m_VB2 > 147.0 ) && ( m_VB1 + m_VB2 < 171.0 ) ) {
-				streamlog_out(DEBUG) << "In findMCVBPair: Found as WW!" << std::endl; 
-	      WW_candidates.push_back( i_pair );
-	      // }
+	      // Check if V within W mass window
+	      if ( ( m_VB1 + m_VB2 > 147.0 ) && ( m_VB1 + m_VB2 < 171.0 ) ) {
+					streamlog_out(DEBUG) << "In findMCVBPair: Found as WW!" << std::endl; 
+		      WW_candidates.push_back( i_pair );
+	      }
 		  }
 		}
 
@@ -181,12 +184,8 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 			streamlog_out(DEBUG) << "In findMCVBPair: No WW/ZZ candidates found." << std::endl; 
 	  }
 		else if ( ( ZZ_candidates.size() != 0) && ( WW_candidates.size() != 0) ) { 
-			streamlog_out(DEBUG) << "In findMCVBPair: Found both WW and ZZ candidates on MC level! Taking one with smallest VB mass difference." << std::endl; 
-			VBPairVec tmp_VBpair_candidates = {};
-			for(auto const& i_ZZ: ZZ_candidates ) { tmp_VBpair_candidates.push_back( m_VBpair_candidates[i_ZZ] ); }
-			for(auto const& i_WW: WW_candidates ) { tmp_VBpair_candidates.push_back( m_VBpair_candidates[i_WW] ); }
-			m_VBpair_candidates = tmp_VBpair_candidates;
-			this->minimizeMassDifference();
+			streamlog_out(ERROR) << "ERROR in findMCVBPair: Found both WW and ZZ candidates on MC level! SHOULD BE IMPOSSIBLE!" << std::endl; 
+			return;
 		}
 		else if ( ( ZZ_candidates.size() > 1) || ( WW_candidates.size() > 1) ) { 
 			streamlog_out(DEBUG) << "In findMCVBPair: Found more than one possible WW (ZZ) candidate on MC level! Taking one with smallest VB mass difference." << std::endl; 
@@ -195,10 +194,11 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 			for(auto const& i_WW: WW_candidates ) { tmp_VBpair_candidates.push_back( m_VBpair_candidates[i_WW] ); }
 			m_VBpair_candidates = tmp_VBpair_candidates;
 			this->minimizeMassDifference();
-		}
-		else if ( ( ZZ_candidates.size() == 1) && ( WW_candidates.size() == 1) ) { 
-			streamlog_out(DEBUG) << "In findMCVBPair: Could be either." << std::endl;
-			m_VBpair_type = 47; // = 23+24 , could be WW or ZZ depending on definition
+			if ( std::find(ZZ_candidates.begin(), ZZ_candidates.end(), m_best_pair_index) != ZZ_candidates.end() ) {
+				m_VBpair_type = 23; // is ZZ
+			} else {
+				m_VBpair_type = 24; // is WW
+			}
 		}
 	  else if ( ZZ_candidates.size() == 1 ) {
 			streamlog_out(DEBUG) << "In findMCVBPair: ZZ candidate found." << std::endl; 
@@ -207,7 +207,7 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 	  }
 	  else if ( WW_candidates.size() == 1 ) {
 			streamlog_out(DEBUG) << "In findMCVBPair: WW candidate found." << std::endl; 
-	    m_VBpair_type = 24; // is ZZ
+	    m_VBpair_type = 24; // is WW
 			m_best_pair_index = WW_candidates[1];
 	  }
 

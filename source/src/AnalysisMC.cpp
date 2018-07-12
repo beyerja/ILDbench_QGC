@@ -30,7 +30,7 @@ void aQGCObservablesProcessor::getMCParticleVector( MCParticleVec &output_vector
 
 //-------------------------------------------------------------------------------------------------
 
-MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec mc_particles ) {
+MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec &mc_particles ) {
   /** Find initial e+ e- in MC particles before interaction (but after ISR)
   */
   
@@ -90,7 +90,7 @@ MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec mc_part
 
 //-------------------------------------------------------------------------------------------------
 
-MCParticleVec aQGCObservablesProcessor::findInitial4q2nu( MCParticleVec mc_particles ) {
+MCParticleVec aQGCObservablesProcessor::findInitial4q2nu( MCParticleVec &mc_particles ) {
   /** Try to find initial state 4q+2neutrino initial state if available,
       otherwise leave output_vector empty
   */
@@ -133,7 +133,7 @@ MCParticleVec aQGCObservablesProcessor::findInitial4q2nu( MCParticleVec mc_parti
 
 //-------------------------------------------------------------------------------------------------
 
-MCParticleVec aQGCObservablesProcessor::getQuarks( MCParticleVec mc_particles ) {
+MCParticleVec aQGCObservablesProcessor::getQuarks( MCParticleVec &mc_particles ) {
   MCParticleVec mc_quarks;
   for ( unsigned int i_mc=0; i_mc<mc_particles.size(); i_mc++ ) {
     if ( PDGIDChecks::isQuarkID( mc_particles[i_mc]->getPDG() ) ) {
@@ -145,7 +145,7 @@ MCParticleVec aQGCObservablesProcessor::getQuarks( MCParticleVec mc_particles ) 
 
 //-------------------------------------------------------------------------------------------------
 
-MCParticleVec aQGCObservablesProcessor::getNeutrinos( MCParticleVec mc_particles ) {
+MCParticleVec aQGCObservablesProcessor::getNeutrinos( MCParticleVec &mc_particles ) {
   MCParticleVec mc_nus;
   for ( unsigned int i_mc=0; i_mc<mc_particles.size(); i_mc++ ) {
     if ( PDGIDChecks::isNeutrinoID( mc_particles[i_mc]->getPDG() ) ) {
@@ -156,40 +156,99 @@ MCParticleVec aQGCObservablesProcessor::getNeutrinos( MCParticleVec mc_particles
 }
 
 //-------------------------------------------------------------------------------------------------
-//         /* First exclude neutrinos that could come from Z
-//         -> those with combined invariant mass < 100GeV
-//         -> those with generations other than electron neutrino bc e->W+nu always ends up with electron neutrino */
-//         std::vector<MCParticle*> gen_level_nus = findTrueGenLevelNeutrinos(MCparticles);
-//         TLorentzVector nu1_tlv = TLorentzVector(gen_level_nus[0]->getMomentum(),gen_level_nus[0]->getEnergy()); 
-//         TLorentzVector nu2_tlv = TLorentzVector(gen_level_nus[1]->getMomentum(),gen_level_nus[1]->getEnergy()); 
-//         float m_nunu = (nu1_tlv+nu2_tlv).M();
-//         int nu1_pdgID = gen_level_nus[0]->getPDG();
-//         int nu2_pdgID = gen_level_nus[1]->getPDG();
-//         if ( (m_nunu < 100) || (fabs(nu1_pdgID) != 12) || (fabs(nu2_pdgID) != 12) ) {
-//                 info.gen_level.eventType = 0;
-//                 return;
-//         }
-void aQGCObservablesProcessor::analyseMC() {
-  /** Analysing MC level observables.
-      WARNING: This is only done for irreducible background investigation!
-              -> only 4q+2neutrino finals states
+
+void aQGCObservablesProcessor::checkMCSignalLikeness( MCParticleVec &mc_particles ) {
+  /** Check if mc particles contain hard interaction that could correspond to a
+      e+e- -> nu nu WW/ZZ -> nu nu q q q q
+      hard interaction.
+      Cuts for the signal definition are taken from previous ILD analyses.
   */
-  
-  MCParticleVec mc_particles{};
-  this->getMCParticleVector( mc_particles );
+
   MCParticleVec initial_4q2nu   = this->findInitial4q2nu(mc_particles);
   MCParticleVec initial_quarks  = this->getQuarks( initial_4q2nu );
   MCParticleVec initial_nus     = this->getNeutrinos( initial_4q2nu );
   if ( ! initial_4q2nu.empty() ){
     VectorBosonPairFinder <MCParticle> VBpair_finder;
-    VBpair_finder.setParticleVector(initial_4q2nu);
+    VBpair_finder.setParticleVector(initial_quarks);
     VBpair_finder.setMinimizationCriterium("MC_VV_likeness");
     VBpair_finder.findBestCandidate();
-
-    //this->findParticleObservables( mc_particles );
+    
+    // If pair finder found possible WW/ZZ candidate check neutrinos inv. mass 
+    //  => exclude neutrinos that could come from Z
+    //  -> those with combined invariant mass < 100GeV
+    //  -> those with generations other than electron neutrino bc e->W+nu always ends up with electron neutrino
+    if ( VBpair_finder.getVBPairType() != 0 ) {
+      MCParticle* nu1 = initial_nus[0];
+      MCParticle* nu2 = initial_nus[1];
+      
+      TLorentzVector nu1_tlv = TLorentzVector( nu1->getMomentum(), nu1->getEnergy() ); 
+      TLorentzVector nu2_tlv = TLorentzVector( nu2->getMomentum(), nu2->getEnergy() ); 
+      float m_nunu = (nu1_tlv+nu2_tlv).M();
+      
+      if ( m_nunu>100 && fabs(nu1->getPDG())==12 && fabs(nu2->getPDG())==12 ) {
+        m_signal_type = VBpair_finder.getVBPairType();
+      }
+    }
+    
   } else {
     streamlog_out(DEBUG) << "In analyseMC: Event not of 4q2nu type!" << std::endl;
   }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+MCParticleVec aQGCObservablesProcessor::findVisibleMC( MCParticleVec &mc_particles ) {
+    // Find daughters after hard interaction
+    MCParticleVec initial_ee = this->findLastInitialee( mc_particles );
+    MCParticleSet ee_vis_daughters {};
+    for(auto const& e: initial_ee ) {
+      MCParticleVec e_daughters = e->getDaughters();
+      for ( unsigned int i_daughter = 0; i_daughter<e_daughters.size(); i_daughter++ ){
+        // Only take detectable particles:
+        //  -> Not neutrinos
+        //  -> Not going into beampipe
+        MCParticle* e_daughter = e_daughters[i_daughter];
+        TLorentzVector e_daughter_tlv = TLorentzVector( e_daughter->getMomentum(), e_daughter->getEnergy() ); 
+        if ( (! PDGIDChecks::isNeutrinoID(e_daughter->getPDG())) &&
+              e_daughter_tlv.CosTheta() > 0.99 ) {
+          ee_vis_daughters.insert( e_daughters[i_daughter] );
+        }
+      }
+    }
+    
+    return MCParticleVec( ee_vis_daughters.begin(), ee_vis_daughters.end() );
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particles ) {
+  /** Goal: 
+        Find values on MC level comparable to the ones on reconstructed level.
+        Then we can test what influence cuts have - kind of - on theory level.
+      Method:
+        - Find visible particles after hard interaction
+        - Cluster them (if necessary) to 4 "jets" using same algorithm as reco jet clustering
+        - Find observables on those clustered "MC jets"
+        - If visible contains a charged lepton set tag as found, then influence of lepton tagging can be tested by ignore/using flag
+  */
+  
+  MCParticleVec visible_initial_state = this->findVisibleMC( mc_particles );
+  
+  // Look if there's a charged lepton
+  // Do jet clustering
+  // Get Jet observables (gooooood enough!)
+}
+  
+//-------------------------------------------------------------------------------------------------
+
+void aQGCObservablesProcessor::analyseMC() {
+  /** Analysing MC level observables.
+  */
+  
+  MCParticleVec mc_particles{};
+  this->getMCParticleVector( mc_particles );
+  this->checkMCSignalLikeness( mc_particles );
+  //this->findParticleObservables( mc_particles );
 }
 
 //-------------------------------------------------------------------------------------------------

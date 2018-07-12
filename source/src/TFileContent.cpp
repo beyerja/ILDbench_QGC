@@ -32,6 +32,11 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // Properties of most energetic track
   tree->Branch( "leadEtrack_cosTheta",  &m_leadEtrack_cosTheta, "leadEtrack_cosTheta/F");
   tree->Branch( "leadEtrack_coneE",     &m_leadEtrack_coneE,    "leadEtrack_coneE/F");
+  
+  // Signal type branch, in this processor used for MC level, can later be used for cuts
+  // 0 = not signal, 
+  tree->Branch( "signal_type",     &m_signal_type,    "signal_type/I"); // O means boolean (obviously :P)
+  
 }
 
 //-------------------------------------------------------------------------------------------------

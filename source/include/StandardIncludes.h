@@ -25,6 +25,7 @@
 //LCIO
 #include <EVENT/LCCollection.h>
 #include <IMPL/LCParametersImpl.h>
+#include <IMPL/MCParticleImpl.h>
 #include <EVENT/MCParticle.h>
 #include <EVENT/ReconstructedParticle.h>
 #include <EVENT/Vertex.h>
