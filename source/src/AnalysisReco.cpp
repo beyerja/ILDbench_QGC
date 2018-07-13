@@ -54,7 +54,7 @@ void aQGCObservablesProcessor::analyseReconstructed() {
   
   // Test if any isolated leptons were found
   ReconstructedParticleVec isolated_leptons = this->getRecoCollectionVector( m_isolatedLeptonsCollectionName );
-  if ( ! reco_particles.empty() ){
+  if ( ! isolated_leptons.empty() ){
     m_found_isolep = true;
   }
   

@@ -112,7 +112,7 @@ MCParticleVec aQGCObservablesProcessor::findInitial4q2nu( MCParticleVec &mc_part
   if ( ee_daughters.size() == 6 ){
     int n_quarks {};
     int n_nus {};
-    for ( MCParticleSet::iterator mc_it=ee_daughters.begin(); mc_it!=ee_daughters.end(); mc_it++ ){
+    for ( MCParticleSet::iterator mc_it=ee_daughters.begin(); mc_it!=ee_daughters.end(); ++mc_it ){
       int daughter_pdg = (*mc_it)->getPDG();
       if ( PDGIDChecks::isNeutrinoID(daughter_pdg) ) n_nus++;
       if ( PDGIDChecks::isQuarkID(daughter_pdg)    ) n_quarks++;
@@ -248,7 +248,7 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   streamlog_out(DEBUG) << "In calculateMCObservables: Found " << visible_initial_state.size() << " visible initial particles!" << std::endl;
   
   // Look if there's a charged lepton
-  if ( thisgetChargedLeptons(visible_initial_state).size() > 0 ) {
+  if ( this->getChargedLeptons(visible_initial_state).size() > 0 ) {
     m_found_isolep = true;
   }
   

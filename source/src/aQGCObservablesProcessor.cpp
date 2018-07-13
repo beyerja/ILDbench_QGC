@@ -60,8 +60,6 @@ void aQGCObservablesProcessor::init() {
   // Usually a good idea to print parameters
   printParameters(); // method from Processor
   
-  //TODO Fill meta info in TNamed!!
-  
   m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
   m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
   m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
