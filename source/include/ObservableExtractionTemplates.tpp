@@ -62,13 +62,12 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
     float jet_E = jet_tlv.E();
     if ( jet_E < m_min_jetE ) { m_min_jetE = jet_E; }
 
-    // Try to investigate jet content ( only works if it is set... )
-    try {
-      const std::vector<ParticleClass*>& jet_particles = jet_vector[i_jet]->getParticles();
+    // Try to investigate jet content ( only works on recos and if it is set... )
+    ReconstructedParticle* ijet_reco = dynamic_cast<ReconstructedParticle*>(jet_vector[i_jet]);
+    if ( nullptr != ijet_reco ){
+      const std::vector<ReconstructedParticle*>& jet_particles = ijet_reco->getParticles();
       
       int n_jet_particles = jet_particles.size();
-      if ( n_jet_particles < m_min_jetNparticles ) { m_min_jetNparticles = n_jet_particles; } 
-      
       int n_charged = 0;
       for( int i_particle = 0; i_particle < n_jet_particles; i_particle++ ){
         ReconstructedParticle* jet_particle = jet_particles[i_particle];
@@ -76,9 +75,10 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
           n_charged += 1;
         }
       }
-      if ( n_charged < m_min_jetNcharged ) { m_min_jetNcharged = n_charged; }
-    }
-    catch ( ... ) {
+      
+      if ( n_jet_particles < m_min_jetNparticles )  { m_min_jetNparticles  = n_jet_particles; } 
+      if ( n_charged < m_min_jetNcharged )          { m_min_jetNcharged    = n_charged;       }
+    } else { // If particle are not reco
       m_min_jetNparticles = -1;
       m_min_jetNcharged   = -1;
       streamlog_out(DEBUG) << "In findJetObservables: No particles within jet found." << std::endl;

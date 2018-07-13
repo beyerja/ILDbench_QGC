@@ -210,7 +210,7 @@ MCParticleVec aQGCObservablesProcessor::findVisibleMC( MCParticleVec &mc_particl
         MCParticle* e_daughter = e_daughters[i_daughter];
         TLorentzVector e_daughter_tlv = TLorentzVector( e_daughter->getMomentum(), e_daughter->getEnergy() ); 
         if ( (! PDGIDChecks::isNeutrinoID(e_daughter->getPDG())) &&
-              e_daughter_tlv.CosTheta() > 0.99 ) {
+              e_daughter_tlv.CosTheta() < 0.99 ) {
           ee_vis_daughters.insert( e_daughters[i_daughter] );
         }
       }
@@ -233,10 +233,22 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   */
   
   MCParticleVec visible_initial_state = this->findVisibleMC( mc_particles );
+  streamlog_out(DEBUG) << "In calculateMCObservables: Found " << visible_initial_state.size() << " visible initial particles!" << std::endl;
   
-  // Look if there's a charged lepton
+  // Look if there's a charged lepton TODO
+  
   // Do jet clustering
+  JetClusterer <MCParticle> jet_clusterer;
+  jet_clusterer.setInputParticles( visible_initial_state );
+  jet_clusterer.setClusteringAlgorithm( "ee_kt_algorithm" );
+  jet_clusterer.setNFinalParticles( 4 );
+  jet_clusterer.runClustering();
+  MCParticleVec clustered_particles = jet_clusterer.getClusteredParticles();
+  
   // Get Jet observables (gooooood enough!)
+  this->findJetObservables( clustered_particles );
+      
+  jet_clusterer.Clean();
 }
   
 //-------------------------------------------------------------------------------------------------
@@ -248,10 +260,24 @@ void aQGCObservablesProcessor::analyseMC() {
   MCParticleVec mc_particles{};
   this->getMCParticleVector( mc_particles );
   this->checkMCSignalLikeness( mc_particles );
-  //this->findParticleObservables( mc_particles );
+  this->calculateMCObservables( mc_particles );
 }
 
 //-------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

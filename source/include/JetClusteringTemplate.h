@@ -28,8 +28,8 @@ class JetClusterer {
     double ee_kt_distance( ParticleClass* particle1, ParticleClass* particle2  );
     
     // Member variables
-    std::string m_clustering_algorithm {};
-    int         m_N_final {1};
+    std::string   m_clustering_algorithm {};
+    unsigned int  m_N_final {1};
     
     ParticleVec m_input_particles {};
     ParticleVec m_clustered_particles {};
