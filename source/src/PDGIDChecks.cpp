@@ -12,6 +12,16 @@ bool PDGIDChecks::isNeutrinoID( int pdgID ) {
 
 //-------------------------------------------------------------------------------------------------
 
+bool PDGIDChecks::isChargedLeptonID( int pdgID ) {
+  if( fabs(pdgID) > 10 && fabs(pdgID) < 19 && !PDGIDChecks::isNeutrinoID(pdgID) ){
+      return true;
+  } else {
+    return false;
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 bool PDGIDChecks::isQuarkID( int pdgID ) {
   if( fabs(pdgID) > 0 && fabs(pdgID) < 9 ){
     return true;

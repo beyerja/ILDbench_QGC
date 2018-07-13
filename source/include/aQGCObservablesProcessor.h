@@ -78,13 +78,13 @@ private:
   MCParticleVec findInitial4q2nu( MCParticleVec &mc_particles );
   MCParticleVec getQuarks( MCParticleVec &mc_particles );
   MCParticleVec getNeutrinos( MCParticleVec &mc_particles );
+  MCParticleVec getChargedLeptons( MCParticleVec &mc_particles );
   void checkMCSignalLikeness( MCParticleVec &mc_particles );
   MCParticleVec findVisibleMC( MCParticleVec &mc_particles );
   void calculateMCObservables( MCParticleVec &mc_particles );
   void analyseMC();
   
-  void getJetVector( ReconstructedParticleVec &output_vector );
-  void getRecoParticleVector( ReconstructedParticleVec &output_vector );
+  ReconstructedParticleVec getRecoCollectionVector( std::string collectionName );
   void analyseReconstructed();
   
   // Member function templates -> definitions need to be included at end of this file
@@ -100,6 +100,7 @@ private:
   std::string         m_mcCollectionName {};
   std::string         m_jetsCollectionName {};
   std::string         m_jetPFOsCollectionName {};
+  std::string         m_isolatedLeptonsCollectionName {};
   
   TTree*              m_mctree {};
   TTree*              m_recotree {};
@@ -140,6 +141,8 @@ private:
   
   float m_leadEtrack_cosTheta {};
   float m_leadEtrack_coneE {};
+  
+  bool  m_found_isolep {};
   
   int   m_signal_type {};
 };

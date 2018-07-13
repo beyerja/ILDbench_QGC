@@ -5,6 +5,7 @@
 
 namespace PDGIDChecks {
   bool isNeutrinoID( int pdgID );
+  bool isChargedLeptonID( int pdgID );
   bool isQuarkID( int pdgID );
   bool isZDecayLike( int p1_pdgID, int p2_pdgID );
   bool isZZDecayLike( int Z1p1_pdgID, int Z1p2_pdgID, int Z2p1_pdgID, int Z2p2_pdgID );

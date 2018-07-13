@@ -40,6 +40,11 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
     m_jetPFOsCollectionName,                 
     std::string("PFOsFromFastJet") );        
 
+  registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+    "InputIsolepsCollection",
+    "Name of the isolated lepton collection",
+    m_isolatedLeptonsCollectionName,
+    std::string("Isoleps") );
 
     
   // Register input parameters

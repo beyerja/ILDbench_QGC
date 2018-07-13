@@ -157,6 +157,18 @@ MCParticleVec aQGCObservablesProcessor::getNeutrinos( MCParticleVec &mc_particle
 
 //-------------------------------------------------------------------------------------------------
 
+MCParticleVec aQGCObservablesProcessor::getChargedLeptons( MCParticleVec &mc_particles ) {
+  MCParticleVec mc_charged_leptons;
+  for ( unsigned int i_mc=0; i_mc<mc_particles.size(); i_mc++ ) {
+    if ( PDGIDChecks::isChargedLeptonID( mc_particles[i_mc]->getPDG() ) ) {
+      mc_charged_leptons.push_back(mc_particles[i_mc]);
+    }
+  }
+  return mc_charged_leptons;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void aQGCObservablesProcessor::checkMCSignalLikeness( MCParticleVec &mc_particles ) {
   /** Check if mc particles contain hard interaction that could correspond to a
       e+e- -> nu nu WW/ZZ -> nu nu q q q q
@@ -235,7 +247,10 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   MCParticleVec visible_initial_state = this->findVisibleMC( mc_particles );
   streamlog_out(DEBUG) << "In calculateMCObservables: Found " << visible_initial_state.size() << " visible initial particles!" << std::endl;
   
-  // Look if there's a charged lepton TODO
+  // Look if there's a charged lepton
+  if ( this->getChargedLeptons(visible_initial_state).size() > 0 ) {
+    m_found_isolep = true;
+  }
   
   // Do jet clustering
   JetClusterer <MCParticle> jet_clusterer;
@@ -254,7 +269,7 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::analyseMC() {
-  /** Analysing MC level observables.
+  /** Analysing generator level.
   */
   
   MCParticleVec mc_particles{};
