@@ -24,4 +24,8 @@ void aQGCObservablesProcessor::CleanEvent() {
 
   m_leadEtrack_cosTheta = -999;
   m_leadEtrack_coneE    = -999;
+  
+  m_found_isolep = false;
+  
+  m_signal_type = 0;
 }

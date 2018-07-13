@@ -60,7 +60,6 @@ public:
   void end();
   
 private:
-  
   // Typedefs for easier readability
   typedef std::set<MCParticle*> MCParticleSet;
   

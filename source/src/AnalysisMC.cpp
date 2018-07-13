@@ -7,18 +7,18 @@ void aQGCObservablesProcessor::getMCParticleVector( MCParticleVec &output_vector
     // Get the MC particle collection from the current event
     LCCollection* collection = m_event->getCollection(m_mcCollectionName);
     streamlog_out(DEBUG) << "Number of mc particles: " << collection->getNumberOfElements() << std::endl;
-    
+
     for(int e=0 ; e<collection->getNumberOfElements() ; e++) {
       // Get an object from the collection and convert it to a MC particle
       MCParticle* particle = static_cast<EVENT::MCParticle*>(collection->getElementAt(e));
-      
+
       // If the collection type is wrong you end up with a null pointer here.
       // Always check it !
       if(nullptr == particle) {
         streamlog_out(ERROR) << "Wrong object type in collection '" << m_mcCollectionName << "'" << std::endl;
         continue;
       }
-      
+
       output_vector.push_back(particle);
     }
   }
@@ -81,7 +81,7 @@ MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec &mc_par
       initial_ee = { daughter_electron, daughter_positron };
     }
     else {
-      
+      initial_ee = { first_electron, first_positron };
     }
   }
   
@@ -248,7 +248,7 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   streamlog_out(DEBUG) << "In calculateMCObservables: Found " << visible_initial_state.size() << " visible initial particles!" << std::endl;
   
   // Look if there's a charged lepton
-  if ( this->getChargedLeptons(visible_initial_state).size() > 0 ) {
+  if ( thisgetChargedLeptons(visible_initial_state).size() > 0 ) {
     m_found_isolep = true;
   }
   

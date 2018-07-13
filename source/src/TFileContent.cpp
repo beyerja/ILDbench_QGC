@@ -4,8 +4,7 @@
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
-  
-  // If new variable is added remember to clean it up in the CleanEvent function!!
+  // WARNING: If new variable is added remember to clean it up in the CleanEvent function!!
   
   // Vector boson observables
   tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
@@ -36,11 +35,9 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // Properties of most energetic track
   tree->Branch( "found_isolep",     &m_found_isolep,    "found_isolep/O"); // O means boolean (obviously :P)
   
-  
   // Signal type branch, in this processor used for MC level, can later be used for cuts
   // 0 = not signal, 
   tree->Branch( "signal_type",     &m_signal_type,    "signal_type/I"); 
-  
 }
 
 //-------------------------------------------------------------------------------------------------

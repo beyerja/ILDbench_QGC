@@ -52,8 +52,6 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
     "Path of output rootfile",
     m_rootfilename,
     std::string("test.root"));
-    
-    
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -84,7 +82,6 @@ void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
-  
   m_event = event;
   
   // Basic idea: perform same analysis first on MC then on Recos
@@ -105,7 +102,6 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   streamlog_out(DEBUG) << "Processing reconstructed info " << std::endl;
   this->analyseReconstructed();
   m_recotree->Fill();
-  
 }
 
 //-------------------------------------------------------------------------------------------------
