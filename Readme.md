@@ -5,10 +5,12 @@ Anomalous quartic gauge coupling measurement
 
 ### Installation
 
-Explain here:
+<!-- Explain here:
 
 - what are the package dependencies (iLCSoft, others ?)
-- how to compile your package. Should normally be something like:
+- how to compile your package. Should normally be something like: -->
+
+The processor can be compiled by loading ilcsoft and executing the compile-macro: 
 
 ```shell
 source /path/to/ilcsoft/init_ilcsoft.sh
@@ -19,14 +21,14 @@ chmod u+x run_make.sh
 
 ### How to run the analysis
 
-Explain here:
+<!-- Explain here:
 
 - where to find data needed for your analysis or how to produce them
 - how to run you analysis: 
    - Marlin processors to run ?
    - ROOT macros to run ?
    - Shell scripts ?
-   - Run the analysis on grid if you provide scripts for that
+   - Run the analysis on grid if you provide scripts for that -->
 
 Example for how to run processor:
 
@@ -42,17 +44,15 @@ rootbrowse test.root
 ```
 
 
-If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
+<!-- If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
 
-More documentation available here in [doc/Readme.md](doc/Readme.md) !
+More documentation available here in [doc/Readme.md](doc/Readme.md) ! -->
 
 ### Issues and contact
 
-Explain here how can people reach you:
+For feedback, complaints, ... contact me:
 
-- via the Github issue interface. For the skeleton package: https://github.com/ILDAnaSoft/ILDbench_QGC/issues
-- **not mandatory**:
-    - email address
-    - working institute
+- via the Github issue interface: https://github.com/ILDAnaSoft/ILDbench_QGC/issues
+
 
 

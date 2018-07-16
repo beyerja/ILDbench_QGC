@@ -1,3 +1,11 @@
-## ROOT macros directory
+## ROOT and bash macros directory
 
-Put all your ROOT macros there and describe what they do here !
+### Content
+
+- ```run_make.sh```: Bash script for compiling the processor. Simply execute w/o arguments.
+- ```ROOT_scripts```: Directory for ROOT macros for my analysis.
+
+### ROOT_macros
+
+- ```SignalSelectionCuts```: Some standard selection cuts defined as TCut for convenience.  
+ 
