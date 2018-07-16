@@ -3,12 +3,6 @@
 
 #include "aQGCObservablesProcessor.h"
 
-
-
-// // Vector boson observables
-// tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
-// tree->Branch( "V2_type",      &m_V2_type,     "V2_type/I"); 
-
 //-------------------------------------------------------------------------------------------------
 
 template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables( std::vector<ParticleClass*> &jet_vector ) {
@@ -16,20 +10,19 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   VBpair_finder.setParticleVector(jet_vector);
   VBpair_finder.findBestCandidate();
           
-  ParticleClass* boson1_p1 = VBpair_finder.getBoson1Particle1();
-  ParticleClass* boson1_p2 = VBpair_finder.getBoson1Particle2();
-  ParticleClass* boson2_p1 = VBpair_finder.getBoson2Particle1();
-  ParticleClass* boson2_p2 = VBpair_finder.getBoson2Particle2();
+  ParticleClass* boson1_jet1 = VBpair_finder.getBoson1Particle1();
+  ParticleClass* boson1_jet2 = VBpair_finder.getBoson1Particle2();
+  ParticleClass* boson2_jet1 = VBpair_finder.getBoson2Particle1();
+  ParticleClass* boson2_jet2 = VBpair_finder.getBoson2Particle2();
   
-  TLorentzVector V1_p1_tlv ( boson1_p1->getMomentum(),  boson1_p1->getEnergy() );
-	TLorentzVector V1_p2_tlv ( boson1_p2->getMomentum(), 	boson1_p2->getEnergy() );
-	TLorentzVector V2_p1_tlv ( boson2_p1->getMomentum(), 	boson2_p1->getEnergy() );
-  
-	TLorentzVector V2_p2_tlv ( boson2_p2->getMomentum(), 	boson2_p2->getEnergy() );
+  TLorentzVector V1_jet1_tlv ( boson1_jet1->getMomentum(),  boson1_jet1->getEnergy() );
+	TLorentzVector V1_jet2_tlv ( boson1_jet2->getMomentum(), 	boson1_jet2->getEnergy() );
+	TLorentzVector V2_jet1_tlv ( boson2_jet1->getMomentum(), 	boson2_jet1->getEnergy() );
+	TLorentzVector V2_jet2_tlv ( boson2_jet2->getMomentum(), 	boson2_jet2->getEnergy() );
   
   // Single VB observables
-  TLorentzVector V1_tlv = V1_p1_tlv + V1_p2_tlv;
-  TLorentzVector V2_tlv = V2_p1_tlv + V2_p2_tlv;
+  TLorentzVector V1_tlv = V1_jet1_tlv + V1_jet2_tlv;
+  TLorentzVector V2_tlv = V2_jet1_tlv + V2_jet2_tlv;
   
   m_V1_m        = V1_tlv.M();
   m_V1_pT       = V1_tlv.Pt();
@@ -38,6 +31,13 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   m_V2_m        = V2_tlv.M();
   m_V2_pT       = V2_tlv.Pt();
   m_V2_cosTheta = V2_tlv.CosTheta();
+
+  // Observables in boosted single V frame
+  TLorentzVector V1_jet1_V1boosted_tlv = getBoostedVector( V1_jet1_tlv, V1_tlv );
+  TLorentzVector V2_jet1_V2boosted_tlv = getBoostedVector( V2_jet1_tlv, V2_tlv );
+  
+  m_V1_jet_absCosThetaStar = fabs( V1_jet1_V1boosted_tlv.Angle( V1_tlv.Vect() ) );
+  m_V2_jet_absCosThetaStar = fabs( V2_jet1_V2boosted_tlv.Angle( V2_tlv.Vect() ) );
   
   // Combined VB observables
   TLorentzVector VV_tlv = V1_tlv + V2_tlv;
@@ -45,6 +45,10 @@ template <class ParticleClass> void aQGCObservablesProcessor::findJetObservables
   m_VV_m      = VV_tlv.M();
   m_VV_pT     = VV_tlv.Pt();
   m_VV_ET     = VV_tlv.Et();
+  
+  // Observables in boosted combined VV frame
+  TLorentzVector VV_V1_VVboosted_tlv = getBoostedVector( V1_tlv, VV_tlv );
+  m_VV_V_absCosThetaStar = fabs( VV_V1_VVboosted_tlv.Angle( VV_tlv.Vect() ) );
   
   // Observables from recoil against VBs
   TLorentzVector collision_system_tlv ( m_com_E*sin(0.014/2.0), 0, 0, m_com_E );

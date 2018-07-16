@@ -12,10 +12,15 @@ void aQGCObservablesProcessor::CleanEvent() {
   m_V2_pT       = 0;
   m_V2_cosTheta = 999;
 
+  m_V1_jet_absCosThetaStar = 999;
+  m_V2_jet_absCosThetaStar = 999;
+
   m_VV_m  = -999;
   m_VV_pT = 0;
   m_VV_ET    = -999;
   m_recoil_m  = -999;
+  
+  m_VV_V_absCosThetaStar = 999;
 
   m_y_34              = -999;
   m_min_jetE          = -999;

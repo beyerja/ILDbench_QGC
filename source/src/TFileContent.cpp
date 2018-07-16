@@ -15,12 +15,19 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   tree->Branch( "V2_m",         &m_V2_m,        "V2_m/F");
   tree->Branch( "V2_pT",        &m_V2_pT,       "V2_pT/F");
   tree->Branch( "V2_cosTheta",  &m_V2_cosTheta, "V2_cosTheta/F");
+  
+  // Observables in boosted single V frame
+  tree->Branch( "V1_jet_absCosThetaStar",  &m_V1_jet_absCosThetaStar, "V1_jet_absCosThetaStar/F");
+  tree->Branch( "V2_jet_absCosThetaStar",  &m_V2_jet_absCosThetaStar, "V2_jet_absCosThetaStar/F");
 
   // Combined VB (= WW/ZZ) properties
   tree->Branch( "VV_m",   &m_VV_m,  "VV_m/F");
   tree->Branch( "VV_pT",  &m_VV_pT, "VV_pT/F");
   tree->Branch( "VV_ET",   &m_VV_ET,    "VV_ET/F" );
   tree->Branch( "m_recoil", &m_recoil_m,  "m_recoil/F" );
+  
+  // Observables in boosted combined VV frame
+  tree->Branch( "VV_V_absCosThetaStar",  &m_VV_V_absCosThetaStar, "VV_V_absCosThetaStar/F");
 
   // Jet property variables
   tree->Branch( "y_34",               &m_y_34,              "y_34/F");

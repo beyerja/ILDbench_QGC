@@ -70,7 +70,7 @@ private:
   
   void CleanEvent();
 
-
+  TLorentzVector getBoostedVector( TLorentzVector &to_boost, TLorentzVector &boost_system );
   
   void getMCParticleVector( MCParticleVec &output_vector );
   MCParticleVec findLastInitialee( MCParticleVec &mc_particles );
@@ -128,10 +128,15 @@ private:
   float m_V2_pT {};
   float m_V2_cosTheta {};
   
+  float m_V1_jet_absCosThetaStar {};
+  float m_V2_jet_absCosThetaStar {};
+  
   float m_VV_m {};
   float m_VV_pT {};
   float m_VV_ET {};
   float m_recoil_m {};
+  
+  float m_VV_V_absCosThetaStar {};
   
   float m_y_34 {};
   float m_min_jetE {};
