@@ -30,6 +30,8 @@ chmod u+x run_make.sh
    - Shell scripts ?
    - Run the analysis on grid if you provide scripts for that -->
 
+#### 0. Example how to run Marlin
+
 Example for how to run processor:
 
 ```shell
@@ -42,6 +44,14 @@ This creates a .root file in the scripts directory which can be open e.g. using
 ```shell
 rootbrowse test.root
 ```
+
+#### 1. Actually running the processor
+
+<!-- TODO -->
+
+#### 2. Analysing the results
+
+<!-- TODO -->
 
 
 <!-- If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
