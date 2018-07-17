@@ -1,3 +1,5 @@
 /build/
 /lib/
 /scripts/tests/
+/scripts/aQGC_processor_steering/tmp*/
+/scripts/Condor_output/*

@@ -1,0 +1,84 @@
+<marlin>
+  
+  <execute>
+    <!-- List the processors to execute here ! -->
+    <processor name="MyIsolatedLeptonTaggingProcessor" />
+    <processor name="MyFastJetProcessor" />
+    <processor name="MyaQGCObservablesProcessor" />
+  </execute>
+  
+  <global>
+    <!-- Change the input file here or by command line -->
+    <parameter name="LCIOInputFiles"> 
+      <!-- REPLACE WITH INPUT FILES -->
+    </parameter>
+    <!-- The maximum number of events + runs to process -->
+    <parameter name="MaxRecordNumber" value="20"/>
+    <!-- The number of events to skip on start -->
+    <parameter name="SkipNEvents" value="0"/>
+    <parameter name="SupressCheck" value="false"/>
+    <!-- Global verbosity -->
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> ERROR </parameter>
+    <!-- A user random seed -->
+    <parameter name="RandomSeed" value="1234567890" />
+  </global>
+  
+  <processor name="MyIsolatedLeptonTaggingProcessor" type="IsolatedLeptonTaggingProcessor">
+    <parameter name="CosConeLarge" type="float">0.95 </parameter>
+    <parameter name="CosConeSmall" type="float">0.98 </parameter>
+    <parameter name="CutOnTheISOElectronMVA" type="float"> 0.5 </parameter>
+    <parameter name="CutOnTheISOMuonMVA" type="float">0.7 </parameter>
+    <parameter name="DirOfISOElectronWeights" type="string"> 
+      <!-- REPLACE WITH CURRENT ee WEIGHTS -->
+    </parameter>
+    <parameter name="DirOfISOMuonWeights" type="string"> 
+      <!-- REPLACE WITH CURRENT mumu WEIGHTS -->
+    </parameter>
+    <parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+    <parameter name="IsSelectingOneIsoLep" type="bool"> false </parameter>
+    <parameter name="MinPForElectron" type="float">5 </parameter>
+    <parameter name="MinPForMuon" type="float">5 </parameter>
+    <parameter name="MinEOverPForElectron" type="float">0.5 </parameter>
+    <parameter name="MaxEOverPForElectron" type="float">1.3 </parameter>
+    <parameter name="MaxEOverPForMuon" type="float">0.3 </parameter>
+    <parameter name="MinEecalOverTotEForElectron" type="float">0.9 </parameter>
+    <parameter name="MinEyokeForMuon" type="float">1.2 </parameter>
+    <parameter name="MaxD0SigForElectron" type="float">50 </parameter>
+    <parameter name="MaxD0SigForMuon" type="float">5 </parameter>
+    <parameter name="MaxZ0SigForElectron" type="float">5 </parameter>
+    <parameter name="MaxZ0SigForMuon" type="float">5 </parameter>
+    <parameter name="OutputIsoLeptonsCollection" type="string" lcioOutType="ReconstructedParticle"> Isoleps </parameter>
+    <parameter name="OutputPFOsWithoutIsoLepCollection" type="string" lcioOutType="ReconstructedParticle"> PFOsWithoutIsoleps </parameter>
+    <parameter name="Verbosity" type="string"> SILENT </parameter>
+</processor>
+
+  
+  <!-- Jet clustering here -->
+  <processor name="MyFastJetProcessor" type="FastJetProcessor">
+    <!--Using the FastJet library to identify jets-->
+    <!--a list of all reconstructed particles we are searching for jets in.-->
+    <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!-- <parameter name="Verbosity" type="string">DEBUG5 </parameter> -->
+    <!--The identified jets-->
+    <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+    <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+    <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+    <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+    <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+    <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+    <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+    <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+    <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+    <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+    <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+  </processor>
+  
+  <!-- Your processor configuration here after -->
+  <processor name="MyaQGCObservablesProcessor" type="aQGCObservablesProcessor">
+    <parameter name="OutputRootFileName" type="string"> 
+      <!-- REPLACE WITH OUTPUT FILES -->
+    </parameter>
+  </processor>
+  
+</marlin>
