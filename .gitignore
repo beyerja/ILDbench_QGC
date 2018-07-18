@@ -3,3 +3,4 @@
 /scripts/tests/
 /scripts/aQGC_processor_steering/tmp*/
 /macros/Condor_output/*
+*.pdf
