@@ -261,9 +261,13 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   MCParticleVec clustered_particles = jet_clusterer.getClusteredParticles();
   
   // Get Jet observables (gooooood enough!)
-  this->findJetObservables( clustered_particles );
+  if ( clustered_particles.size() > 3 ) {
+    this->findJetObservables( clustered_particles );
+  } else {
+    streamlog_out(DEBUG) << "In calculateMCObservables: Found less than 4 visible MC after hard scatter." << std::endl;
+  }
       
-  jet_clusterer.Clean();
+  jet_clusterer.Clean(); // Remove new pointers created in clustering process
 }
   
 //-------------------------------------------------------------------------------------------------
