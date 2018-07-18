@@ -1,11 +1,11 @@
 ## Macros directory
 
-Directory for any code which is needed to perform an analysis using the *aQGCAnalysisProcessor* and its output.
+Directory for any code which is needed to perform an analysis using the *aQGCObservablesProcessor* and its output.
 
 ### Content
 
 - ```run_make.sh```: Bash script for compiling the processor. Simply execute w/o arguments.
-- ```Marlin_macros```: Directory for bash macros needed to run the aQGCAnalysisProcessor over all files of a process, and to send the according jobs to the HTCondor scheduler.
+- ```Marlin_macros```: Directory for bash macros needed to run the aQGCObservablesProcessor over all files of a process, and to send the according jobs to the HTCondor scheduler.
 - ```standard_HTCondor_submit```: Files needed to submit some command to HTCondor (in this case the Marlin jobs).
 - ( ```Condor_output```: Output directory for all logging from HTCondor. Dynamically generated.) 
 - ```ROOT_macros```: Directory for ROOT macros for my analysis.
@@ -28,7 +28,7 @@ Directory for any code which is needed to perform an analysis using the *aQGCAna
 
 1. Set the experimental and computational environment variables in the scripts ```set_simulation_environment.sh``` and ```set_output_environment.sh```.
 2. Check if the directories in which we search for the input files is correct in ```get_setup_directory.sh```.
-3. Run the *aQGCAnalysisProcessor* over any final state, e.g.:
+3. Run the *aQGCObservablesProcessor* over any final state, e.g.:
 ```bash
 ./run_single_process.sh vvxyyx
 ```

@@ -65,8 +65,10 @@ private:
   
   // Additional class member functions for analysis
   void setObservablesBranches( TTree* tree );
+  void setInputInfoBranches( TTree* tree );
   void setTTreeBranches();
-  void setInputInfoStrings();
+  
+  void readInputInfo();
   
   void CleanEvent();
 
@@ -101,18 +103,21 @@ private:
   std::string         m_jetPFOsCollectionName {};
   std::string         m_isolatedLeptonsCollectionName {};
   
+  TTree*              m_processinfotree {};
   TTree*              m_mctree {};
   TTree*              m_recotree {};
   
   TFile*              m_rootfile {};
   std::string         m_rootfilename {};
   
-  TNamed  m_detector_model {};
-  TNamed  m_e_polarization {};
-  TNamed  m_p_polarization {};
-  TNamed  m_process_name {};
-  TNamed  m_cross_section {};
-  TNamed  m_cross_section_error {};
+  // Process information
+  
+  std::string  m_detector_model {};
+  std::string  m_process_name {};
+  float  m_e_polarization {};
+  float  m_p_polarization {};
+  float  m_cross_section {};
+  float  m_cross_section_error {};
   
   float m_com_E {};
   

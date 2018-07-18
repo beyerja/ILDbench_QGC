@@ -61,6 +61,7 @@ void aQGCObservablesProcessor::init() {
   printParameters(); // method from Processor
   
   m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
+  m_processinfotree = new TTree("processInfoTree", "processInfoTree");
   m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
   m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
   
@@ -110,20 +111,12 @@ void aQGCObservablesProcessor::end() {
   std::cout << "aQGCAnalysis: end() " << this->name() // << " processed " << m_nEvtSum << " events in " << m_nRunSum << " runs " << std::endl
   << "Rootfile: " << m_rootfilename.c_str() << std::endl;
 
-  this->setInputInfoStrings(); // Use last event to read file parameters
+  this->readInputInfo(); // Use last event to read file parameters
   
   // Write to .root file
   m_rootfile->cd();
   
-  
-  m_detector_model.Write();
-  m_e_polarization.Write();
-  m_p_polarization.Write();
-  m_process_name.Write();
-  m_cross_section.Write();
-  m_cross_section_error.Write();
-  
-  
+  m_processinfotree->Write();
   m_mctree->Write();
   m_recotree->Write();
   

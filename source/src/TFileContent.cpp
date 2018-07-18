@@ -49,21 +49,23 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
 
 //-------------------------------------------------------------------------------------------------
 
-void aQGCObservablesProcessor::setTTreeBranches() {
-  this->setObservablesBranches(m_mctree);
-  this->setObservablesBranches(m_recotree);
+void aQGCObservablesProcessor::setInputInfoBranches( TTree* tree ) {
+  tree->Branch( "detector_model",   &m_detector_model,  "detector_model/C");
+  tree->Branch( "process_name",   &m_process_name,  "process_name/C");
+  
+  tree->Branch( "e_polarization",   &m_e_polarization,  "e_polarization/F");
+  tree->Branch( "p_polarization",   &m_p_polarization,  "p_polarization/F");
+  tree->Branch( "cross_section",   &m_cross_section,  "cross_section/F");
+  tree->Branch( "cross_section_error",   &m_cross_section_error,  "cross_section_error/F");
 }
+
 
 //-------------------------------------------------------------------------------------------------
 
-void aQGCObservablesProcessor::setInputInfoStrings() {
-  m_detector_model        = TNamed( "detector_model",       m_event->getDetectorName()  );
-  m_process_name          = TNamed( "process_name",         m_event->getParameters().getStringVal( "processName" )                      );
-  
-  m_e_polarization        = TNamed( "e_polarization",       std::to_string(m_event->getParameters().getFloatVal( "Pol0" ))              );
-  m_p_polarization        = TNamed( "p_polarization",       std::to_string(m_event->getParameters().getFloatVal( "Pol1" ))              );
-  m_cross_section         = TNamed( "cross_section",        std::to_string(m_event->getParameters().getFloatVal( "crossSection" ))      );
-  m_cross_section_error   = TNamed( "cross_section_error",  std::to_string(m_event->getParameters().getFloatVal( "crossSectionError" )) );
+void aQGCObservablesProcessor::setTTreeBranches() {
+  this->setInputInfoBranches(m_processinfotree);
+  this->setObservablesBranches(m_mctree);
+  this->setObservablesBranches(m_recotree);
 }
 
 //-------------------------------------------------------------------------------------------------
