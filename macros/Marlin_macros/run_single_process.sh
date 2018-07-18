@@ -27,7 +27,7 @@ if [[ ! -d ${condor_output_directory} ]] ; then # Create if not existing
 fi
 
 
-echo "Start initalizing process ${final_state} running.\n"
+echo "Start initalizing process ${final_state} running."
 
 for e_pol in "${e_polarizations[@]}"; do
   for p_pol in "${p_polarizations[@]}"; do

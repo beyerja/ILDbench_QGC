@@ -21,7 +21,8 @@ source set_output_environment.sh
 steering_directory=${dir}/../../scripts/aQGC_processor_steering
 
 # Base name and steering directory for specific to the input variables
-tmp_base_name=tmp_rv${RECONSTRUCTION_SOFTWARE_VERSION}_sv${SIMULATION_SOFTWARE_VERSION}_mILD_${DETECTOR_MODEL_VERSION}_E${COLLIDER_ENERGY}_${final_state}_${e_pol}_${p_pol}
+base_name=rv${RECONSTRUCTION_SOFTWARE_VERSION}_sv${SIMULATION_SOFTWARE_VERSION}_mILD_${DETECTOR_MODEL_VERSION}_E${COLLIDER_ENERGY}_${final_state}_${e_pol}_${p_pol}
+tmp_base_name=tmp_${base_name}
 tmp_steering_directory=${steering_directory}/${tmp_base_name}
 
 if  [[ ${action} == "--set-steeringfiles" ]]; then
@@ -59,7 +60,7 @@ if  [[ ${action} == "--set-steeringfiles" ]]; then
   echo ${file_steering_paths} # Echo steering files that need to be run
   
 elif [[ ${action} == "--combine-output" ]]; then
-  hadd -k -f ${OUTPUT_DIRECTORY}/${tmp_base_name}.root ${TMP_OUTPUT_DIRECTORY}/${tmp_base_name}_*.root
+  hadd -k -f ${OUTPUT_DIRECTORY}/${base_name}.root ${TMP_OUTPUT_DIRECTORY}/${tmp_base_name}_*.root
   
 elif [[ ${action} == "--clean-up" ]]; then
   rm -r ${tmp_steering_directory}

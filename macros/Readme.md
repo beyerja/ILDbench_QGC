@@ -32,6 +32,11 @@ Directory for any code which is needed to perform an analysis using the *aQGCAna
 ```bash
 ./run_single_process.sh vvxyyx
 ```
+or run over all signal and background signatures using:
+```bash
+./run_all_signal_files.sh
+./run_all_background_files.sh
+```
 4. Find your output in the directory you set in ```set_output_environment.sh```!
 
 
@@ -42,6 +47,8 @@ Directory for any code which is needed to perform an analysis using the *aQGCAna
 - ```set_process_marlin_script.sh```: Changes the respective line in a given Marlin steering file template to the correct variables.
 - ```manage_process_files.sh```: Responsible for setting all files where they need to be in order to start sending Marlin jobs to HTCondor, work with them afterwards, and not make a huge mess of temporary files.
 - ```run_single_process.sh```: Runs over all polarizations of a given final state using HTCondor.
+- ```run_all_signal_files.sh```: Run the *run_single_process.sh* macro for all signal final states (includes irreducible background).
+- ```run_all_background_files.sh```: Run the *run_single_process.sh* macro for all background final states.
 
 ### standard_HTCondor_submit 
 
