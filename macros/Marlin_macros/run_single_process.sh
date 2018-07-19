@@ -32,7 +32,6 @@ echo "Start initalizing process ${final_state} running."
 for e_pol in "${e_polarizations[@]}"; do
   for p_pol in "${p_polarizations[@]}"; do
     echo "Initializing polarization ${e_pol} ${p_pol}."
-    { # Use this scope for parallization of loop (maybe better with function)
       
     # Array to collect condor job IDs so that I can keep track of if any are still running
     condor_job_IDs=()
@@ -42,7 +41,7 @@ for e_pol in "${e_polarizations[@]}"; do
     
     if [[ $steering_files == "" ]]; then
       echo "No files found for process ${final_state} ${e_pol} ${p_pol}."
-      exit # If empty no steering file found -> exit subprocess
+      continue  # If empty no steering file found -> next polarization
     else 
       echo "Found files for ${final_state} ${e_pol} ${p_pol}, send Marlin jobs to BIRD cluster."
     fi
@@ -61,6 +60,7 @@ for e_pol in "${e_polarizations[@]}"; do
     done
     cd ${dir}
     
+    { # Use this scope for parallization of loop, don't include condor_submit in this to avoid spamming the local machine
     echo "Waiting for jobs of ${final_state} ${e_pol} ${p_pol} to finish."
     for job_ID in ${condor_job_IDs[@]}; do
       job_log_path=$(ls ${condor_output_directory}/${job_ID}*.log)
@@ -78,6 +78,3 @@ for e_pol in "${e_polarizations[@]}"; do
 done
 wait
 echo "Done with process ${final_state}!"
-
-
-

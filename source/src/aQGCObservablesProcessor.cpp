@@ -82,6 +82,7 @@ void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 
 void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   m_event = event;
+  this->readInputInfo(); // Read info about process
   
   // Basic idea: perform same analysis first on MC then on Recos
   // -> will have some obvious differences, but will in same output observables
@@ -111,7 +112,6 @@ void aQGCObservablesProcessor::end() {
   std::cout << "aQGCAnalysis: end() " << this->name() // << " processed " << m_nEvtSum << " events in " << m_nRunSum << " runs " << std::endl
   << "Rootfile: " << m_rootfilename.c_str() << std::endl;
 
-  this->readInputInfo(); // Use last event to read file parameters
   
   // Write to .root file
   m_rootfile->cd();

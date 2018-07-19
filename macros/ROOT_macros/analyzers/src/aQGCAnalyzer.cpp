@@ -23,7 +23,11 @@ void aQGCAnalyzer::performAnalysis(){
   float min_jetE_min            = 10;
   float min_jetNparticles_min   = 2;
   float min_jetNcharged_min     = 3;
-  
+  template<class T>
+T getFilter( RDataFrame* rdf ) {
+  return rdf->Filter( CutIsoLeps() );
+}
+
   float leadEtrack_cosTheta_max = 2;
   float leadEtrack_coneE_min    = 0.99;
   
@@ -45,8 +49,9 @@ void aQGCAnalyzer::performAnalysis(){
                           
   // TODO Event weights!!!                              
                           
-   cout << *data_after_cuts.Filter("mc_signal_type > 0").Count() << endl;
+  cout << *data_after_cuts.Filter("mc_signal_type > 0").Count() << endl;
   
-};
+}
 
 //-------------------------------------------------------------------------------------------------
+
