@@ -2,44 +2,54 @@
 
 //-------------------------------------------------------------------------------------------------
 
-void Analyzer::setInputFiles( vector<TFile*> &input_files ){
-  m_input_files = input_files;
+void Analyzer::setInputPaths( vector<string> &input_file_paths ){
+  m_input_file_paths = input_file_paths;
 }
 
 //-------------------------------------------------------------------------------------------------
 
 
-void Analyzer::aliasMCColumnsInDataframe( RDataFrame &dataframe ) {
-  auto col_names = dataframe.GetColumnNames();
+void Analyzer::aliasMCColumnsInDataframe() {
+  auto col_names = m_dataframe->GetColumnNames();
   regex mc_like {"mc.*"};
   for (auto &&col_name : col_names) {
     if ( regex_match( col_name, mc_like ) ) {
       string mc_column_alias = "mc_" + col_name.substr(3);
-      dataframe.Alias( mc_column_alias , col_name );
+      m_dataframe->Alias( mc_column_alias , col_name );
     }
   }
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void Analyzer::getCombinedDataframes() {
-  for ( auto const& file: m_input_files ) {
-    TTree* reco_tree  = (TTree*)file->Get("recoObservablesTree");
-    TTree* mc_tree    = (TTree*)file->Get("mcObservablesTree");
-    reco_tree->AddFriend(mc_tree, "mc");
-    RDataFrame befriended_dataframe = RDataFrame(*reco_tree);
-    this->aliasMCColumnsInDataframe( befriended_dataframe );
-    m_dataframes.push_back( befriended_dataframe );
+void Analyzer::getCombinedDataframe() {
+  TChain* reco_chain = new TChain("recoObservablesTree");
+  TChain* mc_chain   = new TChain("mcObservablesTree");
+  
+  for ( auto const& file_path: m_input_file_paths ) {
+    reco_chain ->Add( file_path.c_str() );
+    mc_chain   ->Add( file_path.c_str() );
   }
+  
+  reco_chain->AddFriend(mc_chain, "mc");
+  RDataFrame* befriended_dataframe = new RDataFrame(*reco_chain);
+  m_dataframe = befriended_dataframe;
+  this->aliasMCColumnsInDataframe();
+  
+  m_all_chains = {reco_chain, mc_chain};
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Analyzer::clearMemory(){
-  for (auto const& tree_ptr : m_all_trees) {
-    delete tree_ptr;
+  delete m_dataframe;
+  
+  for (auto const& ptr : m_all_chains) {
+    delete ptr;
   }
-  m_all_trees = {};
+  m_all_chains = {};
+  
 }
+
 
 //-------------------------------------------------------------------------------------------------

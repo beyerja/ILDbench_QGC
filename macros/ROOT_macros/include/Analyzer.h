@@ -8,19 +8,18 @@ using namespace ROOT;
 class Analyzer {
   
   protected:
-    vector<TFile*> m_input_files {};
-    vector<RDataFrame> m_dataframes {};
-    vector<TTree*> m_all_trees {};
-  
+    vector<string> m_input_file_paths {};
+    RDataFrame* m_dataframe;
+    vector<TChain*> m_all_chains;
+
   public:
-    void setInputFiles( vector<TFile*> &input_files );
+    void setInputPaths( vector<string> &input_file_paths );
     virtual void performAnalysis() = 0;
-    virtual void interpretResults() = 0;
     void clearMemory();
 
   protected:
-    void aliasMCColumnsInDataframe( RDataFrame &rdf );
-    void getCombinedDataframes();
+    void aliasMCColumnsInDataframe();
+    void getCombinedDataframe();
     
     
 };

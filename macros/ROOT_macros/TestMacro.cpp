@@ -1,5 +1,5 @@
 #include "src/InputManager.cpp"
-#include "analyzers/src/TestAnalyzer.cpp"
+#include "analyzers/src/aQGCAnalyzer.cpp"
 
  
 void TestMacro() {
@@ -8,16 +8,13 @@ void TestMacro() {
   InputManager input_manager;
   input_manager.setInputDirectory( "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles" );
   input_manager.setFilenameExtension( "root" );
-  input_manager.openFiles();
+  input_manager.findFiles();
   
-  vector<TFile*> root_files {};
-  input_manager.getFiles( root_files );
+  vector<string> root_file_paths {};
+  input_manager.getFilePaths( root_file_paths );
   
-  TestAnalyzer analyzer;
-  analyzer.setInputFiles( root_files );
+  aQGCAnalyzer analyzer;
+  analyzer.setInputPaths( root_file_paths );
   analyzer.performAnalysis();
-  analyzer.interpretResults();
   analyzer.clearMemory();
-  
-  input_manager.closeFiles();
 };

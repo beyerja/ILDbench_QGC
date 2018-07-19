@@ -10,7 +10,7 @@
   <global>
     <!-- Change the input file here or by command line -->
     <parameter name="LCIOInputFiles"> 
-      /nfs/dust/ilc/group/ild/beyerjac/tmp/rv02-00.sv02-00.mILD_l5_o1_v02.E500-TDR_ws.I108683.Pyycyyc.eL.pR.n003.d_dstm_9886_5.slcio
+      /pnfs/desy.de/ilc/prod/ilc/mc-opt-3/ild/dst-merged/500-TDR_ws/6f_vvWW/ILD_l5_o1_v02/v02-00-01/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I108617.Pvvxyyx.eL.pR.n002.d_dstm_10354_5.slcio
     </parameter>
     <!-- /pnfs/desy.de/ilc/prod/ilc/mc-opt-3/ild/dst-merged/500-TDR_ws/6f_vvWW/ILD_l5_o1_v02/v02-00-01/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I108617.Pvvxyyx.eL.pR.n001.d_dstm_10354_2.slcio -->
     <!-- The maximum number of events + runs to process -->

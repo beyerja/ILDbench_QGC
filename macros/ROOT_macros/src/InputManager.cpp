@@ -14,8 +14,8 @@ void InputManager::setFilenameExtension( string search_extension ) {
 
 //-------------------------------------------------------------------------------------------------
 
-void InputManager::getFiles( vector<TFile*> &file_vector ) {
-  file_vector = m_root_files;
+void InputManager::getFilePaths( vector<string> &filename_vector ) {
+  filename_vector = m_root_file_paths;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -51,25 +51,11 @@ void InputManager::searchFileNamesForType()
 
 //-------------------------------------------------------------------------------------------------
 
-void InputManager::openFiles() {
-  this->getDirectoryContent();
-  this->searchFileNamesForType();
-  
-  for ( auto const& file_path: m_root_file_paths ) {
-    m_root_files.push_back( TFile::Open(file_path.c_str()) );
-  }
+void InputManager::findFiles() {
+    this->getDirectoryContent();
+    this->searchFileNamesForType();
 }
 
 //-------------------------------------------------------------------------------------------------
-
-void InputManager::closeFiles(){
-  for ( auto const& file: m_root_files ) {
-    file->Close();
-    delete file;
-  }
-}
-
-//-------------------------------------------------------------------------------------------------
-
 
 

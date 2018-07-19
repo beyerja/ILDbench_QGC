@@ -3,26 +3,11 @@
 //-------------------------------------------------------------------------------------------------
 
 void TestAnalyzer::performAnalysis(){
-  this->getCombinedDataframes();
+  this->getCombinedDataframe();
   
-  for ( auto & dataframe: m_dataframes ) {
-    cout << *dataframe.Filter( CutVpT(100).c_str() ).Count() << endl;
-  }
+  cout << *m_dataframe->Filter( CutVpT(100).c_str() ).Count() << endl;
+  auto h_VV_m = m_dataframe->Histo1D("VV_m");
+  cout << h_VV_m->GetNbinsX() << endl;
 };
 
 //-------------------------------------------------------------------------------------------------
-
-void TestAnalyzer::interpretResults(){
-  return;
-};
-
-//-------------------------------------------------------------------------------------------------
-
-  
-  // RDataFrame reco( "recoObservablesTree" , "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles/*.root" );
-  // 
-  // auto VV_m_histo = reco.Histo1D("VV_m");
-  // TCanvas* can = new TCanvas("VV_m_can", "", 0, 0, 600, 600);
-  // VV_m_histo->Draw();
-  // can->Print("test_VV_m.pdf");
-  // delete can;
