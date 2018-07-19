@@ -1,28 +1,23 @@
-#include "ReadDirectory.cpp"
-#include "SelectionCutTemplates.cpp"
+#include "src/InputManager.cpp"
+#include "analyzers/src/TestAnalyzer.cpp"
 
-using namespace ROOT;
-
-inline void performSelection ( RDataFrame &dataframe ) {
-  dataframe.Filter(CutVVMass( 200, 300 ));
-}
-
+ 
 void TestMacro() {
-  string VV_m_cut = CutVVMass( 200, 300 );
-  
-  string file_directory = "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles/";
-  
-  vector<string> root_files {searchDirectoryForFileType( file_directory, "root" )};
-  
-  
-  
-  
   EnableImplicitMT(); // Allow multithreating in RDataFrame
-  RDataFrame reco( "recoObservablesTree" , "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles/*.root" );
-  performSelection( reco );
-  auto VV_m_histo = reco.Histo1D("VV_m");
-  TCanvas* can = new TCanvas("VV_m_can", "", 0, 0, 600, 600);
-  VV_m_histo->Draw();
-  can->Print("test_VV_m.pdf");
-  delete can;
+  
+  InputManager input_manager;
+  input_manager.setInputDirectory( "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles" );
+  input_manager.setFilenameExtension( "root" );
+  input_manager.openFiles();
+  
+  vector<TFile*> root_files {};
+  input_manager.getFiles( root_files );
+  
+  TestAnalyzer analyzer;
+  analyzer.setInputFiles( root_files );
+  analyzer.performAnalysis();
+  analyzer.interpretResults();
+  analyzer.clearMemory();
+  
+  input_manager.closeFiles();
 };
