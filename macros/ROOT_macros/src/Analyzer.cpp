@@ -6,6 +6,15 @@ void Analyzer::setInputPaths( vector<string> &input_file_paths ){
   m_input_file_paths = input_file_paths;
 }
 
+void Analyzer::setBeamPolarizations( float &e_beam_polarization, float &p_beam_polarization ){
+  m_e_beam_polarization = e_beam_polarization;
+  m_p_beam_polarization = p_beam_polarization;
+}
+
+void Analyzer::setLuminosity( float &luminosity ){
+  m_luminosity = luminosity;
+}
+
 //-------------------------------------------------------------------------------------------------
 
 
@@ -57,5 +66,16 @@ void Analyzer::clearMemory(){
   
 }
 
+//-------------------------------------------------------------------------------------------------
+
+float Analyzer::getPolarizationWeight( float e_polarization, float p_polarization ) {
+  return 0.5*( 1 + e_polarization * m_e_beam_polarization ) * 0.5*( 1 + p_polarization * m_p_beam_polarization );
+}
+
+//-------------------------------------------------------------------------------------------------
+
+float Analyzer::getEventWeight( float polarization_weight, float cross_section, int N_process_events ){
+  return polarization_weight * ( cross_section * m_luminosity ) / float(N_process_events);
+}
 
 //-------------------------------------------------------------------------------------------------
