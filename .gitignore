@@ -4,3 +4,6 @@
 /scripts/aQGC_processor_steering/tmp*/
 /macros/Condor_output/*
 *.pdf
+/scripts/WHIZARD_scripts/from_Mikael/
+/scripts/WHIZARD_scripts/Sindarin/
+*__pycache__

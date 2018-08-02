@@ -1,0 +1,115 @@
+#################################
+# SINDARIN-MAIN-FILE            #
+# AGC in VBS-Scattering         #
+#################################
+# Marco Sekulla                 #
+# sekulla@physik.uni-siegen.de  #
+# Adopted by:                   #
+#   Jakob Beyer                 #
+#   jakob.beyer@desy.de         #
+# {date}     #
+#################################
+
+! openmp_num_threads = 6
+?vis_history = false
+?resonance_history = true
+! accuracy_goal = 8
+
+################################
+# Parameters                   #
+################################
+
+  model = {model}
+  string $modelname = "{model}"
+
+  ?phs_keep_nonresonant = true
+
+  {coupling}
+
+  fkm = {fkm}
+  eft_h = {eft_h}
+
+
+################################
+# Processes                    #
+################################
+
+  alias uptype_q = u:c:U:C
+  alias downtype_q = d:s:b:D:S:B
+  alias all_q = uptype_q:downtype_q
+  alias neutrinos = n1:N1:n2:N2:n3:N3
+  alias final_partons = all_q:neutrinos
+
+  ! Make WHIZARD explicitly take care of final state polarizations
+  polarized e1, e2 , e3, u, d, c, s, b, n1, n2, n3, E1, E2, E3, U, D, C, S, B, N1, N2, N3, Wp, Wm, Z, A
+
+  process nunu_4q = {process}
+
+  $out_file = "{out_file}"
+  open_out ( $out_file )
+
+  ! include ("print.sin")
+
+  printf "################################################"
+  printf "# Model = %s" ($modelname)
+  printf "# Process = {process}"
+  printf "# Parameters"
+  printf "# AQGC"
+  printf "#   a4  = %f   ; a5  = %f" (a4, a5)
+  printf "#   FS0 = %f   ; FS1 = %f" (fs0, fs1)
+  printf "# Kmatrix"
+  printf "#   fkm = %f" (fkm) {sat_amplitudes}
+  printf "################################################"
+
+################################
+# Beam                         #
+################################
+
+  ! Beam parameters: com-E, beam initial-state radiation, beam polarization
+  sqrts = 1 TeV
+  beams = electron, positron => circe2 => isr, isr 
+  beams_pol_density  = {beam_polarization}
+  beams_pol_fraction = 100%  , 100%
+
+  ! Settings for ISR spectrum
+  $circe2_file = "{polarization_file}" !"500_TDR_ws_ee021.circe"
+  $circe2_design = "ILC"
+  ?circe2_polarized = false
+
+  ! Compile the process into a process library
+  compile
+
+################################
+# Cuts                         #
+################################
+
+  printf "################################################"
+  printf "# Cuts :"
+  printf "#   kT_34_min = {kT_34_min}"
+  printf "#   cosTheta_max_nus = {cosTheta_max_nus}"
+  printf "#   cosTheta_max_qs  = {cosTheta_max_qs}"
+  printf "################################################"
+
+  ! Define cut values and set cuts 
+  real kT_34_min = {kT_34_min}
+  real cosTheta_max_nus = {cosTheta_max_nus}
+  real cosTheta_max_qs  = {cosTheta_max_qs}
+
+  cuts = 
+    all kT > kT_34_min [ all_q, all_q ] 
+    and all abs(cos(Theta)) < cosTheta_max_nus [ collect[neutrinos, neutrinos] ]
+    and all abs(cos(Theta)) < cosTheta_max_qs [ all_q ]
+
+
+################################
+# Start Integration            #
+################################
+
+  ! Fixed seed for reproducibility
+  seed = 814995 
+
+  integrate(nunu_4q) {{iterations = 10:30000 , 5:25000 , 1:25000}} !  similar DBD values, but changed so that grid better adjusted
+  show(integral(nunu_4q))
+  printf "Integral: %E , Error: %E " (integral(nunu_4q), error(nunu_4q))
+
+  close_out ( $out_file )
