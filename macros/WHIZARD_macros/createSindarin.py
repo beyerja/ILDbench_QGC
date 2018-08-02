@@ -7,7 +7,6 @@
 import numpy as np
 
 import datetime
-import os
 import sys
 
 from processMaps    import *
@@ -15,15 +14,14 @@ from processMaps    import *
 #-------------------------------------------------------------------------------
 # Global variables
 
-pwd = os.getcwd()
-target_dir = 'Sindarin'
+target_dir = '/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq'
 
 #-------------------------------------------------------------------------------
 
 def getTemplate():
     """ Return string of template file content.
     """
-    with open("sindarinTemplate.sin", "r") as template_file:
+    with open("../../scripts/WHIZARD_scripts/sindarinTemplate.sin", "r") as template_file:
         return template_file.read()
 
 #-------------------------------------------------------------------------------
@@ -39,7 +37,7 @@ def getFilePath ( final_state, beam_pol, model, fs_zero, fs_one, fkm ):
                                                     model, fs_zero, fs_one,
                                                     fkm_strings[fkm])  
                                                 
-    filepath = pwd + "/" + target_dir + "/" + filename + '.sin'
+    filepath = target_dir + "/" + filename + '.sin'
     return filepath
 
 #-------------------------------------------------------------------------------
