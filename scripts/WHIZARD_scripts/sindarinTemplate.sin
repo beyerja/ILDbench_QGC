@@ -48,8 +48,6 @@
   $out_file = "{out_file}"
   open_out ( $out_file )
 
-  ! include ("print.sin")
-
   printf "################################################"
   printf "# Model = %s" ($modelname)
   printf "# Process = {process}"
@@ -72,7 +70,7 @@
   beams_pol_fraction = 100%  , 100%
 
   ! Settings for ISR spectrum
-  $circe2_file = "{polarization_file}" !"500_TDR_ws_ee021.circe"
+  $circe2_file = "{polarization_file}" ! e.g. "500_TDR_ws_ee021.circe"
   $circe2_design = "ILC"
   ?circe2_polarized = false
 
@@ -85,21 +83,14 @@
 
   printf "################################################"
   printf "# Cuts :"
-  printf "#   kT_34_min = {kT_34_min}"
-  printf "#   cosTheta_max_nus = {cosTheta_max_nus}"
-  printf "#   cosTheta_max_qs  = {cosTheta_max_qs}"
+  printf "#   y_34_min = {y_34_min}"
   printf "################################################"
 
   ! Define cut values and set cuts 
-  real kT_34_min = {kT_34_min}
-  real cosTheta_max_nus = {cosTheta_max_nus}
-  real cosTheta_max_qs  = {cosTheta_max_qs}
+  real y_34_min = {y_34_min}
 
-  cuts = 
-    all kT > kT_34_min [ all_q, all_q ] 
-    and all abs(cos(Theta)) < cosTheta_max_nus [ collect[neutrinos, neutrinos] ]
-    and all abs(cos(Theta)) < cosTheta_max_qs [ all_q ]
-
+  cuts =
+    all kT/ (eval E**2 [ all_q + all_q + all_q + all_q ]) > y_34_min [ all_q, all_q ]
 
 ################################
 # Start Integration            #
@@ -108,7 +99,7 @@
   ! Fixed seed for reproducibility
   seed = 814995 
 
-  integrate(nunu_4q) {{iterations = 10:30000 , 5:25000 , 1:25000}} !  similar DBD values, but changed so that grid better adjusted
+  integrate(nunu_4q) {{iterations = 1:30000 , 10:30000 , 1:30000}} ! Like DBD, but more calls due to more diagrams
   show(integral(nunu_4q))
   printf "Integral: %E , Error: %E " (integral(nunu_4q), error(nunu_4q))
 

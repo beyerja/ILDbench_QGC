@@ -108,9 +108,9 @@ def getCutValueSindarinContext():
     """ Returns cut value dictonary with cut parameters for WHIZARD. 
     """
     cut_context = {
-        'kT_34_min'         : 0.00005,
-        'cosTheta_max_nus'  : 0.999,
-        'cosTheta_max_qs'   : 0.999
+        'y_34_min'          : 0.00001,
+        # 'cosTheta_max_nus'  : 0.999,
+        # 'cosTheta_max_qs'   : 0.999
     }
     return cut_context
 
