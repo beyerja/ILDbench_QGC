@@ -17,7 +17,16 @@ source /path/to/ilcsoft/init_ilcsoft.sh
 cd macros
 chmod u+x run_make.sh
 ./run_make
+cd ..
 ```
+
+Afterwards the processor library must be added to the list of paths in which Marlin searches for processors:
+
+```shell
+export MARLIN_DLL=./lib/libILDbench_QGC.so
+```
+
+It is recommended to do this in your ```~/.profile``` (or which-ever local shell equivalent).
 
 ### How to run the analysis
 
@@ -35,7 +44,6 @@ chmod u+x run_make.sh
 Example for how to run processor:
 
 ```shell
-export MARLIN_DLL=./lib/libILDbench_QGC.so
 Marlin ./scripts/ExampleProcessor.xml
 ```
 
@@ -47,6 +55,11 @@ rootbrowse test.root
 
 #### 1. Actually running the processor
 
+<!-- What needs to be here: (Not to detailed!) -->
+<!-- Refer to local README -->
+<!-- How do I run over all files? -->
+<!-- What is the output? -->
+
 <!-- TODO -->
 
 #### 2. Analysing the results
@@ -57,6 +70,11 @@ rootbrowse test.root
 <!-- If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
 
 More documentation available here in [doc/Readme.md](doc/Readme.md) ! -->
+
+### Acknowledgements
+
+- **WHIZARD macros and steering:** I received a lot of help from the WHIZARD team in setting up my file production and creating useful samples. Special thanks go to Marco Sekulla who provided me with a python template setup which my macros and template are based on.
+
 
 ### Issues and contact
 
