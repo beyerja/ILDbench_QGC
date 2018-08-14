@@ -10,15 +10,13 @@
 # {date}     #
 #################################
 
-openmp_num_threads = 6
-! accuracy_goal = 8
+  ! Use OpenMPI for parallization -> Set number of allowed threads
+  openmp_num_threads = 6
 
-?vis_history = false
-?resonance_history = true
-! resonance_on_shell_limit = 16
-! resonance_on_shell_turnoff = 2
-
-! TODO CHECK ALL COMMENTED THINGS
+  ! Allow resonances in spectrum and set limit to off-shell component 
+  ?resonance_history = true
+  resonance_on_shell_limit = 16
+  resonance_on_shell_turnoff = 2
 
 ################################
 # Parameters                   #
@@ -96,8 +94,9 @@ openmp_num_threads = 6
   
   ?isr_recoil = false
   $isr_handler_mode = "recoil"
+  ?epa_recoil=false
   $epa_handler_mode = "recoil"
-
+  ! TODO isr_hanlder, epa_handler ????? 
 
   ! Compile the process into a process library
   compile
@@ -149,27 +148,27 @@ openmp_num_threads = 6
   ?keep_beams = true
   ?hadronization_active = true
   sample_split_n_kbytes = 500000
-  
-! $extension_stdhep_ev4 = "stdhep" ! If I want to use stdhep as output -> Defined extension of stdhep file
 
-! 
-! ! OPAL tune:
-! $ps_PYTHIA_PYGIVE = "MSTJ(39)=15;MSTJ(28)=0; PMAS(25,1)=120.; PMAS(25,2)=0.3605E-02; MSTJ(41)=2; MSTU(22)=2000; PARJ(21)=0.40000; PARJ(41)=0.11000; PARJ(42)=0.52000; PARJ(81)=0.25000; PARJ(82)=1.90000; MSTJ(11)=3; PARJ(54)=-0.03100; PARJ(55)=-0.00200; PARJ(1)=0.08500; PARJ(3)=0.45000; PARJ(4)=0.02500; PARJ(2)=0.31000; PARJ(11)=0.60000; PARJ(12)=0.40000; PARJ(13)=0.72000; PARJ(14)=0.43000; PARJ(15)=0.08000; PARJ(16)=0.08000; PARJ(17)=0.17000;   MSTP(125)=2; MSTP(3)=1;MSTP(71)=1"
-! ?ps_fsr_active = true
-! $shower_method = "PYTHIA6"
-! ! NB: in 1.95, this takes preceedence over luninousity, in 2.x, the larger of the two will be used:
-! !  n_events = 100  ! (set this, or luminousity, on the command-line)
-! 
-! ?ps_taudec_active = true
-! ! 0=all, 1=e, 2=mu, 3=pi, 4=rho, 5=a_1, ....
-! ps_tauola_dec_mode1 = 3
-! ps_tauola_dec_mode2 = 3
+  ! OPAL tune:
+  $ps_PYTHIA_PYGIVE = "MSTJ(39)=15;MSTJ(28)=0; PMAS(25,1)=120.; PMAS(25,2)=0.3605E-02; MSTJ(41)=2; MSTU(22)=2000; PARJ(21)=0.40000; PARJ(41)=0.11000; PARJ(42)=0.52000; PARJ(81)=0.25000; PARJ(82)=1.90000; MSTJ(11)=3; PARJ(54)=-0.03100; PARJ(55)=-0.00200; PARJ(1)=0.08500; PARJ(3)=0.45000; PARJ(4)=0.02500; PARJ(2)=0.31000; PARJ(11)=0.60000; PARJ(12)=0.40000; PARJ(13)=0.72000; PARJ(14)=0.43000; PARJ(15)=0.08000; PARJ(16)=0.08000; PARJ(17)=0.17000;   MSTP(125)=2; MSTP(3)=1;MSTP(71)=1"
+  ?ps_fsr_active = true
+  $shower_method = "PYTHIA6"
 
+  ! Activate tau decays -> Use Taola tool
+  ?ps_taudec_active = true
+  ! 0=all, 1=e, 2=mu, 3=pi, 4=rho, 5=a_1, ....
+  ps_tauola_dec_mode1 = 3
+  ps_tauola_dec_mode2 = 3
   
   simulate( {process_name} ) {{
     luminosity = {luminosity} !TODO HOW MUCH?
+    
     $sample = "{out_file_base}" !TODO THIS SHOULD BE SOMETHING DIFFERENT!!! -> Separate directory for each subprocess!
     sample_format = {sample_format} 
+    if ( sample_format == stdhep ) then
+      ! If I want to use stdhep as output -> Defined extension of stdhep file
+      $extension_stdhep_ev4 = "stdhep" 
+    endif
   }}
 
   close_out ( $out_file )
