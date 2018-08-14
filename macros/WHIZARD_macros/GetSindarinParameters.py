@@ -47,41 +47,7 @@ def getStandardSindarinContext( filepath_base ):
     
 #-------------------------------------------------------------------------------
 
-def getProcessName( process ):
-    """ Choose how the process will be called depending on which quark 
-        combination is in final state. 
-        Use DBD 6f naming convention: x ~ up, y ~ down (regardless of anti-q)
-    """
-    
-    final_state = process.split("=>", 1)[1] # Everything after "=>": final state
-    final_state = final_state.lower() # Don't care which are anti-particles
-    
-    # Count appearance of up- and down-type quarks:
-    num_up_type     = final_state.count('u') + final_state.count('c') 
-    num_down_type   = final_state.count('d') + final_state.count('s') + final_state.count('b') 
-    # Count appearance of neutrinos:
-    num_neutrinos   = final_state.count('n')
-
-    process_name = "other" # default
-    
-    if num_neutrinos == 2 :
-        if num_up_type == 2 and num_down_type == 2:
-            process_name = "vvxyyx"
-        elif num_up_type == 4:
-            process_name = "xxxxvv"
-        elif num_down_type == 4:
-            process_name = "yyyyvv"
-            
-    if process_name == "other":
-        print(  "Warning in getProcessName! Unrecognized final state: {}"
-                .format( process )
-        )
-        
-    return process_name
-
-#-------------------------------------------------------------------------------
-
-def getProcessSindarinContext(  process, beam_pol, ISR_file, 
+def getProcessSindarinContext(  nunu, qqqq, beam_pol, ISR_file, 
                                 model, fs_zero, fs_one, fkm ):
     """ Return dictonary with parameters in template that configure the
         physics behind the interaction that is calculated by WHIZARD.
@@ -96,8 +62,13 @@ def getProcessSindarinContext(  process, beam_pol, ISR_file,
         eft_switch = "eft_h = 1"
         unitarization_switch = "fkm = {}".format(fkm)
         
+    process = 'electron, positron => {}, {}'.format( pMaps.nunu_states[nunu],
+                                                     pMaps.qqqq_states[qqqq] ) 
+        
+    process_name = "{}{}".format(nunu,qqqq) 
+        
     context = {
-        'process_name':         getProcessName( process ),
+        'process_name':         process_name,
         'process':              process,
         'beam_polarization' :   pMaps.polarizations[beam_pol],
         'ISR_file' :            ISR_file, 

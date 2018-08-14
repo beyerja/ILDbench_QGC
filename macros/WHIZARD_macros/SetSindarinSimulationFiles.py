@@ -23,21 +23,17 @@ def getSimulationTemplate():
         
 #-------------------------------------------------------------------------------
 
-def getFilenameBase ( final_state, beam_pol, model, output_dir ):
+def getFilenameBase ( nunu, qqqq, beam_pol, model, output_dir ):
     """ Returns standardized file name base. 
     """
-        
-    final_state_name = final_state.replace(',', '')
-        
-    filename = "WHIZARD_E1000_{}_{}_{}".format( 
-                                            final_state_name, beam_pol, model )  
+    filename = "WHIZARD_E1000_{}{}_{}_{}".format( nunu, qqqq, beam_pol, model )  
                                                 
     filepath = output_dir + "/" + filename
     return filepath
     
 #-------------------------------------------------------------------------------
 
-def setSingleSindarinFile(  final_state, beam_pol, ISR_file, model, luminosity, 
+def setSingleSindarinFile(  nunu, qqqq, beam_pol, ISR_file, model, luminosity, 
                             output_dir, output_format ):
     """ Create single Sindarin file from the template, replace the template 
         parameters according to the input.
@@ -45,15 +41,13 @@ def setSingleSindarinFile(  final_state, beam_pol, ISR_file, model, luminosity,
     
     ## Collect dictonary with template parameters that need to be replaced
     
-    # In Sindarin: e1 = electron, E1 = positron
-    process = 'e1, E1 => {}'.format( final_state) 
-    
-    filepath_base  = getFilenameBase( final_state, beam_pol, model, output_dir )
+
+    filepath_base  = getFilenameBase( nunu, qqqq, beam_pol, model, output_dir )
     filepath       = "{}.sin".format(filepath_base)
 
     context         = sinPars.getStandardSindarinContext( filepath_base )
     process_context = sinPars.getProcessSindarinContext (   
-                                process, beam_pol, ISR_file, model, 0, 0, 0 )
+                                nunu, qqqq, beam_pol, ISR_file, model, 0, 0, 0 )
     cut_context     = sinPars.getCutValueSindarinContext()
     sim_context     = sinPars.getSimulationSindarinContext( luminosity, 
                                                             output_format )
@@ -76,14 +70,13 @@ def isSignalProcess( neutrino_string, beam_pol ):
           so that W+W- can be radiated
     """
     is_signal = False
-    if ( neutrino_string == 'n1,N1' and beam_pol == 'eLpR' ):
+    if ( neutrino_string == 'veve' and beam_pol == 'eLpR' ):
         is_signal = True
     return is_signal
 
 #-------------------------------------------------------------------------------
 
-def setAllSindarinFiles(    model, ISR_file, luminosity, 
-                            output_dir, output_format ):
+def setAllSindarinFiles( model, ISR_file, luminosity, base_dir, output_format ):
     """ Set all singal and background sindarin files
             - for all signal processes:
                 =>  all e+e- -> 2v4q processes where v are electron-neutrinos 
@@ -91,34 +84,27 @@ def setAllSindarinFiles(    model, ISR_file, luminosity,
             - for all irreducible background processes:
                 =>  e+e- -> 2v4q where VBS not possible (at first order)
                     Includes all neutrino families since they are inaccessible.
-                    To keep consistency with rest of bkg: use SM_CKM model
+        Keep same model for all processes for consistency!
     """
     
-    for nunu in pMaps.di_neutrino_states:
-        for qqqq in np.append(pMaps.ZZlike_4q_processes, pMaps.WWlike_4q_processes):
+    for nunu in pMaps.nunu_states:
+        for qqqq in pMaps.qqqq_states:
             for beam_pol in pMaps.polarizations:
-                final_state = '{},{}'.format( nunu, qqqq )
-                
+                output_dir = base_dir
                 if isSignalProcess( nunu, beam_pol ):  
-                    signal_dir = '{}/signal'.format(output_dir)
-                    setSingleSindarinFile(  final_state, beam_pol, ISR_file, 
-                                            model, luminosity, signal_dir, 
-                                            output_format )
-                
+                    output_dir = '{}/signal'.format(base_dir)
                 else:
-                    bkg_model = 'SM_CKM' # in case of bkg
-                    bkg_dir = '{}/bkg'.format(output_dir)
-                    setSingleSindarinFile(  final_state, beam_pol, ISR_file, 
-                                            bkg_model, luminosity, bkg_dir, 
-                                            output_format )
+                    output_dir = '{}/bkg'.format(base_dir)
                 
+                setSingleSindarinFile(  nunu, qqqq, beam_pol, ISR_file, model, 
+                                        luminosity, output_dir, output_format )
                 
                                     
 #-------------------------------------------------------------------------------
 
 def main(arguments):
     """ Main function:
-            Create Sindarin files for runs with the given parameters\
+            Create Sindarin files for runs with the given parameters.
     """
     
     # TODO Properly document and rename: Everything in integration and simulation is Standard Model (just with SSC_2 => trivial CKM)
@@ -128,10 +114,10 @@ def main(arguments):
     luminosity  = "1000 / 1 fbarn"
     ISR_file    = "500_TDR_ws_ee021.circe" # TODO GLOBAL PATH -> put this somewhere here so that it can be stored on GitHub!
     
-    output_dir      = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq"
+    base_dir        = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq"
     output_format   = "stdhep" 
     
-    setAllSindarinFiles(model, ISR_file, luminosity, output_dir, output_format )
+    setAllSindarinFiles(model, ISR_file, luminosity, base_dir, output_format)
     
 #-------------------------------------------------------------------------------
 

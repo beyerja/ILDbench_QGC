@@ -51,7 +51,9 @@ openmp_num_threads = 6
   alias uptype_antiq    = U:C
   alias downtype_q      = d:s:b
   alias downtype_antiq  = D:S:B
-  alias all_q = uptype_q:uptype_antiq:downtype_q:downtype_antiq
+  all_uptype    = uptype_q:uptype_antiq
+  all_downtype  = downtype_q:downtype_antiq
+  alias all_q   = all_uptype:all_downtype
   
   alias nu_e    = n1:N1       
   alias nu_l    = n2:N2:n3:N3
