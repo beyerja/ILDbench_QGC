@@ -107,14 +107,17 @@
 
   printf "################################################"
   printf "# Cuts :"
-  printf "#   y_34_min = {y_34_min}"
+  printf "#   M_qq_min = {M_qq_min}"
+  printf "#   E_q_min  = {E_q_min}"
   printf "################################################"
 
   ! Define cut values and set cuts 
-  real y_34_min = {y_34_min}
+  real M_qq_min = {M_qq_min}
+  real E_q_min  = {E_q_min}
 
   cuts =
-    all kT/ (eval E**2 [ all_q + all_q + all_q + all_q ]) > y_34_min [ all_q, all_q ]
+    all M > M_qq_min [all_q, all_q] and 
+    all E > E_q_min [all_q]
 
 ################################
 # Start Integration            #
@@ -123,7 +126,7 @@
   ! Fixed seed for reproducibility
   seed = 814995 
 
-  integrate({process_name}) {{iterations = 15:70000 , 3:150000}} ! Similar to default, but more calls (Observed to be much more precise that DBD method)
+  integrate({process_name}) {{iterations = 10:500000, 3:1500000}} ! Similar to default, but more calls (Observed to be much more precise that DBD method)
   
   show(integral({process_name}))
   printf "Integral: %E , Error: %E " (integral({process_name}), error({process_name}))

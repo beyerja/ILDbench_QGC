@@ -86,7 +86,8 @@ def getCutValueSindarinContext():
     """ Returns cut value dictonary with cut parameters for WHIZARD. 
     """
     cut_context = {
-        'y_34_min'          : 0.00001,
+        'M_qq_min'  : '10 GeV',
+        'E_q_min'   : '1  GeV'
     }
     return cut_context
 
