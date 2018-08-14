@@ -1,0 +1,174 @@
+#################################
+# SINDARIN-MAIN-FILE            #
+# AGC in VBS-Scattering         #
+#################################
+# Marco Sekulla                 #
+# sekulla@physik.uni-siegen.de  #
+# Adopted by:                   #
+#   Jakob Beyer                 #
+#   jakob.beyer@desy.de         #
+# {date}     #
+#################################
+
+openmp_num_threads = 6
+! accuracy_goal = 8
+
+?vis_history = false
+?resonance_history = true
+! resonance_on_shell_limit = 16
+! resonance_on_shell_turnoff = 2
+
+! TODO CHECK ALL COMMENTED THINGS
+
+################################
+# Parameters                   #
+################################
+
+  model = {model}
+  string $modelname = "{model}"
+
+  ?phs_keep_nonresonant = true
+
+  {eft_switch}
+  {unitarization_switch}
+  {coupling}
+
+################################
+# Processes                    #
+################################
+
+  printf "################################################"
+  printf "# Model = %s" ($modelname)
+  printf "# Process = {process}"
+  printf "# according process name: {process_name}"
+  printf "#"
+  printf "#  Anomalous couplings and unitarization turned"
+  printf "#  off for SM values in simulation."
+  printf "#  => aQGC weights calculated by rescanning"
+  printf "################################################"
+
+  alias uptype_q        = u:c
+  alias uptype_antiq    = U:C
+  alias downtype_q      = d:s:b
+  alias downtype_antiq  = D:S:B
+  alias all_q = uptype_q:uptype_antiq:downtype_q:downtype_antiq
+  
+  alias nu_e    = n1:N1       
+  alias nu_l    = n2:N2:n3:N3
+  alias all_nu  = nu_e:nu_l
+  
+  alias final_partons = all_q:all_nu
+
+  ! Make WHIZARD explicitly take care of final state polarizations
+  polarized e1, e2 , e3, u, d, c, s, b, n1, n2, n3, E1, E2, E3, U, D, C, S, B, N1, N2, N3, Wp, Wm, Z, A
+
+  ! Process name important because written as parameter into output
+  process {process_name} = {process}
+
+  $out_file = "{out_file_base}.dat"
+  open_out ( $out_file )
+
+################################
+# Beam                         #
+################################
+
+  printf "################################################"
+  printf "# Beam settings:"
+  printf "#   ISR and polarization turned on"
+  printf "#   - polarization setting:"
+  printf "#     e- e+ : {beam_polarization}"
+  printf "#   - ISR setting:"
+  printf "#     CIRCE2, sprectrum file: {ISR_file}"
+  printf "################################################"
+
+  ! Beam parameters: com-E, beam initial-state radiation, beam polarization
+  sqrts = 1 TeV
+  beams = electron, positron => circe2 => isr, isr 
+  beams_pol_density  = {beam_polarization}
+  beams_pol_fraction = 100%  , 100%
+
+  ! Settings for ISR spectrum
+  $circe2_file = "{ISR_file}" ! e.g. "500_TDR_ws_ee021.circe"
+  $circe2_design = "ILC"
+  ?circe2_polarized = false
+  
+  ?isr_recoil = false
+  $isr_handler_mode = "recoil"
+  $epa_handler_mode = "recoil"
+
+
+  ! Compile the process into a process library
+  compile
+
+################################
+# Cuts                         #
+################################
+
+  printf "################################################"
+  printf "# Cuts :"
+  printf "#   y_34_min = {y_34_min}"
+  printf "################################################"
+
+  ! Define cut values and set cuts 
+  real y_34_min = {y_34_min}
+
+  cuts =
+    all kT/ (eval E**2 [ all_q + all_q + all_q + all_q ]) > y_34_min [ all_q, all_q ]
+
+################################
+# Start Integration            #
+################################
+
+  ! Fixed seed for reproducibility
+  seed = 814995 
+
+  integrate({process_name}) {{iterations = 15:70000 , 3:150000}} ! Similar to default, but more calls (Observed to be much more precise that DBD method)
+  
+  show(integral({process_name}))
+  printf "Integral: %E , Error: %E " (integral({process_name}), error({process_name}))
+
+################################
+# Start Simulation             #
+################################
+
+  printf "################################################"
+  printf "# Simulation :"
+  printf "#   Events created according to:"
+  printf "#     luminosity * cross-section"
+  printf "#     luminosity = {luminosity}"
+  printf "#   output_file:"
+  printf "#     {out_file_base}.{sample_format}"
+  printf "################################################"
+  
+  seed = 814995 + 1
+  
+  ! Activating hadronization, keep all previous information
+  ?keep_remnants = true
+  ?keep_beams = true
+  ?hadronization_active = true
+  sample_split_n_kbytes = 500000
+  
+! $extension_stdhep_ev4 = "stdhep" ! If I want to use stdhep as output -> Defined extension of stdhep file
+
+! 
+! ! OPAL tune:
+! $ps_PYTHIA_PYGIVE = "MSTJ(39)=15;MSTJ(28)=0; PMAS(25,1)=120.; PMAS(25,2)=0.3605E-02; MSTJ(41)=2; MSTU(22)=2000; PARJ(21)=0.40000; PARJ(41)=0.11000; PARJ(42)=0.52000; PARJ(81)=0.25000; PARJ(82)=1.90000; MSTJ(11)=3; PARJ(54)=-0.03100; PARJ(55)=-0.00200; PARJ(1)=0.08500; PARJ(3)=0.45000; PARJ(4)=0.02500; PARJ(2)=0.31000; PARJ(11)=0.60000; PARJ(12)=0.40000; PARJ(13)=0.72000; PARJ(14)=0.43000; PARJ(15)=0.08000; PARJ(16)=0.08000; PARJ(17)=0.17000;   MSTP(125)=2; MSTP(3)=1;MSTP(71)=1"
+! ?ps_fsr_active = true
+! $shower_method = "PYTHIA6"
+! ! NB: in 1.95, this takes preceedence over luninousity, in 2.x, the larger of the two will be used:
+! !  n_events = 100  ! (set this, or luminousity, on the command-line)
+! 
+! ?ps_taudec_active = true
+! ! 0=all, 1=e, 2=mu, 3=pi, 4=rho, 5=a_1, ....
+! ps_tauola_dec_mode1 = 3
+! ps_tauola_dec_mode2 = 3
+
+  
+  simulate( {process_name} ) {{
+    luminosity = {luminosity} !TODO HOW MUCH?
+    $sample = "{out_file_base}" !TODO THIS SHOULD BE SOMETHING DIFFERENT!!! -> Separate directory for each subprocess!
+    sample_format = {sample_format} 
+  }}
+
+  close_out ( $out_file )
+  

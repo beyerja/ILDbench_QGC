@@ -43,6 +43,9 @@
   ! Make WHIZARD explicitly take care of final state polarizations
   polarized e1, e2 , e3, u, d, c, s, b, n1, n2, n3, E1, E2, E3, U, D, C, S, B, N1, N2, N3, Wp, Wm, Z, A
 
+  ! TODO replace process name -> Shows up in event parameters!
+  ! => To be consistent:  vvxyyx, ... ??? -> Better option, allows taking process name for combined plotting
+  ! => To be precise:     n1n1uuuu, ... ??? 
   process nunu_4q = {process}
 
   $out_file = "{out_file}"
@@ -51,13 +54,14 @@
   printf "################################################"
   printf "# Model = %s" ($modelname)
   printf "# Process = {process}"
-  printf "# Parameters"
-  printf "# AQGC"
-  printf "#   a4  = %f   ; a5  = %f" (a4, a5)
-  printf "#   FS0 = %f   ; FS1 = %f" (fs0, fs1)
-  printf "# Kmatrix"
-  printf "#   fkm = %f" (fkm) {sat_amplitudes}
   printf "################################################"
+  ! TODO Have output document which index means which parameter
+  ! printf "# Parameters"
+  ! printf "# AQGC"
+  ! printf "#   a4  = %f   ; a5  = %f" (a4, a5)
+  ! printf "#   FS0 = %f   ; FS1 = %f" (fs0, fs1)
+  ! printf "# Kmatrix unitarization"
+  ! printf "#   fkm = %f" (fkm) {sat_amplitudes}
 
 ################################
 # Beam                         #
@@ -78,29 +82,23 @@
   compile
 
 ################################
-# Cuts                         #
+# Start rescanning             #
 ################################
 
-  printf "################################################"
-  printf "# Cuts :"
-  printf "#   y_34_min = {y_34_min}"
-  printf "################################################"
-
-  ! Define cut values and set cuts 
-  real y_34_min = {y_34_min}
-
-  cuts =
-    all kT/ (eval E**2 [ all_q + all_q + all_q + all_q ]) > y_34_min [ all_q, all_q ]
-
-################################
-# Start Integration            #
-################################
-
-  ! Fixed seed for reproducibility
-  seed = 814995 
-
-  integrate(nunu_4q) {{iterations = 1:30000 , 10:30000 , 1:30000}} ! Like DBD, but more calls due to more diagrams
-  show(integral(nunu_4q))
-  printf "Integral: %E , Error: %E " (integral(nunu_4q), error(nunu_4q))
+  rescan "{input_sample}" ( nunu_4q ) {
+    ! Enable updating of matrix element and weight for event (exactly wanted)
+    ?update_sqme = true
+    ?update_weight = true
+    
+    ! Fixed seed for reproducibility
+    seed = 814995 + 1
+    
+    $sample = "{weights_file}"
+    sample_format = weights_stream
+    
+    ! Alternative parameter setups -> here: alternative fs values
+    {alternative_setups}
+  }
 
   close_out ( $out_file )
+  
