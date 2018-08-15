@@ -17,8 +17,8 @@ qqqq_states = {
 # Split into electron neutrino and non-electron neutrino bc only electron nu 
 # is signal-like
 nunu_states = {
-    'veve' : 'nu_e, nu_e',
-    'vlvl' : 'nu_l, nu_l',
+    'v1v1' : 'nu_e, nu_e',
+    'vv' : 'nu_l, nu_l',
 }
 
 polarizations = {

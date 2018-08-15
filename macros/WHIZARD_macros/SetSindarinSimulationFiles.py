@@ -70,7 +70,7 @@ def isSignalProcess( neutrino_string, beam_pol ):
           so that W+W- can be radiated
     """
     is_signal = False
-    if ( neutrino_string == 'veve' and beam_pol == 'eLpR' ):
+    if ( neutrino_string == 'v1v1' and beam_pol == 'eLpR' ):
         is_signal = True
     return is_signal
 
