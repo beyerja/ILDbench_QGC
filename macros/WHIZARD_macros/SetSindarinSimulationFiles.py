@@ -9,11 +9,6 @@ import ProcessMaps            as pMaps
 import GetSindarinParameters  as sinPars
 
 #-------------------------------------------------------------------------------
-# Global variables
-
-target_dir = '/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq'
-
-#-------------------------------------------------------------------------------
 
 def getSimulationTemplate():
     """ Return string of template file content for simulation steering.
@@ -112,7 +107,7 @@ def main(arguments):
     model       = "SSC_2"
     
     luminosity  = "1000 / 1 fbarn"
-    ISR_file    = "500_TDR_ws_ee021.circe" # TODO GLOBAL PATH -> put this somewhere here so that it can be stored on GitHub!
+    ISR_file    = "/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/500_TDR_ws_ee021.circe"
     
     base_dir        = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq"
     output_format   = "stdhep" 
