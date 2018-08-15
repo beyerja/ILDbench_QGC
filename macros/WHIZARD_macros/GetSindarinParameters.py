@@ -36,31 +36,22 @@ def getaQGCSindarinContext(model, fs_zero,fs_one):
 
 #-------------------------------------------------------------------------------
 
-def getStandardSindarinContext( filepath_base ):
+def getStandardSindarinContext( output_dir, filepath_base ):
     """ Returns base dictonary with parameters common to all models. 
     """
     standard_context = {
         'date':                 datetime.datetime.today(),
+        'out_dir' :             filepath_base,
         'out_file_base' :       filepath_base,
     }
     return standard_context
     
 #-------------------------------------------------------------------------------
 
-def getProcessSindarinContext(  nunu, qqqq, beam_pol, ISR_file, 
-                                model, fs_zero, fs_one, fkm ):
+def getProcessSindarinContext(  nunu, qqqq, beam_pol, ISR_file, model ):
     """ Return dictonary with parameters in template that configure the
         physics behind the interaction that is calculated by WHIZARD.
     """
-
-    if model == 'SM_CKM':
-        # -> Is background process
-        eft_switch = ""
-        unitarization_switch = ""
-    else:
-        # -> Is signal process
-        eft_switch = "eft_h = 1"
-        unitarization_switch = "fkm = {}".format(fkm)
         
     process = 'electron, positron => {}, {}'.format( pMaps.nunu_states[nunu],
                                                      pMaps.qqqq_states[qqqq] ) 
@@ -73,13 +64,33 @@ def getProcessSindarinContext(  nunu, qqqq, beam_pol, ISR_file,
         'beam_polarization' :   pMaps.polarizations[beam_pol],
         'ISR_file' :            ISR_file, 
         'model' :               model,
-        'coupling' :            getaQGCSindarinContext(model, fs_zero,fs_one),
-        'eft_switch':           eft_switch,
-        'unitarization_switch': unitarization_switch,        
     }
     
     return context
 
+#-------------------------------------------------------------------------------
+
+def getModelParameterSindarinContext( model, fs_zero=0, fs_one=0, fkm=0 ):
+    """ Return dictonary with model parameters for template.
+    """    
+    
+    if model == 'SM_CKM':
+        # -> Is background process
+        eft_switch = ""
+        unitarization_switch = ""
+    else:
+        # -> Is signal process
+        eft_switch = "eft_h = 1"
+        unitarization_switch = "fkm = {}".format(fkm)
+
+    context = {
+        'coupling' :            getaQGCSindarinContext(model, fs_zero, fs_one),
+        'eft_switch':           eft_switch,
+        'unitarization_switch': unitarization_switch
+    }
+    
+    return context
+    
 #-------------------------------------------------------------------------------
 
 def getCutValueSindarinContext():

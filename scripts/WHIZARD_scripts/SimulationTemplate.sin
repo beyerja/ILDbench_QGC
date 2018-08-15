@@ -1,129 +1,6 @@
-#################################
-# SINDARIN-MAIN-FILE            #
-# AGC in VBS-Scattering         #
-#################################
-# Marco Sekulla                 #
-# sekulla@physik.uni-siegen.de  #
-# Adopted by:                   #
-#   Jakob Beyer                 #
-#   jakob.beyer@desy.de         #
-# {date}     #
-#################################
-
-  ! Use OpenMPI for parallization -> Set number of allowed threads
-  openmp_num_threads = 6
-
-  ! Allow resonances in spectrum and set limit to off-shell component 
-  ?resonance_history = true
-  resonance_on_shell_limit = 16
-  resonance_on_shell_turnoff = 2
-
-################################
-# Parameters                   #
-################################
-
-  model = {model}
-  string $modelname = "{model}"
-
-  ?phs_keep_nonresonant = true
-
-  {eft_switch}
-  {unitarization_switch}
-  {coupling}
-
-################################
-# Processes                    #
-################################
-
-  printf "################################################"
-  printf "# Model = %s" ($modelname)
-  printf "# Process = {process}"
-  printf "# according process name: {process_name}"
-  printf "#"
-  printf "#  Anomalous couplings and unitarization turned"
-  printf "#  off for SM values in simulation."
-  printf "#  => aQGC weights calculated by rescanning"
-  printf "################################################"
-
-  alias uptype_q        = u:c
-  alias uptype_antiq    = U:C
-  alias downtype_q      = d:s:b
-  alias downtype_antiq  = D:S:B
-  all_uptype    = uptype_q:uptype_antiq
-  all_downtype  = downtype_q:downtype_antiq
-  alias all_q   = all_uptype:all_downtype
-  
-  alias nu_e    = n1:N1       
-  alias nu_l    = n2:N2:n3:N3
-  alias all_nu  = nu_e:nu_l
-  
-  alias final_partons = all_q:all_nu
-
-  ! Make WHIZARD explicitly take care of final state polarizations
-  polarized e1, e2 , e3, u, d, c, s, b, n1, n2, n3, E1, E2, E3, U, D, C, S, B, N1, N2, N3, Wp, Wm, Z, A
-
-  ! Process name important because written as parameter into output
-  process {process_name} = {process}
-
-  $out_file = "{out_file_base}.dat"
-  open_out ( $out_file )
-
-################################
-# Beam                         #
-################################
-
-  printf "################################################"
-  printf "# Beam settings:"
-  printf "#   ISR and polarization turned on"
-  printf "#   - polarization setting:"
-  printf "#     e- e+ : {beam_polarization}"
-  printf "#   - ISR setting:"
-  printf "#     CIRCE2, sprectrum file: {ISR_file}"
-  printf "################################################"
-
-  ! Beam parameters: com-E, beam initial-state radiation, beam polarization
-  sqrts = 1 TeV
-  beams = electron, positron => circe2 => isr, isr 
-  beams_pol_density  = {beam_polarization}
-  beams_pol_fraction = 100%  , 100%
-
-  ! Settings for ISR spectrum
-  $circe2_file = "{ISR_file}" ! e.g. "500_TDR_ws_ee021.circe"
-  $circe2_design = "ILC"
-  ?circe2_polarized = false
-  
-  ?isr_recoil = false
-  $isr_handler_mode = "recoil"
-
-  ! Compile the process into a process library
-  compile
-
-################################
-# Cuts                         #
-################################
-
-  printf "################################################"
-  printf "# Cuts :"
-  printf "#   M_qq_min = {M_qq_min}"
-  printf "#   E_q_min  = {E_q_min}"
-  printf "################################################"
-
-  ! Define cut values and set cuts 
-  real M_qq_min = {M_qq_min}
-  real E_q_min  = {E_q_min}
-
-  cuts =
-    all M > M_qq_min [all_q, all_q] and 
-    all E > E_q_min [all_q]
-
 ################################
 # Start Integration            #
 ################################
-
-  ! vamp2 is new faster integration tool and necessary for parallel computing
-  $integration_method = "vamp2"
-  ! Different random number generator which allows parallization
-  $rng_method = "rng_stream" 
 
   ! Fixed seed for reproducibility
   seed = 814995 
@@ -168,13 +45,14 @@
   simulate( {process_name} ) {{
     luminosity = {luminosity} !TODO HOW MUCH?
     
-    $sample = "{out_file_base}" !TODO THIS SHOULD BE SOMETHING DIFFERENT!!! -> Separate directory for each subprocess!
+    $sample = "{out_file_base}_sim"
     sample_format = {sample_format} 
     if ( sample_format == stdhep ) then
       ! If I want to use stdhep as output -> Defined extension of stdhep file
       $extension_stdhep_ev4 = "stdhep" 
     endif
   }}
+  
+  close_out ( $out_file ) 
 
-  close_out ( $out_file )
   

@@ -11,12 +11,12 @@ import GetSindarinParameters  as sinPars
 
 #-------------------------------------------------------------------------------
 
-def getSimulationTemplate():
-    """ Return string of template file content for simulation steering.
+def readFileContent( filepath ):
+    """ Read content of file into string and return
     """
-    with open("../../scripts/WHIZARD_scripts/SimulationTemplate.sin", "r") as template_file:
-        return template_file.read()
-        
+    with open(filepath, "r") as file:
+        return file.read()
+
 #-------------------------------------------------------------------------------
 
 def createProcessSubdirectory( nunu, qqqq, beam_pol, model, output_dir ):
@@ -39,41 +39,56 @@ def getFilenameBase ( nunu, qqqq, beam_pol, model, output_dir ):
     """ Returns standardized file name base. 
     """
     filename = "WHIZARD_E1000_{}{}_{}_{}".format( nunu, qqqq, beam_pol, model )  
-    filepath = "{}/{}".format(output_dir, filename)
-    return filepath
+    return filename
     
 #-------------------------------------------------------------------------------
-
-def setSingleSindarinFile(  nunu, qqqq, beam_pol, ISR_file, model, luminosity, 
+        
+def setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, luminosity, 
                             output_dir, output_format ):
-    """ Create single Sindarin file from the template, replace the template 
-        parameters according to the input.
-    """
+                            
+    # Create subdirectory specific to process
+    process_dir = createProcessSubdirectory( nunu, qqqq, beam_pol, model, 
+                                             output_dir )
+                                             
+    # Get process specific file name                                         
+    filename_base       = getFilenameBase(nunu, qqqq, beam_pol, model, output_dir)
+    filepath_base       = "{}/{}".format(process_dir, filename_base)
+                            
+    ## Collect all parameters needed for simulation
+    context             = sinPars.getStandardSindarinContext( process_dir, filename_base )
     
-    ## Collect dictonary with template parameters that need to be replaced
-    
-    process_dir     = createProcessSubdirectory(    nunu, qqqq, beam_pol, model, 
-                                                    output_dir )
-
-    filepath_base   = getFilenameBase(nunu, qqqq, beam_pol, model, process_dir)
-    filepath        = "{}.sin".format(filepath_base)
-
-    context         = sinPars.getStandardSindarinContext( filepath_base )
-    process_context = sinPars.getProcessSindarinContext (   
-                                nunu, qqqq, beam_pol, ISR_file, model, 0, 0, 0 )
+    process_context = sinPars.getProcessSindarinContext( nunu, qqqq, beam_pol, 
+                                                         ISR_file, model )
+    parameter_context   = sinPars.getModelParameterSindarinContext( model )
     cut_context     = sinPars.getCutValueSindarinContext()
-    sim_context     = sinPars.getSimulationSindarinContext( luminosity, 
-                                                            output_format )
+    sim_context         = sinPars.getSimulationSindarinContext( luminosity, output_format )
     
-    context.update( process_context )
-    context.update( cut_context     )
-    context.update( sim_context     )
+    # Bring all into one dictionary                    
+    context.update(parameter_context)
+    context.update(sim_context)
+    context.update(process_context)
+    context.update(cut_context)
+                            
+    setup_dict_path = "{}_setup_dictionary.py".format(filepath_base)
 
-    ## Create Sindarin file and replace template parameters 
-    with  open(filepath,'w') as myfile:
-        print("creating {}".format(filepath))
-        myfile.write(getSimulationTemplate().format(**context))
-
+    # Safe these parameters so that rescanning can use them (for consistency)
+    with open(setup_dict_path,'w') as myfile:
+        print("creating process parameter dictionary {}".format(setup_dict_path))
+        myfile.write("{}".format(context))
+                                     
+    ## Create the sindarin file for the simulation
+    sim_filepath = "{}_sim.sin".format(filepath_base)
+            
+    # Simulation file = file with basic information + specific simulation stuff
+    common_template = readFileContent("../../scripts/WHIZARD_scripts/CommonSetupTemplate.sin")
+    sim_template    = readFileContent("../../scripts/WHIZARD_scripts/SimulationTemplate.sin")
+    full_template   = "{}\n{}".format(common_template, sim_template)  
+    
+    # Replace template parameters and write to file
+    with open(sim_filepath,'w') as myfile:
+        print("creating {}".format(sim_filepath))
+        myfile.write(full_template.format(**context))
+    
 #-------------------------------------------------------------------------------
 
 def isSignalProcess( neutrino_string, beam_pol ):
@@ -109,7 +124,7 @@ def setAllSindarinFiles( model, ISR_file, luminosity, base_dir, output_format ):
                 else:
                     output_dir = '{}/bkg'.format(base_dir)
                 
-                setSingleSindarinFile(  nunu, qqqq, beam_pol, ISR_file, model, 
+                setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, 
                                         luminosity, output_dir, output_format )
                 
                                     
@@ -127,6 +142,7 @@ def main(arguments):
     luminosity  = "1000 / 1 fbarn"
     ISR_file    = "/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/500_TDR_ws_ee021.circe"
     
+    # base_dir must exist and contain two dirs called "signal" and "bkg"
     base_dir        = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq"
     output_format   = "stdhep" 
     

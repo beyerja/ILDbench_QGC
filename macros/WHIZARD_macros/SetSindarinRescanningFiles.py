@@ -17,8 +17,15 @@ target_dir = '/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq'
 def getRescanningTemplate():
     """ Return string of template file content.
     """
-    with open("../../scripts/WHIZARD_scripts/RescanningTemplate.sin", "r") as template_file:
-        return template_file.read()
+    with open("../../scripts/WHIZARD_scripts/CommonSetupTemplate.sin", "r") as setup_template_file:
+        setup_template  = setup_template_file.read()
+    
+    with open("../../scripts/WHIZARD_scripts/RescanningTemplate.sin", "r") as rescan_template_file:
+        rescan_template    = rescan_template_file.read()
+        
+    full_template = "{}\n{}".format(setup_template, rescan_template)
+        
+    return full_template
         
 #-------------------------------------------------------------------------------
 
