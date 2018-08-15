@@ -3,6 +3,7 @@
 """ Create Sindarin files and according directory structure to given process.
 """
 
+import os
 import sys
 import numpy as np
 import ProcessMaps            as pMaps 
@@ -18,12 +19,27 @@ def getSimulationTemplate():
         
 #-------------------------------------------------------------------------------
 
+def createProcessSubdirectory( nunu, qqqq, beam_pol, model, output_dir ):
+    """ Creates subdirectory for the specific process in the given output 
+        directory.
+    """
+    subdir_name = "{}{}_{}_{}".format( nunu, qqqq, beam_pol, model )
+    full_subdir_path = "{}/{}".format(output_dir, subdir_name) 
+    
+    # Create directory if not already existing
+    newpath = r"{}".format( full_subdir_path )
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+        
+    return full_subdir_path
+        
+#-------------------------------------------------------------------------------
+
 def getFilenameBase ( nunu, qqqq, beam_pol, model, output_dir ):
     """ Returns standardized file name base. 
     """
     filename = "WHIZARD_E1000_{}{}_{}_{}".format( nunu, qqqq, beam_pol, model )  
-                                                
-    filepath = output_dir + "/" + filename
+    filepath = "{}/{}".format(output_dir, filename)
     return filepath
     
 #-------------------------------------------------------------------------------
@@ -36,9 +52,11 @@ def setSingleSindarinFile(  nunu, qqqq, beam_pol, ISR_file, model, luminosity,
     
     ## Collect dictonary with template parameters that need to be replaced
     
+    process_dir     = createProcessSubdirectory(    nunu, qqqq, beam_pol, model, 
+                                                    output_dir )
 
-    filepath_base  = getFilenameBase( nunu, qqqq, beam_pol, model, output_dir )
-    filepath       = "{}.sin".format(filepath_base)
+    filepath_base   = getFilenameBase(nunu, qqqq, beam_pol, model, process_dir)
+    filepath        = "{}.sin".format(filepath_base)
 
     context         = sinPars.getStandardSindarinContext( filepath_base )
     process_context = sinPars.getProcessSindarinContext (   
