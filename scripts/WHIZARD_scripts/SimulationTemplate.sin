@@ -94,9 +94,6 @@
   
   ?isr_recoil = false
   $isr_handler_mode = "recoil"
-  ?epa_recoil=false
-  $epa_handler_mode = "recoil"
-  ! TODO isr_hanlder, epa_handler ????? 
 
   ! Compile the process into a process library
   compile
@@ -122,6 +119,11 @@
 ################################
 # Start Integration            #
 ################################
+
+  ! vamp2 is new faster integration tool and necessary for parallel computing
+  $integration_method = "vamp2"
+  ! Different random number generator which allows parallization
+  $rng_method = "rng_stream" 
 
   ! Fixed seed for reproducibility
   seed = 814995 
