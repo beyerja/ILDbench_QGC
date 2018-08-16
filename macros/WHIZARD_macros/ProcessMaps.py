@@ -17,8 +17,8 @@ qqqq_states = {
 # Split into electron neutrino and non-electron neutrino bc only electron nu 
 # is signal-like
 nunu_states = {
-    'v1v1' : 'nu_e, nu_e',
-    'vv' : 'nu_l, nu_l',
+    'v1v1' : 'all_nu_e, all_nu_e',
+    'vv' : 'all_nu_l, all_nu_l',
 }
 
 polarizations = {
@@ -28,12 +28,7 @@ polarizations = {
     'eRpR': '@(+1) , @(+1)',
 }
 
-# TODO Move this to where it belongs
-# Is K-matrix unitarization turned on(1) or off(0)? -> file name part
-fkm_strings = {
-    1 : "kmon",
-    0 : "kmoff",
-}
+
 
 
 # TODO Rename file, e.g. ConventionToSindarinMaps

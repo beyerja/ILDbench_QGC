@@ -12,7 +12,7 @@
     ! Fixed seed for reproducibility
     seed = 814995 + 1
     
-    $sample = "{weights_file}"
+    $sample = "{out_file_base}"
     sample_format = weights_stream
     
     ! Alternative parameter setups -> here: alternative fs values

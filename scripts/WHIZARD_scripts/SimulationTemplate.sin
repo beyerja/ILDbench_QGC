@@ -47,10 +47,6 @@
     
     $sample = "{out_file_base}_sim"
     sample_format = {sample_format} 
-    if ( sample_format == stdhep ) then
-      ! If I want to use stdhep as output -> Defined extension of stdhep file
-      $extension_stdhep_ev4 = "stdhep" 
-    endif
   }}
   
   close_out ( $out_file ) 

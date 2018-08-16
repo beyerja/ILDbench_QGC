@@ -11,7 +11,7 @@
 #################################
 
   ! Output log file -> Double brackets becaused replace in sim/rescan set
-  $out_file = "{out_dir}/{out_file_base}.dat"
+  $out_file = "{out_file_base}.dat"
   open_out ( $out_file )
 
   ! Use OpenMP for parallization -> Set number of allowed threads
@@ -55,13 +55,13 @@
   alias uptype_antiq    = U:C
   alias downtype_q      = d:s:b
   alias downtype_antiq  = D:S:B
-  all_uptype    = uptype_q:uptype_antiq
-  all_downtype  = downtype_q:downtype_antiq
+  alias all_uptype    = uptype_q:uptype_antiq
+  alias all_downtype  = downtype_q:downtype_antiq
   alias all_q   = all_uptype:all_downtype
   
-  alias nu_e    = n1:N1       
-  alias nu_l    = n2:N2:n3:N3
-  alias all_nu  = nu_e:nu_l
+  alias all_nu_e  = n1:N1       
+  alias all_nu_l  = n2:N2:n3:N3
+  alias all_nu    = all_nu_e:all_nu_l
   
   alias final_partons = all_q:all_nu
 

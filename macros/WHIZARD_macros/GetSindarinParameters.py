@@ -4,7 +4,7 @@
 """ # TODO Update!!!
 
 import datetime
-import ProcessMaps as pMaps 
+import numpy as np
 
 #-------------------------------------------------------------------------------
 
@@ -14,24 +14,16 @@ def calculateAlphaConstant(dim8c):
         
 #-------------------------------------------------------------------------------
 
-def getaQGCSindarinContext(model, fs_zero,fs_one):
+def getaQGCSindarinContext(model, fs0, fs1):
     
     if model == "SM_CKM":
         return " "
     
-    aqgccontext = {
-        'fs0' : fs_zero,
-        'fs1' : fs_one,
-        'a4'  : calculateAlphaConstant(fs_zero),
-        'a5'  : calculateAlphaConstant(fs_one),
-    }
+    a4 = calculateAlphaConstant(fs0)
+    a5 = calculateAlphaConstant(fs1)
 
-    result = """
-  fs0 = {fs0}
-  fs1 = {fs1}
-  real a4 = {a4}
-  real a5 = {a5}
-""".format(**aqgccontext)
+    result = ' fs0 = {}\n fs1 = {}\n real a4 = {}\n real a5 = {}'.format( 
+                                                            fs0, fs1, a4, a5)
     return result
 
 #-------------------------------------------------------------------------------
@@ -114,3 +106,76 @@ def getSimulationSindarinContext( luminosity, output_format ):
     }
     
     return context
+    
+#-------------------------------------------------------------------------------
+
+def get2DParameterGrid( fs0_points, fs1_points, scan2D ):
+    """ Get 2D grid of (FS0, FS1) parameter space.
+        Can choose whether to include points where both are non-zero.
+        Do not include SM point if it is in arrays.
+    """
+    grid = []
+    
+    
+    if scan2D:
+        N_2D_points = len(fs0_points)*len(fs1_points)
+        if ( (0 in fs0_points) and (0 in fs1_points)):
+            # exclude SM point when in array
+            N_2D_points -= 1
+            
+        # Empty array of right shape 
+        grid = np.zeros( shape=(N_2D_points, 2) )
+        index = 0
+        for fs0_point in fs0_points:
+            for fs1_point in fs1_points:
+                if ( fs0_point == 0 and fs1_point == 0 ): continue
+                grid[index] = [fs0_point, fs1_point]
+                index += 1
+    else:
+        N_2D_points = len(fs0_points)+len(fs1_points)
+        # exclude SM point when in array
+        if 0 in fs0_points: N_2D_points -= 1
+        if 0 in fs1_points: N_2D_points -= 1
+            
+        # Empty array of right shape (exclude SM points!)
+        grid = np.zeros( shape=(N_2D_points, 2) )
+        index = 0
+        for fs0_point in fs0_points:
+            if ( fs0_point == 0 ): continue
+            grid[index] = [fs0_point, 0]
+            index += 1
+        for fs1_point in fs1_points:
+            if ( fs1_point == 0 ): continue
+            grid[index] = [0, fs1_point]
+            index += 1
+            
+    return grid
+
+#-------------------------------------------------------------------------------
+
+def getAlternativeParametersSindarinContext( fs0_points, fs1_points, scan2D ):
+    """ Takes arrays of EFT coupling points, creates Sindarin language 
+        command for reweighting with alternative setups for all parameter point
+        combinations and return dictionary for placing this into the template.
+    """
+    
+    alt_setups = "alt_setup ="
+    
+    parameter_grid = get2DParameterGrid( fs0_points, fs1_points, scan2D )
+    
+    for fs0_point, fs1_point in parameter_grid:
+        couplings_string = getaQGCSindarinContext("SSC_2", fs0_point, fs1_point)
+        alt_setups = "{} {{\n{}\n}},".format( alt_setups, couplings_string )
+
+    # Remove last comma
+    alt_setups = alt_setups[:-1]
+    
+    context = {
+        'alternative_setups': alt_setups
+    }
+    
+    return context
+
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
