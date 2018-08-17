@@ -8,6 +8,8 @@ import sys
 import ProcessMaps            as pMaps 
 import GetSindarinParameters  as sinPars
 import SystemHelperFunctions  as sysHelp
+import GetOutputDirectory     as outDir
+
 
 #-------------------------------------------------------------------------------
 
@@ -128,22 +130,21 @@ def setAllSindarinFiles( model, ISR_file, luminosity, base_dir, output_format ):
 def main(arguments):
     """ Main function:
             Create Sindarin files for simulation runs with the given parameters.
-        - Everything 
     """
     
     # TODO Properly document everything -> How are steerings created, how can one change settings, .......
     # TODO Properly document and rename: Everything in integration and simulation is Standard Model (just with SSC_2 => trivial CKM)
     
     # Model used by WHIZARD to calculate the matrix element
-    model       = "SSC_2"
+    model       = 'SSC_2'
     
     # Settings for the simulation
-    luminosity  = "1000 / 1 fbarn"
-    ISR_file    = "/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/500_TDR_ws_ee021.circe"
+    luminosity  = '1000 / 1 fbarn'
+    ISR_file    = '/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/500_TDR_ws_ee021.circe'
     
     # base_dir must exist and contain two dirs called "signal" and "bkg"
-    base_dir        = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq"
-    output_format   = "stdhep" 
+    base_dir        = outDir.getOutputDirectory()
+    output_format   = 'lcio' 
     
     setAllSindarinFiles(model, ISR_file, luminosity, base_dir, output_format)
     
@@ -152,3 +153,4 @@ def main(arguments):
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
 
+#-------------------------------------------------------------------------------

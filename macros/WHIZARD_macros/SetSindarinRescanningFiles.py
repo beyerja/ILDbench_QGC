@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-""" Create Sindarin files and according directory structure to given process.
+""" Create Sindarin files for calculation of weights for different model 
+    parameters.
 """
 
 import os   # for scanning directory structure etc
@@ -11,6 +12,7 @@ import numpy                  as np
 import ProcessMaps            as pMaps 
 import GetSindarinParameters  as sinPars
 import SystemHelperFunctions  as sysHelp
+import GetOutputDirectory     as outDir
 
 #-------------------------------------------------------------------------------
 
@@ -171,11 +173,8 @@ def setAllRescanFiles( signal_dir, fs0_max, fs1_max,
 #-------------------------------------------------------------------------------
 
 def main(arguments):
-    """
-    """
-    
     # Directory with all signal runs
-    signal_dir = "/afs/desy.de/group/flc/pool/beyerjac/WHIZARD/vvqqqq/signal"
+    signal_dir = "{}/signal".format(outDir.getOutputDirectory())
     
     # Parameters determining the scanned parameter points
     fs0_max = 500
@@ -192,9 +191,9 @@ def main(arguments):
     setAllRescanFiles( signal_dir, fs0_max, fs1_max, n_fs0_steps, n_fs1_steps, 
                        fkm, scan2D )
     
-    
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
 
+#-------------------------------------------------------------------------------

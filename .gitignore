@@ -7,3 +7,4 @@
 /scripts/WHIZARD_scripts/from_Mikael/
 /scripts/WHIZARD_scripts/Sindarin/
 *__pycache__
+*.pyc
