@@ -24,4 +24,5 @@ sim_file_dir=$( cd "$( dirname "${sim_file_path}"  )" && pwd  )
 sim_file_name=$( basename "${sim_file_path}"  )
 
 # Submit job to condor 
+cd ${standard_condor_directory}
 condor_submit ${multithread_condor_submit} arguments="cd ${sim_file_dir} && whizard ${sim_file_name}"

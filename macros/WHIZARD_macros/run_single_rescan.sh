@@ -24,4 +24,5 @@ rescan_file_dir=$( cd "$( dirname "${rescan_file_path}"  )" && pwd  )
 rescan_file_name=$( basename "${rescan_file_path}"  )
 
 # Submit job to condor 
+cd ${standard_condor_directory}
 condor_submit ${standard_condor_submit} arguments="cd ${rescan_file_dir} && whizard ${rescan_file_name}"
