@@ -80,8 +80,10 @@ Run any command on HTCondor using:
 ```bash
 condor_submit standard_htcondor_steering.submit arguments="insert-your-command-here"
 ```
+or same with ```multithread_htcondor_steering.submit``` for more cpus.
 
 #### Files:
+- ```multithread_htcondor_steering.submit```: HTCondor submit file used in combination with standard_bash_run.sh to send Marlin runs to the BIRD cluster, has increased demands (more cpus, time, ...).
 - ```standard_bash_run.sh```: Generic scripts that takes any bash command as input, sources the .profile in the home directory, and then executes the command.
 - ```standard_htcondor_steering.submit```: HTCondor submit file used in combination with standard_bash_run.sh to send Marlin runs to the BIRD cluster.
 
@@ -89,4 +91,49 @@ condor_submit standard_htcondor_steering.submit arguments="insert-your-command-h
 
 #### Usage:
 
+<!-- set output dir in GetOutputDirectory, create sim files with SetSimFiles, create rescan with SetRescanFiles, run with respective bash scripts -->
+
+1. **Set input parameters**:
+  - The output/working directory for whizard is set in *GetOutputDirectory.py* and can be changed there.
+  - Parameters which are intended to be changeable for the integration and simulation are set in the main function of *SetSindarinSimulationFiles.py*.
+  - Parameters which are intended to be changeable for the rescanning for weights at different parameter points are set in the main function of *SetSindarinRescanningFiles.py*.
+2. **Creating Sindarin steering files**:
+  - This is split into creating scripts for integration + event simulation and scripts for rescanning the created events.
+  - To create the steering scripts run:
+    ```shell
+      python3 SetSindarinSimulationFiles.py
+      python3 SetSindarinRescanningFiles.py
+    ```
+    (The simulation files must(!) be created first.)
+3. **Running the simulation and rescanning**:
+  - Once the steering is set it can be run using the bash scripts. The simulation must be run first and execute successfully in order for the rescanning to do anything useful.
+  - Individual simulation scripts can be run using:
+  ```shell
+    ./run_single_simulation.sh simulation_file_path
+  ```
+  or one can run all simulation files in the output directory using:
+  ```shell
+    ./run_all_simulations.sh
+  ```
+  - Individual rescanning scripts can be run using:
+  ```shell
+    ./run_single_rescan.sh rescan_file_path
+  ```
+  or one can run all rescan files in the signal directory using:
+  ```shell
+    ./run_all_rescans.sh
+  ```
+  
 #### Files:
+- ```GetOutputDirectory.py```: Central script that holds/returns the output directory for all WHIZARD runs.
+- ```GetSindarinParameters.py```: Functions that return python dictionaries with the parameters for the sindarin templates. Includes some settings that are not intended to be changed such as cut values.
+- ```ProcessMaps.py```: Python dictionaries which map the filename convention to the respective Sindarin syntax.
+- ```run_all_rescans.sh```  : Searches for all rescanning sindarin steerings in the signal directory and runs them.
+- ```run_all_simulations.sh```: Searches for all simulation sindarin steering files in the output directory and starts a whizard run for each of them.
+- ```run_single_rescan.sh```: Takes a single sindarin rescan file and sends a job to HTCondor to run it.
+- ```run_single_simulation.sh```: Takes a single sindarin simulation file and sends a job to HTCondor to run it.
+- ```SetSindarinRescanningFiles.py```: Builds full sindarin template out of CommonSetupTemplate and RescanningTemplate from *scripts* directory, fills the template with the given parameters and writes the output to the respective signal directories. Uses dictionaries from *SetSindarinSimulationFiles.py* for consistency. In the main function the scanned parameter grid is determined.
+- ```SetSindarinSimulationFiles.py```: Builds full sindarin template out of CommonSetupTemplate and SimulationTemplate from *scripts* directory, fills the template with the given parameters and writes the output to an according structure in the output directory. Some simulation-specific variables can be set in the main function (e.g. luminosity).
+- ```SystemHelperFunctions.py```:  Some helper functions for dealing with file reading and directory structure.
+
+

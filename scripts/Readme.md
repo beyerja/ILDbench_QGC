@@ -38,7 +38,10 @@ Directory for steering files for Marlin and WHIZARD.
 
 #### Usage:
 (Used automatically by *WHIZARD_macros*.)
-The ```sindarinTemplate.sin``` is a template file in which all variable enclosed in curly brackets will be replaced by the python scripts in *WHIZARD_macros* to produce runnable Sindarin files.
+The macros in *WHIZARD_macros* combine the ```CommonSetupTemplate``` with either ```SimulationTemplate.sin``` or ```RescanningTemplate.sin``` to from full simulation and rescanning Sindarin scripts, respectively. Templates are in Python-style and the parameters are replaced in the macros.
 
 #### Files:
-- ```sindarinTemplate.sin```: Template sindarin file in python template style.
+- ```CommonSetupTemplate.sin```: Python-style template, base sindarin settings used for both simulation and rescanning of events. Is combined by macro with simulation or rescanning part to form complete Sindarin script. 
+- ```RescanningTemplate.sin```: Python-style template, settings specific to rescanning.
+- ```SimulationTemplate.sin```: Python-style template, settings specific to integral calculation and simulation.
+- ```isr_spectrum_files```: Directory with initial-state radiation spectrum files.

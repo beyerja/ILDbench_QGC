@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 """
-Collection of dictionaries and arrays used by createSindarin.py to create 
-WHIZARD steering Sindarin files.
+Collection of dictionaries mapping the usual filename convention to the 
+respective Sindarin syntax.
 """
 
 import numpy as np

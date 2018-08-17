@@ -28,20 +28,9 @@ export MARLIN_DLL=./lib/libILDbench_QGC.so
 
 It is recommended to do this in your ```~/.profile``` (or which-ever local shell equivalent).
 
-### How to run the analysis
+#### Example how to run Marlin
 
-<!-- Explain here:
-
-- where to find data needed for your analysis or how to produce them
-- how to run you analysis: 
-   - Marlin processors to run ?
-   - ROOT macros to run ?
-   - Shell scripts ?
-   - Run the analysis on grid if you provide scripts for that -->
-
-#### 0. Example how to run Marlin
-
-Example for how to run processor:
+Example for how to run the processor:
 
 ```shell
 Marlin ./scripts/ExampleProcessor.xml
@@ -53,7 +42,20 @@ This creates a .root file in the scripts directory which can be open e.g. using
 rootbrowse test.root
 ```
 
-#### 1. Actually running the processor
+### How to run the analysis
+
+<!-- Explain here:
+
+- where to find data needed for your analysis or how to produce them
+- how to run you analysis: 
+   - Marlin processors to run ?
+   - ROOT macros to run ?
+   - Shell scripts ?
+   - Run the analysis on grid if you provide scripts for that -->
+
+#### 1. Creating samples for signal (& irred. bkg)
+
+#### 2. Running the processor
 
 <!-- What needs to be here: (Not to detailed!) -->
 <!-- Refer to local README -->
@@ -62,7 +64,7 @@ rootbrowse test.root
 
 <!-- TODO -->
 
-#### 2. Analysing the results
+#### 3. Analysing the results
 
 <!-- TODO -->
 

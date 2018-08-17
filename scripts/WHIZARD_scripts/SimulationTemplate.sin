@@ -43,7 +43,9 @@
   ps_tauola_dec_mode2 = 3
   
   simulate( {process_name} ) {{
-    luminosity = {luminosity} !TODO HOW MUCH?
+    ! Give both lumi and minimal number of events -> WHIZARD chooses bigger one
+    luminosity  = {luminosity}
+    n_events    = 10000
     
     $sample = "{out_file_base}_sim"
     sample_format = {sample_format} 
