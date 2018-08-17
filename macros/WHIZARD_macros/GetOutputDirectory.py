@@ -14,7 +14,7 @@ def getOutputDirectory():
 #-------------------------------------------------------------------------------
 
 def main(arguments):
-    output_dir = GetOutputDirectory()
+    output_dir = getOutputDirectory()
     return output_dir
     
 #-------------------------------------------------------------------------------
