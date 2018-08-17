@@ -13,10 +13,22 @@ whizard_directory=$(python ${dir}/GetOutputDirectory.py 2>&1)
 
 # Search the signal directory for rescan files
 rescan_files=()
-# Loop over all directories
+# Loop over all directories, only take rescan files when the directory contains
+# a non-empty slcio file (ASSUMES OUTPUT FORMAT SLCIO).
 for process_dir in "${whizard_directory}/signal/"*/; do
-  process_rescan=$(ls ${process_dir}/rescan_*.sin)
-  rescan_files+="${process_rescan} "
+  contains_simulated_events=false
+  event_files=$(ls ${process_dir}/*.slcio)
+  for event_file in ${event_files[@]}; do
+    n_events=$(lcio_event_counter ${event_file})
+    if [[  ${n_events} > 0 ]]; then
+      contains_simulated_events=true
+    fi
+  done
+  
+  if [ "${contains_simulated_events}" = true ] ; then
+    process_rescan=$(ls ${process_dir}/rescan_*.sin)
+    rescan_files+="${process_rescan} "
+  fi
 done
 
 # Start simulation for each sim file

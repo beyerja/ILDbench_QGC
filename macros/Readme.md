@@ -128,7 +128,7 @@ or same with ```multithread_htcondor_steering.submit``` for more cpus.
 - ```GetOutputDirectory.py```: Central script that holds/returns the output directory for all WHIZARD runs.
 - ```GetSindarinParameters.py```: Functions that return python dictionaries with the parameters for the sindarin templates. Includes some settings that are not intended to be changed such as cut values.
 - ```ProcessMaps.py```: Python dictionaries which map the filename convention to the respective Sindarin syntax.
-- ```run_all_rescans.sh```  : Searches for all rescanning sindarin steerings in the signal directory and runs them.
+- ```run_all_rescans.sh```  : Searches for all rescanning sindarin steerings in the signal directory, checks if there is an event file to reweight and if so runs them.
 - ```run_all_simulations.sh```: Searches for all simulation sindarin steering files in the output directory and starts a whizard run for each of them.
 - ```run_single_rescan.sh```: Takes a single sindarin rescan file and sends a job to HTCondor to run it.
 - ```run_single_simulation.sh```: Takes a single sindarin simulation file and sends a job to HTCondor to run it.
