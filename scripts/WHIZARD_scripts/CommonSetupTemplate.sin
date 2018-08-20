@@ -14,9 +14,6 @@
   $out_file = "{out_file_base}.dat"
   open_out ( $out_file )
 
-  ! Use OpenMP for parallization -> Set number of allowed threads
-  openmp_num_threads = 6
-
   ! Allow resonances in spectrum and set limit to off-shell component 
   ?resonance_history = true
   resonance_on_shell_limit = 16
