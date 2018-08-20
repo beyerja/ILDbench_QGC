@@ -7,7 +7,6 @@ fi
 
 # Directory of this script
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
-echo $dir
 
 # Standard HTCondor environment
 standard_condor_directory=${dir}/../standard_HTCondor_submit
@@ -25,4 +24,4 @@ rescan_file_name=$( basename "${rescan_file_path}"  )
 
 # Submit job to condor 
 cd ${standard_condor_directory}
-condor_submit ${standard_condor_submit} arguments="cd ${rescan_file_dir} && whizard ${rescan_file_name}"
+condor_submit ${standard_condor_submit} arguments="cd ${rescan_file_dir} \&\& whizard ${rescan_file_name}"

@@ -12,4 +12,5 @@ command_with_arguments=$@
 
 source ~/.profile # Use my local environment
 
-${command_with_arguments} # Execute command
+echo "Running command: ${command_with_arguments}"
+eval "${command_with_arguments}" # Execute command

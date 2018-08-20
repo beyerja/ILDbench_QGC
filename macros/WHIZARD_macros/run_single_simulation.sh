@@ -7,7 +7,6 @@ fi
 
 # Directory of this script
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
-echo $dir
 
 # Multithread HTCondor environment
 standard_condor_directory=${dir}/../standard_HTCondor_submit
@@ -25,4 +24,4 @@ sim_file_name=$( basename "${sim_file_path}"  )
 
 # Submit job to condor 
 cd ${standard_condor_directory}
-condor_submit ${multithread_condor_submit} arguments="cd ${sim_file_dir} && whizard ${sim_file_name}"
+condor_submit ${multithread_condor_submit} arguments="cd ${sim_file_dir} \&\& whizard ${sim_file_name}"
