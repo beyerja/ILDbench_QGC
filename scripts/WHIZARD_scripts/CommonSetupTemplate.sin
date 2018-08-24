@@ -89,7 +89,7 @@
 
   ! Settings for ISR spectrum
   $circe2_file = "{ISR_file}" ! e.g. "500_TDR_ws_ee021.circe"
-  $circe2_design = "ILC"
+  $circe2_design = "1000GeV_B1b"
   ?circe2_polarized = false
   
   ?isr_recoil = false

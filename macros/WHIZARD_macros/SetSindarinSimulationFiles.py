@@ -140,7 +140,7 @@ def main(arguments):
     
     # Settings for the simulation
     luminosity  = '1000 / 1 fbarn'
-    ISR_file    = '/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/500_TDR_ws_ee021.circe'
+    ISR_file    = '/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/ee_Waisty_opt_Jan2012_1000GeV_B1b.circe'
     
     # base_dir must exist and contain two dirs called "signal" and "bkg"
     base_dir        = outDir.getOutputDirectory()

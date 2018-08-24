@@ -13,14 +13,14 @@ log                 = ../Condor_output/$(Cluster).$(Process).log
 # htcondor will (as any other batchsystem) not create any directories for you, hence these need to exist.
 
 
-# Set maximum run time to two days
-+RequestRuntime = 2*86400
+# Set maximum run time to four days
++RequestRuntime = 4*86400
 
 # Set Requested amount of memory
-RequestMemory = 8*512
+# RequestMemory = 8*512
 
 # Set Requested disk space
-RequestDisk = 5632000
+# RequestDisk = 5632000
 
 # Set Requested disk space
 RequestCpus = 6

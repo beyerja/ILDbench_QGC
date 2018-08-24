@@ -47,7 +47,7 @@
     luminosity  = {luminosity}
     n_events    = 10000
     
-    $sample = "{out_file_base}_sim"
+    $sample = "{out_file_base}_events"
     sample_format = {sample_format} 
   }}
   

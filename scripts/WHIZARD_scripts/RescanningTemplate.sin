@@ -4,7 +4,7 @@
 # Start rescanning             #
 ################################
 
-  rescan "{input_sample}" ( nunu_4q ) {{
+  rescan "{input_sample}_events" ( nunu_4q ) {{
     ! Enable updating of matrix element and weight for event (exactly wanted)
     ?update_sqme = true
     ?update_weight = true
