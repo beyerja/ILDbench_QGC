@@ -10,7 +10,16 @@ Anomalous quartic gauge coupling measurement
 - what are the package dependencies (iLCSoft, others ?)
 - how to compile your package. Should normally be something like: -->
 
-The processor can be compiled by loading ilcsoft and executing the compile-macro: 
+For creating 2neutrino+4quark generator level samples this code requires WHIZARD2.
+It must be installed and its binary and library directory added to the respective paths:
+
+```shell
+export WHIZARD_DIR=/path/to/WHIZARD2installation
+export PATH=${PATH}:${WHIZARD_DIR}/install/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${WHIZARD_DIR}/install/lib
+```
+
+The analysis processor can be compiled by loading ilcsoft and executing the compile-macro: 
 
 ```shell
 source /path/to/ilcsoft/init_ilcsoft.sh
@@ -54,6 +63,42 @@ rootbrowse test.root
    - Run the analysis on grid if you provide scripts for that -->
 
 #### 1. Creating samples for signal (& irred. bkg)
+
+Macros for the creation of 2neutrino+4quark samples sits in the ```macros/WHIZARD_macros``` directory.
+Two steps are required to create the samples:
+
+1. Setting the Sindarin steering files.
+```shell
+python3 SetSindarinSimulationFiles.py
+```
+2. Running the simulation (will send jobs to the BIRD cluster):
+  - Either all at once:
+  ```shell
+  ./run_all_simulations.sh
+  ```
+  - Or individual:
+  ```shell
+  ./run_single_simulation.sh [complete_path_of_simulation_sindarin]
+  ```
+
+Additional two steps are required to get event weights for aQGC points:
+3. Setting the Sindarin steering files.
+```shell
+python3 SetSindarinRescanningFiles.py
+```
+4. Running the rescan (will send jobs to the BIRD cluster):
+  - Either all at once:
+  ```shell
+  ./run_all_rescans.sh
+  ```
+  - Or individual:
+  ```shell
+  ./run_single_rescan.sh [complete_path_of_rescan_sindarin]
+  ```
+  
+**Output**:
+  - The simulation will create *.slcio* generator level event files in the directory of its respective steering file.
+  - The rescan will produce weight files in *rescan_output* subdirectory of the respective steering file.
 
 #### 2. Running the processor
 

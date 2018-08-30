@@ -177,11 +177,11 @@ def main(arguments):
     signal_dir = "{}/signal".format(outDir.getOutputDirectory())
     
     # Parameters determining the scanned parameter points
-    fs0_max = 500
-    fs1_max = 500
+    fs0_max = 200
+    fs1_max = 50
     
-    n_fs0_steps = 50
-    n_fs1_steps = 50 
+    n_fs0_steps = 3
+    n_fs1_steps = 3 
     
     scan2D = True
     

@@ -4,7 +4,7 @@
 # Start rescanning             #
 ################################
 
-  rescan "{input_sample}_events" ( nunu_4q ) {{
+  rescan "{input_sample}_events" ( {process_name} ) {{
     ! Enable updating of matrix element and weight for event (exactly wanted)
     ?update_sqme = true
     ?update_weight = true
@@ -13,7 +13,7 @@
     seed = 814995 + 1
     
     $sample = "{out_file_base}"
-    sample_format = weights_stream
+    sample_format = weight_stream
     
     ! Alternative parameter setups -> here: alternative fs values
     {alternative_setups}
