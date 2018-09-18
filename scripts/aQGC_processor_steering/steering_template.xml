@@ -14,7 +14,7 @@
       <!-- REPLACE WITH INPUT FILES -->
     </parameter>
     <!-- The maximum number of events + runs to process -->
-    <parameter name="MaxRecordNumber" value="500"/>
+    <parameter name="MaxRecordNumber" value="0"/>
     <!-- The number of events to skip on start -->
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
@@ -30,6 +30,7 @@
     <parameter name="DD4hepXMLFile" type="string"> 
       <!-- REPLACE WITH CURRENT COMPACT FILE PATH FOR DETECTOR MODEL -->
     </parameter>
+    <parameter name="Verbosity" type="string"> SILENT </parameter>
   </processor>
 
   <processor name="MyIsolatedLeptonTaggingProcessor" type="IsolatedLeptonTaggingProcessor">
@@ -59,7 +60,7 @@
     <parameter name="OutputIsoLeptonsCollection" type="string" lcioOutType="ReconstructedParticle"> Isoleps </parameter>
     <parameter name="OutputPFOsWithoutIsoLepCollection" type="string" lcioOutType="ReconstructedParticle"> PFOsWithoutIsoleps </parameter>
     <parameter name="Verbosity" type="string"> SILENT </parameter>
-</processor>
+  </processor>
 
   
   <!-- Jet clustering here -->

@@ -57,9 +57,6 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::init() {
-  // Usually a good idea to print parameters
-  printParameters(); // method from Processor
-  
   m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
   m_processinfotree = new TTree("processInfoTree", "processInfoTree");
   m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
@@ -74,8 +71,6 @@ void aQGCObservablesProcessor::init() {
 
 void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
   streamlog_out(MESSAGE) << "Starting run no " << run->getRunNumber() << std::endl;
-  // LCRunHeader objects can be printed using LCTOOLS class
-  UTIL::LCTOOLS::dumpRunHeader(run);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -110,7 +105,7 @@ void aQGCObservablesProcessor::end() {
   // Cleanup your mess here !
   
   std::cout << "aQGCAnalysis: end() " << this->name() // << " processed " << m_nEvtSum << " events in " << m_nRunSum << " runs " << std::endl
-  << "Rootfile: " << m_rootfilename.c_str() << std::endl;
+  << " Rootfile: " << m_rootfilename.c_str() << std::endl;
 
   
   // Write to .root file
