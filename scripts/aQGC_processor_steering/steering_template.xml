@@ -2,6 +2,7 @@
   
   <execute>
     <!-- List the processors to execute here ! -->
+    <processor name="InitDD4hep" />
     <processor name="MyIsolatedLeptonTaggingProcessor" />
     <processor name="MyFastJetProcessor" />
     <processor name="MyaQGCObservablesProcessor" />
@@ -22,7 +23,15 @@
     <!-- A user random seed -->
     <parameter name="RandomSeed" value="1234567890" />
   </global>
-  
+
+  <processor name="InitDD4hep" type="InitializeDD4hep">
+    <!--InitializeDD4hep reads a compact xml file and initializes the DD4hep::LCDD object-->
+    <!--Name of the DD4hep compact xml file to load-->
+    <parameter name="DD4hepXMLFile" type="string"> 
+      <!-- REPLACE WITH CURRENT COMPACT FILE PATH FOR DETECTOR MODEL -->
+    </parameter>
+  </processor>
+
   <processor name="MyIsolatedLeptonTaggingProcessor" type="IsolatedLeptonTaggingProcessor">
     <parameter name="CosConeLarge" type="float">0.95 </parameter>
     <parameter name="CosConeSmall" type="float">0.98 </parameter>
