@@ -25,4 +25,5 @@ done
 # Start simulation for each sim file
 for sim_file in ${sim_files[@]}; do
   ./run_single_simulation.sh ${sim_file}
+  sleep 1
 done

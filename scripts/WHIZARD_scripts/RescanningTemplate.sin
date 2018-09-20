@@ -4,7 +4,7 @@
 # Start rescanning             #
 ################################
 
-  rescan "{input_sample}_events" ( {process_name} ) {{
+  rescan "{input_sample}_basic_events" ( {process_name} ) {{
     ! Enable updating of matrix element and weight for event (exactly wanted)
     ?update_sqme = true
     ?update_weight = true

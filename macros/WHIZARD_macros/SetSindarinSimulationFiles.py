@@ -33,6 +33,19 @@ def getFilenameBase ( nunu, qqqq, beam_pol, model, output_dir ):
     return filename
     
 #-------------------------------------------------------------------------------
+
+def isSignalProcess( neutrino_string, beam_pol ):
+    """ Checks if e+e- -> 2v4q is signal like:
+        - neutrinos must be 1st generation
+        - beam must be polarized as e-: left-handed; e+: right-handed 
+          so that W+W- can be radiated
+    """
+    is_signal = False
+    if ( neutrino_string == 'v1v1' and beam_pol == 'eLpR' ):
+        is_signal = True
+    return is_signal
+    
+#-------------------------------------------------------------------------------
         
 def setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, luminosity, 
                             output_dir, output_format ):
@@ -67,6 +80,7 @@ def setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, luminosity,
     context.update(sim_context)
     context.update(process_context)
     context.update(cut_context)
+    context["is_signal"] = str(isSignalProcess( nunu, beam_pol )).lower() # This is ugly...
                             
     setup_dict_path = "{}_setup_dictionary.py".format(filepath_base)
 
@@ -87,19 +101,6 @@ def setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, luminosity,
     with open(sim_filepath,'w') as myfile:
         print("creating {}".format(sim_filepath))
         myfile.write(full_template.format(**context))
-    
-#-------------------------------------------------------------------------------
-
-def isSignalProcess( neutrino_string, beam_pol ):
-    """ Checks if e+e- -> 2v4q is signal like:
-        - neutrinos must be 1st generation
-        - beam must be polarized as e-: left-handed; e+: right-handed 
-          so that W+W- can be radiated
-    """
-    is_signal = False
-    if ( neutrino_string == 'v1v1' and beam_pol == 'eLpR' ):
-        is_signal = True
-    return is_signal
 
 #-------------------------------------------------------------------------------
 

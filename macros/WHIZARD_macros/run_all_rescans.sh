@@ -34,4 +34,5 @@ done
 # Start simulation for each sim file
 for rescan_file in ${rescan_files[@]}; do
   ./run_single_rescan.sh ${rescan_file}
+  sleep 1
 done

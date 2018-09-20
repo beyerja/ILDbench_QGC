@@ -180,7 +180,7 @@ def main(arguments):
     fs0_max = 200
     fs1_max = 50
     
-    n_fs0_steps = 3
+    n_fs0_steps = 5
     n_fs1_steps = 3 
     
     scan2D = True
