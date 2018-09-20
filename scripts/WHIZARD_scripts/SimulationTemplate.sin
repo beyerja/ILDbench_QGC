@@ -51,12 +51,12 @@
     sample_format = {sample_format} 
   }}
   
-  logical ?is_signal = {is_signal}
+  logical ?is_signal = {{is_signal}}
   
   ! For rescanning: Produce signal samples again only contain initial particles
   !                 and the 2nu + 4q final state
   if ?is_signal then
-    simulate( {process_name} ) {
+    simulate( {process_name} ) {{
       seed = 814995 + 1
       ! Give both lumi and minimal number of events -> WHIZARD chooses bigger one
       luminosity  = {luminosity}
@@ -69,7 +69,7 @@
       ?ps_fsr_active = false
       ?hadronization_active = false
       ?ps_taudec_active = false
-    }
+    }}
   endif
 
   close_out ( $out_file ) 

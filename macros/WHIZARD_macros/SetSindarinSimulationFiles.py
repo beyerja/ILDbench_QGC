@@ -80,7 +80,7 @@ def setSingleProcessFile(   nunu, qqqq, beam_pol, ISR_file, model, luminosity,
     context.update(sim_context)
     context.update(process_context)
     context.update(cut_context)
-    context["is_signal"] = str(isSignalProcess( nunu, beam_pol )).lower() # This is ugly...
+    context["is_signal"] = str(isSignalProcess(nunu,beam_pol)).lower() # This is ugly...
                             
     setup_dict_path = "{}_setup_dictionary.py".format(filepath_base)
 
@@ -120,6 +120,7 @@ def setAllSindarinFiles( model, ISR_file, luminosity, base_dir, output_format ):
                 output_dir = base_dir
                 if isSignalProcess( nunu, beam_pol ):  
                     output_dir = '{}/signal'.format(base_dir)
+                    continue
                 else:
                     output_dir = '{}/bkg'.format(base_dir)
                 
