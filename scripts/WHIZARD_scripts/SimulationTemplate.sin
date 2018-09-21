@@ -51,7 +51,7 @@
     sample_format = {sample_format} 
   }}
   
-  logical ?is_signal = {{is_signal}}
+  logical ?is_signal = {is_signal}
   
   ! For rescanning: Produce signal samples again only contain initial particles
   !                 and the 2nu + 4q final state

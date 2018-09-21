@@ -123,6 +123,10 @@ or same with ```multithread_htcondor_steering.submit``` for more cpus.
   ```shell
     ./run_all_rescans.sh
   ```
+  - Finally, convert the weight files into usable ROOT format:
+  ```shell
+    python ConvertWeightsToTree.py
+  ```
   
 #### Files:
 - ```GetOutputDirectory.py```: Central script that holds/returns the output directory for all WHIZARD runs.
