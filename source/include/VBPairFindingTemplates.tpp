@@ -184,7 +184,17 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 			streamlog_out(DEBUG) << "In findMCVBPair: No WW/ZZ candidates found." << std::endl; 
 	  }
 		else if ( ( ZZ_candidates.size() != 0) && ( WW_candidates.size() != 0) ) { 
-			streamlog_out(ERROR) << "ERROR in findMCVBPair: Found both WW and ZZ candidates on MC level! SHOULD BE IMPOSSIBLE!" << std::endl; 
+			streamlog_out(DEBUG) << "In findMCVBPair: Found both WW and ZZ candidates on MC level. Taking one with smallest VB mass difference." << std::endl; 
+			VBPairVec tmp_VBpair_candidates = {};
+			for(auto const& i_ZZ: ZZ_candidates ) { tmp_VBpair_candidates.push_back( m_VBpair_candidates[i_ZZ] ); }
+			for(auto const& i_WW: WW_candidates ) { tmp_VBpair_candidates.push_back( m_VBpair_candidates[i_WW] ); }
+			m_VBpair_candidates = tmp_VBpair_candidates;
+			this->minimizeMassDifference();
+			if ( std::find(ZZ_candidates.begin(), ZZ_candidates.end(), m_best_pair_index) != ZZ_candidates.end() ) {
+				m_VBpair_type = 23; // is ZZ
+			} else {
+				m_VBpair_type = 24; // is WW
+			}
 			return;
 		}
 		else if ( ( ZZ_candidates.size() > 1) || ( WW_candidates.size() > 1) ) { 

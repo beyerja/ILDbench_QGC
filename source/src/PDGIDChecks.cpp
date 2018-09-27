@@ -87,3 +87,32 @@ bool PDGIDChecks::isWWDecayLike( int W1p1_pdgID, int W1p2_pdgID, int W2p1_pdgID,
 
 //-------------------------------------------------------------------------------------------------
 
+bool PDGIDChecks::isWID( int pdgID ) {
+  if( fabs(pdgID) == 24 ){
+      return true;
+  } else {
+    return false;
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool PDGIDChecks::isZID( int pdgID ) {
+  if( fabs(pdgID) == 23 ){
+      return true;
+  } else {
+    return false;
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool PDGIDChecks::isVectorBosonID( int pdgID ) {
+  if( PDGIDChecks::isWID( pdgID ) || PDGIDChecks::isZID( pdgID ) ){
+      return true;
+  } else {
+    return false;
+  }
+}
+
+//-------------------------------------------------------------------------------------------------

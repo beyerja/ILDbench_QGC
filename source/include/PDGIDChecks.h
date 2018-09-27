@@ -11,6 +11,9 @@ namespace PDGIDChecks {
   bool isZZDecayLike( int Z1p1_pdgID, int Z1p2_pdgID, int Z2p1_pdgID, int Z2p2_pdgID );
   bool isWDecayLike( int p1_pdgID, int p2_pdgID );
   bool isWWDecayLike( int W1p1_pdgID, int W1p2_pdgID, int W2p1_pdgID, int W2p2_pdgID );
+  bool isWID( int pdgID );
+  bool isZID( int pdgID );
+  bool isVectorBosonID( int pdgID );
 }
 
 #endif

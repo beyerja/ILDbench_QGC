@@ -31,7 +31,10 @@ void aQGCObservablesProcessor::getMCParticleVector( MCParticleVec &output_vector
 //-------------------------------------------------------------------------------------------------
 
 MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec &mc_particles ) {
-  /** Find initial e+ e- in MC particles before interaction (but after ISR)
+  /** Find initial e+ e- in MC particles before interaction (but after ISR).
+      Calls itself recursively if multiple versions of the initial e+e- exist
+      in the MCParticles.
+      Recursion ends when hard scatter is found.
   */
   
   MCParticleVec initial_ee{};
@@ -40,8 +43,8 @@ MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec &mc_par
   MCParticle* first_positron {};
   
   // First get first e+ and e- in MC list
-  for ( unsigned int i_mc = 0; i_mc<mc_particles.size(); i_mc++ ) {
-    MCParticle* mc = mc_particles[i_mc];
+  for ( auto & mc: mc_particles ) {//unsigned int i_mc = 0; i_mc<mc_particles.size(); i_mc++ ) {
+    // MCParticle* mc = mc_particles[i_mc];
     int mc_pdg = mc->getPDG();
     
     if ( mc_pdg == -11 )  { first_electron = mc; }
@@ -56,22 +59,36 @@ MCParticleVec aQGCObservablesProcessor::findLastInitialee( MCParticleVec &mc_par
   }
   
   // Then go through electron daughters and try to see if it consists
-  // of e+e- + some gammas -> If so take next step e+e-
+  // of e+e- + some gammas -> If so take next step e+e- and test again
   // Everything else would already be hard interaction
   MCParticleVec electron_daughters ( first_electron->getDaughters() );
+  MCParticleVec positron_daughters ( first_positron->getDaughters() );
+  MCParticleVec ee_daughters {};
+  ee_daughters.insert( ee_daughters.end(), electron_daughters.begin(), electron_daughters.end() );
+  ee_daughters.insert( ee_daughters.end(), positron_daughters.begin(), positron_daughters.end() );
   MCParticle* daughter_electron {};
   MCParticle* daughter_positron {};
-  for ( unsigned int i_daughter = 0; i_daughter<electron_daughters.size(); i_daughter++ ){
-    MCParticle* mc = electron_daughters[i_daughter];
-    int mc_pdg = mc->getPDG();
+  bool found_hardscatter_particles = false;
+  // TODO GO OVER BOTH DAUGHTERS
+  for ( auto & daughter: ee_daughters ) {
+    int daughter_pdg = daughter->getPDG();
     
-    if      ( mc_pdg == -11 ) { daughter_electron = mc; }
-    else if ( mc_pdg == 11 )  { daughter_positron = mc; }
-    else if ( mc_pdg == 22 )  { continue; }
+    if      ( daughter_pdg == -11 ) { daughter_electron = daughter; }
+    else if ( daughter_pdg == 11 )  { daughter_positron = daughter; }
+    else if ( daughter_pdg == 22 )  { continue; }
     else { 
       /* Found some non-{e+,e-,gamma} particle, break and return first e+e- */
       initial_ee = { first_electron, first_positron };
-    } 
+      found_hardscatter_particles = true;
+    }
+  }
+  if ( !found_hardscatter_particles ) {
+    // Have not found hard scatter yet, try next level recursively
+    streamlog_out(DEBUG) << "In findLastInitialee: Didn't end at hard scatter yet, try another level." << std::endl;
+    MCParticleVec new_level_ee {daughter_electron, daughter_positron};
+    initial_ee = this->findLastInitialee( new_level_ee );
+  } else {
+    streamlog_out(DEBUG) << "In findLastInitialee: Found hard scatter, taking ee directly before it." << std::endl;
   }
   
   // If final e+e- not already found set here
@@ -103,10 +120,28 @@ MCParticleVec aQGCObservablesProcessor::findInitial4q2nu( MCParticleVec &mc_part
   MCParticleSet ee_daughters {};
   for(auto const& e: initial_ee ) {
     MCParticleVec e_daughters = e->getDaughters();
-    for ( unsigned int i_daughter = 0; i_daughter<e_daughters.size(); i_daughter++ ){
-      ee_daughters.insert( e_daughters[i_daughter] );
+    for ( auto & e_daughter: e_daughters ) {//unsigned int i_daughter = 0; i_daughter<e_daughters.size(); i_daughter++ ){
+      // Special case: intermediate vector bosons inserted by WHIZARD 
+      // -> ignore them, go over their daughters instead
+      int daughter_pdg = e_daughter->getPDG();
+      if ( PDGIDChecks::isVectorBosonID(daughter_pdg) ) {
+        MCParticleVec V_daughters = e_daughter->getDaughters();
+        for ( auto & V_daughter: V_daughters ) {
+          streamlog_out(DEBUG) << "In findInitial4q2nu: Found intermediate vector boson. Ignoring it and taking daughters instead." << std::endl;
+          ee_daughters.insert( V_daughter );
+        }
+      } else {
+        ee_daughters.insert( e_daughter );
+      }
     }
   }
+  
+  streamlog_out(DEBUG) << "In findInitial4q2nu: ee_daughter IDs: ";
+  for ( MCParticleSet::iterator mc_it=ee_daughters.begin(); mc_it!=ee_daughters.end(); ++mc_it ){
+    streamlog_out(DEBUG) << (*mc_it)->getPDG() << " " ;
+  }
+  streamlog_out(DEBUG) << std::endl;
+  
   
   // Find 4q2nu topology if available
   if ( ee_daughters.size() == 6 ){
