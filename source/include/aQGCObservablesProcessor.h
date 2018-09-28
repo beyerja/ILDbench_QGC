@@ -83,10 +83,13 @@ private:
   void checkMCSignalLikeness( MCParticleVec &mc_particles );
   MCParticleVec findVisibleMC( MCParticleVec &mc_particles );
   void calculateMCObservables( MCParticleVec &mc_particles );
-  void analyseMC();
+  void analyseMCObservables();
+  void analyseMCTruth();
   
   ReconstructedParticleVec getRecoCollectionVector( std::string collectionName );
   void analyseReconstructed();
+  
+  void findVectorBosonObservables( TLorentzVector &V1_jet1_tlv, TLorentzVector &V1_jet2_tlv, TLorentzVector &V2_jet1_tlv, TLorentzVector &V2_jet2_tlv  );
   
   // Member function templates -> definitions need to be included at end of this file
   template <class ParticleClass> void findJetObservables( std::vector<ParticleClass*> &jet_vector );
@@ -104,6 +107,7 @@ private:
   std::string         m_isolatedLeptonsCollectionName {};
   
   TTree*              m_processinfotree {};
+  TTree*              m_truthtree {};
   TTree*              m_mctree {};
   TTree*              m_recotree {};
   

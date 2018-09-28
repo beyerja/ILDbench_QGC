@@ -64,6 +64,7 @@ void aQGCObservablesProcessor::setInputInfoBranches( TTree* tree ) {
 
 void aQGCObservablesProcessor::setTTreeBranches() {
   this->setInputInfoBranches(m_processinfotree);
+  this->setObservablesBranches(m_truthtree);
   this->setObservablesBranches(m_mctree);
   this->setObservablesBranches(m_recotree);
 }

@@ -59,6 +59,7 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
 void aQGCObservablesProcessor::init() {
   m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
   m_processinfotree = new TTree("processInfoTree", "processInfoTree");
+  m_mctruth = new TTree("mcTruthTree", "mcTruthTree");
   m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
   m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
   
@@ -89,8 +90,13 @@ void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   m_com_E = m_event->getParameters().getFloatVal( "Energy" );
   
   this->CleanEvent();
-  streamlog_out(DEBUG) << "Processing MC info " << std::endl;
-  this->analyseMC();
+  streamlog_out(DEBUG) << "Processing MC truth info " << std::endl;
+  this->analyseMCTruth();
+  m_truthtree->Fill();
+  
+  this->CleanEvent();
+  streamlog_out(DEBUG) << "Processing MC observable-like info " << std::endl;
+  this->analyseMCObservables();
   m_mctree->Fill();
   
   this->CleanEvent();
@@ -112,6 +118,7 @@ void aQGCObservablesProcessor::end() {
   m_rootfile->cd();
   
   m_processinfotree->Write();
+  m_mctruth->Write();
   m_mctree->Write();
   m_recotree->Write();
   
