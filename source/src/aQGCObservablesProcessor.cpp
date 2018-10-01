@@ -58,10 +58,11 @@ aQGCObservablesProcessor::aQGCObservablesProcessor() : Processor("aQGCObservable
 
 void aQGCObservablesProcessor::init() {
   m_rootfile = new TFile(m_rootfilename.c_str(), "recreate");
+  
   m_processinfotree = new TTree("processInfoTree", "processInfoTree");
-  m_mctruth = new TTree("mcTruthTree", "mcTruthTree");
-  m_mctree = new TTree("mcObservablesTree", "mcObservablesTree");
-  m_recotree = new TTree("recoObservablesTree", "recoObservablesTree");
+  m_truthtree = new TTree("mcTruthTree", "mcTruthTree");
+  m_mctree    = new TTree("mcObservablesTree", "mcObservablesTree");
+  m_recotree  = new TTree("recoObservablesTree", "recoObservablesTree");
   
   this->setTTreeBranches();
 }
@@ -118,7 +119,7 @@ void aQGCObservablesProcessor::end() {
   m_rootfile->cd();
   
   m_processinfotree->Write();
-  m_mctruth->Write();
+  m_truthtree->Write();
   m_mctree->Write();
   m_recotree->Write();
   

@@ -41,7 +41,6 @@ void aQGCObservablesProcessor::calculateMCObservables( MCParticleVec &mc_particl
   MCParticleVec visible_initial_state = this->findVisibleMC( mc_particles );
   streamlog_out(DEBUG) << "In calculateMCObservables: Found " << visible_initial_state.size() << " visible initial particles!" << std::endl;
   
-  // TODO THIS SHOULD NOT BE HERE BUT IN MCTRUTH
   // Look if there's a charged lepton
   if ( this->getChargedLeptons(visible_initial_state).size() > 0 ) {
     m_found_isolep = true;

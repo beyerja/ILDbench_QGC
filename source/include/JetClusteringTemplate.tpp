@@ -79,6 +79,8 @@ double JetClusterer<ParticleClass>::ee_kt_distance( ParticleClass* particle1, Pa
   return 2.0 * Esquared_min * ( 1.0 - cosTheta_12 ); 
 }
   
+//-------------------------------------------------------------------------------------------------
+
 template<class ParticleClass>
 std::vector<ParticleClass*> JetClusterer<ParticleClass>::ee_kt_algorithm_step( ParticleVec &particles ){
   double minimal_distance = std::numeric_limits<double>::infinity();
@@ -88,7 +90,7 @@ std::vector<ParticleClass*> JetClusterer<ParticleClass>::ee_kt_algorithm_step( P
   // Find the two particles with minimal distance
   for ( unsigned int i_p1=0; i_p1<particles.size()-1; i_p1++ ) {
     for ( unsigned int i_p2=i_p1+1; i_p2<particles.size(); i_p2++ ) {
-      double distance_12 = ee_kt_distance( particles[i_p1], particles[i_p2] );
+      double distance_12 = this->ee_kt_distance( particles[i_p1], particles[i_p2] );
       if ( distance_12 < minimal_distance ) {
         minimal_distance = distance_12;
         minimum_index1 = i_p1;

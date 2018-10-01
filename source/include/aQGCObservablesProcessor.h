@@ -80,18 +80,18 @@ private:
   MCParticleVec getQuarks( MCParticleVec &mc_particles );
   MCParticleVec getNeutrinos( MCParticleVec &mc_particles );
   MCParticleVec getChargedLeptons( MCParticleVec &mc_particles );
-  void checkMCSignalLikeness( MCParticleVec &mc_particles );
   MCParticleVec findVisibleMC( MCParticleVec &mc_particles );
   void calculateMCObservables( MCParticleVec &mc_particles );
   void analyseMCObservables();
+  void calculateMCTruth( MCParticleVec &mc_particles );
   void analyseMCTruth();
   
   ReconstructedParticleVec getRecoCollectionVector( std::string collectionName );
   void analyseReconstructed();
   
-  void findVectorBosonObservables( TLorentzVector &V1_jet1_tlv, TLorentzVector &V1_jet2_tlv, TLorentzVector &V2_jet1_tlv, TLorentzVector &V2_jet2_tlv  );
   
   // Member function templates -> definitions need to be included at end of this file
+  template <class ParticleClass> void findVectorBosonObservables( VectorBosonPairFinder<ParticleClass> &VBpair_finder );
   template <class ParticleClass> void findJetObservables( std::vector<ParticleClass*> &jet_vector );
   template <class ParticleClass> void findParticleObservables( std::vector<ParticleClass*> &particle_vector );
 

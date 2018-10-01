@@ -7,11 +7,9 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   // WARNING: If new variable is added remember to clean it up in the CleanEvent function!!
   
   // Vector boson observables
-  tree->Branch( "V1_type",      &m_V1_type,     "V1_type/I"); 
   tree->Branch( "V1_m",         &m_V1_m,        "V1_m/F");
   tree->Branch( "V1_pT",        &m_V1_pT,       "V1_pT/F");
   tree->Branch( "V1_cosTheta",  &m_V1_cosTheta, "V1_cosTheta/F");
-  tree->Branch( "V2_type",      &m_V2_type,     "V2_type/I"); 
   tree->Branch( "V2_m",         &m_V2_m,        "V2_m/F");
   tree->Branch( "V2_pT",        &m_V2_pT,       "V2_pT/F");
   tree->Branch( "V2_cosTheta",  &m_V2_cosTheta, "V2_cosTheta/F");
