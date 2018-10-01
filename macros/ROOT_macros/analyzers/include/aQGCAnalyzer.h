@@ -5,7 +5,7 @@
 
 class aQGCAnalyzer : public Analyzer {
   
-  public:
+  private:
     void performAnalysis();
 };
 

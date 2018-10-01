@@ -9,7 +9,7 @@ class Analyzer {
   
   protected:
     vector<string> m_input_file_paths {};
-    RDataFrame* m_dataframe;
+    RDataFrame* m_dataframe{};
     vector<TChain*> m_all_chains {};
 
     float m_luminosity {};
@@ -22,15 +22,16 @@ class Analyzer {
     void setBeamPolarizations( float &e_beam_polarization, float &p_beam_polarization );
     void setLuminosity( float &luminosity );
     
-    virtual void performAnalysis() = 0;
-    void clearMemory();
+    void run();
 
   protected:
     void aliasMCColumnsInDataframe();
     void getCombinedDataframe();
+    virtual void performAnalysis() = 0;
+    void clearMemory();
     
     float getPolarizationWeight( float e_polarization, float p_polarization );
-    float getEventWeight( float polarization_weight, float cross_section, int N_process_events );
+    float getProcessWeight( float polarization_weight, float cross_section, int N_process_events );
     
 };
 

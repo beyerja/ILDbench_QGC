@@ -1,5 +1,5 @@
 #include "src/InputManager.cpp"
-#include "analyzers/src/HighestSignificanceFinder.cpp"
+#include "analyzers/src/aQGCAnalyzer.cpp"
 
  
 void TestMacro() {
@@ -13,8 +13,7 @@ void TestMacro() {
   vector<string> root_file_paths {};
   input_manager.getFilePaths( root_file_paths );
   
-  HighestSignificanceFinder analyzer;
+  aQGCAnalyzer analyzer;
   analyzer.setInputPaths( root_file_paths );
-  analyzer.performAnalysis();
-  analyzer.clearMemory();
+  analyzer.run();
 };

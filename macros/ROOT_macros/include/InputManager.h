@@ -7,6 +7,9 @@
 
 
 class InputManager {
+  /** Class with the purpose to easily find a bunch of files with the same 
+      extension in a directory.
+  */
   
   string m_directory {};
   string m_search_extension {"root"};

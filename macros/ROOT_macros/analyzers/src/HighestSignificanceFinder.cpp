@@ -51,9 +51,6 @@ float HighestSignificanceFinder::singleCutSignificance( ParameterType x, Cut cut
 //-------------------------------------------------------------------------------------------------
 
 void HighestSignificanceFinder::performAnalysis(){
-  this->getCombinedDataframe();
-  
-  
   initializer_list<string> variable_names = {"reco.VV_pT"};
   function<float (float)> neg_significance_lambda 
     = [this,variable_names](float x) { return this->singleCutSignificance( x, PassesCutVVpT, variable_names ); };

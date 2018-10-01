@@ -5,7 +5,7 @@
 
 class TestAnalyzer : public Analyzer {
   
-  public:
+  private:
     void performAnalysis();
 };
 

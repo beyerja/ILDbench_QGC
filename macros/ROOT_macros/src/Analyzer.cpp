@@ -35,23 +35,34 @@ void Analyzer::aliasMCColumnsInDataframe() {
 //-------------------------------------------------------------------------------------------------
 
 void Analyzer::getCombinedDataframe() {
-  TChain* info_chain = new TChain("processInfoTree");
-  TChain* reco_chain = new TChain("recoObservablesTree");
-  TChain* mc_chain   = new TChain("mcObservablesTree");
+  TChain* info_chain  = new TChain("processInfoTree");
+  TChain* reco_chain  = new TChain("recoObservablesTree");
+  TChain* mc_chain    = new TChain("mcObservablesTree");
+  TChain* truth_chain = new TChain("mcTruthTree");
   
   for ( auto const& file_path: m_input_file_paths ) {
     info_chain ->Add( file_path.c_str() );
     reco_chain ->Add( file_path.c_str() );
     mc_chain   ->Add( file_path.c_str() );
+    truth_chain->Add( file_path.c_str() );
   }
   
   info_chain->AddFriend(reco_chain, "reco");
-  info_chain->AddFriend(mc_chain, "mc");
+  info_chain->AddFriend(mc_chain, "mcobs");
+  info_chain->AddFriend(truth_chain, "mctruth");
   RDataFrame* befriended_dataframe = new RDataFrame(*info_chain);
   m_dataframe = befriended_dataframe;
   // this->aliasMCColumnsInDataframe();
   
-  m_all_chains = {info_chain, reco_chain, mc_chain};
+  m_all_chains = {info_chain, reco_chain, mc_chain, truth_chain};
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Analyzer::run(){
+  this->getCombinedDataframe();
+  this->performAnalysis();
+  this->clearMemory();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -74,7 +85,7 @@ float Analyzer::getPolarizationWeight( float e_polarization, float p_polarizatio
 
 //-------------------------------------------------------------------------------------------------
 
-float Analyzer::getEventWeight( float polarization_weight, float cross_section, int N_process_events ){
+float Analyzer::getProcessWeight( float polarization_weight, float cross_section, int N_process_events ){
   return polarization_weight * ( cross_section * m_luminosity ) / float(N_process_events);
 }
 

@@ -7,10 +7,9 @@ using namespace Math;
 
 class HighestSignificanceFinder : public Analyzer {
   
-  public:
+  private:
     void performAnalysis();
     
-  private:
     vector<float> getSignificance( vector<int> &sig, vector<int> &bkg );
     int findMaxSignificanceIndex( vector<int> &sig, vector<int> &bkg );
     
