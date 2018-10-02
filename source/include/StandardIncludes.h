@@ -21,6 +21,7 @@
 #include "TTree.h"
 #include "TH1F.h"
 #include "TLorentzVector.h"
+#include "TString.h"
 
 //LCIO
 #include <EVENT/LCCollection.h>

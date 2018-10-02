@@ -34,6 +34,46 @@ void Analyzer::aliasMCColumnsInDataframe() {
 
 //-------------------------------------------------------------------------------------------------
 
+void Analyzer::findAllFinalStates( TChain *info_chain ) {
+  if ( !m_final_state_Nevents.empty() ){
+    cout << "ERROR in Analyzer::findAllFinalStates : Searching final states, but they are already found!"  << endl;
+    return;
+  }
+  
+  int N_total = info_chain->GetEntries();
+  TString* process_name_ptr {};
+  float e_polarization, p_polarization {};
+  info_chain->SetBranchAddress("process_name", &process_name_ptr);
+  info_chain->SetBranchAddress("e_polarization", &e_polarization);
+  info_chain->SetBranchAddress("p_polarization", &p_polarization);
+  
+  // For each event determine if final state (incl. pol.) already captured.
+  // If so increment specific event counter, else create new one as 1.
+  for (int i=0; i<N_total; i++) {
+    info_chain->GetEvent(i);
+    string process_name = process_name_ptr->Data();
+    
+    // Test if final state already found
+    if ( m_final_state_Nevents.find(process_name) == m_final_state_Nevents.end() ) {
+      cout  << "Found final state: " <<  process_name << endl;
+      m_final_state_Nevents[process_name] = pol_Nevents_map{};
+    }
+    
+    // Test if polarization already found for this final state
+    pol_Nevents_map* fs_pol_map = &m_final_state_Nevents[process_name]; 
+    auto pol_pair = make_pair(e_polarization, p_polarization);
+    if ( fs_pol_map->find(pol_pair) == fs_pol_map->end() ) {
+      cout  << "Found final state - polarization pairing: " << process_name 
+            << " " << e_polarization << " " << p_polarization << endl;
+      m_final_state_Nevents[process_name][pol_pair] = 1;
+    } else {
+      m_final_state_Nevents[process_name][pol_pair]++;
+    }
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void Analyzer::getCombinedDataframe() {
   TChain* info_chain  = new TChain("processInfoTree");
   TChain* reco_chain  = new TChain("recoObservablesTree");
@@ -46,6 +86,8 @@ void Analyzer::getCombinedDataframe() {
     mc_chain   ->Add( file_path.c_str() );
     truth_chain->Add( file_path.c_str() );
   }
+  
+  this->findAllFinalStates( info_chain );
   
   info_chain->AddFriend(reco_chain, "reco");
   info_chain->AddFriend(mc_chain, "mcobs");
@@ -60,9 +102,13 @@ void Analyzer::getCombinedDataframe() {
 //-------------------------------------------------------------------------------------------------
 
 void Analyzer::run(){
+  cout << "Reading in trees from files to create dataframe." << endl;
   this->getCombinedDataframe();
+  cout << "Starting analysis." << endl;
   this->performAnalysis();
+  cout << "Analysis finished - cleaning up." << endl;
   this->clearMemory();
+  cout << "Done!" << endl;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -79,14 +125,48 @@ void Analyzer::clearMemory(){
 
 //-------------------------------------------------------------------------------------------------
 
+int Analyzer::getNProcessEvents( TString* process_name_ptr, float e_polarization, float p_polarization ) {
+  string process_name = process_name_ptr->Data();
+  
+  // Test if final state is registered
+  if ( m_final_state_Nevents.find(process_name) == m_final_state_Nevents.end() ) {
+    cout  << "ERROR in Analyzer::getNProcessEvents: Unknown process "
+          << process_name << endl;
+    return -1;
+  }
+  
+  // Test if polarization is registered
+  pol_Nevents_map* fs_pol_map = &m_final_state_Nevents[process_name]; 
+  auto pol_pair = make_pair(e_polarization, p_polarization);
+  if ( fs_pol_map->find(pol_pair) == fs_pol_map->end() ) {
+    cout  << "ERROR in Analyzer::getNProcessEvents: Unknown process - pol pairing "
+    << process_name << " " << e_polarization << " " << p_polarization << endl;
+    return -1;
+  } 
+  
+  return m_final_state_Nevents[process_name][pol_pair];
+}
+
+//-------------------------------------------------------------------------------------------------
+
 float Analyzer::getPolarizationWeight( float e_polarization, float p_polarization ) {
   return 0.5*( 1 + e_polarization * m_e_beam_polarization ) * 0.5*( 1 + p_polarization * m_p_beam_polarization );
 }
 
 //-------------------------------------------------------------------------------------------------
 
-float Analyzer::getProcessWeight( float polarization_weight, float cross_section, int N_process_events ){
+float Analyzer::getProcessWeight( TString* process_name_ptr, float e_polarization, float p_polarization, float cross_section ){
+  float polarization_weight = this->getPolarizationWeight( e_polarization, p_polarization );
+  int N_process_events = getNProcessEvents( process_name_ptr, e_polarization, p_polarization );
   return polarization_weight * ( cross_section * m_luminosity ) / float(N_process_events);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+function<float (TString, float, float, float)> Analyzer::getProcessWeightLambda() {
+  return[this](TString process_name_ptr, float e_polarization, float p_polarization, float cross_section) {
+    return this->getProcessWeight( &process_name_ptr, e_polarization, p_polarization, cross_section ); 
+  };
 }
 
 //-------------------------------------------------------------------------------------------------

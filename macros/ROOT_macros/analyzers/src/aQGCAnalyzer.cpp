@@ -40,31 +40,48 @@ void aQGCAnalyzer::performAnalysis(){
   auto LeadETrackConeECut       = Cuts::getMinCutLambda( leadEtrack_coneE_min );
   auto IsoLepsCut               = Cuts::getBoolCutLambda( false );
   
-  auto data_after_cuts = m_dataframe->Filter( VMassCut, {"V1_m"} )
-                                    .Filter( VMassCut, {"V2_m"} )
-                                    .Filter( VAbsCosThetaCut, {"V1_cosTheta"} )
-                                    .Filter( VAbsCosThetaCut, {"V2_cosTheta"} )
-                                    .Filter( VVMassCut, {"VV_m"} )
-                                    .Filter( VVpTCut, {"VV_pT"} )
-                                    .Filter( VVETCut, {"VV_ET"} )
-                                    .Filter( MRecoilCut, {"m_recoil"} )
-                                    .Filter( Y34Cut, {"y_34"} )
-                                    .Filter( JetECut, {"min_jetE"} )
-                                    .Filter( JetNParticlesCut, {"min_jetNparticles"} )
-                                    .Filter( JetNChargedCut, {"min_jetNcharged"} )
-                                    .Filter( LeadETrackAbsCosThetaCut, {"leadEtrack_cosTheta"} )
-                                    .Filter( LeadETrackConeECut, {"leadEtrack_coneE"} )
-                                    .Filter( IsoLepsCut, {"found_isolep"} );
-
+  // TODO MAYBE IN COMPLETELY SEPARATE FUNCTION!
+  // TODO THINK ABOUT WHAT TO DO TO GET TOTAL NUMBER OF EVENTS FOR ONE FINAL STATE!
   // TODO CREATE ACTUAL WEIGHTS BY COMBINING WITH PROCESS WEIGHTS
+  // auto pol_weight_lambda = this->getPolarizationWeightLambda();
   
+  
+  // auto rdf_with_pol_weight = m_dataframe->Define("pol_weight", pol_weight_lambda, {"e_polarization","p_polarization"});  
+  auto process_weight_lambda = this->getProcessWeightLambda();
+  auto rdf_with_process_weight = m_dataframe->Define("process_weight", process_weight_lambda, {"process_name", "e_polarization", "p_polarization", "cross_section"});  
+  
+  auto rdf_data_after_cuts = rdf_with_process_weight.Filter( VMassCut, {"reco.V1_m"} )
+                                    .Filter( VMassCut, {"reco.V2_m"} )
+                                    .Filter( VAbsCosThetaCut, {"reco.V1_cosTheta"} )
+                                    .Filter( VAbsCosThetaCut, {"reco.V2_cosTheta"} )
+                                    .Filter( VVMassCut, {"reco.VV_m"} )
+                                    .Filter( VVpTCut, {"reco.VV_pT"} )
+                                    .Filter( VVETCut, {"reco.VV_ET"} )
+                                    .Filter( MRecoilCut, {"reco.m_recoil"} )
+                                    .Filter( Y34Cut, {"reco.y_34"} )
+                                    .Filter( JetECut, {"reco.min_jetE"} )
+                                    .Filter( JetNParticlesCut, {"reco.min_jetNparticles"} )
+                                    .Filter( JetNChargedCut, {"reco.min_jetNcharged"} )
+                                    .Filter( LeadETrackAbsCosThetaCut, {"reco.leadEtrack_cosTheta"} )
+                                    .Filter( LeadETrackConeECut, {"reco.leadEtrack_coneE"} )
+                                    .Filter( IsoLepsCut, {"reco.found_isolep"} );
+
 
   // // TODO Event weights!!!                              
   // 
-  // TODO Test this!
-  cout << *data_after_cuts.Filter("mctruth.signal_type > 0").Count() << endl;
-  
-  // auto h1_VV_m = data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "VV_m", "event_weights");
+  cout << *rdf_with_process_weight.Filter("mctruth.signal_type > 0").Count() << endl;
+  cout << *rdf_with_process_weight.Filter("mctruth.signal_type == 0").Count() << endl;
+  cout << *rdf_data_after_cuts.Filter("mctruth.signal_type > 0").Count() << endl;
+  cout << *rdf_data_after_cuts.Filter("mctruth.signal_type == 0").Count() << endl;
+  // 
+  TCanvas *canvas_h1 = new TCanvas("test", "", 0, 0, 600, 600);
+  auto h1_VV_m = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts = rdf_with_process_weight.Histo1D({"h1_VV_m_nocuts", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  h1_VV_m_nocuts->Draw("hist");
+  h1_VV_m->SetLineColor(2);
+  h1_VV_m->Draw("hist same");
+  canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot.pdf");
+  delete canvas_h1;
 }
 
 //-------------------------------------------------------------------------------------------------

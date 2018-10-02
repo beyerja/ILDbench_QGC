@@ -48,13 +48,13 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
 //-------------------------------------------------------------------------------------------------
 
 void aQGCObservablesProcessor::setInputInfoBranches( TTree* tree ) {
-  tree->Branch( "detector_model",   &m_detector_model,  "detector_model/C");
-  tree->Branch( "process_name",   &m_process_name,  "process_name/C");
+  tree->Branch( "detector_model", &m_detector_model,  16000, 0);
+  tree->Branch( "process_name",   &m_process_name,    16000, 0);
   
-  tree->Branch( "e_polarization",   &m_e_polarization,  "e_polarization/F");
-  tree->Branch( "p_polarization",   &m_p_polarization,  "p_polarization/F");
-  tree->Branch( "cross_section",   &m_cross_section,  "cross_section/F");
-  tree->Branch( "cross_section_error",   &m_cross_section_error,  "cross_section_error/F");
+  tree->Branch( "e_polarization", &m_e_polarization,  "e_polarization/F");
+  tree->Branch( "p_polarization", &m_p_polarization,  "p_polarization/F");
+  tree->Branch( "cross_section",  &m_cross_section,   "cross_section/F");
+  tree->Branch( "cross_section_error",  &m_cross_section_error, "cross_section_error/F");
 }
 
 

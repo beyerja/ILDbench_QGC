@@ -116,8 +116,8 @@ private:
   
   // Process information
   
-  std::string  m_detector_model {};
-  std::string  m_process_name {};
+  TString  m_detector_model {};
+  TString  m_process_name {};
   float  m_e_polarization {};
   float  m_p_polarization {};
   float  m_cross_section {};
