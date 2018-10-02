@@ -17,23 +17,6 @@ void Analyzer::setLuminosity( float &luminosity ){
 
 //-------------------------------------------------------------------------------------------------
 
-
-void Analyzer::aliasMCColumnsInDataframe() {
-  auto col_names = m_dataframe->GetColumnNames();
-  
-  regex mc_like {"mc.*"};
-  for (auto &&col_name : col_names) {
-    if ( regex_match( col_name, mc_like ) ) {
-      string mc_column_alias = "mc_" + col_name.substr(3);
-      m_dataframe->Alias( mc_column_alias , col_name );
-    }
-  }
-  
-  col_names = m_dataframe->GetColumnNames();
-}
-
-//-------------------------------------------------------------------------------------------------
-
 void Analyzer::findAllFinalStates( TChain *info_chain ) {
   if ( !m_final_state_Nevents.empty() ){
     cout << "ERROR in Analyzer::findAllFinalStates : Searching final states, but they are already found!"  << endl;
@@ -94,7 +77,6 @@ void Analyzer::getCombinedDataframe() {
   info_chain->AddFriend(truth_chain, "mctruth");
   RDataFrame* befriended_dataframe = new RDataFrame(*info_chain);
   m_dataframe = befriended_dataframe;
-  // this->aliasMCColumnsInDataframe();
   
   m_all_chains = {info_chain, reco_chain, mc_chain, truth_chain};
 }

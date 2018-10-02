@@ -27,7 +27,6 @@ class Analyzer {
     void run();
 
   protected:
-    void aliasMCColumnsInDataframe();
     void findAllFinalStates( TChain *info_chain );
     void getCombinedDataframe();
     virtual void performAnalysis() = 0;
@@ -37,6 +36,7 @@ class Analyzer {
     float getPolarizationWeight( float e_polarization, float p_polarization );
     float getProcessWeight(  TString* process_name_ptr, float e_polarization, float p_polarization, float cross_section );
     
+    // Lambda can be used in dataframe to extract weight
   	function<float (TString, float, float, float)> getProcessWeightLambda(); 
 
 };
