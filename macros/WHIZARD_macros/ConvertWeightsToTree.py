@@ -59,7 +59,7 @@ def extractWeights( weights_string ):
 
 def writeWeightsToTree( weights_dict, root_path ):
     file = ROOT.TFile( root_path, 'recreate' )
-    tree = ROOT.TTree( 'weights_tree', 'weights for anomalous couplings' )
+    tree = ROOT.TTree( 'weightsTree', 'weights for anomalous couplings' )
 
     # Writing trees in Python complicated because it works with references..
     weight_ptrs = {}
@@ -68,7 +68,7 @@ def writeWeightsToTree( weights_dict, root_path ):
     for key in weights_dict:
         weight_ptr = array( 'f', [ 0. ] )
         weight_ptrs[key] = weight_ptr
-        tree.Branch( "weight{}".format(key), weight_ptrs[key], "{}/F".format(key) )
+        tree.Branch( "weight{}".format(key), weight_ptrs[key], "weight{}/F".format(key) )
     
     # Then fill (all parameter sets should have number of weights)
     n_events = len(weights_dict[weights_dict.keys()[0]])
