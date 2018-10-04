@@ -202,6 +202,19 @@ void EFTAnalyzer::run(){
 
 //-------------------------------------------------------------------------------------------------
 
+int EFTAnalyzer::getNParameterPoints() const{
+  return m_parameter_points.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+map<int, pair<float, float>> EFTAnalyzer::getParameterPointMap() const{
+  return m_parameter_points;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+
 float EFTAnalyzer::getEventWeight( float event_weight, float process_weight ){
   return event_weight * process_weight;
 }
