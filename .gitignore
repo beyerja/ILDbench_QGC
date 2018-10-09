@@ -9,3 +9,4 @@
 *__pycache__
 *.pyc
 /scripts/WHIZARD_scripts/isr_spectrum_files/ee_Waisty_opt_Jan2012_1000GeV_B1b.circe
+*.root
