@@ -14,6 +14,13 @@ void InputManager::setFilenameExtension( string search_extension ) {
 
 //-------------------------------------------------------------------------------------------------
 
+void InputManager::beSilent( bool silent ){
+  m_silent = silent;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+
 void InputManager::getFilePaths( vector<string> &filename_vector ) {
   filename_vector = m_root_file_paths;
 }
@@ -32,7 +39,9 @@ void InputManager::getDirectoryContent()
   DIR *dp;
   struct dirent *dirp;
   if((dp  = opendir(m_directory.c_str())) == NULL) {
-    cout << "Error(" << errno << ") opening " << m_directory << endl;
+    if ( !m_silent ) { 
+      cout << "Error(" << errno << ") opening " << m_directory << endl;
+    }
     return errno;
   }
 

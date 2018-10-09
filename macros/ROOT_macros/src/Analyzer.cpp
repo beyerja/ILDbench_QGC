@@ -17,7 +17,7 @@ void Analyzer::setLuminosity( float &luminosity ){
 
 //-------------------------------------------------------------------------------------------------
 
-void Analyzer::findAllFinalStates( TChain *info_chain ) {
+void Analyzer::findAllFinalStates( TTree *info_chain ) {
   if ( !m_final_state_Nevents.empty() ){
     cout << "ERROR in Analyzer::findAllFinalStates : Searching final states, but they are already found!"  << endl;
     return;

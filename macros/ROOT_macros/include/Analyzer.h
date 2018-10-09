@@ -27,7 +27,7 @@ class Analyzer {
     void run();
 
   protected:
-    void findAllFinalStates( TChain *info_chain );
+    void findAllFinalStates( TTree *info_chain );
     void getCombinedDataframe();
     virtual void performAnalysis() = 0;
     void clearMemory();

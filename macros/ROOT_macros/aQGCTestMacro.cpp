@@ -1,8 +1,8 @@
 #include "analyzers/src/EFTTester.cpp"
 
 void aQGCTestMacro() {
-  EnableImplicitMT(); // Allow multithreating in RDataFrame
-  EnableThreadSafety(); 
+  EnableImplicitMT(20); // Allow multithreating in RDataFrame
+  // EnableThreadSafety(); 
   
   // TODO Create clean-up option for temporary files
   

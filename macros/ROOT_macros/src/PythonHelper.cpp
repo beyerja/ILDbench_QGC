@@ -1,8 +1,6 @@
-#ifndef PYTHONHELPER_SRC
-#define PYTHONHELPER_SRC 1
-
-
 #include "../include/PythonHelper.h"
+
+//-------------------------------------------------------------------------------------------------
 
 vector<vector<float>> PyHelp::read2DMatrixFromFile ( string &py_file_path ) {
   // Reads a 2D python array from a Python file
@@ -33,4 +31,4 @@ vector<vector<float>> PyHelp::read2DMatrixFromFile ( string &py_file_path ) {
   return matrix;
 }
 
-#endif
+//-------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@
 #include "../src/Analyzer.cpp"
 #include "../src/InputManager.cpp"
 #include "../src/PythonHelper.cpp"
+#include "../src/SystemHelper.cpp"
 
 class EFTAnalyzer : public Analyzer {
 
@@ -13,7 +14,8 @@ class EFTAnalyzer : public Analyzer {
     typedef pair<float,float> ParameterPoint;
     map<int, ParameterPoint> m_parameter_points {};
     string m_dummy_weights_file {};
-    int m_dummy_count {};
+    string m_total_combined_path {};
+    TFile* m_combined_file {};
 
   public:  
     void run();
@@ -23,10 +25,11 @@ class EFTAnalyzer : public Analyzer {
     void setupDummyWeightsFile( string weight_file_path );
     void searchForWeightFile( string file_path );
     void searchForWeightFiles();
-    string getDummyCopy( string file_path );
-    string getCombinedFilePath( string file_path, string weight_path );
+    string makeDummyCopy( string file_path );
+    string combineFileAndWeight( string file_path, string weight_path );
+    void combineAllFiles();
     void getCombinedDataframe();
-    
+    void clearMemory();
 
     ParameterPoint getParameterPoint( int setting_index ) const;
     int getNParameterPoints() const;

@@ -1,4 +1,4 @@
-// #include "src/InputManager.cpp"
+#include "src/InputManager.cpp"
 #include "analyzers/src/aQGCAnalyzer.cpp"
 
  
