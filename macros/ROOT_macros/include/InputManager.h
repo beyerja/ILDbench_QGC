@@ -26,6 +26,7 @@ class InputManager {
 
   private:
 
+    void cleanDirectoryContent();
     void getDirectoryContent();
     void searchFileNamesForType();
     

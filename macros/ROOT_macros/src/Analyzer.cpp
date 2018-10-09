@@ -32,7 +32,8 @@ void Analyzer::findAllFinalStates( TChain *info_chain ) {
   
   // For each event determine if final state (incl. pol.) already captured.
   // If so increment specific event counter, else create new one as 1.
-  for (int i=0; i<N_total; i++) {
+  // -> Check only every 100th event to speed up (no file should have less...)
+  for (int i=0; i<N_total; i+=100) {
     info_chain->GetEvent(i);
     string process_name = process_name_ptr->Data();
     

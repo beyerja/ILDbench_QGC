@@ -20,6 +20,12 @@ void InputManager::getFilePaths( vector<string> &filename_vector ) {
 
 //-------------------------------------------------------------------------------------------------
 
+void InputManager::cleanDirectoryContent(){
+  m_all_file_names = {};
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void InputManager::getDirectoryContent()
 // Copy-pasted from: https://www.linuxquestions.org/questions/programming-9/c-list-files-in-directory-379323/
 {
@@ -52,6 +58,7 @@ void InputManager::searchFileNamesForType()
 //-------------------------------------------------------------------------------------------------
 
 void InputManager::findFiles() {
+    this->cleanDirectoryContent();
     this->getDirectoryContent();
     this->searchFileNamesForType();
 }
