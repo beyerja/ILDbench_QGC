@@ -6,7 +6,7 @@ void TestMacro() {
   EnableImplicitMT(); // Allow multithreating in RDataFrame
   
   InputManager input_manager;
-  input_manager.setInputDirectory( "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/rootfiles" );
+  input_manager.setInputDirectory( "/nfs/dust/ilc/group/ild/beyerjac/VBS/aQGCAnalysis/test_combined" );
   input_manager.setFilenameExtension( "root" );
   input_manager.findFiles();
   

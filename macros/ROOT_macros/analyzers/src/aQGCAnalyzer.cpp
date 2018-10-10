@@ -40,15 +40,18 @@ void aQGCAnalyzer::performAnalysis(){
   auto LeadETrackConeECut       = Cuts::getMinCutLambda( leadEtrack_coneE_min );
   auto IsoLepsCut               = Cuts::getBoolCutLambda( false );
   
-  // TODO MAYBE IN COMPLETELY SEPARATE FUNCTION!
-  // TODO THINK ABOUT WHAT TO DO TO GET TOTAL NUMBER OF EVENTS FOR ONE FINAL STATE!
-  // TODO CREATE ACTUAL WEIGHTS BY COMBINING WITH PROCESS WEIGHTS
-  // auto pol_weight_lambda = this->getPolarizationWeightLambda();
+  auto IsTrueWWSignalCut          = Cuts::getIntCutLambda( 24 );
+  auto IsTrueZZSignalCut          = Cuts::getIntCutLambda( 23 );
+  auto IsTrueBkgCut             = Cuts::getIntCutLambda( 0 );
   
-  
-  // auto rdf_with_pol_weight = m_dataframe->Define("pol_weight", pol_weight_lambda, {"e_polarization","p_polarization"});  
   auto process_weight_lambda = this->getProcessWeightLambda();
+  
+  // TODO make this standard when possible with newer root version!
   auto rdf_with_process_weight = m_dataframe->Define("process_weight", process_weight_lambda, {"process_name", "e_polarization", "p_polarization", "cross_section"});  
+  
+  auto rdf_WWsignal_no_cuts = rdf_with_process_weight.Filter( IsTrueWWSignalCut, {"mctruth.signal_type"} );
+  auto rdf_ZZsignal_no_cuts = rdf_with_process_weight.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
+  auto rdf_bkg_no_cuts    = rdf_with_process_weight.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
   
   auto rdf_data_after_cuts = rdf_with_process_weight.Filter( VMassCut, {"reco.V1_m"} )
                                     .Filter( VMassCut, {"reco.V2_m"} )
@@ -66,24 +69,43 @@ void aQGCAnalyzer::performAnalysis(){
                                     .Filter( LeadETrackConeECut, {"reco.leadEtrack_coneE"} )
                                     .Filter( IsoLepsCut, {"reco.found_isolep"} );
 
+  auto rdf_WWsignal_with_cuts = rdf_data_after_cuts.Filter( IsTrueWWSignalCut, {"mctruth.signal_type"} );
+  auto rdf_ZZsignal_with_cuts = rdf_data_after_cuts.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
+  auto rdf_bkg_with_cuts    = rdf_data_after_cuts.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
+
 
   // // TODO Event weights!!!                              
   // 
-  cout << *rdf_with_process_weight.Filter("mctruth.signal_type > 0").Count() << endl;
-  cout << *rdf_with_process_weight.Filter("mctruth.signal_type == 0").Count() << endl;
-  cout << *rdf_data_after_cuts.Filter("mctruth.signal_type > 0").Count() << endl;
-  cout << *rdf_data_after_cuts.Filter("mctruth.signal_type == 0").Count() << endl;
+  cout << *rdf_WWsignal_no_cuts.Count() << endl;
+  cout << *rdf_ZZsignal_no_cuts.Count() << endl;
+  cout << *rdf_bkg_no_cuts.Count() << endl;
+  cout << *rdf_WWsignal_with_cuts.Count() << endl;
+  cout << *rdf_ZZsignal_with_cuts.Count() << endl;
+  cout << *rdf_bkg_with_cuts.Count() << endl;
   // 
   TCanvas *canvas_h1 = new TCanvas("test", "", 0, 0, 600, 600);
-  auto h1_VV_m = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
   auto h1_VV_m_nocuts = rdf_with_process_weight.Histo1D({"h1_VV_m_nocuts", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_WWsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_ZZsignal = rdf_ZZsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_ZZsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  
   h1_VV_m_nocuts->Draw("hist");
-  h1_VV_m->SetLineColor(2);
-  h1_VV_m->Draw("hist same");
+  h1_VV_m_nocuts_WWsignal->SetLineStyle(2);
+  h1_VV_m_nocuts_ZZsignal->SetLineStyle(3);
+  h1_VV_m_nocuts_WWsignal->Draw("hist same");
+  h1_VV_m_nocuts_ZZsignal->Draw("hist same");
+  h1_VV_m_withcuts->SetLineColor(2);
+  h1_VV_m_withcuts_WWsignal->SetLineColor(2);
+  h1_VV_m_withcuts_ZZsignal->SetLineColor(2);
+  h1_VV_m_withcuts_WWsignal->SetLineStyle(2);
+  h1_VV_m_withcuts_ZZsignal->SetLineStyle(3);
+  h1_VV_m_withcuts->Draw("hist same");
+  h1_VV_m_withcuts_WWsignal->Draw("hist same");
+  h1_VV_m_withcuts_ZZsignal->Draw("hist same");
   canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot.pdf");
   delete canvas_h1;
 }
 
 //-------------------------------------------------------------------------------------------------
-
-
