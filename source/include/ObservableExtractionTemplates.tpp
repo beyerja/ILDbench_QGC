@@ -10,11 +10,14 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
   /** Takes VB pair finder in which the VB candidate pair is already found
       and calculates the relevant observables for it.
   */
+  
+  streamlog_out(DEBUG) << "In findVectorBosonObservables: Getting particles." << std::endl;
   ParticleClass* boson1_jet1 = VBpair_finder.getBoson1Particle1();
   ParticleClass* boson1_jet2 = VBpair_finder.getBoson1Particle2();
   ParticleClass* boson2_jet1 = VBpair_finder.getBoson2Particle1();
   ParticleClass* boson2_jet2 = VBpair_finder.getBoson2Particle2();
   
+  streamlog_out(DEBUG) << "In findVectorBosonObservables: Calculating simple particle kinematics." << std::endl;
   TLorentzVector V1_jet1_tlv ( boson1_jet1->getMomentum(),  boson1_jet1->getEnergy() );
   TLorentzVector V1_jet2_tlv ( boson1_jet2->getMomentum(), 	boson1_jet2->getEnergy() );
   TLorentzVector V2_jet1_tlv ( boson2_jet1->getMomentum(), 	boson2_jet1->getEnergy() );
@@ -33,6 +36,7 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
   m_V2_cosTheta = V2_tlv.CosTheta();
 
   // Observables in boosted single V frame
+  streamlog_out(DEBUG) << "In findVectorBosonObservables: Calculating boosted particle kinematics." << std::endl;
   TLorentzVector V1_jet1_V1boosted_tlv = getBoostedVector( V1_jet1_tlv, V1_tlv );
   TLorentzVector V2_jet1_V2boosted_tlv = getBoostedVector( V2_jet1_tlv, V2_tlv );
   
@@ -51,6 +55,7 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
   m_VV_V_absCosThetaStar = fabs( VV_V1_VVboosted_tlv.Angle( VV_tlv.Vect() ) );
   
   // Observables from recoil against VBs
+  streamlog_out(DEBUG) << "In findVectorBosonObservables: Looking into recoil." << std::endl;
   TLorentzVector collision_system_tlv ( m_com_E*sin(0.014/2.0), 0, 0, m_com_E );
   TLorentzVector recoil_tlv  = collision_system_tlv - VV_tlv;
   m_recoil_m  = recoil_tlv.M();

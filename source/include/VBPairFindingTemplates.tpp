@@ -213,12 +213,12 @@ void VectorBosonPairFinder<ParticleClass>::findSignalMCVBPair() {
 	  else if ( ZZ_candidates.size() == 1 ) {
 			streamlog_out(DEBUG) << "In findMCVBPair: ZZ candidate found." << std::endl; 
 	    m_VBpair_type = 23; // is ZZ
-			m_best_pair_index = ZZ_candidates[0];
+			m_best_pair_index = ZZ_candidates.front();
 	  }
 	  else if ( WW_candidates.size() == 1 ) {
 			streamlog_out(DEBUG) << "In findMCVBPair: WW candidate found." << std::endl; 
 	    m_VBpair_type = 24; // is WW
-			m_best_pair_index = WW_candidates[1];
+			m_best_pair_index = WW_candidates.front();
 	  }
 
 }

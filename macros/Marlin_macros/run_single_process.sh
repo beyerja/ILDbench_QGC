@@ -45,7 +45,7 @@ for e_pol in "${e_polarizations[@]}"; do
     else 
       echo "Found files for ${final_state} ${e_pol} ${p_pol}, send Marlin jobs to BIRD cluster."
     fi
-    
+
     # Start jobs for each steering file
     cd ${standard_condor_directory}
     
