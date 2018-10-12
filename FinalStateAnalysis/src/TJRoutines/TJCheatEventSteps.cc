@@ -1,8 +1,5 @@
 #include "JakobsVBSProcessor.h"
 
-
-
-
 void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {
 
   std::vector<float> initial_cn_reco_masses;
@@ -10,9 +7,11 @@ void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {
   // Loop over all initial colour neutrals
   // If they come from quarks (only two should!!) write its mass to vector
   // afterwards write to output info.
+  streamlog_out(DEBUG) << "In TJGetInitialCNRecoMasses: Got " << nicn() << " total icns." << std::endl;
   for (int i=0; i<nicn(); i++) {
     int initial_cn_parent_pdg = pdg_icn_parent(i);
     if ( initial_cn_parent_pdg == 0 || initial_cn_parent_pdg > 8 ) { continue; }
+    streamlog_out(DEBUG) << "In TJGetInitialCNRecoMasses: Got icn with parent PDG " << initial_cn_parent_pdg << std::endl;
 
     const IntVec& jets_to_icn = jets_of_initial_cn(i);
 
@@ -25,9 +24,10 @@ void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {
 
     initial_cn_reco_masses.push_back( icn_reco_tlv.M() );
   }
+  streamlog_out(DEBUG) << "In TJGetInitialCNRecoMasses: Got " << initial_cn_reco_masses.size() << " icns with quark-like parents." << std::endl;
 
   if (initial_cn_reco_masses.size() != 2) {
-    streamlog_out(ERROR) << "ERROR when checking recos to initial cns: NOT 2 QUARK-LIKE ICNs";
+    streamlog_out(ERROR) << "ERROR when checking recos to initial cns: NOT 2 QUARK-LIKE ICNs!" << std::endl;
     return;
   }
 

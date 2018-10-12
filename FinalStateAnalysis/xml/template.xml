@@ -2,7 +2,7 @@
 	<execute>
 		<processor name="MyAdd4MomCovMatrixCharged"/>
 		<processor name="MyThrustReconstruction"/>
- <!--		<processor name="MyTrueJet"/>  -->
+ 		<processor name="MyTrueJet"/> 
 		<processor name="MyIsolatedLeptonTaggingProcessor"/>	
 		<processor name="MyOverlayRemovalFastJetProcessor"/>
 		<processor name="MyFastJetProcessor"/>
@@ -19,7 +19,6 @@
 		<parameter name="LCIOInputFiles">
 		<!-- Line replaced by set_xml.sh, becomes input file -->
 		</parameter>
-		<parameter name="GearXMLFile"> GearOutput.xml </parameter> 
 		<parameter name="MaxRecordNumber" value="0" />  
 		<parameter name="SkipNEvents" value="0" />  
 		<parameter name="SupressCheck" value="false" />  
@@ -43,6 +42,7 @@
 
 	<!-- Processor that constructs correct jets from PFO links to generator level particles -->
 	<processor name="MyTrueJet" type="TrueJet">
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
 		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING1</parameter>
 	</processor>
 
@@ -118,8 +118,8 @@
 		<parameter name="InputFastJetsCollection" type="string" lcioInType="ReconstructedParticle"> FastJets </parameter>
 		<parameter name="InputPFOsFromFastJetCollection" type="string" lcioInType="ReconstructedParticle"> PFOsFromFastJet </parameter>
 		<parameter name="InputIsolepsCollection" type="string" lcioInType="ReconstructedParticle"> Isoleps </parameter>
-        <parameter name="RootFileName"> 
-		<!-- Line replaced by set_xml.sh, becomes output file -->
+    <parameter name="RootFileName"> 
+  		<!-- Line replaced by set_xml.sh, becomes output file -->
 		</parameter>
 	</processor>
 
@@ -225,7 +225,7 @@
 		<parameter name="VertexCollection" type="string" lcioInType="Vertex"> BuildUpVertex </parameter>
 		
 		<!--Name of the MCParticle collection-->
-		<parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticlesSkimmed</parameter>
+		<parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle</parameter>
 		
 		<!--Name of the ReconstructedParticle collection-->
 		<parameter name="RecoParticleCollection" type="string" lcioInType="ReconstructedParticle"> MergedRPCollection</parameter>

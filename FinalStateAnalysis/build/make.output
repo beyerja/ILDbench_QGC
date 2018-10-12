@@ -1,6 +1,7 @@
 [100%] Built target JakobsVBSProcessor
 Install the project...
 -- Install configuration: "RelWithDebInfo"
--- Up-to-date: /afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib/libJakobsVBSProcessor.so.0.1.0
+-- Installing: /afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib/libJakobsVBSProcessor.so.0.1.0
 -- Up-to-date: /afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib/libJakobsVBSProcessor.so.0.1
 -- Up-to-date: /afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib/libJakobsVBSProcessor.so
+-- Set runtime path of "/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib/libJakobsVBSProcessor.so.0.1.0" to "/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/Marlin/v01-16/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/lcio/v02-12-01/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/gear/v01-08/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/CLHEP/2.3.4.3/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/ilcutil/v01-05/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/DD4hep/v01-07-02/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinUtil/v01-15/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/CED/v01-09-02/lib:/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/root/6.08.06/lib"

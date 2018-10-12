@@ -266,15 +266,12 @@ C_DIALECT	build/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c	523;"	d	file:
 C_DIALECT	build/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c	525;"	d	file:
 Calculation	analysis/parameter_optimization/include/calculation.h	/^class Calculation {$/;"	c
 Calculator1DRatio	analysis/parameter_optimization/src/calculate_1D_ratio.cpp	/^class Calculator1DRatio : public ParameterPointCalculator {$/;"	c	file:
-Counter	backup/TJTotalSingleJetInfo.h	/^class Counter{$/;"	c
 Counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^class Counter{$/;"	c
 CreateObservablesBranch	src/TreeBranches/ObservablesBranch.cc	/^void JakobsVBSProcessor::CreateObservablesBranch( TTree* tree, Observables* observ_ptr, std::string branch_name ) {$/;"	f	class:JakobsVBSProcessor
 CutflowPlotter	analysis/complete_plotting/plotters/cutflow_plotter.cpp	/^class CutflowPlotter : public Plotter {$/;"	c	file:
 DEC	build/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c	447;"	d	file:
 DEC	build/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	434;"	d	file:
 E	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	float** E;$/;"	m	struct:JetLevel	file:
-E	backup/TJTotalSingleJetInfo.h	/^		float E[__max_Njets];$/;"	m	class:TrueJetLevel
-E	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	float** E;$/;"	m	struct:JetLevel	file:
 E	include/InformationStorages/EventInformation.h	/^		float E;$/;"	m	class:ISR
 E	include/InformationStorages/EventInformation.h	/^		float E;$/;"	m	class:JetInfo
 E	include/InformationStorages/EventInformation.h	/^		float E;$/;"	m	class:TrueParticleInfo
@@ -313,8 +310,6 @@ FlagsForCompilationDatabase	.ycm_extra_conf.py	/^def FlagsForCompilationDatabase
 FlagsForFile	.ycm_extra_conf.py	/^def FlagsForFile(filename):$/;"	f
 FlagsForInclude	.ycm_extra_conf.py	/^def FlagsForInclude(root):$/;"	f
 GetCompilationInfoForFile	.ycm_extra_conf.py	/^def GetCompilationInfoForFile(database, filename):$/;"	f
-GetIndexHighestWeightChargedMCLepton	backup/LeptonsInTJJets.cc	/^int JakobsVBSProcessor::GetIndexHighestWeightChargedMCLepton( LCObjectVec &MCsToThisPFO, FloatVec &MCweightsToThisPFO) {$/;"	f	class:JakobsVBSProcessor
-GetIndexHighestWeightReco	backup/LeptonsInTJJets.cc	/^int JakobsVBSProcessor::GetIndexHighestWeightReco( FloatVec &PFOweightsToThisMC) {$/;"	f	class:JakobsVBSProcessor
 GetIndexHighestWeightReco	src/TJRoutines/ParticleTypeInTJJets.cc	/^int JakobsVBSProcessor::GetIndexHighestWeightReco( FloatVec &PFO_weights_to_MC ) {$/;"	f	class:JakobsVBSProcessor
 GetIndexHighestWeightTypeMC	src/TJRoutines/ParticleTypeInTJJets.cc	/^int JakobsVBSProcessor::GetIndexHighestWeightTypeMC($/;"	f	class:JakobsVBSProcessor
 GetMCParticlesLinkedToPFO	src/TJRoutines/TJSingleJetAnalysis.cc	/^void JakobsVBSProcessor::GetMCParticlesLinkedToPFO( $/;"	f	class:JakobsVBSProcessor
@@ -328,43 +323,30 @@ ISR	include/InformationStorages/EventInformation.h	/^class ISR {$/;"	c
 ISR_tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector ISR_tlv;$/;"	m	class:ISR
 IcnIndex	include/Adjusted_TrueJet_Parser.h	/^struct IcnIndex : LCIntExtension<IcnIndex> {} ;$/;"	s
 IcnIndex	include/TrueJet_Parser.h	/^struct IcnIndex : LCIntExtension<IcnIndex> {} ;$/;"	s
-IdentifiedAsChargedLepton	backup/LeptonsInTJJets.cc	/^bool JakobsVBSProcessor::IdentifiedAsChargedLepton( ReconstructedParticle* PFO ) {$/;"	f	class:JakobsVBSProcessor
 IdentifiedAsType	src/TJRoutines/ParticleTypeCheck.cc	/^bool JakobsVBSProcessor::IdentifiedAsType( ReconstructedParticle* PFO, std::string type ) {$/;"	f	class:JakobsVBSProcessor
 IndividualJetsPlotter	analysis/complete_plotting/plotters/individual_quarks_plotter.cpp	/^class IndividualJetsPlotter : public Plotter {$/;"	c	file:
 InfoStorage	analysis/complete_plotting/include/InfoStorage.h	/^class InfoStorage {$/;"	c
 IsHeaderFile	.ycm_extra_conf.py	/^def IsHeaderFile(filename):$/;"	f
-IsIntChargedLeptonPDGID	backup/LeptonsInTJJets.cc	/^bool JakobsVBSProcessor::IsIntChargedLeptonPDGID( int pdgID ) {$/;"	f	class:JakobsVBSProcessor
 IsIntTypePDGID	src/TJRoutines/ParticleTypeCheck.cc	/^bool JakobsVBSProcessor::IsIntTypePDGID( int pdgID, float charge, std::string type ) {$/;"	f	class:JakobsVBSProcessor
 JET_CORRECTION_H	include/jet_corrections.h	2;"	d
-JakobsVBSProcessor	backup/JakobsVBSProcessor.h	/^class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {$/;"	c
 JakobsVBSProcessor	include/JakobsVBSProcessor.h	/^class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {$/;"	c
 JakobsVBSProcessor	src/JakobsVBSProcessor.cc	/^JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {$/;"	f	class:JakobsVBSProcessor
-JakobsVBSProcessor_h	backup/JakobsVBSProcessor.h	2;"	d
 JakobsVBSProcessor_h	include/JakobsVBSProcessor.h	2;"	d
 JetIndex	include/Adjusted_TrueJet_Parser.h	/^struct JetIndex : LCIntExtension<JetIndex> {} ;$/;"	s
 JetIndex	include/TrueJet_Parser.h	/^struct JetIndex : LCIntExtension<JetIndex> {} ;$/;"	s
 JetInfo	include/InformationStorages/EventInformation.h	/^class JetInfo {$/;"	c
-JetLeptonsInfo	backup/TJTotalSingleJetInfo.h	/^class JetLeptonsInfo {$/;"	c
 JetLevel	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel( string _descr, float** _E, float** _p ) :$/;"	f	struct:JetLevel
 JetLevel	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^struct JetLevel {$/;"	s	file:
-JetLevel	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	JetLevel( string _descr, float** _E, float** _p ) :$/;"	f	struct:JetLevel
-JetLevel	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^struct JetLevel {$/;"	s	file:
 JetParticleTypeInfo	include/InformationStorages/TJTotalSingleJetInformation.h	/^class JetParticleTypeInfo {$/;"	c
 LCIOHELPER_H	include/LCIOHelpers.h	2;"	d
 LevelComparisonIndividualJets	src/TJRoutines/CompareReconstructionLevels.cc	/^void JakobsVBSProcessor::LevelComparisonIndividualJets(LCRelationNavigator* relation_recoMCtruth, EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 LevelStep	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	LevelStep( JetLevel _level1, JetLevel _level2, string _name, string _titel ) :$/;"	f	struct:LevelStep
 LevelStep	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^struct LevelStep {$/;"	s	file:
-LevelStep	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	LevelStep( JetLevel _level1, JetLevel _level2, string _name, string _titel ) :$/;"	f	struct:LevelStep
-LevelStep	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^struct LevelStep {$/;"	s	file:
-MCParticleIsChargedLepton	backup/LeptonsInTJJets.cc	/^bool JakobsVBSProcessor::MCParticleIsChargedLepton( MCParticle* MCparticle ) {$/;"	f	class:JakobsVBSProcessor
 MCParticleIsType	src/TJRoutines/ParticleTypeCheck.cc	/^bool JakobsVBSProcessor::MCParticleIsType( MCParticle* MCparticle, std::string type ) {$/;"	f	class:JakobsVBSProcessor
 MCPpyjet	include/Adjusted_TrueJet_Parser.h	/^struct MCPpyjet : LCIntExtension<MCPpyjet> {} ;$/;"	s
 MCPpyjet	include/TrueJet_Parser.h	/^struct MCPpyjet : LCIntExtension<MCPpyjet> {} ;$/;"	s
 MC_E	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float MC_E[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-MC_lepton_E	backup/TJTotalSingleJetInfo.h	/^	float MC_lepton_E[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
-MC_lepton_pdgID	backup/TJTotalSingleJetInfo.h	/^	int MC_lepton_pdgID[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 MC_pdgID	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int MC_pdgID[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-MCleptons	backup/TJTotalSingleJetInfo.h	/^	TJMCLepton MCleptons;$/;"	m	class:JetLeptonsInfo
 M_fcn	include/Adjusted_TrueJet_Parser.h	/^  double M_fcn(int ifcn){return finalcns->at(ifcn)->getMass();} ;$/;"	f	class:Adjusted_TrueJet_Parser
 M_fcn	include/TrueJet_Parser.h	/^  double M_fcn(int ifcn){return finalcns->at(ifcn)->getMass();} ;$/;"	f	class:TrueJet_Parser
 M_icn	include/Adjusted_TrueJet_Parser.h	/^  double M_icn(int iicn) {; return initialcns->at(iicn)->getMass();};$/;"	f	class:Adjusted_TrueJet_Parser
@@ -399,7 +381,6 @@ Njets	include/InformationStorages/EventInformation.h	/^		int Njets;$/;"	m	class:
 Nlep_class_from_int	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	string Nlep_class_from_int ( int Nlep ) {$/;"	f	class:TJLeptonsInJetsPlotter	file:
 Nlep_classes	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> Nlep_classes = 	{"0", 	"1", "2", "3", 	"geq4"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
 Nnehad_class_from_int	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	string Nnehad_class_from_int ( int Nnehad ) {$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
-Nnehad_class_from_int	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	string Nnehad_class_from_int ( int Nnehad ) {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 Nnehad_classes	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> Nnehad_classes = 	{"0", 	"1", "2", "3", 	"geq4"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 Observables	include/InformationStorages/EventInformation.h	/^class Observables {$/;"	c
 PFOLevelComparison	include/InformationStorages/EventInformation.h	/^class PFOLevelComparison {$/;"	c
@@ -469,8 +450,6 @@ PLOTTER_h	analysis/complete_plotting/include/plotter.h	2;"	d
 ParameterPointCalculator	analysis/parameter_optimization/include/parameter_point_calculator.h	/^class ParameterPointCalculator {$/;"	c
 ParameterPointIterator	analysis/parameter_optimization/include/parameter_point_iterator.h	/^class ParameterPointIterator {$/;"	c
 ParameterSpaceVector	analysis/parameter_optimization/include/parameter_vector.h	/^class ParameterSpaceVector {$/;"	c
-PercentageRange	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	PercentageRange( string _descr, float _perc_min, float _perc_max ) :$/;"	f	struct:PercentageRange
-PercentageRange	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^struct PercentageRange {$/;"	s	file:
 Plotter	analysis/complete_plotting/include/plotter.h	/^class Plotter {$/;"	c
 RM	build/Makefile	/^RM = \/cvmfs\/ilc.desy.de\/sw\/x86_64_gcc49_sl6\/CMake\/3.6.3\/bin\/cmake -E remove -f$/;"	m
 RecoMjjVSQuarkPDGPlotter	analysis/complete_plotting/plotters/mjj_reco_quark_pdg_plotter.cpp	/^class RecoMjjVSQuarkPDGPlotter : public Plotter {$/;"	c	file:
@@ -532,24 +511,21 @@ TJCorrectedLowEJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_corrected_l
 TJEventInfo	include/InformationStorages/TJInformation.h	/^class TJEventInfo {$/;"	c
 TJGetInitialCNRecoMasses	src/TJRoutines/TJCheatEventSteps.cc	/^void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 TJINFORMATION_H	include/InformationStorages/TJInformation.h	2;"	d
+TJJetEnergyResolutionPlotter	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^class TJJetEnergyResolutionPlotter : public Plotter {$/;"	c	file:
 TJJetLevelsPlotter	analysis/complete_plotting/plotters/TJ/TJ_jet_level_plotter.cpp	/^class TJJetLevelsPlotter : public Plotter {$/;"	c	file:
 TJJetMassInvestigationPlotter	analysis/complete_plotting/plotters/TJ/TJ_jet_mass_investigation_plotter.cpp	/^class TJJetMassInvestigationPlotter : public Plotter {$/;"	c	file:
 TJLeptonsInJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^class TJLeptonsInJetsPlotter : public Plotter {$/;"	c	file:
 TJLevelInfo	include/InformationStorages/TJInformation.h	/^class TJLevelInfo {$/;"	c
-TJMCLepton	backup/TJTotalSingleJetInfo.h	/^class TJMCLepton {$/;"	c
 TJNParticlesPlotter	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^class TJNParticlesPlotter : public Plotter {$/;"	c	file:
-TJNeutralHadronsEPercentagePlotter	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^class TJNeutralHadronsEPercentagePlotter : public Plotter {$/;"	c	file:
 TJNeutralHadronsInJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^class TJNeutralHadronsInJetsPlotter : public Plotter {$/;"	c	file:
+TJObservToICNsOnlyUDSCPlotter	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp	/^class TJObservToICNsOnlyUDSCPlotter : public Plotter {$/;"	c	file:
+TJObservToICNsOnlyUDSPlotter	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp	/^class TJObservToICNsOnlyUDSPlotter : public Plotter {$/;"	c	file:
 TJObservToICNsPlotter	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_plotter.cpp	/^class TJObservToICNsPlotter : public Plotter {$/;"	c	file:
 TJPhotonsInJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^class TJPhotonsInJetsPlotter : public Plotter {$/;"	c	file:
-TJProcessSingleMCLepton	backup/LeptonsInTJJets.cc	/^void JakobsVBSProcessor::TJProcessSingleMCLepton( $/;"	f	class:JakobsVBSProcessor
-TJProcessSinglePFOLepton	backup/LeptonsInTJJets.cc	/^void JakobsVBSProcessor::TJProcessSinglePFOLepton( $/;"	f	class:JakobsVBSProcessor
 TJProcessSingleTypeMC	src/TJRoutines/ParticleTypeInTJJets.cc	/^void JakobsVBSProcessor::TJProcessSingleTypeMC( $/;"	f	class:JakobsVBSProcessor
 TJProcessSingleTypePFO	src/TJRoutines/ParticleTypeInTJJets.cc	/^void JakobsVBSProcessor::TJProcessSingleTypePFO( $/;"	f	class:JakobsVBSProcessor
 TJQuarkJetsPlusNeutrinosPlotter	analysis/complete_plotting/plotters/TJ/TJ_2nus4qs_plotter.cpp	/^class TJQuarkJetsPlusNeutrinosPlotter : public Plotter {$/;"	c	file:
-TJRecoParticleAsLeptonIDd	backup/TJTotalSingleJetInfo.h	/^class TJRecoParticleAsLeptonIDd {$/;"	c
 TJRecoParticleAsTypeIDd	include/InformationStorages/TJTotalSingleJetInformation.h	/^class TJRecoParticleAsTypeIDd {$/;"	c
-TJSINGLEJET_INFORMATION_H	backup/TJTotalSingleJetInfo.h	2;"	d
 TJSINGLEJET_INFORMATION_H	include/InformationStorages/TJTotalSingleJetInformation.h	2;"	d
 TJSeenTrueOfSeenECorrectionPlotter	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^class TJSeenTrueOfSeenECorrectionPlotter : public Plotter {$/;"	c	file:
 TJSeenTrueOfSeenPCorrectionPlotter	analysis/complete_plotting/plotters/TJ/TJ_tos_s_p_correction_plotter.cpp	/^class TJSeenTrueOfSeenPCorrectionPlotter : public Plotter {$/;"	c	file:
@@ -620,9 +596,7 @@ TestPlotter	analysis/complete_plotting/plotters/test_plotter.cpp	/^class TestPlo
 ThetaMPlotter	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^class ThetaMPlotter : public Plotter {$/;"	c	file:
 TreeEvent	analysis/event_selection/eventClass.C	/^class TreeEvent {$/;"	c	file:
 TrueISRvsMjjPlotter	analysis/complete_plotting/plotters/trueISR_E_over_jetmass.cpp	/^class TrueISRvsMjjPlotter : public Plotter {$/;"	c	file:
-TrueJetLevel	backup/TJTotalSingleJetInfo.h	/^class TrueJetLevel {$/;"	c
 TrueJetLevel	include/InformationStorages/TJTotalSingleJetInformation.h	/^class TrueJetLevel {$/;"	c
-TrueJetSingleJetInfo	backup/TJTotalSingleJetInfo.h	/^class TrueJetSingleJetInfo {$/;"	c
 TrueJetSingleJetInfo	include/InformationStorages/TJTotalSingleJetInformation.h	/^class TrueJetSingleJetInfo {$/;"	c
 TrueJet_Parser	include/TrueJet_Parser.h	/^class TrueJet_Parser {$/;"	c
 TrueJet_Parser_h	include/TrueJet_Parser.h	2;"	d
@@ -632,29 +606,17 @@ VpairFinder_h	include/VpairFinder.h	2;"	d
 Vpair_link	include/InformationStorages/EventInformation.h	/^		RecoTruthLink Vpair_link;$/;"	m	class:EventInfo
 _COUNT_FSR	include/Adjusted_TrueJet_Parser.h	/^  int _COUNT_FSR;$/;"	m	class:Adjusted_TrueJet_Parser
 _COUNT_FSR	include/TrueJet_Parser.h	/^  int _COUNT_FSR;$/;"	m	class:TrueJet_Parser
-__Njets	backup/JakobsVBSProcessor.h	/^  int __Njets = 4;$/;"	m	class:JakobsVBSProcessor
-__Njets	backup/TJTotalSingleJetInfo.h	/^static const int __Njets = 4;$/;"	v
 __Njets	include/InformationStorages/TJTotalSingleJetInformation.h	/^static const int __Njets = 4;$/;"	v
 __Njets	include/JakobsVBSProcessor.h	/^  int __Njets = 4;$/;"	m	class:JakobsVBSProcessor
-__max_Njets	backup/JakobsVBSProcessor.h	/^  int __max_Njets = 20;$/;"	m	class:JakobsVBSProcessor
-__max_Njets	backup/TJTotalSingleJetInfo.h	/^static const int __max_Njets = 20;$/;"	v
 __max_Njets	include/InformationStorages/TJTotalSingleJetInformation.h	/^static const int __max_Njets = 25;$/;"	v
 __max_Njets	include/JakobsVBSProcessor.h	/^  int __max_Njets = 20;$/;"	m	class:JakobsVBSProcessor
-__max_Nleps	backup/JakobsVBSProcessor.h	/^  int __max_Nleps = 50;$/;"	m	class:JakobsVBSProcessor
-__max_Nleps	backup/TJTotalSingleJetInfo.h	/^static const int __max_Nleps = 50;$/;"	v
 __max_Nparticles	include/InformationStorages/TJTotalSingleJetInformation.h	/^static const int __max_Nparticles = 150;$/;"	v
 __max_Nparticles	include/JakobsVBSProcessor.h	/^  int __max_Nparticles = 50;$/;"	m	class:JakobsVBSProcessor
-_colAllPFOs	backup/JakobsVBSProcessor.h	/^  std::string _colAllPFOs;$/;"	m	class:JakobsVBSProcessor
 _colAllPFOs	include/JakobsVBSProcessor.h	/^  std::string _colAllPFOs;$/;"	m	class:JakobsVBSProcessor
-_colFastJets	backup/JakobsVBSProcessor.h	/^  std::string _colFastJets;$/;"	m	class:JakobsVBSProcessor
 _colFastJets	include/JakobsVBSProcessor.h	/^  std::string _colFastJets;$/;"	m	class:JakobsVBSProcessor
-_colIsoleps	backup/JakobsVBSProcessor.h	/^  std::string _colIsoleps;$/;"	m	class:JakobsVBSProcessor
 _colIsoleps	include/JakobsVBSProcessor.h	/^  std::string _colIsoleps;$/;"	m	class:JakobsVBSProcessor
-_colMC	backup/JakobsVBSProcessor.h	/^  std::string _colMC;$/;"	m	class:JakobsVBSProcessor
 _colMC	include/JakobsVBSProcessor.h	/^  std::string _colMC;$/;"	m	class:JakobsVBSProcessor
-_colPFOsFromFastJet	backup/JakobsVBSProcessor.h	/^  std::string _colPFOsFromFastJet;$/;"	m	class:JakobsVBSProcessor
 _colPFOsFromFastJet	include/JakobsVBSProcessor.h	/^  std::string _colPFOsFromFastJet;$/;"	m	class:JakobsVBSProcessor
-_datatrain	backup/JakobsVBSProcessor.h	/^  TTree* _datatrain; $/;"	m	class:JakobsVBSProcessor
 _datatrain	include/JakobsVBSProcessor.h	/^  TTree* _datatrain;$/;"	m	class:JakobsVBSProcessor
 _finalColourNeutralCollectionName	include/Adjusted_TrueJet_Parser.h	/^  std::string _finalColourNeutralCollectionName;$/;"	m	class:Adjusted_TrueJet_Parser
 _finalColourNeutralCollectionName	include/TrueJet_Parser.h	/^  std::string _finalColourNeutralCollectionName;$/;"	m	class:TrueJet_Parser
@@ -668,19 +630,13 @@ _initialColourNeutralLink	include/Adjusted_TrueJet_Parser.h	/^  std::string _ini
 _initialColourNeutralLink	include/TrueJet_Parser.h	/^  std::string _initialColourNeutralLink;$/;"	m	class:TrueJet_Parser
 _initialElementonLink	include/Adjusted_TrueJet_Parser.h	/^  std::string _initialElementonLink ;$/;"	m	class:Adjusted_TrueJet_Parser
 _initialElementonLink	include/TrueJet_Parser.h	/^  std::string _initialElementonLink ;$/;"	m	class:TrueJet_Parser
-_mcpfoRelation	backup/JakobsVBSProcessor.h	/^  std::string _mcpfoRelation;$/;"	m	class:JakobsVBSProcessor
 _mcpfoRelation	include/JakobsVBSProcessor.h	/^  std::string _mcpfoRelation;$/;"	m	class:JakobsVBSProcessor
-_nEvt	backup/JakobsVBSProcessor.h	/^  int _nEvt ;$/;"	m	class:JakobsVBSProcessor
 _nEvt	include/JakobsVBSProcessor.h	/^  int _nEvt ;$/;"	m	class:JakobsVBSProcessor
-_nRun	backup/JakobsVBSProcessor.h	/^  int _nRun ;$/;"	m	class:JakobsVBSProcessor
 _nRun	include/JakobsVBSProcessor.h	/^  int _nRun ;$/;"	m	class:JakobsVBSProcessor
-_otfile	backup/JakobsVBSProcessor.h	/^  TFile* _otfile;$/;"	m	class:JakobsVBSProcessor
 _otfile	include/JakobsVBSProcessor.h	/^  TFile* _otfile;$/;"	m	class:JakobsVBSProcessor
-_recoMCTruthLink	backup/JakobsVBSProcessor.h	/^  std::string _recoMCTruthLink;$/;"	m	class:JakobsVBSProcessor
 _recoMCTruthLink	include/Adjusted_TrueJet_Parser.h	/^  std::string _recoMCTruthLink;$/;"	m	class:Adjusted_TrueJet_Parser
 _recoMCTruthLink	include/JakobsVBSProcessor.h	/^  std::string _recoMCTruthLink;$/;"	m	class:JakobsVBSProcessor
 _recoMCTruthLink	include/TrueJet_Parser.h	/^  std::string _recoMCTruthLink;$/;"	m	class:TrueJet_Parser
-_rootfilename	backup/JakobsVBSProcessor.h	/^  std::string _rootfilename;$/;"	m	class:JakobsVBSProcessor
 _rootfilename	include/JakobsVBSProcessor.h	/^  std::string _rootfilename;$/;"	m	class:JakobsVBSProcessor
 _trueJetCollectionName	include/Adjusted_TrueJet_Parser.h	/^  std::string _trueJetCollectionName ;$/;"	m	class:Adjusted_TrueJet_Parser
 _trueJetCollectionName	include/TrueJet_Parser.h	/^  std::string _trueJetCollectionName ;$/;"	m	class:TrueJet_Parser
@@ -740,12 +696,9 @@ cosTheta_EmaxTrack	include/InformationStorages/EventInformation.h	/^		float cosT
 cosTheta_miss	analysis/complete_plotting/include/plotter.h	/^	float cosTheta_miss;$/;"	m	class:Plotter
 cosTheta_miss	analysis/event_selection/eventClass.C	/^		float cosTheta_miss;$/;"	m	class:TreeEvent	file:
 cosTheta_miss	include/InformationStorages/EventInformation.h	/^		float cosTheta_miss;$/;"	m	class:Observables
-count	backup/TJTotalSingleJetInfo.h	/^	int count(){$/;"	f	class:Counter
 count	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int count(){$/;"	f	class:Counter
-counter	backup/TJTotalSingleJetInfo.h	/^  int counter;$/;"	m	class:Counter
 counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^  int counter;$/;"	m	class:Counter
 create_levels	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	void create_levels() {$/;"	f	class:TJNParticlesPlotter	file:
-create_levels	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	void create_levels() {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 create_parameter_point_plots	analysis/parameter_optimization/src/specifications.cpp	/^void ParameterPointCalculator::create_parameter_point_plots() {$/;"	f	class:ParameterPointCalculator
 create_performanceplots	Results/also_using_eRpL_samples_WRONG/Results_using_old_GenLevelClassif_noFlavourCheck/ilcsoft_01_17_11/Overlay_removal_performance/performance_forcedEjet_mjet0/create_performanceplots.cc	/^int create_performanceplots() {$/;"	f
 create_performanceplots	Results/also_using_eRpL_samples_WRONG/Results_using_old_GenLevelClassif_noFlavourCheck/ilcsoft_01_17_11/Overlay_removal_performance/performance_recoEjet/create_performanceplots.cc	/^int create_performanceplots() {$/;"	f
@@ -754,7 +707,6 @@ create_plots_all_points	analysis/parameter_optimization/src/specifications.cpp	/
 current_event_number	analysis/complete_plotting/include/plotter.h	/^	int current_event_number;$/;"	m	class:Plotter
 current_file	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		float current_file;$/;"	m	class:ParameterPointIterator
 current_file_index	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		int current_file_index = -1;$/;"	m	class:ParameterPointIterator
-current_jet	backup/TJTotalSingleJetInfo.h	/^		int current_jet() {$/;"	f	class:TrueJetSingleJetInfo
 current_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int current_jet() {$/;"	f	class:TrueJetSingleJetInfo
 current_tree	analysis/complete_plotting/include/plotter.h	/^	TTree* current_tree;$/;"	m	class:Plotter
 current_weight	analysis/complete_plotting/include/plotter.h	/^	float current_weight;$/;"	m	class:Plotter
@@ -765,11 +717,14 @@ define_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_correct
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJChargedHadronsInJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJCorrectedJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+define_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetEnergyResolutionPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_level_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_mass_investigation_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJLeptonsInJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJObservToICNsPlotter	file:
+define_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJObservToICNsOnlyUDSPlotter	file:
+define_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJObservToICNsOnlyUDSCPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJPhotonsInJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJSeenTrueOfSeenECorrectionPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_p_correction_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJSeenTrueOfSeenPCorrectionPlotter	file:
@@ -783,13 +738,9 @@ define_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void define
 define_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void define_plots(){$/;"	f	class:TestPlotter	file:
 define_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void define_plots(){$/;"	f	class:ThetaMPlotter	file:
 define_plots	analysis/complete_plotting/plotters/trueISR_E_over_jetmass.cpp	/^	void define_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
-define_plots	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 delall	src/Adjusted_TrueJet_Parser.cc	/^void Adjusted_TrueJet_Parser::delall( ) { $/;"	f	class:Adjusted_TrueJet_Parser
 descr	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	string descr;$/;"	m	struct:JetLevel	file:
 descr	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	string descr;$/;"	m	struct:NRange	file:
-descr	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	string descr;$/;"	m	struct:JetLevel	file:
-descr	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	string descr;$/;"	m	struct:PercentageRange	file:
-detected	backup/TJTotalSingleJetInfo.h	/^		TrueJetLevel detected;$/;"	m	class:TrueJetSingleJetInfo
 detected	include/InformationStorages/TJTotalSingleJetInformation.h	/^		TrueJetLevel detected;$/;"	m	class:TrueJetSingleJetInfo
 do_calculation	analysis/parameter_optimization/include/calculation.h	/^		void do_calculation() {$/;"	f	class:Calculation
 do_event_calculation	analysis/parameter_optimization/src/calculate_1D_ratio.cpp	/^		void do_event_calculation() {$/;"	f	class:Calculator1DRatio
@@ -803,11 +754,14 @@ draw_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJChargedHadronsInJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJCorrectedJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+draw_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetEnergyResolutionPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_level_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_mass_investigation_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJLeptonsInJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJObservToICNsPlotter	file:
+draw_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJObservToICNsOnlyUDSPlotter	file:
+draw_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJObservToICNsOnlyUDSCPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJPhotonsInJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJSeenTrueOfSeenECorrectionPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_p_correction_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJSeenTrueOfSeenPCorrectionPlotter	file:
@@ -821,7 +775,6 @@ draw_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void draw_plo
 draw_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TestPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void draw_plots(){$/;"	f	class:ThetaMPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/trueISR_E_over_jetmass.cpp	/^	void draw_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
-draw_plots	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 e_beam_polarization	analysis/complete_plotting/include/InfoStorage.h	/^	float e_beam_polarization;$/;"	m	class:InfoStorage
 e_pol_percentage	analysis/plotting/plotting.C	/^	float e_pol_percentage=-0.8;$/;"	v
 e_polarization_sign	include/InformationStorages/FileInformation.h	/^		float e_polarization_sign;$/;"	m	class:FileInfo
@@ -837,9 +790,6 @@ evt	analysis/complete_plotting/include/plotter.h	/^	int evt;$/;"	m	class:Plotter
 evt	include/Adjusted_TrueJet_Parser.h	/^  LCEvent* evt ;$/;"	m	class:Adjusted_TrueJet_Parser
 evt	include/TrueJet_Parser.h	/^  LCEvent* evt ;$/;"	m	class:TrueJet_Parser
 evtN	include/InformationStorages/EventInformation.h	/^		int evtN;$/;"	m	class:EventInfo
-exists	backup/TJTotalSingleJetInfo.h	/^		int exists[__max_Njets];$/;"	m	class:TrueJetSingleJetInfo
-exists	backup/TJTotalSingleJetInfo.h	/^	int exists[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
-exists	backup/TJTotalSingleJetInfo.h	/^	int exists[__max_Njets][__max_Nleps];$/;"	m	class:TJRecoParticleAsLeptonIDd
 exists	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int exists[__max_Njets];$/;"	m	class:TrueJetSingleJetInfo
 exists	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int exists[__max_Njets][__max_Nparticles];$/;"	m	class:TJRecoParticleAsTypeIDd
 exists	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int exists[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
@@ -848,7 +798,6 @@ fcncol	include/Adjusted_TrueJet_Parser.h	/^    LCCollection* fcncol ;$/;"	m	clas
 fcncol	include/TrueJet_Parser.h	/^    LCCollection* fcncol ;$/;"	m	class:TrueJet_Parser
 features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
 features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
-file_info	backup/JakobsVBSProcessor.h	/^  FileInfo file_info;$/;"	m	class:JakobsVBSProcessor
 file_info	include/JakobsVBSProcessor.h	/^  FileInfo file_info;$/;"	m	class:JakobsVBSProcessor
 file_infos	analysis/parameter_optimization/include/calculation.h	/^	vector<FileInfo> file_infos;$/;"	m	class:Calculation
 file_infos	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		vector<FileInfo> file_infos;	$/;"	m	class:ParameterPointIterator
@@ -867,11 +816,14 @@ fill_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJChargedHadronsInJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJCorrectedJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+fill_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetEnergyResolutionPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_level_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetLevelsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_jet_mass_investigation_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJJetMassInvestigationPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJLeptonsInJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJObservToICNsPlotter	file:
+fill_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJObservToICNsOnlyUDSPlotter	file:
+fill_plots	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJObservToICNsOnlyUDSCPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJPhotonsInJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJSeenTrueOfSeenECorrectionPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/TJ/TJ_tos_s_p_correction_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJSeenTrueOfSeenPCorrectionPlotter	file:
@@ -885,13 +837,10 @@ fill_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void fill_plo
 fill_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TestPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void fill_plots(){$/;"	f	class:ThetaMPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/trueISR_E_over_jetmass.cpp	/^	void fill_plots(){$/;"	f	class:TrueISRvsMjjPlotter	file:
-fill_plots	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 final_cn	src/Adjusted_TrueJet_Parser.cc	/^int Adjusted_TrueJet_Parser::final_cn( int ijet ) {$/;"	f	class:Adjusted_TrueJet_Parser
 final_cn_system	include/InformationStorages/TJInformation.h	/^	TJLevelInfo final_cn_system;$/;"	m	class:TJEventInfo
-final_elementon	backup/TJTotalSingleJetInfo.h	/^		TrueJetLevel final_elementon;$/;"	m	class:TrueJetSingleJetInfo
 final_elementon	include/InformationStorages/TJTotalSingleJetInformation.h	/^		TrueJetLevel final_elementon;$/;"	m	class:TrueJetSingleJetInfo
 final_elementon	src/Adjusted_TrueJet_Parser.cc	/^MCParticle* Adjusted_TrueJet_Parser::final_elementon(int ijet){$/;"	f	class:Adjusted_TrueJet_Parser
-final_elementon_pdgID	backup/TJTotalSingleJetInfo.h	/^		int final_elementon_pdgID[__max_Njets];$/;"	m	class:TrueJetSingleJetInfo
 final_elementon_pdgID	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int final_elementon_pdgID[__max_Njets];$/;"	m	class:TrueJetSingleJetInfo
 final_siblings	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::final_siblings( int ijet ) {$/;"	f	class:Adjusted_TrueJet_Parser
 final_states	analysis/complete_plotting/include/InfoStorage.h	/^	vector<string> 	final_states;$/;"	m	class:InfoStorage
@@ -907,7 +856,6 @@ findTrueGenLevelQuarks	src/GeneratorLevelChecks.cc	/^std::vector<MCParticle*> Ja
 findVectorDifferences	src/TJRoutines/CompareReconstructionLevels.cc	/^void JakobsVBSProcessor::findVectorDifferences(	std::vector<Type> vector1, std::vector<Type> vector2,$/;"	f	class:JakobsVBSProcessor
 findVpair	include/VpairFinder.h	/^void JakobsVBSProcessor::findVpair(std::vector<LCIOParticleType*> particles, Observables &observ) {$/;"	f	class:JakobsVBSProcessor
 find_range	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	NRange* find_range( int N ) {$/;"	f	class:TJNParticlesPlotter	file:
-find_range	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	PercentageRange* find_range( float perc ) {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 fit	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^Double_t fit(Double_t *coord, Double_t* par) {$/;"	f
 fit	analysis/fit_test/test.cpp	/^Double_t fit(Double_t *coord, Double_t* par) {$/;"	f
 float_to_string	analysis/parameter_optimization/src/specifications.cpp	/^string float_to_string(float number) {$/;"	f
@@ -979,12 +927,12 @@ get_parameter_point	analysis/parameter_optimization/include/parameter_vector.h	/
 get_polarization_string_i	analysis/complete_plotting/include/InfoStorage.h	/^		string get_polarization_string_i (int i) {$/;"	f	class:InfoStorage
 get_ratio_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void get_ratio_plot( TH1D* plot, TH1D* ratio_plot ) {$/;"	f	class:TJCorrectedJetsPlotter	file:
 get_ratio_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void get_ratio_plot( TH1D* plot, TH1D* ratio_plot ) {$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
-get_recoMCTruthLink	backup/JakobsVBSProcessor.h	/^  std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ; } ;$/;"	f	class:JakobsVBSProcessor
 get_recoMCTruthLink	include/Adjusted_TrueJet_Parser.h	/^  virtual    std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ;};$/;"	f	class:Adjusted_TrueJet_Parser
 get_recoMCTruthLink	include/JakobsVBSProcessor.h	/^  std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ; } ;$/;"	f	class:JakobsVBSProcessor
 get_recoMCTruthLink	include/TrueJet_Parser.h	/^  virtual    std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ;};$/;"	f	class:TrueJet_Parser
 get_resolution_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void get_resolution_plot( TH1D* plot, TH1D* resolution_plot ) {$/;"	f	class:TJCorrectedJetsPlotter	file:
 get_resolution_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void get_resolution_plot( TH1D* plot, TH1D* resolution_plot ) {$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+get_resolution_projection	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^	void get_resolution_projection ( TProfile* plot, TH1D* error_clone ){$/;"	f	class:TJJetEnergyResolutionPlotter	file:
 get_result_storage	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		ResultStorage get_result_storage() {$/;"	f	class:ParameterPointCalculator
 get_tree	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		TTree* get_tree() {$/;"	f	class:ParameterPointIterator
 get_tree_name	analysis/complete_plotting/include/InfoStorage.h	/^		string get_tree_name () {$/;"	f	class:InfoStorage
@@ -995,23 +943,13 @@ get_xsection_i	analysis/complete_plotting/include/InfoStorage.h	/^		float get_xs
 getall	src/Adjusted_TrueJet_Parser.cc	/^void Adjusted_TrueJet_Parser::getall( LCEvent * event ) { $/;"	f	class:Adjusted_TrueJet_Parser
 helper_float_arrays	analysis/complete_plotting/include/plotter.h	/^	vector<float*> helper_float_arrays;$/;"	m	class:Plotter
 helper_int_arrays	analysis/complete_plotting/include/plotter.h	/^	vector<int*> helper_int_arrays;$/;"	m	class:Plotter
-highest_calo_weight_in_any_recoparticle	backup/TJTotalSingleJetInfo.h	/^	float highest_calo_weight_in_any_recoparticle[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_calo_weight_in_any_recoparticle	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_calo_weight_in_any_recoparticle[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_calo_weight_in_this_jet	backup/TJTotalSingleJetInfo.h	/^	float highest_calo_weight_in_this_jet[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_calo_weight_in_this_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_calo_weight_in_this_jet[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_calo_weight_in_this_jet_IDd_as_lepton	backup/TJTotalSingleJetInfo.h	/^    float highest_calo_weight_in_this_jet_IDd_as_lepton[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_calo_weight_in_this_jet_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^    float highest_calo_weight_in_this_jet_IDd_as_type[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_calo_weight_recoparticle_IDd_as_lepton	backup/TJTotalSingleJetInfo.h	/^	int highest_calo_weight_recoparticle_IDd_as_lepton[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_calo_weight_recoparticle_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int highest_calo_weight_recoparticle_IDd_as_type[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_lepton_calo_weight	backup/TJTotalSingleJetInfo.h	/^	float highest_lepton_calo_weight[__max_Njets][__max_Nleps];	$/;"	m	class:TJRecoParticleAsLeptonIDd
-highest_lepton_trck_weight	backup/TJTotalSingleJetInfo.h	/^	float highest_lepton_trck_weight[__max_Njets][__max_Nleps];	$/;"	m	class:TJRecoParticleAsLeptonIDd
-highest_trck_weight_in_any_recoparticle	backup/TJTotalSingleJetInfo.h	/^	float highest_trck_weight_in_any_recoparticle[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_trck_weight_in_any_recoparticle	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_trck_weight_in_any_recoparticle[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_trck_weight_in_this_jet	backup/TJTotalSingleJetInfo.h	/^	float highest_trck_weight_in_this_jet[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_trck_weight_in_this_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_trck_weight_in_this_jet[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_trck_weight_in_this_jet_IDd_as_lepton	backup/TJTotalSingleJetInfo.h	/^	float highest_trck_weight_in_this_jet_IDd_as_lepton[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_trck_weight_in_this_jet_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_trck_weight_in_this_jet_IDd_as_type[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
-highest_trck_weight_recoparticle_IDd_as_lepton	backup/TJTotalSingleJetInfo.h	/^	int highest_trck_weight_recoparticle_IDd_as_lepton[__max_Njets][__max_Nleps];$/;"	m	class:TJMCLepton
 highest_trck_weight_recoparticle_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int highest_trck_weight_recoparticle_IDd_as_type[__max_Njets][__max_Nparticles];$/;"	m	class:TJTypeMC
 highest_type_calo_weight	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_type_calo_weight[__max_Njets][__max_Nparticles];	$/;"	m	class:TJRecoParticleAsTypeIDd
 highest_type_trck_weight	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float highest_type_trck_weight[__max_Njets][__max_Nparticles];	$/;"	m	class:TJRecoParticleAsTypeIDd
@@ -1020,8 +958,6 @@ icncol	include/TrueJet_Parser.h	/^    LCCollection* icncol ;$/;"	m	class:TrueJet
 in_directory	analysis/parameter_optimization/include/fileinfo.h	/^		string in_directory;$/;"	m	class:FileInfo
 in_directory	analysis/parameter_optimization/src/fileinfo_class.cpp	/^		string in_directory;$/;"	m	class:FileInfo	file:
 in_range	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	bool in_range(int N) {$/;"	f	struct:NRange
-in_range	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	bool in_range(float perc) {$/;"	f	struct:PercentageRange
-info	backup/JakobsVBSProcessor.h	/^  EventInfo info;$/;"	m	class:JakobsVBSProcessor
 info	include/JakobsVBSProcessor.h	/^  EventInfo info;$/;"	m	class:JakobsVBSProcessor
 info_arch	build/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
 info_arch	build/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
@@ -1046,12 +982,6 @@ init	analysis/parameter_optimization/include/fileinfo.h	/^		void init( string _f
 init	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		void init( ParameterPointIterator &_parameter_point_iterator, ResultStorage &_results_all_points ){$/;"	f	class:ParameterPointCalculator
 init	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		void init ( vector<float> _parameter_point, vector<FileInfo> _file_infos ) {$/;"	f	class:ParameterPointIterator
 init	analysis/parameter_optimization/src/fileinfo_class.cpp	/^		void init( string _file_name, string _in_directory, string _tree_name ) {$/;"	f	class:FileInfo
-init	backup/TJTotalSingleJetInfo.h	/^		void init() {$/;"	f	class:TrueJetSingleJetInfo
-init	backup/TJTotalSingleJetInfo.h	/^		void init(Counter* _jet_counter) {$/;"	f	class:TrueJetLevel
-init	backup/TJTotalSingleJetInfo.h	/^	void init() {$/;"	f	class:Counter
-init	backup/TJTotalSingleJetInfo.h	/^	void init() {$/;"	f	class:TJMCLepton
-init	backup/TJTotalSingleJetInfo.h	/^	void init() {$/;"	f	class:TJRecoParticleAsLeptonIDd
-init	backup/TJTotalSingleJetInfo.h	/^	void init(Counter* _jet_counter) {$/;"	f	class:JetLeptonsInfo
 init	include/InformationStorages/EventInformation.h	/^		void init() {$/;"	f	class:EventInfo
 init	include/InformationStorages/EventInformation.h	/^		void init() {$/;"	f	class:ISR
 init	include/InformationStorages/EventInformation.h	/^		void init() {$/;"	f	class:JetInfo
@@ -1093,17 +1023,12 @@ is_good_lepton	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	
 is_good_lepton	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	bool is_good_lepton( int ijet, int ilep ) {$/;"	f	class:TJLeptonsInJetsPlotter	file:
 is_good_neutral_hadron	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	bool is_good_neutral_hadron( int ijet, int inehad ) {$/;"	f	class:TJNParticlesPlotter	file:
 is_good_neutral_hadron	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	bool is_good_neutral_hadron( int ijet, int inehad ) {$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
-is_good_neutral_hadron	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	bool is_good_neutral_hadron( int ijet, int inehad ) {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 isr	include/InformationStorages/EventInformation.h	/^		ISR isr;$/;"	m	class:Truth
 isr_inJets	include/InformationStorages/EventInformation.h	/^		ISR isr_inJets;$/;"	m	class:Truth
 jet_charged_hadrons	include/InformationStorages/TJTotalSingleJetInformation.h	/^		JetParticleTypeInfo jet_charged_hadrons;$/;"	m	class:TrueJetSingleJetInfo
-jet_counter	backup/TJTotalSingleJetInfo.h	/^		Counter jet_counter;$/;"	m	class:TrueJetSingleJetInfo
-jet_counter	backup/TJTotalSingleJetInfo.h	/^		Counter* jet_counter;$/;"	m	class:TrueJetLevel
-jet_counter	backup/TJTotalSingleJetInfo.h	/^	Counter* jet_counter;$/;"	m	class:JetLeptonsInfo
 jet_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^		Counter jet_counter;$/;"	m	class:TrueJetSingleJetInfo
 jet_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^		Counter* jet_counter;$/;"	m	class:TrueJetLevel
 jet_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter* jet_counter;$/;"	m	class:JetParticleTypeInfo
-jet_leptons	backup/TJTotalSingleJetInfo.h	/^		JetLeptonsInfo jet_leptons;$/;"	m	class:TrueJetSingleJetInfo
 jet_leptons	include/InformationStorages/TJTotalSingleJetInformation.h	/^		JetParticleTypeInfo jet_leptons;$/;"	m	class:TrueJetSingleJetInfo
 jet_neutral_hadrons	include/InformationStorages/TJTotalSingleJetInformation.h	/^		JetParticleTypeInfo jet_neutral_hadrons;$/;"	m	class:TrueJetSingleJetInfo
 jet_photons	include/InformationStorages/TJTotalSingleJetInformation.h	/^		JetParticleTypeInfo jet_photons;$/;"	m	class:TrueJetSingleJetInfo
@@ -1121,7 +1046,6 @@ lep_E_classes	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cp
 lep_class_labels	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> lep_class_labels = {"E>5GeV", "E<5GeV"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
 lep_classes	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> lep_classes = {"highE", "lowE"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
 level1	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel level1;$/;"	m	struct:LevelStep	file:
-level1	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	JetLevel level1;$/;"	m	struct:LevelStep	file:
 level1_descr	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<string> level1_descr = {$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 level1_descr	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<string> level1_descr = {$/;"	m	class:TJChargedHadronsInJetsPlotter	file:
 level1_descr	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> level1_descr = {$/;"	m	class:TJLeptonsInJetsPlotter	file:
@@ -1133,7 +1057,6 @@ level1_index	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 level2	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel level2;$/;"	m	struct:LevelStep	file:
-level2	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	JetLevel level2;$/;"	m	struct:LevelStep	file:
 level2_descr	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<string> level2_descr = {$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 level2_descr	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<string> level2_descr = {$/;"	m	class:TJChargedHadronsInJetsPlotter	file:
 level2_descr	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> level2_descr = {$/;"	m	class:TJLeptonsInJetsPlotter	file:
@@ -1174,7 +1097,6 @@ main	build/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int 
 main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 makeNTuple	src/JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::makeNTuple() {$/;"	f	class:JakobsVBSProcessor
-mass	backup/TJTotalSingleJetInfo.h	/^		float mass[__max_Njets];$/;"	m	class:TrueJetLevel
 mass	include/InformationStorages/EventInformation.h	/^		float mass;$/;"	m	class:JetInfo
 mass	include/InformationStorages/TJTotalSingleJetInformation.h	/^		float mass[__max_Njets];$/;"	m	class:TrueJetLevel
 mass	include/jet_corrections.h	/^double mass ( double E, double p ) {$/;"	f
@@ -1185,7 +1107,6 @@ max_Nparticles	include/InformationStorages/EventInformation.h	/^		int max_Nparti
 max_matrix_size	analysis/complete_plotting/include/plotter.h	/^	int max_matrix_size;$/;"	m	class:Plotter
 max_matrix_size	include/InformationStorages/EventInformation.h	/^		int max_matrix_size;$/;"	m	class:EventInfo
 mc_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter mc_counter;$/;"	m	class:JetParticleTypeInfo
-mclep_counter	backup/TJTotalSingleJetInfo.h	/^	Counter mclep_counter;$/;"	m	class:JetLeptonsInfo
 mcpartvec	include/Adjusted_TrueJet_Parser.h	/^  MCParticleVec* mcpartvec;$/;"	m	class:Adjusted_TrueJet_Parser
 mcpartvec	include/TrueJet_Parser.h	/^  MCParticleVec* mcpartvec;$/;"	m	class:TrueJet_Parser
 min_Ejet	analysis/complete_plotting/include/plotter.h	/^	float min_Ejet;$/;"	m	class:Plotter
@@ -1204,21 +1125,16 @@ miss_mass	include/InformationStorages/EventInformation.h	/^		float miss_mass; \/
 miss_tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector miss_tlv;$/;"	m	class:Observables
 myfunc3	analysis/fit_test/other.cpp	/^double myfunc3(double *x, double *par) {$/;"	f
 name	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	string name;$/;"	m	struct:LevelStep	file:
-name	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	string name;$/;"	m	struct:LevelStep	file:
 need_1D_arrays	analysis/complete_plotting/include/plotter.h	/^	bool need_1D_arrays = false;$/;"	m	class:Plotter
 need_2D_arrays	analysis/complete_plotting/include/plotter.h	/^	bool need_2D_arrays = false;$/;"	m	class:Plotter
 nehad_E_classes	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> nehad_E_classes = {0, 5, 10, 50, 100};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 nehad_class_labels	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> nehad_class_labels = {"E>5GeV", "E<5GeV"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 nehad_classes	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> nehad_classes = {"highE", "lowE"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
-newProcessor	backup/JakobsVBSProcessor.h	/^  virtual Processor*  newProcessor() { return new JakobsVBSProcessor ; }$/;"	f	class:JakobsVBSProcessor
 newProcessor	include/JakobsVBSProcessor.h	/^  virtual Processor*  newProcessor() { return new JakobsVBSProcessor ; }$/;"	f	class:JakobsVBSProcessor
 next_file	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		bool next_file() {$/;"	f	class:ParameterPointIterator
-next_jet	backup/TJTotalSingleJetInfo.h	/^		int next_jet() {$/;"	f	class:TrueJetSingleJetInfo
 next_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int next_jet() {$/;"	f	class:TrueJetSingleJetInfo
 next_mc	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int next_mc() {$/;"	f	class:JetParticleTypeInfo
-next_mclep	backup/TJTotalSingleJetInfo.h	/^	int next_mclep() {$/;"	f	class:JetLeptonsInfo
 next_reco	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int next_reco() {$/;"	f	class:JetParticleTypeInfo
-next_recolep	backup/TJTotalSingleJetInfo.h	/^	int next_recolep() {$/;"	f	class:JetLeptonsInfo
 nfcn	include/Adjusted_TrueJet_Parser.h	/^  int nfcn() { return fcncol->getNumberOfElements(); };$/;"	f	class:Adjusted_TrueJet_Parser
 nfcn	include/TrueJet_Parser.h	/^  int nfcn() { return fcncol->getNumberOfElements(); };$/;"	f	class:TrueJet_Parser
 nicn	include/Adjusted_TrueJet_Parser.h	/^  int nicn() { return icncol->getNumberOfElements(); };$/;"	f	class:Adjusted_TrueJet_Parser
@@ -1240,8 +1156,6 @@ observables	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	
 observables	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> observables = {"Ejet", "pjet"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 observables	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<string> observables = {"Ejet", "pjet"};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 operator ()	src/CPPHelperFunctions.cc	/^	inline bool operator() (std::pair<int, float> &a, std::pair<int, float> &b) {$/;"	f	struct:JakobsVBSProcessor::compareSecondArgument
-operator ++	backup/TJTotalSingleJetInfo.h	/^	Counter operator++(int) {$/;"	f	class:Counter
-operator ++	backup/TJTotalSingleJetInfo.h	/^	Counter& operator++(){$/;"	f	class:Counter
 operator ++	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter operator++(int) {$/;"	f	class:Counter
 operator ++	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter& operator++(){$/;"	f	class:Counter
 os	.ycm_extra_conf.py	/^import os$/;"	i
@@ -1250,8 +1164,6 @@ other	analysis/fit_test/other.cpp	/^void other() {$/;"	f
 output_directory	analysis/complete_plotting/include/InfoStorage.h	/^	string output_directory;	$/;"	m	class:InfoStorage
 output_folder_name	analysis/complete_plotting/include/plotter.h	/^	string output_folder_name;$/;"	m	class:Plotter
 p	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	float** p;	$/;"	m	struct:JetLevel	file:
-p	backup/TJTotalSingleJetInfo.h	/^		float p[__max_Njets];$/;"	m	class:TrueJetLevel
-p	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	float** p;	$/;"	m	struct:JetLevel	file:
 p	include/InformationStorages/EventInformation.h	/^		float p;$/;"	m	class:ISR
 p	include/InformationStorages/TJTotalSingleJetInformation.h	/^		float p[__max_Njets];$/;"	m	class:TrueJetLevel
 p3	include/Adjusted_TrueJet_Parser.h	/^  double p3[3]; $/;"	m	class:Adjusted_TrueJet_Parser
@@ -1304,7 +1216,6 @@ particle_types	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_p
 particle_types	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> particle_types = {"all_q", "udsc", "b"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
 particle_types	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> particle_types = {"all_q", "udsc", "b"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 particle_types	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<string> particle_types = {"all_q", "udsc", "b"};$/;"	m	class:TJPhotonsInJetsPlotter	file:
-particle_types	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	vector<string> particle_types = {"all_q", "udsc", "b"};$/;"	m	class:TJNeutralHadronsEPercentagePlotter	file:
 partner_of_truthV1	analysis/complete_plotting/include/plotter.h	/^	int partner_of_truthV1;$/;"	m	class:Plotter
 partner_of_truthV1	analysis/parameter_optimization/include/tree_readout.h	/^		int partner_of_truthV1, partner_of_truthV2;$/;"	m	class:TTreeReadout
 partner_of_truthV2	analysis/complete_plotting/include/plotter.h	/^	int partner_of_truthV2;$/;"	m	class:Plotter
@@ -1356,8 +1267,6 @@ pdg_icn_comps	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_P
 pdg_icn_parent	include/Adjusted_TrueJet_Parser.h	/^  int pdg_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getPDG() ; };$/;"	f	class:Adjusted_TrueJet_Parser
 pdg_icn_parent	include/TrueJet_Parser.h	/^  int pdg_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getPDG() ; };$/;"	f	class:TrueJet_Parser
 pdg_id	include/InformationStorages/EventInformation.h	/^		int pdg_id;$/;"	m	class:TrueParticleInfo
-perc_max	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	float perc_max;$/;"	m	struct:PercentageRange	file:
-perc_min	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	float perc_min;$/;"	m	struct:PercentageRange	file:
 pol_weight	analysis/plotting/plotting.C	/^	float pol_weight = ( 1 + sample_e_pol * e_pol_percentage )\/2 * ( 1 + sample_p_pol * p_pol_percentage )\/2;$/;"	v
 polarization_weight	analysis/parameter_optimization/include/fileinfo.h	/^		float polarization_weight;$/;"	m	class:FileInfo
 polarization_weight	analysis/parameter_optimization/src/fileinfo_class.cpp	/^		float polarization_weight;$/;"	m	class:FileInfo	file:
@@ -1377,14 +1286,10 @@ qnxnto	build/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnt
 qnxnto	build/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 quarks	include/InformationStorages/EventInformation.h	/^		TrueParticleInfo quarks[__Njets];$/;"	m	class:Truth
 ranges	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	vector<NRange> ranges;$/;"	m	class:TJNParticlesPlotter	file:
-ranges	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	vector<PercentageRange> ranges;$/;"	m	class:TJNeutralHadronsEPercentagePlotter	file:
 re	.ycm_extra_conf.py	/^import re$/;"	i
 reco_E	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float reco_E[__max_Njets][__max_Nparticles];$/;"	m	class:TJRecoParticleAsTypeIDd
 reco_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter reco_counter;$/;"	m	class:JetParticleTypeInfo
-reco_lepton_E	backup/TJTotalSingleJetInfo.h	/^	float reco_lepton_E[__max_Njets][__max_Nleps];$/;"	m	class:TJRecoParticleAsLeptonIDd
 reco_system	include/InformationStorages/TJInformation.h	/^	TJLevelInfo reco_system;$/;"	m	class:TJEventInfo
-recolep_counter	backup/TJTotalSingleJetInfo.h	/^	Counter recolep_counter;$/;"	m	class:JetLeptonsInfo
-recos_IDd_as_lepton	backup/TJTotalSingleJetInfo.h	/^	TJRecoParticleAsLeptonIDd recos_IDd_as_lepton;$/;"	m	class:JetLeptonsInfo
 recos_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	TJRecoParticleAsTypeIDd recos_IDd_as_type;$/;"	m	class:JetParticleTypeInfo
 relfcn	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* relfcn ;$/;"	m	class:Adjusted_TrueJet_Parser
 relfcn	include/TrueJet_Parser.h	/^    LCRelationNavigator* relfcn ;$/;"	m	class:TrueJet_Parser
@@ -1400,9 +1305,7 @@ reltjreco	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* reltjreco
 reltjreco	include/TrueJet_Parser.h	/^    LCRelationNavigator* reltjreco ;$/;"	m	class:TrueJet_Parser
 reltrue_tj	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* reltrue_tj ;$/;"	m	class:Adjusted_TrueJet_Parser
 reltrue_tj	include/TrueJet_Parser.h	/^    LCRelationNavigator* reltrue_tj ;$/;"	m	class:TrueJet_Parser
-reset	backup/TJTotalSingleJetInfo.h	/^	void reset(){$/;"	f	class:Counter
 reset	include/InformationStorages/TJTotalSingleJetInformation.h	/^	void reset(){$/;"	f	class:Counter
-reset_lepton_counters	backup/TJTotalSingleJetInfo.h	/^	void reset_lepton_counters() {$/;"	f	class:JetLeptonsInfo
 reset_type_counters	include/InformationStorages/TJTotalSingleJetInformation.h	/^	void reset_type_counters() {$/;"	f	class:JetParticleTypeInfo
 result_storage	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		ResultStorage result_storage;$/;"	m	class:ParameterPointCalculator
 results_all_points	analysis/parameter_optimization/include/calculation.h	/^	ResultStorage results_all_points;$/;"	m	class:Calculation
@@ -1424,7 +1327,6 @@ save_all_TProfiles_in_rootfile	analysis/complete_plotting/include/plotter.h	/^	v
 save_all_histograms_in_rootfiles	analysis/complete_plotting/include/plotter.h	/^	void save_all_histograms_in_rootfiles() {$/;"	f	class:Plotter
 save_results	analysis/parameter_optimization/src/specifications.cpp	/^void Calculation::save_results() { $/;"	f	class:Calculation
 seen	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel seen =  		JetLevel("detected particles reco values",$/;"	m	class:TJNParticlesPlotter	file:
-seen	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	JetLevel seen =  		JetLevel("detected particles reco values",$/;"	m	class:TJNeutralHadronsEPercentagePlotter	file:
 seen_partics	include/Adjusted_TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:Adjusted_TrueJet_Parser
 seen_partics	include/TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:TrueJet_Parser
 set_1D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_1D_array_reading( bool need ) { need_1D_arrays = need; }$/;"	f	class:Plotter
@@ -1439,7 +1341,6 @@ set_dynamic_1D_array_addresses	analysis/complete_plotting/include/plotter.h	/^	v
 set_dynamic_2D_array_addresses	analysis/complete_plotting/include/plotter.h	/^	void set_dynamic_2D_array_addresses() {$/;"	f	class:Plotter
 set_dynamic_addresses	analysis/complete_plotting/include/plotter.h	/^	void set_dynamic_addresses() {$/;"	f	class:Plotter
 set_environment	analysis/complete_plotting/include/InfoStorage.h	/^		void set_environment(string _input_directory, string _output_directory, string _tree_name) {$/;"	f	class:InfoStorage
-set_output_folder	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	void set_output_folder() {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 set_output_folder_name	analysis/complete_plotting/include/plotter.h	/^	void set_output_folder_name(string _output_folder_name) {$/;"	f	class:Plotter
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_2nus4qs_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJQuarkJetsPlusNeutrinosPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJNParticlesPlotter	file:
@@ -1447,11 +1348,14 @@ set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJChargedHadronsInJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJCorrectedJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJJetEnergyResolutionPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_jet_level_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJJetLevelsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_jet_mass_investigation_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJJetMassInvestigationPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJLeptonsInJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJNeutralHadronsInJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJObservToICNsPlotter	file:
+set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJObservToICNsOnlyUDSPlotter	file:
+set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJObservToICNsOnlyUDSCPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJPhotonsInJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_tos_s_E_correction_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJSeenTrueOfSeenECorrectionPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/TJ/TJ_tos_s_p_correction_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TJSeenTrueOfSeenPCorrectionPlotter	file:
@@ -1469,7 +1373,6 @@ set_plotters	analysis/complete_plotting/src/configuration.cpp	/^void set_plotter
 set_setup	analysis/complete_plotting/include/InfoStorage.h	/^		void set_setup (float _luminosity, float _e_beam_polarization, float _p_beam_polarization) {$/;"	f	class:InfoStorage
 set_tree_adresses	analysis/complete_plotting/include/plotter.h	/^	void set_tree_adresses () {$/;"	f	class:Plotter
 steps	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	vector<LevelStep> steps;$/;"	m	class:TJNParticlesPlotter	file:
-steps	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	vector<LevelStep> steps;$/;"	m	class:TJNeutralHadronsEPercentagePlotter	file:
 sum_E_q	analysis/complete_plotting/include/plotter.h	/^	float sum_E_q;$/;"	m	class:Plotter
 sum_E_q	analysis/event_selection/eventClass.C	/^		float sum_E_q;$/;"	m	class:TreeEvent	file:
 sum_E_q	analysis/parameter_optimization/include/tree_readout.h	/^				sum_E_q,        $/;"	m	class:TTreeReadout
@@ -1477,18 +1380,15 @@ sum_E_q	include/InformationStorages/EventInformation.h	/^		float sum_E_q; \/\/ s
 test	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	void test() {$/;"	f	class:TJNParticlesPlotter	file:
 test	analysis/fit_test/test.cpp	/^void test() $/;"	f
 test	analysis/parameter_optimization/src/test.cpp	/^int test() {$/;"	f
-theta	backup/TJTotalSingleJetInfo.h	/^		float theta[__max_Njets];$/;"	m	class:TrueJetLevel
 theta	include/InformationStorages/EventInformation.h	/^		float theta;$/;"	m	class:ISR
 theta	include/InformationStorages/EventInformation.h	/^		float theta;$/;"	m	class:JetInfo
 theta	include/InformationStorages/EventInformation.h	/^		float theta;$/;"	m	class:TrueParticleInfo
 theta	include/InformationStorages/TJTotalSingleJetInformation.h	/^		float theta[__max_Njets];$/;"	m	class:TrueJetLevel
 titel	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	string titel;$/;"	m	struct:LevelStep	file:
-titel	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	string titel;$/;"	m	struct:LevelStep	file:
 tjcol	include/Adjusted_TrueJet_Parser.h	/^    LCCollection* tjcol ;$/;"	m	class:Adjusted_TrueJet_Parser
 tjcol	include/TrueJet_Parser.h	/^    LCCollection* tjcol ;$/;"	m	class:TrueJet_Parser
 tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector tlv;$/;"	m	class:JetInfo
 tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector tlv;$/;"	m	class:TrueParticleInfo
-to_perc	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	int to_perc( float number ) {$/;"	f	class:TJNeutralHadronsEPercentagePlotter	file:
 total_E	include/InformationStorages/TJInformation.h	/^	float total_E;$/;"	m	class:TJLevelInfo
 tree_name	analysis/complete_plotting/include/InfoStorage.h	/^	string tree_name;$/;"	m	class:InfoStorage
 tree_name	analysis/parameter_optimization/include/fileinfo.h	/^		string tree_name;		$/;"	m	class:FileInfo
@@ -1498,7 +1398,6 @@ true_ISR_inJets_E	analysis/complete_plotting/include/plotter.h	/^	float true_ISR
 true_ISR_inJets_p	analysis/complete_plotting/include/plotter.h	/^	float true_ISR_inJets_p;$/;"	m	class:Plotter
 true_ISR_inJets_theta	analysis/complete_plotting/include/plotter.h	/^	float true_ISR_inJets_theta;$/;"	m	class:Plotter
 true_evt_type	analysis/complete_plotting/include/plotter.h	/^	int true_evt_type;$/;"	m	class:Plotter
-true_jet	backup/TJTotalSingleJetInfo.h	/^		TrueJetLevel true_jet;$/;"	m	class:TrueJetSingleJetInfo
 true_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^		TrueJetLevel true_jet;$/;"	m	class:TrueJetSingleJetInfo
 true_miss_mass	analysis/complete_plotting/include/plotter.h	/^	float true_miss_mass;$/;"	m	class:Plotter
 true_miss_mass	analysis/parameter_optimization/include/tree_readout.h	/^		float 	true_miss_mass,$/;"	m	class:TTreeReadout
@@ -1509,7 +1408,6 @@ true_nu2_E	analysis/complete_plotting/include/plotter.h	/^	float true_nu2_E;$/;"
 true_nu2_pdg_id	analysis/complete_plotting/include/plotter.h	/^	int true_nu2_pdg_id;$/;"	m	class:Plotter
 true_nu2_theta	analysis/complete_plotting/include/plotter.h	/^	float true_nu2_theta;$/;"	m	class:Plotter
 true_of_seen	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel true_of_seen = JetLevel("detected particles true values",$/;"	m	class:TJNParticlesPlotter	file:
-true_of_seen	backup/TJ_neutral_hadron_energy_ratio_plotter.cpp	/^	JetLevel true_of_seen = JetLevel("detected particles true values",$/;"	m	class:TJNeutralHadronsEPercentagePlotter	file:
 true_pair1_mass	analysis/complete_plotting/include/plotter.h	/^	float true_pair1_mass;$/;"	m	class:Plotter
 true_pair1_mass	analysis/parameter_optimization/include/tree_readout.h	/^				true_pair1_mass,$/;"	m	class:TTreeReadout
 true_pair1_theta	analysis/complete_plotting/include/plotter.h	/^	float true_pair1_theta;$/;"	m	class:Plotter
@@ -1521,7 +1419,6 @@ true_quarks_pdg_id	analysis/complete_plotting/include/plotter.h	/^	int true_quar
 true_quarks_theta	analysis/complete_plotting/include/plotter.h	/^	float true_quarks_theta[4];$/;"	m	class:Plotter
 true_sum_E_q	analysis/complete_plotting/include/plotter.h	/^	float true_sum_E_q;$/;"	m	class:Plotter
 true_sum_E_q	analysis/parameter_optimization/include/tree_readout.h	/^				true_sum_E_q,   $/;"	m	class:TTreeReadout
-true_value_of_detectable_jet	backup/TJTotalSingleJetInfo.h	/^		TrueJetLevel true_value_of_detectable_jet;$/;"	m	class:TrueJetSingleJetInfo
 true_value_of_detectable_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^		TrueJetLevel true_value_of_detectable_jet;$/;"	m	class:TrueJetSingleJetInfo
 type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	char* type;$/;"	m	class:JetParticleTypeInfo
 type_MCs	include/InformationStorages/TJTotalSingleJetInformation.h	/^	TJTypeMC type_MCs;$/;"	m	class:JetParticleTypeInfo

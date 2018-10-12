@@ -11,7 +11,7 @@ BuildDirectory: /afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/build
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: naf-ilc11.desy.de
+Site: naf-ilc13.desy.de
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Linux-g++
@@ -64,9 +64,9 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: 
+UpdateCommand: /usr/bin/git
 UpdateOptions: 
-UpdateType: 
+UpdateType: git
 
 # Compiler info
 Compiler: /cvmfs/sft.cern.ch/lcg/contrib/gcc/4.9.3/x86_64-slc6/bin/g++

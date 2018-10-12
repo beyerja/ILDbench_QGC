@@ -145,31 +145,39 @@ void JakobsVBSProcessor::LevelComparisonIndividualJets(LCRelationNavigator* rela
 
 	for ( int i=0; i<njets(); i++ ) {
 		int ijet = info.TJ_jetinfo.next_jet();
-		streamlog_out(DEBUG) << " Treating jet " << ijet   << std::endl;
+		streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Treating jet " << ijet   << std::endl;
 
 		SearchSingleTJJetParticles( relation_recoMCtruth, info.TJ_jetinfo );
 
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet seen 4-momentum." << std::endl;
 		TLorentzVector seen_jet_tlv = TLorentzVector( p4seen(ijet)[1],p4seen(ijet)[2],p4seen(ijet)[3], p4seen(ijet)[0] );
 		float detected_mass = seen_jet_tlv.M();
 		float detected_E	= seen_jet_tlv.E();
 		float detected_p	= seen_jet_tlv.P();
 
-		ReconstructedParticleVec ijetPFOs = seen_partics(ijet); // seen_partics(...) is function of TrueJet_Parser, see header
+		// ReconstructedParticleVec ijetPFOs = seen_partics(ijet); // seen_partics(...) is function of TrueJet_Parser, see header
 
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet true of seen 4-momentum." << std::endl;
 		TLorentzVector true_of_seen_tlv = TLorentzVector( p4trueseen(ijet)[1], p4trueseen(ijet)[2], p4trueseen(ijet)[3], p4trueseen(ijet)[0]);
 		float true_mass_of_detectable_jet	= true_of_seen_tlv.M();
 		float true_E_of_detectable_jet		= true_of_seen_tlv.E();
 		float true_p_of_detectable_jet		= true_of_seen_tlv.P();
 
 		// The final elementon is the q / g / gamma / ... after parton shower
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet final elementon 4-momentum." << std::endl;
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: fe ptr:" << final_elementon(ijet) << std::endl;
 		MCParticle* final_elementon_particle = final_elementon(ijet);
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: hm." << std::endl;
 		int final_elementon_pdgID = final_elementon_particle->getPDG();
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: hmm." << std::endl;
 		TLorentzVector final_elementon_tlv = TLorentzVector( final_elementon_particle->getMomentum(), final_elementon_particle->getEnergy() );
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: hmmm." << std::endl;
 		float final_elementon_mass = final_elementon_tlv.M();
 		float final_elementon_E = final_elementon_tlv.E();
 		float final_elementon_p = final_elementon_tlv.P();
 
 
+    streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet final true 4-momentum." << std::endl;
 		TLorentzVector true_tlv = TLorentzVector( p4true(ijet)[1], p4true(ijet)[2], p4true(ijet)[3], p4true(ijet)[0]);
 		float true_mass	= true_tlv.M();
 		float true_E	= true_tlv.E();

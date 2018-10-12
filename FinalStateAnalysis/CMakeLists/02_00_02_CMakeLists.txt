@@ -1,0 +1,68 @@
+########################################################
+# cmake file for building Marlin example Package
+# @author Jan Engels, Desy IT
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
+########################################################
+
+
+# project name
+PROJECT( JakobsVBSProcessor )
+
+
+# project version
+SET( ${PROJECT_NAME}_VERSION_MAJOR 0 )
+SET( ${PROJECT_NAME}_VERSION_MINOR 1 )
+SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
+
+
+# Create compliation database to allow autocomplete
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+
+### DEPENDENCIES ############################################################
+
+FIND_PACKAGE( ILCUTIL REQUIRED COMPONENTS ILCSOFT_CMAKE_MODULES )
+
+# load default settings from ILCSOFT_CMAKE_MODULES
+INCLUDE( ilcsoft_default_settings )
+
+FIND_PACKAGE( Marlin 1.0 REQUIRED ) # minimum required Marlin version
+INCLUDE_DIRECTORIES( SYSTEM ${Marlin_INCLUDE_DIRS} )
+LINK_LIBRARIES( ${Marlin_LIBRARIES} )
+ADD_DEFINITIONS( ${Marlin_DEFINITIONS} )
+
+FIND_PACKAGE( DD4hep )
+INCLUDE_DIRECTORIES( SYSTEM ${DD4hep_INCLUDE_DIRS} )
+LINK_LIBRARIES( ${DD4hep_LIBRARIES} )
+ADD_DEFINITIONS( ${DD4hep_DEFINITIONS} )
+
+FIND_PACKAGE( MarlinUtil 1.0 REQUIRED ) # minimum required MarlinUtil version
+INCLUDE_DIRECTORIES( SYSTEM ${MarlinUtil_INCLUDE_DIRS} )
+LINK_LIBRARIES( ${MarlinUtil_LIBRARIES} )
+ADD_DEFINITIONS( ${MarlinUtil_DEFINITIONS} )
+
+FIND_PACKAGE( ROOT REQUIRED ) 
+INCLUDE_DIRECTORIES( SYSTEM ${ROOT_INCLUDE_DIRS} )
+LINK_LIBRARIES( ${ROOT_LIBRARIES} )
+ADD_DEFINITIONS( ${ROOT_DEFINITIONS} )
+
+
+### LIBRARY #################################################################
+
+# definitions to pass to the compiler
+ ADD_DEFINITIONS( "-w -ansi -pedantic -std=gnu++11" )
+ #ADD_DEFINITIONS( "-Wall -ansi -pedantic -std=gnu++11" )
+ #ADD_DEFINITIONS( "-Wno-long-long" )
+
+# include directories
+INCLUDE_DIRECTORIES( ./include ./include/InformationStorages )
+
+# add library
+AUX_SOURCE_DIRECTORY( ./src library_source )
+AUX_SOURCE_DIRECTORY( ./src/TreeBranches tree_branches_source )
+AUX_SOURCE_DIRECTORY( ./src/TJRoutines TJ_routines_source )
+ADD_SHARED_LIBRARY( ${PROJECT_NAME} ${library_source} ${tree_branches_source} ${TJ_routines_source})
+INSTALL_SHARED_LIBRARY( ${PROJECT_NAME} DESTINATION lib )
+
+# display some variables and write them to cache
+DISPLAY_STD_VARIABLES()
+

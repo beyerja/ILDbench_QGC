@@ -36,7 +36,6 @@ if [[ ! -z ${pol_weight_aux} ]] ; then
 			mkdir ${tmp_xml_dir}
 		fi
 		cp ${template_file} ${xml_file}
-		cp ${xml_directory}/GearOutput.xml ${tmp_xml_dir}/.
 		base_name=${data_directory}/${class_name}_${final_state}_${polarization}_${i}
 		lctuple_name=${base_name}_lctuple
 		root_name=${base_name}.root 

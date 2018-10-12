@@ -34,18 +34,23 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
+  "DD4HEP_USE_TINYXML"
   "MARLINDEBUG"
   )
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/Marlin/v01-15-02/include"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/lcio/v02-11/include"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/gear/v01-07/include"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/gear/v01-07/include/gear"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/CLHEP/2.3.4.3/include"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/ilcutil/v01-03/include"
-  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-05/root/6.08.06/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/Marlin/v01-16/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/lcio/v02-12-01/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/gear/v01-08/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/gear/v01-08/include/gear"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/CLHEP/2.3.4.3/lib/CLHEP-2.3.4.3/../../include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/ilcutil/v01-05/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/DD4hep/v01-07-02/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinUtil/v01-15/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinUtil/v01-15/include/marlinutil"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/CED/v01-09-02/include"
+  "/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/root/6.08.06/include"
   ".././include"
   ".././include/InformationStorages"
   )

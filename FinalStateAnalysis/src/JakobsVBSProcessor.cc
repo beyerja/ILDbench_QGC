@@ -43,7 +43,7 @@ JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {
             "MCParticleCollection",
             "Name of the MC particle collection",
             _colMC,
-            std::string("MCParticlesSkimmed2")
+            std::string("MCParticle")
     );
 
 
@@ -74,17 +74,14 @@ JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {
 			"MCPFORelation",
 			"Relation between MC and PFO particles",
 			_mcpfoRelation,
-			std::string("RecoMCTruthLink2") );
+			std::string("RecoMCTruthLink") );
 
-
-	// Inputs from TrueJet processor
-	//WARNING Remove the "2"s when possible
 
 	registerInputCollection( LCIO::LCRELATION,
     		"RecoMCTruthLink",
     		"Name of the RecoMCTruthLink input collection"  ,
 			_recoMCTruthLink,
-			std::string("RecoMCTruthLink2") ) ;
+			std::string("RecoMCTruthLink") ) ;
 
 	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
 			"TrueJets" ,

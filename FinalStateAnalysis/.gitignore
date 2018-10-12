@@ -1,0 +1,7 @@
+/build/
+/doc/
+*.svn/
+/lib/
+/scripts/BIRD_output/*
+/scripts/old_runners/
+/xml/tmp*

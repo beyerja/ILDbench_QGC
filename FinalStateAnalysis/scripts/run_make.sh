@@ -1,11 +1,7 @@
 #!/bin/bash
 
-if [ $#==1 ] ; then 
-	PROJECTNAME=MyProcessor
-elif [ $#==2 ] ; then 
-	PROJECTNAME=$1"Processor"
-else
-	echo "usage: ./action.sh [Processor Name (will append \"Processor\" automatically)]"
+if [[ $# > 1 ]] ; then 
+	echo "usage: ./run_make.sh"
 	exit
 fi
 
@@ -25,6 +21,8 @@ if [[ $version == "01-17-11" ]]; then
 	cmakelist_path=${home_folder}/CMakeLists/17_11_CMakeLists.txt
 elif [[ $version == "01-19-05" ]]; then
 	cmakelist_path=${home_folder}/CMakeLists/19_05_CMakeLists.txt
+elif [[ $version == "02-00-02" ]]; then
+	cmakelist_path=${home_folder}/CMakeLists/02_00_02_CMakeLists.txt
 else 
 	echo "ERROR: no CMakeLists found for this ilcsoft version! Exiting now..."
 	exit
@@ -40,11 +38,15 @@ ILD_gearoutputs_dir=${home_folder}/xml/steering_files/ILD_GearOutputs
 
 # TODO Make this better in combination with the above
 
+rm ${home_folder}/xml/template.xml
+
 # Set the template with the correct processor versions
 if [[ $version == "01-17-11" ]]; then
 	template=${templates_dir}/01_17_11_template.xml
 elif [[ $version == "01-19-05" ]]; then
 	template=${templates_dir}/01_19_05_template.xml
+elif [[ $version == "02-00-02" ]]; then
+	template=${templates_dir}/02_00_02_template.xml
 else 
 	echo "ERROR: not valid ilcsoft version! Exiting now..."
 	exit
@@ -57,8 +59,7 @@ echo
 
 ILD_model=$CURRENT_ILD_MODEL
 
-#TODO  CHANGE TEMPLATES
-
+ILD_gearoutput=""
 # Set the correct steering file for the detector
 if [[ $ILD_model == "l5_v02" ]]; then
 	ILD_gearoutput=${ILD_gearoutputs_dir}/gear_ILD_l5_v02.xml
@@ -68,14 +69,19 @@ elif [[ $ILD_model == "o1_v05" ]]; then
 	ILD_gearoutput=${ILD_gearoutputs_dir}/GearOutput_ILD_o1_v05.xml
 elif [[ $ILD_model == "o2_v05" ]]; then
 	ILD_gearoutput=${ILD_gearoutputs_dir}/GearOutput_ILD_o2_v05.xml
+elif [[ $ILD_model == "l5_o1_v02" ]]; then
+  echo "" >/dev/null # do nothing
 else
 	echo "ERROR: not valid ILD model version! Exiting now..."
 	exit
 fi
 
-echo "Setting GearOutput to ILD version " ${ILD_model}
-cp ${ILD_gearoutput} ${home_folder}/xml/GearOutput.xml
-echo
+rm ${home_folder}/xml/GearOutput.xml
+if [[ ${ILD_gearoutput} != "" ]]; then
+  echo "Setting GearOutput to ILD version " ${ILD_model}
+  cp ${ILD_gearoutput} ${home_folder}/xml/GearOutput.xml
+  echo
+fi
 
 # -------------------------------------------------#
 # Check if necessary directories are in place
@@ -88,39 +94,6 @@ else
 fi
 
 echo 
-
-if [ -d ${home_folder}/src  ] ; then
-	echo "Already have  --src-- filter with the source file"
-else
-	echo "no source filter, mkdir new src filter"
-	mkdir ${home_folder}/src 
-	if [ -a ${home_folder}/*.cc  ] ; then
-		echo "Already have source file, move to src filter"
-		mv ${home_folder}/*.cc ${home_folder}/src
-	else
-		echo "no source file, stop"
-		exit
-	fi
-fi
-
-echo 
-
-if [ -d ${home_folder}/include  ] ; then
-	echo "Already have  --include-- filter with the header file"
-else
-	echo "no header filter"
-	mkdir include
-	if [ -a ${home_folder}/*.h  ] ; then
-		echo "Already have header file, move to head filter"
-		mv ${home_folder}/*.h ${home_folder}/include
-	else
-		echo "no head file, stop"
-		exit
-	fi
-fi
-
-echo 
-
 
 # -------------------------------------------------#
 # Move to build directory and to build framework 
