@@ -24,6 +24,8 @@ isolep_mm_weights_line=45
 
 compact_file_line=31
 
+# TODO This should be imporved: instead of hardcoding lines -> set markers in templates, find line by marker here
+# TODO Use something like "awk '/${MARKERNAME}/{ print NR; exit }' ${filename}" to find line number -> separate small script for that
 # Replace the relevant lines (in decreasing line order to avoid problems caused by added line breaks)
 sed -i "${output_file_line}s\.*\ ${output_file} \  " ${steering_file}
 sed -i "${isolep_mm_weights_line}s\.*\ ${ISOLEPFINDER_WEIGHTS_mm} \  " ${steering_file}
