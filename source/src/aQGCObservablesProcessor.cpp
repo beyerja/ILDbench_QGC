@@ -118,13 +118,16 @@ void aQGCObservablesProcessor::end() {
   // Write to .root file
   m_rootfile->cd();
   
+  streamlog_out(DEBUG) << "In end: Writing trees." << std::endl;
   m_processinfotree->Write();
   m_truthtree->Write();
   m_mctree->Write();
   m_recotree->Write();
   
+  streamlog_out(DEBUG) << "In end: Closing file." << std::endl;
   m_rootfile->Close();
   
   delete m_rootfile;
+  streamlog_out(DEBUG) << "In end: Done." << std::endl;
 }
 

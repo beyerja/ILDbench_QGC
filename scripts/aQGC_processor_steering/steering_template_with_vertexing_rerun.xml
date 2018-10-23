@@ -98,8 +98,9 @@
   <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag" type="LcfiplusProcessor">
 
     <!-- run primary and secondary vertex finders -->
-    <parameter name="Algorithms" type="stringVec"> PrimaryVertexFinder BuildUpVertex JetClustering Je
-    tVertexRefiner FlavorTag ReadMVA</parameter>
+    <parameter name="Algorithms" type="stringVec"> 
+      PrimaryVertexFinder BuildUpVertex JetClustering JetVertexRefiner FlavorTag ReadMVA
+    </parameter>
 
     <!-- general parameters -->
     <parameter name="PFOCollection" type="string" value="PandoraPFOs" /> <!-- input PFO collection --
