@@ -19,7 +19,7 @@ p_polarizations=("pL" "pR")
 
 # Standard HTCondor environment
 standard_condor_directory=${dir}/../standard_HTCondor_submit
-standard_condor_submit=${standard_condor_directory}/standard_htcondor_steering.submit
+standard_condor_submit=${standard_condor_directory}/daylong_htcondor_steering.submit
 
 condor_output_directory=${dir}/../Condor_output
 if [[ ! -d ${condor_output_directory} ]] ; then # Create if not existing
