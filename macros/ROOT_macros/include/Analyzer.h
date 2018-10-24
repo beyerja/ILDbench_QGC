@@ -3,6 +3,7 @@
 
 #include "../src/SelectionCutTemplates.cpp"
 #include "../src/VariableCombinationTemplates.cpp"
+#include "../src/SystemHelper.cpp"
 
 using namespace ROOT;
 
@@ -20,10 +21,13 @@ class Analyzer {
     float m_e_beam_polarization {};
     float m_p_beam_polarization {};
 
+    string m_output_directory {"."};
+
   public:
     void setInputPaths( vector<string> &input_file_paths );
     void setBeamPolarizations( float &e_beam_polarization, float &p_beam_polarization );
     void setLuminosity( float &luminosity );
+    void setOutputDirectory( string &output_directory );
     
     void run();
 
@@ -40,6 +44,7 @@ class Analyzer {
     // Lambda can be used in dataframe to extract weight
   	function<float (TString, float, float, float)> getProcessWeightLambda(); 
 
+    string getOutputDirectory();
 };
 
 #endif

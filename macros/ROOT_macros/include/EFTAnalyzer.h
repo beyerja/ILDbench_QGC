@@ -4,7 +4,7 @@
 #include "../src/Analyzer.cpp"
 #include "../src/InputManager.cpp"
 #include "../src/PythonHelper.cpp"
-#include "../src/SystemHelper.cpp"
+
 
 class EFTAnalyzer : public Analyzer {
 

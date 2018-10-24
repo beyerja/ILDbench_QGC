@@ -108,7 +108,7 @@ void EFTAnalyzer::setupDummyWeightsFile( string weight_file_path ){
 void EFTAnalyzer::searchForWeightFile( string file_path ){
   // Uses weight file convention to search for weight file to event file
   // WARNING: Has convention hardcoded!
-  string file_directory = SysHelp::extract_directory(file_path);
+  string file_directory = SysHelp::extractDirectory(file_path);
   string weight_directory = file_directory + "/rescan_output";
   
   InputManager weight_file_searcher;
@@ -152,11 +152,11 @@ void EFTAnalyzer::searchForWeightFiles() {
 string EFTAnalyzer::makeDummyCopy( string file_path) {
   /** Creates copy of the dummy tree and returns the copys path.
   */
-  string dummy_directory =  SysHelp::extract_directory(m_dummy_weights_file);
-  string file_name = SysHelp::extract_filename(file_path);
+  string dummy_directory =  SysHelp::extractDirectory(m_dummy_weights_file);
+  string file_name = SysHelp::extractFilename(file_path);
   string dummy_copy = dummy_directory + "/dummy_copy_" + file_name;
   
-  if ( SysHelp::file_exists(dummy_copy) ) {
+  if ( SysHelp::pathExists(dummy_copy) ) {
     cout << "Already have weight dummy, not overwriting: " << dummy_copy << endl;
   
   } else {
@@ -168,7 +168,7 @@ string EFTAnalyzer::makeDummyCopy( string file_path) {
     delete file;
     
     cout << "Creating dummy weight file: " << dummy_copy << endl;
-    SysHelp::make_Nevents_treecopy(m_dummy_weights_file, "weightsTree", N_entries, dummy_copy);
+    SysHelp::makeNEventsTreeCopy(m_dummy_weights_file, "weightsTree", N_entries, dummy_copy);
   }
   return dummy_copy;
   
@@ -180,12 +180,12 @@ string EFTAnalyzer::makeDummyCopy( string file_path) {
 // TODO Find way to combine with previous function or at least create common functions
 string EFTAnalyzer::combineFileAndWeight( string file_path, string weight_path ){
   
-  string dummy_directory = SysHelp::extract_directory(m_dummy_weights_file);
-  string file_name = SysHelp::extract_filename(file_path);
+  string dummy_directory = SysHelp::extractDirectory(m_dummy_weights_file);
+  string file_name = SysHelp::extractFilename(file_path);
   
   string combined_path = dummy_directory + "/combined_" + file_name;
 
-  if ( SysHelp::file_exists(combined_path) ) {
+  if ( SysHelp::pathExists(combined_path) ) {
     cout << "Already have combined file, not overwriting: " << combined_path << endl;
   } else {
     // Determine number of events the copy need
@@ -193,7 +193,7 @@ string EFTAnalyzer::combineFileAndWeight( string file_path, string weight_path )
     // ~/flc/VBS/aQGC_analysis/macros/ROOT_macros/run_in_old_root.sh
     
     string paths_to_combine = file_path + " " + weight_path;
-    SysHelp::hadd_rootfiles( combined_path , paths_to_combine, "-f" );
+    SysHelp::haddROOTFiles( combined_path , paths_to_combine, "-f" );
   }
   
   return combined_path;
@@ -212,7 +212,7 @@ void EFTAnalyzer::combineAllFiles() {
   // TODO Directory path should be settable option
   m_total_combined_path = "/afs/desy.de/group/flc/pool/beyerjac/tmp/total.root";
   
-  if ( SysHelp::file_exists(m_total_combined_path) ) {
+  if ( SysHelp::pathExists(m_total_combined_path) ) {
     cout << "Already have combined total file, not overwriting: " << m_total_combined_path << endl;
   } else {
 
@@ -233,7 +233,7 @@ void EFTAnalyzer::combineAllFiles() {
     }
     
     cout << "Combining all files to final file: " << m_total_combined_path << endl;
-    SysHelp::hadd_rootfiles( m_total_combined_path, all_combined_paths, "-f" );
+    SysHelp::haddROOTFiles( m_total_combined_path, all_combined_paths, "-f" );
   }
   
 }

@@ -15,6 +15,31 @@ void Analyzer::setLuminosity( float &luminosity ){
   m_luminosity = luminosity;
 }
 
+void Analyzer::setOutputDirectory( string &output_directory ){
+  m_output_directory = output_directory;
+  if ( ! SysHelp::pathExists(m_output_directory) ) {
+    cout << "Given output directory does not exist. Trying to create it..." << endl;
+    SysHelp::createDirectory(m_output_directory);
+    if ( SysHelp::pathExists(m_output_directory) ) {
+      cout << "Successfully created output directory!" << endl;
+    } else {
+      cout << "Something went wrong in creating output directory: " << m_output_directory << endl;
+      cout << "Exiting now." << endl;
+      exit(1);
+    }
+  }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+string Analyzer::getOutputDirectory(){
+  if ( ! SysHelp::pathExists(m_output_directory) ) {
+    cout << "Something went wrong, trying to use non-existent output path! Exiting..." << endl;
+    exit(1);
+  } 
+  return m_output_directory;
+}
+
 //-------------------------------------------------------------------------------------------------
 
 void Analyzer::findAllFinalStates( TTree *info_chain ) {

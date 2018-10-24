@@ -125,7 +125,10 @@ void aQGCAnalyzer::performAnalysis(){
   auto count_WWsignal_inZZregion_with_cuts = rdf_WWsignal_inZZregion_with_cuts.Count();
   //----------------------------------------------------------------------------
 
-
+  auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
+  
 
 
   //============================================================================
@@ -157,7 +160,7 @@ void aQGCAnalyzer::performAnalysis(){
   h1_VV_m_withcuts->Draw("hist same");
   h1_VV_m_withcuts_WWsignal->Draw("hist same");
   h1_VV_m_withcuts_ZZsignal->Draw("hist same");
-  canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot.pdf");
+  canvas_h1->Print( ( this->getOutputDirectory() + "/VV_m.pdf").c_str() );
   delete canvas_h1;
   
   cout << endl;
