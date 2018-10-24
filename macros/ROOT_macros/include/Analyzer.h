@@ -2,6 +2,7 @@
 #define ANALYZER_h 1
 
 #include "../src/SelectionCutTemplates.cpp"
+#include "../src/VariableCombinationTemplates.cpp"
 
 using namespace ROOT;
 
