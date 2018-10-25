@@ -70,6 +70,7 @@ private:
   
   void readInputInfo();
   
+  void CleanEventParameters();
   void CleanEvent();
 
   TLorentzVector getBoostedVector( TLorentzVector &to_boost, TLorentzVector &boost_system );
@@ -115,6 +116,7 @@ private:
   std::string         m_rootfilename {};
   
   // Process information
+  // REMEMBER: Everything declared here should be cleaned up in corresp. Clean... function
   
   TString  m_detector_model {};
   TString  m_process_name {};
@@ -126,7 +128,6 @@ private:
   float m_com_E {};
   
   // Observables 
-  
   int   m_V1_type {};
   float m_V1_m {};
   float m_V1_pT {};

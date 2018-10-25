@@ -79,6 +79,7 @@ void aQGCObservablesProcessor::processRunHeader( EVENT::LCRunHeader* run ) {
 
 void aQGCObservablesProcessor::processEvent( EVENT::LCEvent * event ) {
   m_event = event;
+  this->CleanEventParameters();
   this->readInputInfo(); // Read info about process
   
   // Basic idea: perform same analysis first on MC then on Recos

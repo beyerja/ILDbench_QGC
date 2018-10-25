@@ -9,12 +9,17 @@ void aQGCObservablesProcessor::calculateMCTruth( MCParticleVec &mc_particles ) {
       Cuts for the signal definition are taken from previous ILD analyses.
   */
 
+  if (  m_e_polarization != -1 || m_p_polarization != +1 ) {
+    streamlog_out(DEBUG) << "In calculateMCTruth: Initial e+e- polarization not compatible with VBS!" << std::endl;
+    return;
+  }
+
   MCParticleVec initial_4q2nu   = this->findInitial4q2nu(mc_particles);
   MCParticleVec initial_quarks  = this->getQuarks( initial_4q2nu );
   MCParticleVec initial_nus     = this->getNeutrinos( initial_4q2nu );
   
   if ( initial_4q2nu.empty() ){
-    streamlog_out(DEBUG) << "In analyseMC: Event not of 4q2nu type!" << std::endl;
+    streamlog_out(DEBUG) << "In calculateMCTruth: Event not of 4q2nu type!" << std::endl;
     return;
   } 
 
@@ -28,7 +33,7 @@ void aQGCObservablesProcessor::calculateMCTruth( MCParticleVec &mc_particles ) {
   //  -> those with combined invariant mass < 100GeV
   //  -> those with generations other than electron neutrino bc e->W+nu always ends up with electron neutrino
   if ( VBpair_finder.getVBPairType() == 0 ) {
-    streamlog_out(DEBUG) << "In analyseMC: 4q state not signal like!" << std::endl;
+    streamlog_out(DEBUG) << "In calculateMCTruth: 4q state not signal like!" << std::endl;
     return;
   }
   
@@ -40,13 +45,13 @@ void aQGCObservablesProcessor::calculateMCTruth( MCParticleVec &mc_particles ) {
   float m_nunu = (nu1_tlv+nu2_tlv).M();
   
   if ( m_nunu<100 && fabs(nu1->getPDG())!=12 && fabs(nu2->getPDG())!=12 ) {
-    streamlog_out(DEBUG) << "In analyseMC: 2nu state not signal like!" << std::endl;
+    streamlog_out(DEBUG) << "In calculateMCTruth: 2nu state not signal like!" << std::endl;
     return;
   } 
   
   // Event is signal-like, now get the MC parameters
   m_signal_type = VBpair_finder.getVBPairType();
-  streamlog_out(DEBUG) << "In analyseMC: Event is of VB type " << m_signal_type << std::endl;
+  streamlog_out(DEBUG) << "In calculateMCTruth: Event is of VB type " << m_signal_type << std::endl;
   this->findVectorBosonObservables( VBpair_finder );
 }
 
