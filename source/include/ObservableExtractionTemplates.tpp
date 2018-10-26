@@ -37,11 +37,11 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
 
   // Observables in boosted single V frame
   streamlog_out(DEBUG) << "In findVectorBosonObservables: Calculating boosted particle kinematics." << std::endl;
-  TLorentzVector V1_jet1_V1boosted_tlv = getBoostedVector( V1_jet1_tlv, V1_tlv );
-  TLorentzVector V2_jet1_V2boosted_tlv = getBoostedVector( V2_jet1_tlv, V2_tlv );
+  TLorentzVector V1_jet1_V1boosted_tlv = this->getBoostedVector( V1_jet1_tlv, V1_tlv );
+  TLorentzVector V2_jet1_V2boosted_tlv = this->getBoostedVector( V2_jet1_tlv, V2_tlv );
   
-  m_V1_jet_absCosThetaStar = fabs( V1_jet1_V1boosted_tlv.Angle( V1_tlv.Vect() ) );
-  m_V2_jet_absCosThetaStar = fabs( V2_jet1_V2boosted_tlv.Angle( V2_tlv.Vect() ) );
+  m_V1_jet_absCosThetaStar = fabs( std::cos(V1_jet1_V1boosted_tlv.Angle( V1_tlv.Vect() )) );
+  m_V2_jet_absCosThetaStar = fabs( std::cos(V2_jet1_V2boosted_tlv.Angle( V2_tlv.Vect() )) );
   
   // Combined VB observables
   TLorentzVector VV_tlv = V1_tlv + V2_tlv;
@@ -51,8 +51,8 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
   m_VV_ET     = VV_tlv.Et();
   
   // Observables in boosted combined VV frame
-  TLorentzVector VV_V1_VVboosted_tlv = getBoostedVector( V1_tlv, VV_tlv );
-  m_VV_V_absCosThetaStar = fabs( VV_V1_VVboosted_tlv.Angle( VV_tlv.Vect() ) );
+  TLorentzVector VV_V1_VVboosted_tlv = this->getBoostedVector( V1_tlv, VV_tlv );
+  m_VV_V_absCosThetaStar = fabs( std::cos(VV_V1_VVboosted_tlv.Angle( VV_tlv.Vect() )) );
   
   // Observables from recoil against VBs
   streamlog_out(DEBUG) << "In findVectorBosonObservables: Looking into recoil." << std::endl;
