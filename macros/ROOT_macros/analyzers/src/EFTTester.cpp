@@ -51,8 +51,9 @@ void EFTTester::performAnalysis(){
   all_VV_m->Draw("hist");
   leg->Draw();
   cout << "Save file." << endl;
-  canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot_1.pdf");
-  canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot_1.root");
+  
+  canvas_h1->Print( (this->getOutputDirectory() + "/test_plot_1.pdf").c_str() );
+  canvas_h1->Print( (this->getOutputDirectory() + "/test_plot_1.root").c_str() );
   delete canvas_h1;
 
 

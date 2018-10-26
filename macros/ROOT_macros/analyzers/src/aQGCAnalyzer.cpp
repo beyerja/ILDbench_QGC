@@ -106,11 +106,12 @@ void aQGCAnalyzer::performAnalysis(){
   auto h1_VV_m_nocuts = rdf_with_process_weight.Histo1D({"h1_VV_m_nocuts", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
   auto h1_VV_m_nocuts_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_WWsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
   auto h1_VV_m_nocuts_ZZsignal = rdf_ZZsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_ZZsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_bkg = rdf_bkg_no_cuts.Histo1D({"h1_VV_m_nocuts_bkg", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_bkg = rdf_bkg_with_cuts.Histo1D({"h1_VV_m_bkg", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
   //----------------------------------------------------------------------------
-  
   
   //----------------------------------------------------------------------------
   // Count of true WW/ZZ events in the reconstructed WW/ZZ regions
@@ -125,11 +126,21 @@ void aQGCAnalyzer::performAnalysis(){
   auto count_WWsignal_inZZregion_with_cuts = rdf_WWsignal_inZZregion_with_cuts.Count();
   //----------------------------------------------------------------------------
 
-  auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 100, 0, 1000}, "reco.VV_V_absCosThetaStar", "process_weight");
+  //----------------------------------------------------------------------------
+  // Observable histrograms
+  auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta_V^*|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
   
+  auto h1_absCosThetaJetstarV1_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_WWsignal", "jet angle in V1 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_ZZsignal", "jet angle in V1 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV1_withcuts_bkg", "jet angle in V1 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  
+  auto h1_absCosThetaJetstarV2_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal", "jet angle in V2 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal", "jet angle in V2 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg", "jet angle in V2 system after cuts; |cos #theta_{jet}^*|_{V_1}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
 
+  //----------------------------------------------------------------------------
 
   //============================================================================
   //============================================================================
@@ -160,12 +171,36 @@ void aQGCAnalyzer::performAnalysis(){
   h1_VV_m_withcuts->Draw("hist same");
   h1_VV_m_withcuts_WWsignal->Draw("hist same");
   h1_VV_m_withcuts_ZZsignal->Draw("hist same");
-  canvas_h1->Print( ( this->getOutputDirectory() + "/VV_m.pdf").c_str() );
+  canvas_h1->Print( ( this->getOutputDirectory() + "/cutcomparison_VV_m.pdf").c_str() );
   delete canvas_h1;
   
   cout << endl;
   cout << "True ZZ events in: ZZ region: " << *count_ZZsignal_inZZregion_with_cuts << " , WW region: " << *count_ZZsignal_inWWregion_with_cuts << endl;
   cout << "True WW events in: WW region: " << *count_WWsignal_inWWregion_with_cuts << " , ZZ region: " << *count_WWsignal_inZZregion_with_cuts << endl;
+  
+  
+  TCanvas *canvas_absCosThetaVstar = new TCanvas("absCosThetaVstar", "", 0, 0, 600, 600);
+  THStack *absCosThetaVstar_stack = new THStack("absCosThetaVstar", "");
+  h1_absCosThetaVstar_withcuts_WWsignal->SetLineColor(4);
+  h1_absCosThetaVstar_withcuts_ZZsignal->SetLineColor(2);
+  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_WWsignal.GetPtr());
+  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_ZZsignal.GetPtr());
+  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_bkg.GetPtr());
+  absCosThetaVstar_stack->Draw("nostack hist");
+  canvas_absCosThetaVstar->Print( ( this->getOutputDirectory() + "/absCosThetaVstar.pdf").c_str() );
+  delete canvas_absCosThetaVstar;
+  
+  
+  TCanvas *canvas_VV_m = new TCanvas("VV_m", "", 0, 0, 600, 600);
+  THStack *VV_m_stack = new THStack("VV_m", "");
+  h1_VV_m_withcuts_WWsignal->SetLineColor(4);
+  h1_VV_m_withcuts_ZZsignal->SetLineColor(2);
+  VV_m_stack->Add(h1_VV_m_withcuts_WWsignal.GetPtr());
+  VV_m_stack->Add(h1_VV_m_withcuts_ZZsignal.GetPtr());
+  VV_m_stack->Add(h1_VV_m_withcuts_bkg.GetPtr());
+  VV_m_stack->Draw("nostack hist");
+  canvas_VV_m->Print( ( this->getOutputDirectory() + "/VV_m.pdf").c_str() );
+  delete canvas_VV_m;
 }
 
 //-------------------------------------------------------------------------------------------------
