@@ -128,17 +128,17 @@ void aQGCAnalyzer::performAnalysis(){
 
   //----------------------------------------------------------------------------
   // Observable histrograms
-  auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 32, 0, 3.2}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
   
-  auto h1_absCosThetaJetstarV1_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_WWsignal", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaJetstarV1_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_ZZsignal", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaJetstarV1_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV1_withcuts_bkg", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 32, 0, 3.2}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_WWsignal", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_ZZsignal", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV1_withcuts_bkg", "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
   
-  auto h1_absCosThetaJetstarV2_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaJetstarV2_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
-  auto h1_absCosThetaJetstarV2_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 32, 0, 3.2}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
 
   //----------------------------------------------------------------------------
 
@@ -228,9 +228,9 @@ void aQGCAnalyzer::performAnalysis(){
   
 
   //TODO CAREFUL WHEN COMBINING THE Y AXIS BECOMES 2*EVENTS
-  auto h1_absCosThetaJetstar_combined_withcuts_WWsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 32, 0, 3.2 );
-  auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 32, 0, 3.2 );
-  auto h1_absCosThetaJetstar_combined_withcuts_bkg      = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 32, 0, 3.2 );
+  auto h1_absCosThetaJetstar_combined_withcuts_WWsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  auto h1_absCosThetaJetstar_combined_withcuts_bkg      = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   
   h1_absCosThetaJetstar_combined_withcuts_WWsignal->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal.GetPtr(), h1_absCosThetaJetstarV1_withcuts_WWsignal.GetPtr() );
   h1_absCosThetaJetstar_combined_withcuts_ZZsignal->Add( h1_absCosThetaJetstarV1_withcuts_ZZsignal.GetPtr(), h1_absCosThetaJetstarV1_withcuts_ZZsignal.GetPtr() );
