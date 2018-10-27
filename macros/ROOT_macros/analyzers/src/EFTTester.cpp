@@ -22,7 +22,7 @@ void EFTTester::performAnalysis(){
     th1s_w_leg.push_back(make_pair(h1_VV_m, leg_entry));
   }
 
-  auto h1_VV_m_SM = m_dataframe->Histo1D({"h1_VV_m_SM", "Di-boson mass; m_{VV}; Events", 50, 0, 1000}, "mctruth.VV_m");
+  auto h1_VV_m_SM = rdf_with_process_weight.Histo1D({"h1_VV_m_SM", "Di-boson mass; m_{VV}; Events", 50, 0, 1000}, "mctruth.VV_m", "process_weight");
 
   cout << "Start plotting." << endl;
   TCanvas *canvas_h1 = new TCanvas("test", "", 0, 0, 600, 600);

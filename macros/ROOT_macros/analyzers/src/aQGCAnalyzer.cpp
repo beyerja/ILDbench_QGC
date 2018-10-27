@@ -91,34 +91,39 @@ void aQGCAnalyzer::performAnalysis(){
   auto rdf_ZZsignal_with_cuts = rdf_data_after_cuts.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
   auto rdf_bkg_with_cuts    = rdf_data_after_cuts.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
 
-  //----------------------------------------------------------------------------
-  // Count signal/bkg numbers w/ and w/o cuts
-  auto count_WWsignal_no_cuts   = rdf_WWsignal_no_cuts.Count();
-  auto count_ZZsignal_no_cuts   = rdf_ZZsignal_no_cuts.Count();
-  auto count_bkg_no_cuts        = rdf_bkg_no_cuts.Count();
-  auto count_WWsignal_with_cuts = rdf_WWsignal_with_cuts.Count();
-  auto count_ZZsignal_with_cuts = rdf_ZZsignal_with_cuts.Count();
-  auto count_bkg_with_cuts      = rdf_bkg_with_cuts.Count();
-  //----------------------------------------------------------------------------
-  
-  //----------------------------------------------------------------------------
-  // Histograms of diboson mass
-  auto h1_VV_m_nocuts = rdf_with_process_weight.Histo1D({"h1_VV_m_nocuts", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_nocuts_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_WWsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_nocuts_ZZsignal = rdf_ZZsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_ZZsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_nocuts_bkg = rdf_bkg_no_cuts.Histo1D({"h1_VV_m_nocuts_bkg", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_bkg = rdf_bkg_with_cuts.Histo1D({"h1_VV_m_bkg", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  //----------------------------------------------------------------------------
-  
-  //----------------------------------------------------------------------------
-  // Count of true WW/ZZ events in the reconstructed WW/ZZ regions
   auto rdf_ZZsignal_inZZregion_with_cuts = rdf_ZZsignal_with_cuts.Filter( ZMassRegionCut, {"recoVmMean"} );
   auto rdf_ZZsignal_inWWregion_with_cuts = rdf_ZZsignal_with_cuts.Filter( WMassRegionCut, {"recoVmMean"} );
   auto rdf_WWsignal_inZZregion_with_cuts = rdf_WWsignal_with_cuts.Filter( ZMassRegionCut, {"recoVmMean"} );
   auto rdf_WWsignal_inWWregion_with_cuts = rdf_WWsignal_with_cuts.Filter( WMassRegionCut, {"recoVmMean"} );
+  
+  //----------------------------------------------------------------------------
+  // Counts on generator level
+  
+  //----------------------------------------------------------------------------
+  // Histograms on generator level
+  auto h1_genlevel_VV_m_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_gen_level_WWsignal", "Di-boson mass, generator level; m_{VV}; Events", 100, 0, 1000}, "mctruth.VV_m", "process_weight");
+  auto h1_genlevel_VV_m_ZZsignal = rdf_ZZsignal_no_cuts.Histo1D({"h1_VV_m_gen_level_ZZsignal", "Di-boson mass, generator level; m_{VV}; Events", 100, 0, 1000}, "mctruth.VV_m", "process_weight");
+  
+  //----------------------------------------------------------------------------
+  // Counts before cuts
+  auto count_WWsignal_no_cuts   = rdf_WWsignal_no_cuts.Count();
+  auto count_ZZsignal_no_cuts   = rdf_ZZsignal_no_cuts.Count();
+  auto count_bkg_no_cuts        = rdf_bkg_no_cuts.Count();
+  //----------------------------------------------------------------------------
+  
+  //----------------------------------------------------------------------------
+  // Histograms before cuts
+  auto h1_VV_m_nocuts = rdf_with_process_weight.Histo1D({"h1_VV_m_nocuts", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_WWsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_ZZsignal = rdf_ZZsignal_no_cuts.Histo1D({"h1_VV_m_nocuts_ZZsignal", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_nocuts_bkg = rdf_bkg_no_cuts.Histo1D({"h1_VV_m_nocuts_bkg", "Di-boson mass before cuts; m_{VV}; Events", 100, 0, 1000}, "reco.VV_m", "process_weight");
+  //----------------------------------------------------------------------------
+  
+  //----------------------------------------------------------------------------
+  // Counts after cuts
+  auto count_WWsignal_with_cuts = rdf_WWsignal_with_cuts.Count();
+  auto count_ZZsignal_with_cuts = rdf_ZZsignal_with_cuts.Count();
+  auto count_bkg_with_cuts      = rdf_bkg_with_cuts.Count();
   
   auto count_ZZsignal_inZZregion_with_cuts = rdf_ZZsignal_inZZregion_with_cuts.Count();
   auto count_ZZsignal_inWWregion_with_cuts = rdf_ZZsignal_inWWregion_with_cuts.Count();
@@ -127,7 +132,12 @@ void aQGCAnalyzer::performAnalysis(){
   //----------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------
-  // Observable histrograms
+  // Histograms after cuts
+  auto h1_VV_m_withcuts           = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_bkg       = rdf_bkg_with_cuts.Histo1D({"h1_VV_m_bkg", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  
   auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
   auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
   auto h1_absCosThetaVstar_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
@@ -149,31 +159,49 @@ void aQGCAnalyzer::performAnalysis(){
   // From here on start using results (e.g. plotting etc.)
   //============================================================================
   //============================================================================
-
+  
+  
+  //----------------------------------------------------------------------------
+  // Generator level
+  
+  TCanvas *canvas_genlevel_VV_m = new TCanvas("genlevel_VV_m", "", 0, 0, 600, 600);
+  THStack *genlevel_VV_m_stack = new THStack("genlevel_VV_m", "; m_{VV}; Events");
+  TLegend *genlevel_VV_m_leg = new TLegend( 0.6, 0.6, 0.9, 0.9 ); // TODO
+  h1_genlevel_VV_m_WWsignal->SetLineColor(4);
+  h1_genlevel_VV_m_ZZsignal->SetLineColor(2);
+  h1_genlevel_VV_m_WWsignal->SetLineStyle(1);
+  h1_genlevel_VV_m_ZZsignal->SetLineStyle(1);
+  genlevel_VV_m_stack->Add( h1_genlevel_VV_m_WWsignal.GetPtr());
+  genlevel_VV_m_stack->Add( h1_genlevel_VV_m_ZZsignal.GetPtr());
+  genlevel_VV_m_leg->SetHeader("generator level");
+  genlevel_VV_m_leg->AddEntry( h1_genlevel_VV_m_WWsignal.GetPtr(), "WW", "l" );
+  genlevel_VV_m_leg->AddEntry( h1_genlevel_VV_m_ZZsignal.GetPtr(), "ZZ", "l" );
+  genlevel_VV_m_stack->Draw("nostack hist");
+  genlevel_VV_m_stack->GetYaxis()->SetMaxDigits(3);
+  genlevel_VV_m_leg->Draw();
+  canvas_genlevel_VV_m->Print( ( this->getOutputDirectory() + "/genlevel_VV_m.pdf").c_str() );
+  unique_ptr<TFile> genlevel_VV_m_file ( new TFile( ( this->getOutputDirectory() + "/genlevel_VV_m.root").c_str(), "RECREATE" ) );
+  h1_genlevel_VV_m_WWsignal->Write();
+  h1_genlevel_VV_m_ZZsignal->Write();
+  genlevel_VV_m_file->Close();
+  delete canvas_genlevel_VV_m;
+  delete genlevel_VV_m_stack;
+  delete genlevel_VV_m_leg;
+  
+  
+  
+  //----------------------------------------------------------------------------
+  // Before cuts
   cout << *count_WWsignal_no_cuts << endl;
   cout << *count_ZZsignal_no_cuts << endl;
   cout << *count_bkg_no_cuts << endl;
+  
+  
+  //----------------------------------------------------------------------------
+  // After cuts
   cout << *count_WWsignal_with_cuts << endl;
   cout << *count_ZZsignal_with_cuts << endl;
   cout << *count_bkg_with_cuts << endl;
-  // 
-  TCanvas *canvas_h1 = new TCanvas("test", "", 0, 0, 600, 600);
-  h1_VV_m_nocuts->Draw("hist");
-  h1_VV_m_nocuts_WWsignal->SetLineStyle(2);
-  h1_VV_m_nocuts_ZZsignal->SetLineStyle(3);
-  h1_VV_m_nocuts_WWsignal->Draw("hist same");
-  h1_VV_m_nocuts_ZZsignal->Draw("hist same");
-  h1_VV_m_withcuts->SetLineColor(2);
-  h1_VV_m_withcuts_WWsignal->SetLineColor(2);
-  h1_VV_m_withcuts_ZZsignal->SetLineColor(2);
-  h1_VV_m_withcuts_WWsignal->SetLineStyle(2);
-  h1_VV_m_withcuts_ZZsignal->SetLineStyle(3);
-  h1_VV_m_withcuts->Draw("hist same");
-  h1_VV_m_withcuts_WWsignal->Draw("hist same");
-  h1_VV_m_withcuts_ZZsignal->Draw("hist same");
-  canvas_h1->Print( ( this->getOutputDirectory() + "/cutcomparison_VV_m.pdf").c_str() );
-  delete canvas_h1;
-  
   cout << endl;
   cout << "True ZZ events in: ZZ region: " << *count_ZZsignal_inZZregion_with_cuts << " , WW region: " << *count_ZZsignal_inWWregion_with_cuts << endl;
   cout << "True WW events in: WW region: " << *count_WWsignal_inWWregion_with_cuts << " , ZZ region: " << *count_WWsignal_inZZregion_with_cuts << endl;
@@ -223,11 +251,6 @@ void aQGCAnalyzer::performAnalysis(){
   delete VV_m_leg;
   
   
-  
-
-  
-
-  //TODO CAREFUL WHEN COMBINING THE Y AXIS BECOMES 2*EVENTS
   auto h1_absCosThetaJetstar_combined_withcuts_WWsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   auto h1_absCosThetaJetstar_combined_withcuts_bkg      = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
@@ -257,6 +280,25 @@ void aQGCAnalyzer::performAnalysis(){
   delete absCosThetaJetstar_combined_leg;
   
   
+  //----------------------------------------------------------------------------
+  // Level comparisons
+  TCanvas *canvas_cutcomparison_VV_m = new TCanvas("cutcomparison_VV_m", "", 0, 0, 600, 600);
+  h1_VV_m_nocuts->Draw("hist");
+  h1_VV_m_nocuts_WWsignal->SetLineStyle(2);
+  h1_VV_m_nocuts_ZZsignal->SetLineStyle(3);
+  h1_VV_m_nocuts_WWsignal->Draw("hist same");
+  h1_VV_m_nocuts_ZZsignal->Draw("hist same");
+  h1_VV_m_withcuts->SetLineColor(2);
+  h1_VV_m_withcuts_WWsignal->SetLineColor(2);
+  h1_VV_m_withcuts_ZZsignal->SetLineColor(2);
+  h1_VV_m_withcuts_WWsignal->SetLineStyle(2);
+  h1_VV_m_withcuts_ZZsignal->SetLineStyle(3);
+  h1_VV_m_withcuts->Draw("hist same");
+  h1_VV_m_withcuts_WWsignal->Draw("hist same");
+  h1_VV_m_withcuts_ZZsignal->Draw("hist same");
+  canvas_cutcomparison_VV_m->Print( ( this->getOutputDirectory() + "/cutcomparison_VV_m.pdf").c_str() );
+  delete canvas_cutcomparison_VV_m;
+
 }
 
 //-------------------------------------------------------------------------------------------------
