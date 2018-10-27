@@ -65,4 +65,10 @@ elif [[ ${action} == "--combine-output" ]]; then
 elif [[ ${action} == "--clean-up" ]]; then
   rm -r ${tmp_steering_directory}
   rm ${TMP_OUTPUT_DIRECTORY}/${tmp_base_name}_*.root
+  
+else   
+  echo "In manage_process_files.sh: Unknown action '"${action}"' requested."
+  echo "Options are: --set-steeringfiles --combine-output --clean-up"
+  echo "Exiting."
+  exit
 fi

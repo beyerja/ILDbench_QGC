@@ -16,13 +16,13 @@ detector_model=$( dumpevent ${input_file} 1 | grep " detector :" | rev | cut -d'
 compact_file="${lcgeo_DIR}/ILD/compact/${detector_model}/${detector_model}.xml"
 
 # Line numbers of lines in template that need to be replaced
-input_file_line=14
-output_file_line=90
+input_file_line=15
+output_file_line=100
 
-isolep_ee_weights_line=42
-isolep_mm_weights_line=45
+isolep_ee_weights_line=43
+isolep_mm_weights_line=46
 
-compact_file_line=31
+compact_file_line=32
 
 # TODO This should be imporved: instead of hardcoding lines -> set markers in templates, find line by marker here
 # TODO Use something like "awk '/${MARKERNAME}/{ print NR; exit }' ${filename}" to find line number -> separate small script for that

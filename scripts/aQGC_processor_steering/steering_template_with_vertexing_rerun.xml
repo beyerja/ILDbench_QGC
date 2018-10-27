@@ -5,6 +5,7 @@
     <processor name="InitDD4hep" />
     <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag"/>
     <processor name="MyIsolatedLeptonTaggingProcessor" />
+    <processor name="MyOverlayRemovalFastJetProcessor" />
     <processor name="MyFastJetProcessor" />
     <processor name="MyaQGCObservablesProcessor" />
   </execute>
@@ -63,29 +64,38 @@
     <parameter name="Verbosity" type="string"> SILENT </parameter>
   </processor>
   
-  <!-- Jet clustering here -->
-  <processor name="MyFastJetProcessor" type="FastJetProcessor">
-    <!--Using the FastJet library to identify jets-->
+  <!-- Using the overlay removal of the FastJetProcessor, only interested in the PFO output -->
+  <processor name="MyOverlayRemovalFastJetProcessor" type="FastJetProcessor">
     <!--a list of all reconstructed particles we are searching for jets in.-->
     <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
-    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
-    <!-- <parameter name="Verbosity" type="string">DEBUG5 </parameter> -->
-    <!--The identified jets-->
-    <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+    <!--The identified jets, not interesting, only using this processor for overlay removal-->
+    <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> WrongJetsDoNotUse </parameter>
+    <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+    <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
     <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
     <parameter name="storeParticlesInJets" type="bool"> true </parameter>
-    <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
-    <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
     <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
-    <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+    <parameter name="algorithm" type="StringVec"> kt_algorithm 1.3 </parameter>     
     <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
-    <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+    <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 6 </parameter>     
     <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+    <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+  </processor>
+    
+  <!-- Jet clustering here -->
+  <processor name="MyFastJetProcessor" type="FastJetProcessor">
+    <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
+    <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> FastJets </parameter>
+    <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+    <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> PFOsFromFastJet </parameter>
+    <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+    <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
     <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
   </processor>
   
   <!-- Your processor configuration here after -->
   <processor name="MyaQGCObservablesProcessor" type="aQGCObservablesProcessor">
+    <parameter name="PfoCollection" type="string" lcioInType="ReconstructedParticle"> PFOsOverlayRemoved </parameter>
     <parameter name="OutputRootFileName" type="string"> 
       <!-- REPLACE WITH OUTPUT FILES -->
     </parameter>
