@@ -33,6 +33,8 @@ void aQGCSampleSMAnalyzer::performAnalysis(){
   VV_m_stack->GetYaxis()->SetMaxDigits(3);
   VV_m_leg->Draw();
   canvas_VV_m->Print( (this->getOutputDirectory() + "/VV_m.pdf").c_str() );
-  canvas_VV_m->Print( (this->getOutputDirectory() + "/VV_m.root").c_str() );
-  
+  unique_ptr<TFile> VV_m_file ( new TFile( ( this->getOutputDirectory() + "/VV_m.root").c_str(), "RECREATE" ) );
+  h1_VV_m_WWsignal->Write();
+  h1_VV_m_ZZsignal->Write();
+  VV_m_file->Close();
 }
