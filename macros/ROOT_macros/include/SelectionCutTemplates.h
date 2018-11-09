@@ -9,8 +9,10 @@ namespace Cuts {
   template<class ValueType> function<bool (ValueType)> getMinCutLambda(ValueType min_limit);
   template<class ValueType> function<bool (ValueType)> getMaxCutLambda(ValueType max_limit);
   template<class ValueType> function<bool (ValueType)> getMinMaxCutLambda(ValueType min_limit, ValueType max_limit);
-  function<bool (bool)> getBoolCutLambda(bool desired_outcome);
-  function<bool (int)>  getIntCutLambda(int desired_outcome);
+  function<bool (bool)>     getBoolCutLambda(bool desired_outcome);
+  function<bool (float)>    getFloatCutLambda(float desired_outcome);
+  function<bool (int)>      getIntCutLambda(int desired_outcome);
+  function<bool (TString)>  getStringTestLambda(TString desired_outcome);
 }
 
 #endif

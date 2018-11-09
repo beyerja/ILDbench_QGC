@@ -1,4 +1,5 @@
-#include "analyzers/src/aQGCSampleSMAnalyzer.cpp"
+#include "analyzers/src/EFTTester.cpp"
+// #include "analyzers/src/aQGCSampleSMAnalyzer.cpp"
 
 void aQGCTestMacro() {
   EnableImplicitMT(20); // Allow multithreating in RDataFrame
@@ -35,24 +36,25 @@ void aQGCTestMacro() {
   vector<string> root_file_paths {};
   input_manager.getFilePaths( root_file_paths );
   
+  
   // Now to the analysis!
   float e_beam_polarization = -0.8;
   float p_beam_polarization = 0.3;
-  float luminosity = 2000;
+  float luminosity = 1000;
   
-  // string output_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/aQGCAnalysis/analyzer_plots/EFTTester";
-  // EFTTester analyzer;  
-  // analyzer.setInputPaths( root_file_paths );
-  // analyzer.setBeamPolarizations( e_beam_polarization, p_beam_polarization );
-  // analyzer.setLuminosity( luminosity );
-  // analyzer.setOutputDirectory( output_directory );
-  // analyzer.run();
-  
-  string output_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/aQGCAnalysis/analyzer_plots/aQGCSampleSMAnalyzer";
-  aQGCSampleSMAnalyzer analyzer;  
+  string output_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/aQGCAnalysis/analyzer_plots/EFTTester";
+  EFTTester analyzer;  
   analyzer.setInputPaths( root_file_paths );
   analyzer.setBeamPolarizations( e_beam_polarization, p_beam_polarization );
   analyzer.setLuminosity( luminosity );
   analyzer.setOutputDirectory( output_directory );
   analyzer.run();
+  
+  // string output_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/aQGCAnalysis/analyzer_plots/aQGCSampleSMAnalyzer";
+  // aQGCSampleSMAnalyzer analyzer;  
+  // analyzer.setInputPaths( root_file_paths );
+  // analyzer.setBeamPolarizations( e_beam_polarization, p_beam_polarization );
+  // analyzer.setLuminosity( luminosity );
+  // analyzer.setOutputDirectory( output_directory );
+  // analyzer.run();
 };

@@ -36,10 +36,25 @@ function<bool (bool)> Cuts::getBoolCutLambda(bool desired_outcome) {
 
 //------------------------------------------------------------------------------
 
+function<bool (float)> Cuts::getFloatCutLambda(float desired_outcome) {
+  return [desired_outcome](float value) { 
+    return value == desired_outcome; };
+}
+
+//------------------------------------------------------------------------------
+
 function<bool (int)> Cuts::getIntCutLambda(int desired_outcome) {
   return [desired_outcome](int value) { 
     bool value_as_bool = bool(value); // Will be true for all non-zero ints
     return value == desired_outcome; };
+}
+
+//------------------------------------------------------------------------------
+
+function<bool (TString)> Cuts::getStringTestLambda(TString desired_outcome) {
+  return [desired_outcome](TString value){ 
+    return value == desired_outcome; 
+  };
 }
 
 //------------------------------------------------------------------------------

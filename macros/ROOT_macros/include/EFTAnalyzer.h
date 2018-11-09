@@ -34,8 +34,8 @@ class EFTAnalyzer : public Analyzer {
     ParameterPoint getParameterPoint( int setting_index ) const;
     int getNParameterPoints() const;
     map<int, ParameterPoint> getParameterPointMap() const;
-    float getEventWeight( float event_weight, float process_weight );
-    function<float (float, float)> getEventWeightLambda();
+    float getEventWeight( float event_weight, float process_weight ) const;
+    function<float (float, float)> getEventWeightLambda() const;
     
     virtual void performAnalysis() = 0;
 };

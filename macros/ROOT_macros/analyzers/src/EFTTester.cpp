@@ -10,7 +10,7 @@ void EFTTester::performAnalysis(){
   auto event_weight_lambda = this->getEventWeightLambda();
 
   vector<pair<ROOT::RDF::RResultPtr<TH1D>, string>> th1s_w_leg{};
-  TLegend *leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
+  TLegend *leg = new TLegend( 0.55, 0.4, 0.9, 0.85 );
   for ( auto const& element: this->getParameterPointMap() ) {
     auto index = element.first;
     auto pp = element.second;
@@ -18,7 +18,7 @@ void EFTTester::performAnalysis(){
 
     auto h1_VV_m = rdf_with_event_weight.Histo1D({("h1_VV_m" + to_string(index)).c_str(), "Di-boson mass; m_{VV}; Events", 50, 0, 1000}, "mctruth.VV_m", ("event_weight" + to_string(index)).c_str());
 
-    string leg_entry = "FS0: " + to_string(pp.first) + "TeV^{-4}, FS1: " + to_string(pp.second) + "TeV^{-4}";
+    string leg_entry = "FS0: " + to_string(int(pp.first)) + "TeV^{-4}, FS1: " + to_string(int(pp.second)) + "TeV^{-4}";
     th1s_w_leg.push_back(make_pair(h1_VV_m, leg_entry));
   }
 
@@ -26,29 +26,23 @@ void EFTTester::performAnalysis(){
 
   cout << "Start plotting." << endl;
   TCanvas *canvas_h1 = new TCanvas("test", "", 0, 0, 600, 600);
+  canvas_h1->SetTopMargin(1.5);
   int colour_count = 1;
   THStack* all_VV_m = new THStack("all_VV_m", "Di-boson mass; m_{VV}; Events");
   
-  cout << "Doing SM:" << endl;
-  cout << "Coloring." << endl;
   h1_VV_m_SM->SetLineColor(colour_count++);
-  cout << "Adding." << endl;
   all_VV_m->Add(h1_VV_m_SM.GetPtr());
   leg->AddEntry(h1_VV_m_SM.GetPtr(), "Standard Model", "l");
   
-  cout << "Doing non-SM:" << endl;
   colour_count=30;
   for (auto & th1_w_leg: th1s_w_leg) {
-    cout << "Coloring." << endl;
     th1_w_leg.first->SetLineColor(colour_count++);
-    cout << "Adding." << endl;
     all_VV_m->Add(th1_w_leg.first.GetPtr());
     leg->AddEntry(th1_w_leg.first.GetPtr(), th1_w_leg.second.c_str(), "l");
   }
   
-  cout << "Drawing." << endl;
-  canvas_h1->cd()->SetLogy();
-  all_VV_m->Draw("hist");
+  // canvas_h1->cd()->SetLogy();
+  all_VV_m->Draw("hist nostack");
   leg->Draw();
   cout << "Save file." << endl;
   

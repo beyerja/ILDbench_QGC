@@ -251,7 +251,6 @@ void EFTAnalyzer::getCombinedDataframe() {
   TTree* truth_tree   = (TTree*)m_combined_file->Get("mcTruthTree");
   TTree* weight_tree  = (TTree*)m_combined_file->Get("weightsTree");
   
-  this->findAllFinalStates( info_tree );
   
   info_tree->AddFriend(reco_tree, "reco");
   info_tree->AddFriend(mc_tree, "mcobs");
@@ -260,6 +259,8 @@ void EFTAnalyzer::getCombinedDataframe() {
   
   cout << "Creating RDataFrame." << endl;
   m_dataframe = new RDataFrame(*info_tree);
+  
+  this->findAllFinalStates( info_tree );
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -305,13 +306,13 @@ map<int, pair<float, float>> EFTAnalyzer::getParameterPointMap() const{
 
 //-------------------------------------------------------------------------------------------------
 
-float EFTAnalyzer::getEventWeight( float event_weight, float process_weight ){
+float EFTAnalyzer::getEventWeight( float event_weight, float process_weight ) const {
   return event_weight * process_weight;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-function<float (float, float)> EFTAnalyzer::getEventWeightLambda(){
+function<float (float, float)> EFTAnalyzer::getEventWeightLambda() const{
   return[this](float event_weight, float process_weight) {
     return this->getEventWeight( event_weight, process_weight ); 
   };

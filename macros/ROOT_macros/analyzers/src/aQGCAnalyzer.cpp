@@ -64,6 +64,13 @@ void aQGCAnalyzer::performAnalysis(){
   auto rdf_with_extra_variables = m_dataframe->Define( "recoVmMean", VarComb::getMeanLambda<float>(), {"reco.V1_m", "reco.V2_m"} );  
   auto rdf_with_process_weight = rdf_with_extra_variables.Define("process_weight", process_weight_lambda, {"process_name", "e_polarization", "p_polarization", "cross_section"});  
   
+  // auto testing_h = rdf_with_process_weight.Histo1D({"testing_h", "Process weight; weight; Events", 100, 0, 100}, "process_weight");
+  // unique_ptr<TCanvas> testing_c (new TCanvas("testing_c", "", 0, 0, 700, 600));
+  // testing_h->Draw("hist");
+  // testing_c->Print( ( this->getOutputDirectory() + "/testing_c.pdf").c_str() );
+  // 
+  // return;
+  
   auto rdf_WWsignal_no_cuts = rdf_with_process_weight.Filter( IsTrueWWSignalCut, {"mctruth.signal_type"} );
   auto rdf_ZZsignal_no_cuts = rdf_with_process_weight.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
   auto rdf_bkg_no_cuts    = rdf_with_process_weight.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
@@ -99,6 +106,8 @@ void aQGCAnalyzer::performAnalysis(){
   //----------------------------------------------------------------------------
   // Counts on generator level
   
+  // TODO THIS LEVEL DISTINCTION DOESN'T MAKE SENSE, REMOVE IT!
+  
   //----------------------------------------------------------------------------
   // Histograms on generator level
   auto h1_genlevel_VV_m_WWsignal = rdf_WWsignal_no_cuts.Histo1D({"h1_VV_m_gen_level_WWsignal", "Di-boson mass, generator level; m_{VV}; Events", 100, 0, 1000}, "mctruth.VV_m", "process_weight");
@@ -106,9 +115,9 @@ void aQGCAnalyzer::performAnalysis(){
   
   //----------------------------------------------------------------------------
   // Counts before cuts
-  auto count_WWsignal_no_cuts   = rdf_WWsignal_no_cuts.Count();
-  auto count_ZZsignal_no_cuts   = rdf_ZZsignal_no_cuts.Count();
-  auto count_bkg_no_cuts        = rdf_bkg_no_cuts.Count();
+  auto count_WWsignal_no_cuts   = rdf_WWsignal_no_cuts.Sum("process_weight");
+  auto count_ZZsignal_no_cuts   = rdf_ZZsignal_no_cuts.Sum("process_weight");
+  auto count_bkg_no_cuts        = rdf_bkg_no_cuts.Sum("process_weight");
   //----------------------------------------------------------------------------
   
   //----------------------------------------------------------------------------
@@ -121,14 +130,23 @@ void aQGCAnalyzer::performAnalysis(){
   
   //----------------------------------------------------------------------------
   // Counts after cuts
-  auto count_WWsignal_with_cuts = rdf_WWsignal_with_cuts.Count();
-  auto count_ZZsignal_with_cuts = rdf_ZZsignal_with_cuts.Count();
-  auto count_bkg_with_cuts      = rdf_bkg_with_cuts.Count();
+  auto count_WWsignal_with_cuts = rdf_WWsignal_with_cuts.Sum("process_weight");
+  auto count_ZZsignal_with_cuts = rdf_ZZsignal_with_cuts.Sum("process_weight");
+  auto count_bkg_with_cuts      = rdf_bkg_with_cuts.Sum("process_weight");
   
-  auto count_ZZsignal_inZZregion_with_cuts = rdf_ZZsignal_inZZregion_with_cuts.Count();
-  auto count_ZZsignal_inWWregion_with_cuts = rdf_ZZsignal_inWWregion_with_cuts.Count();
-  auto count_WWsignal_inWWregion_with_cuts = rdf_WWsignal_inWWregion_with_cuts.Count();
-  auto count_WWsignal_inZZregion_with_cuts = rdf_WWsignal_inZZregion_with_cuts.Count();
+  auto count_ZZsignal_inZZregion_with_cuts = rdf_ZZsignal_inZZregion_with_cuts.Sum("process_weight");
+  auto count_ZZsignal_inWWregion_with_cuts = rdf_ZZsignal_inWWregion_with_cuts.Sum("process_weight");
+  auto count_WWsignal_inWWregion_with_cuts = rdf_WWsignal_inWWregion_with_cuts.Sum("process_weight");
+  auto count_WWsignal_inZZregion_with_cuts = rdf_WWsignal_inZZregion_with_cuts.Sum("process_weight");
+  
+  vector<pair<string, pair<ResultSumDouble, ResultSumDouble>>> bkg_final_state_counts {};
+  for ( auto & final_state: this->getFinalStatesSet() ) {
+    auto FinalStateTest = Cuts::getStringTestLambda(final_state);
+    auto final_state_count_with_cuts = rdf_bkg_with_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
+    auto final_state_count_no_cuts = rdf_bkg_no_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
+    bkg_final_state_counts.push_back( make_pair(final_state, make_pair(final_state_count_no_cuts, final_state_count_with_cuts)) );
+  }
+  
   //----------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------
@@ -149,7 +167,24 @@ void aQGCAnalyzer::performAnalysis(){
   auto h1_absCosThetaJetstarV2_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
   auto h1_absCosThetaJetstarV2_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
   auto h1_absCosThetaJetstarV2_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
-
+  
+  vector<pair<string, ResultTH1D>>  bkg_final_state_h1_VV_m_withcuts {}, 
+                                    bkg_final_state_h1_absCosThetaVstar_withcuts {};
+  vector<pair<string,pair<ResultTH1D,ResultTH1D>>> bkg_final_state_h1_absCosThetaJetstar_withcuts {}; 
+                                    
+                                    
+  for ( auto & final_state: this->getFinalStatesSet() ) {
+    auto FinalStateTest = Cuts::getStringTestLambda(final_state);
+    auto rdf_final_state = rdf_bkg_with_cuts.Filter(FinalStateTest, {"process_name"});
+    auto h1_VV_m_withcuts_final_state                 = rdf_final_state.Histo1D({("h1_VV_m_" + final_state).c_str(), "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+    auto h1_absCosThetaVstar_withcuts_final_state     = rdf_final_state.Histo1D({("h1_absCosThetaVstar_withcuts_" + final_state).c_str(), "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV1_withcuts_final_state = rdf_final_state.Histo1D({("h1_absCosThetaJetstarV1_withcuts_" + final_state).c_str(), "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV2_withcuts_final_state = rdf_final_state.Histo1D({("h1_absCosThetaJetstarV2_withcuts_" + final_state).c_str(), "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+    
+    bkg_final_state_h1_VV_m_withcuts.push_back( make_pair( final_state, h1_VV_m_withcuts_final_state ) );
+    bkg_final_state_h1_absCosThetaVstar_withcuts.push_back( make_pair( final_state, h1_absCosThetaVstar_withcuts_final_state ) );
+    bkg_final_state_h1_absCosThetaJetstar_withcuts.push_back( make_pair( final_state, make_pair(h1_absCosThetaJetstarV1_withcuts_final_state,h1_absCosThetaJetstarV2_withcuts_final_state) ));
+  }
   //----------------------------------------------------------------------------
 
   //============================================================================
@@ -192,92 +227,148 @@ void aQGCAnalyzer::performAnalysis(){
   
   //----------------------------------------------------------------------------
   // Before cuts
-  cout << *count_WWsignal_no_cuts << endl;
-  cout << *count_ZZsignal_no_cuts << endl;
-  cout << *count_bkg_no_cuts << endl;
   
+  
+  cout << "Getting event numbers." << endl;
+  ofstream bkg_count_file;
+  bkg_count_file.open((this->getOutputDirectory() + "/bkg_count.txt"));
+  bkg_count_file << "Final state: Before cuts | After cuts | Efficiency\n";
+  for ( auto & final_state_count: bkg_final_state_counts ) {
+    bkg_count_file << final_state_count.first << " : "
+          << *(final_state_count.second.first) << " | "
+          << *(final_state_count.second.second) << " | "
+          << *(final_state_count.second.second) / *(final_state_count.second.first) << "\n";
+  }
+  bkg_count_file.close();
+
+  ofstream signal_count_file;
+  signal_count_file.open((this->getOutputDirectory() + "/signal_count.txt"));
+  signal_count_file << "Final state: Before cuts | After cuts | Efficiency\n";
+  signal_count_file << "WW : " << *count_WWsignal_no_cuts << " | " << *count_WWsignal_with_cuts << " | "
+                    << *count_WWsignal_with_cuts / *count_WWsignal_no_cuts << "\n";
+  signal_count_file << "ZZ : " << *count_ZZsignal_no_cuts << " | " << *count_ZZsignal_with_cuts << " | "
+                    << *count_ZZsignal_with_cuts / *count_ZZsignal_no_cuts << "\n\n";
+  signal_count_file << "True ZZ events in: ZZ region: " << *count_ZZsignal_inZZregion_with_cuts << " , WW region: " << *count_ZZsignal_inWWregion_with_cuts << endl;
+  signal_count_file << "True WW events in: WW region: " << *count_WWsignal_inWWregion_with_cuts << " , ZZ region: " << *count_WWsignal_inZZregion_with_cuts << endl;
+  signal_count_file.close();
+
   
   //----------------------------------------------------------------------------
   // After cuts
-  cout << *count_WWsignal_with_cuts << endl;
-  cout << *count_ZZsignal_with_cuts << endl;
-  cout << *count_bkg_with_cuts << endl;
-  cout << endl;
-  cout << "True ZZ events in: ZZ region: " << *count_ZZsignal_inZZregion_with_cuts << " , WW region: " << *count_ZZsignal_inWWregion_with_cuts << endl;
-  cout << "True WW events in: WW region: " << *count_WWsignal_inWWregion_with_cuts << " , ZZ region: " << *count_WWsignal_inZZregion_with_cuts << endl;
   
-  
-  TCanvas *canvas_absCosThetaVstar = new TCanvas("absCosThetaVstar", "", 0, 0, 600, 600);
-  THStack *absCosThetaVstar_stack = new THStack("absCosThetaVstar", "; |cos #theta*_{V}|; Events");
-  TLegend *absCosThetaVstar_leg = new TLegend( 0.6, 0.6, 0.9, 0.9 ); // TODO
+  // TODO Unify this as function (?)
+  unique_ptr<TCanvas> canvas_absCosThetaVstar_final_states (new TCanvas("absCosThetaVstar_final_states", "", 0, 0, 700, 600));
+  canvas_absCosThetaVstar_final_states->SetTopMargin(0.11);
+  canvas_absCosThetaVstar_final_states->SetRightMargin(0.24);
+  unique_ptr<THStack> absCosThetaVstar_stack_signals (new THStack("absCosThetaVstar_signals", "after cuts; |cos #theta*_{V}|; Events"));
+  unique_ptr<TLegend> absCosThetaVstar_leg_signals (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  absCosThetaVstar_leg_signals->SetHeader("Signals");
   h1_absCosThetaVstar_withcuts_WWsignal->SetLineColor(4);
   h1_absCosThetaVstar_withcuts_ZZsignal->SetLineColor(2);
-  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_WWsignal.GetPtr());
-  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_ZZsignal.GetPtr());
-  absCosThetaVstar_stack->Add(h1_absCosThetaVstar_withcuts_bkg.GetPtr());
-  absCosThetaVstar_leg->SetHeader("after cuts");
-  absCosThetaVstar_leg->AddEntry( h1_absCosThetaVstar_withcuts_WWsignal.GetPtr(), "WW", "l" );
-  absCosThetaVstar_leg->AddEntry( h1_absCosThetaVstar_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
-  absCosThetaVstar_leg->AddEntry( h1_absCosThetaVstar_withcuts_bkg.GetPtr(), "SM bkg", "l" );
-  absCosThetaVstar_stack->Draw("nostack hist");
-  absCosThetaVstar_stack->GetYaxis()->SetMaxDigits(3);
-  absCosThetaVstar_leg->Draw();
-  canvas_absCosThetaVstar->Print( ( this->getOutputDirectory() + "/absCosThetaVstar.pdf").c_str() );
-  delete canvas_absCosThetaVstar;
-  delete absCosThetaVstar_stack;
-  delete absCosThetaVstar_leg;
+  absCosThetaVstar_stack_signals->Add(h1_absCosThetaVstar_withcuts_WWsignal.GetPtr());
+  absCosThetaVstar_stack_signals->Add(h1_absCosThetaVstar_withcuts_ZZsignal.GetPtr());
+  absCosThetaVstar_leg_signals->AddEntry( h1_absCosThetaVstar_withcuts_WWsignal.GetPtr(), "WW", "l" );
+  absCosThetaVstar_leg_signals->AddEntry( h1_absCosThetaVstar_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
+
+  unique_ptr<TLegend> absCosThetaVstar_leg_bkgs (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  absCosThetaVstar_leg_bkgs->SetHeader("Bkgs");
+  unique_ptr<THStack> absCosThetaVstar_stack_bkgs (new THStack("absCosThetaVstar_bkgs", "after cuts; |cos #theta*_{V}|}; Events"));
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_absCosThetaVstar: bkg_final_state_h1_absCosThetaVstar_withcuts ) {
+    absCosThetaVstar_stack_bkgs->Add(final_state_absCosThetaVstar.second.GetPtr());
+    absCosThetaVstar_leg_bkgs->AddEntry( final_state_absCosThetaVstar.second.GetPtr(), final_state_absCosThetaVstar.first.c_str(), "l" );
+  }
+  
+  absCosThetaVstar_stack_signals->Draw("hist nostack");
+  absCosThetaVstar_stack_signals->GetYaxis()->SetMaxDigits(3);
+  absCosThetaVstar_stack_bkgs->Draw("hist pfc plc same");
+  absCosThetaVstar_stack_signals->Draw("hist nostack same");
+  absCosThetaVstar_leg_bkgs->Draw();
+  absCosThetaVstar_leg_signals->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_absCosThetaVstar_final_states->Print( ( this->getOutputDirectory() + "/absCosThetaVstar_stackedbkg.pdf").c_str() );
   
   
-  TCanvas *canvas_VV_m = new TCanvas("VV_m", "", 0, 0, 600, 600);
-  THStack *VV_m_stack = new THStack("VV_m", "; m_{VV}; Events");
-  TLegend *VV_m_leg = new TLegend( 0.6, 0.6, 0.9, 0.9 ); // TODO
+  unique_ptr<TCanvas> canvas_VV_m_final_states (new TCanvas("VV_m_final_states", "", 0, 0, 700, 600));
+  canvas_VV_m_final_states->SetTopMargin(0.11);
+  canvas_VV_m_final_states->SetRightMargin(0.24);
+  unique_ptr<THStack> VV_m_stack_signals (new THStack("VV_m_signals", "after cuts; m_{VV}; Events"));
+  unique_ptr<TLegend> VV_m_leg_signals (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  VV_m_leg_signals->SetHeader("Signals");
   h1_VV_m_withcuts_WWsignal->SetLineColor(4);
   h1_VV_m_withcuts_ZZsignal->SetLineColor(2);
-  h1_VV_m_withcuts_WWsignal->SetLineStyle(1);
-  h1_VV_m_withcuts_ZZsignal->SetLineStyle(1);
-  VV_m_stack->Add(h1_VV_m_withcuts_WWsignal.GetPtr());
-  VV_m_stack->Add(h1_VV_m_withcuts_ZZsignal.GetPtr());
-  VV_m_stack->Add(h1_VV_m_withcuts_bkg.GetPtr());
-  VV_m_leg->SetHeader("after cuts");
-  VV_m_leg->AddEntry( h1_VV_m_withcuts_WWsignal.GetPtr(), "WW", "l" );
-  VV_m_leg->AddEntry( h1_VV_m_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
-  VV_m_leg->AddEntry( h1_VV_m_withcuts_bkg.GetPtr(), "SM bkg", "l" );
-  VV_m_stack->Draw("nostack hist");
-  VV_m_stack->GetYaxis()->SetMaxDigits(3);
-  VV_m_leg->Draw();
-  canvas_VV_m->Print( ( this->getOutputDirectory() + "/VV_m.pdf").c_str() );
-  delete canvas_VV_m;
-  delete VV_m_stack;
-  delete VV_m_leg;
+  VV_m_stack_signals->Add(h1_VV_m_withcuts_WWsignal.GetPtr());
+  VV_m_stack_signals->Add(h1_VV_m_withcuts_ZZsignal.GetPtr());
+  VV_m_leg_signals->AddEntry( h1_VV_m_withcuts_WWsignal.GetPtr(), "WW", "l" );
+  VV_m_leg_signals->AddEntry( h1_VV_m_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
+
+  unique_ptr<TLegend> VV_m_leg_bkgs (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  VV_m_leg_bkgs->SetHeader("Bkgs");
+  unique_ptr<THStack> VV_m_stack_bkgs (new THStack("VV_m_bkgs", "after cuts; m_{VV}; Events"));
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_VV_m: bkg_final_state_h1_VV_m_withcuts ) {
+    VV_m_stack_bkgs->Add(final_state_VV_m.second.GetPtr());
+    VV_m_leg_bkgs->AddEntry( final_state_VV_m.second.GetPtr(), final_state_VV_m.first.c_str(), "l" );
+  }
+  
+  VV_m_stack_signals->Draw("hist nostack");
+  VV_m_stack_signals->GetYaxis()->SetMaxDigits(3);
+  VV_m_stack_bkgs->Draw("hist pfc plc same");
+  VV_m_stack_signals->Draw("hist nostack same");
+  VV_m_leg_bkgs->Draw();
+  VV_m_leg_signals->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_VV_m_final_states->Print( ( this->getOutputDirectory() + "/VV_m_stackedbkg.pdf").c_str() );
   
   
+  
+  unique_ptr<TCanvas> canvas_h1_absCosThetaJetstar_combined_final_states (new TCanvas("h1_absCosThetaJetstar_combined_final_states", "", 0, 0, 700, 600));
+  canvas_h1_absCosThetaJetstar_combined_final_states->SetTopMargin(0.11);
+  canvas_h1_absCosThetaJetstar_combined_final_states->SetRightMargin(0.24);
+  
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_signals (new THStack("h1_absCosThetaJetstar_combined_signals", "after cuts; |cos #theta*_{jet}|; 2*Events"));
   auto h1_absCosThetaJetstar_combined_withcuts_WWsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
-  auto h1_absCosThetaJetstar_combined_withcuts_bkg      = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
-  
-  h1_absCosThetaJetstar_combined_withcuts_WWsignal->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal.GetPtr(), h1_absCosThetaJetstarV1_withcuts_WWsignal.GetPtr() );
-  h1_absCosThetaJetstar_combined_withcuts_ZZsignal->Add( h1_absCosThetaJetstarV1_withcuts_ZZsignal.GetPtr(), h1_absCosThetaJetstarV1_withcuts_ZZsignal.GetPtr() );
-  h1_absCosThetaJetstar_combined_withcuts_bkg->Add( h1_absCosThetaJetstarV1_withcuts_bkg.GetPtr(), h1_absCosThetaJetstarV1_withcuts_bkg.GetPtr() );
-  
-  TCanvas *canvas_absCosThetaJetstar_combined = new TCanvas("absCosThetaJetstar_combined", "", 0, 0, 600, 600);
-  THStack *absCosThetaJetstar_combined_stack = new THStack("absCosThetaJetstar_combined", "; |cos #theta*_{jet}|; 2*Events");
-  TLegend *absCosThetaJetstar_combined_leg = new TLegend( 0.6, 0.6, 0.9, 0.9 ); // TODO
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal.GetPtr(), h1_absCosThetaJetstarV2_withcuts_WWsignal.GetPtr() );
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal->Add( h1_absCosThetaJetstarV1_withcuts_ZZsignal.GetPtr(), h1_absCosThetaJetstarV2_withcuts_ZZsignal.GetPtr() );
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_signals (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  h1_absCosThetaJetstar_combined_leg_signals->SetHeader("Signals");
   h1_absCosThetaJetstar_combined_withcuts_WWsignal->SetLineColor(4);
   h1_absCosThetaJetstar_combined_withcuts_ZZsignal->SetLineColor(2);
-  absCosThetaJetstar_combined_stack->Add(h1_absCosThetaJetstar_combined_withcuts_WWsignal);
-  absCosThetaJetstar_combined_stack->Add(h1_absCosThetaJetstar_combined_withcuts_ZZsignal);
-  absCosThetaJetstar_combined_stack->Add(h1_absCosThetaJetstar_combined_withcuts_bkg);
-  absCosThetaJetstar_combined_leg->SetHeader("after cuts");
-  absCosThetaJetstar_combined_leg->AddEntry( h1_absCosThetaJetstar_combined_withcuts_WWsignal, "WW", "l" );
-  absCosThetaJetstar_combined_leg->AddEntry( h1_absCosThetaJetstar_combined_withcuts_ZZsignal, "ZZ", "l" );
-  absCosThetaJetstar_combined_leg->AddEntry( h1_absCosThetaJetstar_combined_withcuts_bkg, "SM bkg", "l" );
-  absCosThetaJetstar_combined_stack->Draw("nostack hist");
-  absCosThetaJetstar_combined_stack->GetYaxis()->SetMaxDigits(3);
-  absCosThetaJetstar_combined_leg->Draw();
-  canvas_absCosThetaJetstar_combined->Print( ( this->getOutputDirectory() + "/absCosThetaJetstar_combined.pdf").c_str() );
-  delete canvas_absCosThetaJetstar_combined;
-  delete absCosThetaJetstar_combined_stack;
-  delete absCosThetaJetstar_combined_leg;
+  h1_absCosThetaJetstar_combined_stack_signals->Add(h1_absCosThetaJetstar_combined_withcuts_WWsignal);
+  h1_absCosThetaJetstar_combined_stack_signals->Add(h1_absCosThetaJetstar_combined_withcuts_ZZsignal);
+  h1_absCosThetaJetstar_combined_leg_signals->AddEntry( h1_absCosThetaJetstar_combined_withcuts_WWsignal, "WW", "l" );
+  h1_absCosThetaJetstar_combined_leg_signals->AddEntry( h1_absCosThetaJetstar_combined_withcuts_ZZsignal, "ZZ", "l" );
+
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_bkgs (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  h1_absCosThetaJetstar_combined_leg_bkgs->SetHeader("Bkgs");
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_bkgs (new THStack("h1_absCosThetaJetstar_combined_bkgs", "after cuts; |cos #theta*_{jet}|; Events"));
+  gStyle->SetPalette(kNeon);
+  vector<TH1D*> to_delete{};
+  for ( auto & final_state_absCosThetaJetstar_combined: bkg_final_state_h1_absCosThetaJetstar_withcuts ) {
+    auto h1_final_state_absCosThetaJetstar_combined = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+    h1_final_state_absCosThetaJetstar_combined->Add( final_state_absCosThetaJetstar_combined.second.first.GetPtr(), final_state_absCosThetaJetstar_combined.second.second.GetPtr() );
+    h1_absCosThetaJetstar_combined_stack_bkgs->Add(h1_final_state_absCosThetaJetstar_combined);
+    h1_absCosThetaJetstar_combined_leg_bkgs->AddEntry( h1_final_state_absCosThetaJetstar_combined, final_state_absCosThetaJetstar_combined.first.c_str(), "l" );
+    to_delete.push_back(h1_final_state_absCosThetaJetstar_combined);
+  }
+  
+  h1_absCosThetaJetstar_combined_stack_signals->Draw("hist nostack");
+  h1_absCosThetaJetstar_combined_stack_signals->GetYaxis()->SetMaxDigits(3);
+  h1_absCosThetaJetstar_combined_stack_bkgs->Draw("hist pfc plc same");
+  h1_absCosThetaJetstar_combined_stack_signals->Draw("hist nostack same");
+  h1_absCosThetaJetstar_combined_leg_bkgs->Draw();
+  h1_absCosThetaJetstar_combined_leg_signals->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_h1_absCosThetaJetstar_combined_final_states->Print( ( this->getOutputDirectory() + "/absCosThetaJetstar_combined_stackedbkg.pdf").c_str() );
+  delete h1_absCosThetaJetstar_combined_withcuts_WWsignal;
+  delete h1_absCosThetaJetstar_combined_withcuts_ZZsignal;
+  for (auto & deletable: to_delete) { delete deletable; }
+  
+  
   
   
   //----------------------------------------------------------------------------
