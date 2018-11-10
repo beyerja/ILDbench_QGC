@@ -33,12 +33,12 @@ void aQGCAnalyzer::performAnalysis(){
   auto VVpTCut                  = Cuts::getMinCutLambda( VV_pT_min );
   auto VVETCut                  = Cuts::getMinCutLambda( VV_ET_min );
   auto MRecoilCut               = Cuts::getMinCutLambda( m_recoil_min );
-  auto RecoilAbsCosThetaCut     = Cuts::getMinMaxCutLambda( -1.0*recoil_cosTheta_max , recoil_cosTheta_max );
+  auto RecoilAbsCosThetaCut     = Cuts::getMinMaxCutLambda( float(-1.0*recoil_cosTheta_max) , recoil_cosTheta_max );
   auto Y34Cut                   = Cuts::getMinCutLambda( y_34_min );
   auto JetECut                  = Cuts::getMinCutLambda( min_jetE_min );
   auto JetNParticlesCut         = Cuts::getMinCutLambda( min_jetNparticles_min );
   auto JetNChargedCut           = Cuts::getMinCutLambda( min_jetNcharged_min );
-  auto LeadETrackAbsCosThetaCut = Cuts::getMinMaxCutLambda( -1.0*leadEtrack_cosTheta_max , leadEtrack_cosTheta_max );
+  auto LeadETrackAbsCosThetaCut = Cuts::getMinMaxCutLambda( float(-1.0*leadEtrack_cosTheta_max) , leadEtrack_cosTheta_max );
   auto LeadETrackConeECut       = Cuts::getMinCutLambda( leadEtrack_coneE_min );
   auto IsoLepsCut               = Cuts::getBoolCutLambda( false );
   
@@ -49,11 +49,14 @@ void aQGCAnalyzer::performAnalysis(){
   auto process_weight_lambda = this->getProcessWeightLambda();
   
   
-  float min_m_Zregion = 0;
-  float m_WZborder    = 86;
-  float max_m_Wregion = 1000;
-  auto ZMassRegionCut = Cuts::getMinMaxCutLambda( m_WZborder , max_m_Wregion );
-  auto WMassRegionCut = Cuts::getMinMaxCutLambda( min_m_Zregion , m_WZborder );
+  float min_VmSum_WW = 145;
+  float max_VmSum_ZZ = 205;
+  float border_VmSum = 178;
+  float max_Vm_diff = 25;
+  
+  auto WWRegionVmSumCut = Cuts::getMinMaxCutLambda(min_VmSum_WW, border_VmSum);
+  auto ZZRegionVmSumCut = Cuts::getMinMaxCutLambda(border_VmSum, max_VmSum_ZZ);
+  auto VVRegionVmDiffCut = Cuts::getMinMaxCutLambda(float(-1.*border_VmSum),border_VmSum);
   
   //============================================================================
   //============================================================================
@@ -63,7 +66,9 @@ void aQGCAnalyzer::performAnalysis(){
   
   
   // TODO make this standard when possible with newer root version!
-  auto rdf_with_extra_variables = m_dataframe->Define( "recoVmMean", VarComb::getMeanLambda<float>(), {"reco.V1_m", "reco.V2_m"} );  
+  auto rdf_with_extra_variables = m_dataframe->Define( "recoVmMean", VarComb::getMeanLambda<float>(), {"reco.V1_m", "reco.V2_m"} )
+                                              .Define( "recoVmSum", VarComb::getPlusLambda<float>(), {"reco.V1_m", "reco.V2_m"})
+                                              .Define( "recoVmDiff", VarComb::getMinusLambda<float>(), {"reco.V1_m", "reco.V2_m"});  
   auto rdf_with_process_weight = rdf_with_extra_variables.Define("process_weight", process_weight_lambda, {"process_name", "e_polarization", "p_polarization", "cross_section"});  
   
   // auto testing_h = rdf_with_process_weight.Histo1D({"testing_h", "Process weight; weight; Events", 100, 0, 100}, "process_weight");
@@ -88,7 +93,7 @@ void aQGCAnalyzer::performAnalysis(){
                                     .Filter( VVpTCut, {"reco.VV_pT"} )
                                     .Filter( VVETCut, {"reco.VV_ET"} )
                                     .Filter( MRecoilCut, {"reco.m_recoil"} )
-                                    .Filter( RecoilAbsCosThetaCut, {"reco.cosTheta_recoil"} )
+                                    // .Filter( RecoilAbsCosThetaCut, {"reco.cosTheta_recoil"} )
                                     .Filter( Y34Cut, {"reco.y_34"} )
                                     .Filter( JetECut, {"reco.min_jetE"} )
                                     .Filter( JetNParticlesCut, {"reco.min_jetNparticles"} )
@@ -102,10 +107,15 @@ void aQGCAnalyzer::performAnalysis(){
   auto rdf_ZZsignal_with_cuts = rdf_data_after_cuts.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
   auto rdf_bkg_with_cuts    = rdf_data_after_cuts.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
 
-  auto rdf_ZZsignal_inZZregion_with_cuts = rdf_ZZsignal_with_cuts.Filter( ZMassRegionCut, {"recoVmMean"} );
-  auto rdf_ZZsignal_inWWregion_with_cuts = rdf_ZZsignal_with_cuts.Filter( WMassRegionCut, {"recoVmMean"} );
-  auto rdf_WWsignal_inZZregion_with_cuts = rdf_WWsignal_with_cuts.Filter( ZMassRegionCut, {"recoVmMean"} );
-  auto rdf_WWsignal_inWWregion_with_cuts = rdf_WWsignal_with_cuts.Filter( WMassRegionCut, {"recoVmMean"} );
+  auto rdf_inZZregion_with_cuts = rdf_data_after_cuts.Filter( ZZRegionVmSumCut, {"recoVmSum"} ).Filter( VVRegionVmDiffCut, {"recoVmDiff"} );
+  auto rdf_inWWregion_with_cuts = rdf_data_after_cuts.Filter( WWRegionVmSumCut, {"recoVmSum"} ).Filter( VVRegionVmDiffCut, {"recoVmDiff"} );
+
+  auto rdf_ZZsignal_inZZregion_with_cuts = rdf_inZZregion_with_cuts.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
+  auto rdf_ZZsignal_inWWregion_with_cuts = rdf_inWWregion_with_cuts.Filter( IsTrueZZSignalCut, {"mctruth.signal_type"} );
+  auto rdf_WWsignal_inZZregion_with_cuts = rdf_inZZregion_with_cuts.Filter( IsTrueWWSignalCut, {"mctruth.signal_type"} );
+  auto rdf_WWsignal_inWWregion_with_cuts = rdf_inWWregion_with_cuts.Filter( IsTrueWWSignalCut, {"mctruth.signal_type"} );
+  auto rdf_bkg_inZZregion_with_cuts = rdf_inZZregion_with_cuts.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
+  auto rdf_bkg_inWWregion_with_cuts = rdf_inWWregion_with_cuts.Filter( IsTrueBkgCut, {"mctruth.signal_type"} );
   
   //----------------------------------------------------------------------------
   // Counts on generator level
@@ -163,10 +173,10 @@ void aQGCAnalyzer::performAnalysis(){
   auto h2_Vm_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo2D({"h2_Vm_withcuts_ZZsignal", "w/ cuts ; m_{jj,1} [GeV]; m_{jj,2} [GeV]; Events", 35, 50, 120, 35, 50, 120}, "reco.V1_m", "reco.V2_m", "process_weight");
   auto h2_Vm_withcuts_bkg       = rdf_bkg_with_cuts.Histo2D({"h2_Vm_withcuts_bkg", "w/ cuts ; m_{jj,1} [GeV]; m_{jj,2} [GeV]; Events", 35, 50, 120, 35, 50, 120}, "reco.V1_m", "reco.V2_m", "process_weight");
   
-  auto h1_VV_m_withcuts           = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
-  auto h1_VV_m_withcuts_bkg       = rdf_bkg_with_cuts.Histo1D({"h1_VV_m_bkg", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts           = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_bkg       = rdf_bkg_with_cuts.Histo1D({"h1_VV_m_bkg", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
   
   auto h1_absCosThetaVstar_withcuts_WWsignal = rdf_WWsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
   auto h1_absCosThetaVstar_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal", "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
@@ -180,22 +190,90 @@ void aQGCAnalyzer::performAnalysis(){
   auto h1_absCosThetaJetstarV2_withcuts_ZZsignal = rdf_ZZsignal_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
   auto h1_absCosThetaJetstarV2_withcuts_bkg      = rdf_bkg_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg", "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
   
+  // ----------- ZZ region
+  auto h1_VV_m_withcuts_WWsignal_inZZregion  = rdf_WWsignal_inZZregion_with_cuts.Histo1D({"h1_VV_m_WWsignal_inZZregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal_inZZregion  = rdf_ZZsignal_inZZregion_with_cuts.Histo1D({"h1_VV_m_ZZsignal_inZZregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_bkg_inZZregion       = rdf_bkg_inZZregion_with_cuts.Histo1D({"h1_VV_m_bkg_inZZregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  
+  auto h1_absCosThetaVstar_withcuts_WWsignal_inZZregion = rdf_WWsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal_inZZregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion = rdf_ZZsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_bkg_inZZregion      = rdf_bkg_inZZregion_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg_inZZregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  
+  auto h1_absCosThetaJetstarV1_withcuts_WWsignal_inZZregion = rdf_WWsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_WWsignal_inZZregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_ZZsignal_inZZregion = rdf_ZZsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_ZZsignal_inZZregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_bkg_inZZregion      = rdf_bkg_inZZregion_with_cuts     .Histo1D({"h1_absCosThetaJetstarV1_withcuts_bkg_inZZregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  
+  auto h1_absCosThetaJetstarV2_withcuts_WWsignal_inZZregion = rdf_WWsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal_inZZregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_ZZsignal_inZZregion = rdf_ZZsignal_inZZregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal_inZZregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_bkg_inZZregion      = rdf_bkg_inZZregion_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg_inZZregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  // ---------------------
+  
+  // ----------- WW region
+  auto h1_VV_m_withcuts_WWsignal_inWWregion  = rdf_WWsignal_inWWregion_with_cuts.Histo1D({"h1_VV_m_WWsignal_inWWregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_ZZsignal_inWWregion  = rdf_ZZsignal_inWWregion_with_cuts.Histo1D({"h1_VV_m_ZZsignal_inWWregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  auto h1_VV_m_withcuts_bkg_inWWregion       = rdf_bkg_inWWregion_with_cuts.Histo1D({"h1_VV_m_bkg_inWWregion", "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+  
+  auto h1_absCosThetaVstar_withcuts_WWsignal_inWWregion = rdf_WWsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_WWsignal_inWWregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion = rdf_ZZsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaVstar_withcuts_bkg_inWWregion      = rdf_bkg_inWWregion_with_cuts     .Histo1D({"h1_absCosThetaVstar_withcuts_bkg_inWWregion", "V angle in VV system after cuts;  |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+  
+  auto h1_absCosThetaJetstarV1_withcuts_WWsignal_inWWregion = rdf_WWsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_WWsignal_inWWregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_ZZsignal_inWWregion = rdf_ZZsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV1_withcuts_ZZsignal_inWWregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV1_withcuts_bkg_inWWregion      = rdf_bkg_inWWregion_with_cuts     .Histo1D({"h1_absCosThetaJetstarV1_withcuts_bkg_inWWregion", "jet angle in V1 system after cuts ; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+  
+  auto h1_absCosThetaJetstarV2_withcuts_WWsignal_inWWregion = rdf_WWsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_WWsignal_inWWregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_ZZsignal_inWWregion = rdf_ZZsignal_inWWregion_with_cuts.Histo1D({"h1_absCosThetaJetstarV2_withcuts_ZZsignal_inWWregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  auto h1_absCosThetaJetstarV2_withcuts_bkg_inWWregion      = rdf_bkg_inWWregion_with_cuts     .Histo1D({"h1_absCosThetaJetstarV2_withcuts_bkg_inWWregion", "jet angle in V2 system after cuts ; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+  // ---------------------
+  
   vector<pair<string, ResultTH1D>>  bkg_final_state_h1_VV_m_withcuts {}, 
                                     bkg_final_state_h1_absCosThetaVstar_withcuts {};
   vector<pair<string,pair<ResultTH1D,ResultTH1D>>> bkg_final_state_h1_absCosThetaJetstar_withcuts {}; 
+  
+  vector<pair<string, ResultTH1D>>  bkg_final_state_inZZregion_h1_VV_m_withcuts {}, 
+                                    bkg_final_state_inZZregion_h1_absCosThetaVstar_withcuts {};
+  vector<pair<string,pair<ResultTH1D,ResultTH1D>>> bkg_final_state_inZZregion_h1_absCosThetaJetstar_withcuts {}; 
+  
+  vector<pair<string, ResultTH1D>>  bkg_final_state_inWWregion_h1_VV_m_withcuts {}, 
+                                    bkg_final_state_inWWregion_h1_absCosThetaVstar_withcuts {};
+  vector<pair<string,pair<ResultTH1D,ResultTH1D>>> bkg_final_state_inWWregion_h1_absCosThetaJetstar_withcuts {}; 
                                     
                                     
   for ( auto & final_state: this->getFinalStatesSet() ) {
     auto FinalStateTest = Cuts::getStringTestLambda(final_state);
     auto rdf_final_state = rdf_bkg_with_cuts.Filter(FinalStateTest, {"process_name"});
-    auto h1_VV_m_withcuts_final_state                 = rdf_final_state.Histo1D({("h1_VV_m_" + final_state).c_str(), "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
+    auto h1_VV_m_withcuts_final_state                 = rdf_final_state.Histo1D({("h1_VV_m_" + final_state).c_str(), "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
     auto h1_absCosThetaVstar_withcuts_final_state     = rdf_final_state.Histo1D({("h1_absCosThetaVstar_withcuts_" + final_state).c_str(), "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
     auto h1_absCosThetaJetstarV1_withcuts_final_state = rdf_final_state.Histo1D({("h1_absCosThetaJetstarV1_withcuts_" + final_state).c_str(), "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
     auto h1_absCosThetaJetstarV2_withcuts_final_state = rdf_final_state.Histo1D({("h1_absCosThetaJetstarV2_withcuts_" + final_state).c_str(), "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
     
+    // ----------- ZZ region
+    auto rdf_final_state_inZZregion = rdf_bkg_inZZregion_with_cuts.Filter(FinalStateTest, {"process_name"});
+    auto h1_VV_m_withcuts_final_state_inZZregion                 = rdf_final_state_inZZregion.Histo1D({("h1_VV_m_" + final_state + "_inZZregion").c_str(), "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+    auto h1_absCosThetaVstar_withcuts_final_state_inZZregion     = rdf_final_state_inZZregion.Histo1D({("h1_absCosThetaVstar_withcuts_" + final_state + "_inZZregion").c_str(), "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV1_withcuts_final_state_inZZregion = rdf_final_state_inZZregion.Histo1D({("h1_absCosThetaJetstarV1_withcuts_" + final_state + "_inZZregion").c_str(), "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV2_withcuts_final_state_inZZregion = rdf_final_state_inZZregion.Histo1D({("h1_absCosThetaJetstarV2_withcuts_" + final_state + "_inZZregion").c_str(), "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+    // ---------------------
+    
+    // ----------- WW region
+    auto rdf_final_state_inWWregion = rdf_bkg_inWWregion_with_cuts.Filter(FinalStateTest, {"process_name"});
+    auto h1_VV_m_withcuts_final_state_inWWregion                 = rdf_final_state_inWWregion.Histo1D({("h1_VV_m_" + final_state + "_inWWregion").c_str(), "Di-boson mass after cuts; m_{VV}; Events", 50, 0, 1000}, "reco.VV_m", "process_weight");
+    auto h1_absCosThetaVstar_withcuts_final_state_inWWregion     = rdf_final_state_inWWregion.Histo1D({("h1_absCosThetaVstar_withcuts_" + final_state + "_inWWregion").c_str(), "V angle in VV system after cuts; |cos #theta*_{V}|; Events", 20, 0, 1}, "reco.VV_V_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV1_withcuts_final_state_inWWregion = rdf_final_state_inWWregion.Histo1D({("h1_absCosThetaJetstarV1_withcuts_" + final_state + "_inWWregion").c_str(), "jet angle in V1 system after cuts; |cos #theta*_{jet}|_{V_{1}}; Events", 20, 0, 1}, "reco.V1_jet_absCosThetaStar", "process_weight");
+    auto h1_absCosThetaJetstarV2_withcuts_final_state_inWWregion = rdf_final_state_inWWregion.Histo1D({("h1_absCosThetaJetstarV2_withcuts_" + final_state + "_inWWregion").c_str(), "jet angle in V2 system after cuts; |cos #theta*_{jet}|_{V_{2}}; Events", 20, 0, 1}, "reco.V2_jet_absCosThetaStar", "process_weight");
+    // ---------------------
+    
     bkg_final_state_h1_VV_m_withcuts.push_back( make_pair( final_state, h1_VV_m_withcuts_final_state ) );
     bkg_final_state_h1_absCosThetaVstar_withcuts.push_back( make_pair( final_state, h1_absCosThetaVstar_withcuts_final_state ) );
     bkg_final_state_h1_absCosThetaJetstar_withcuts.push_back( make_pair( final_state, make_pair(h1_absCosThetaJetstarV1_withcuts_final_state,h1_absCosThetaJetstarV2_withcuts_final_state) ));
+    
+    bkg_final_state_inZZregion_h1_VV_m_withcuts.push_back( make_pair( final_state, h1_VV_m_withcuts_final_state_inZZregion ) );
+    bkg_final_state_inZZregion_h1_absCosThetaVstar_withcuts.push_back( make_pair( final_state, h1_absCosThetaVstar_withcuts_final_state_inZZregion ) );
+    bkg_final_state_inZZregion_h1_absCosThetaJetstar_withcuts.push_back( make_pair( final_state, make_pair(h1_absCosThetaJetstarV1_withcuts_final_state_inZZregion,h1_absCosThetaJetstarV2_withcuts_final_state_inZZregion) ));
+    
+    bkg_final_state_inWWregion_h1_VV_m_withcuts.push_back( make_pair( final_state, h1_VV_m_withcuts_final_state_inWWregion ) );
+    bkg_final_state_inWWregion_h1_absCosThetaVstar_withcuts.push_back( make_pair( final_state, h1_absCosThetaVstar_withcuts_final_state_inWWregion ) );
+    bkg_final_state_inWWregion_h1_absCosThetaJetstar_withcuts.push_back( make_pair( final_state, make_pair(h1_absCosThetaJetstarV1_withcuts_final_state_inWWregion,h1_absCosThetaJetstarV2_withcuts_final_state_inWWregion) ));
   }
   //----------------------------------------------------------------------------
 
@@ -403,19 +481,16 @@ void aQGCAnalyzer::performAnalysis(){
   canvas_VmMean->Print( ( this->getOutputDirectory() + "/VmMean.pdf").c_str() );
 
 
-
   unique_ptr<TCanvas> canvas_Vm2D (new TCanvas("Vm2D", "", 0, 0, 700, 600));
   canvas_Vm2D->SetRightMargin(0.24);
-  unique_ptr<TLegend> Vm2D_leg (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> Vm2D_leg (new TLegend( 0.8, 0.1, 1.0, 0.9 ));
   h2_Vm_withcuts_WWsignal->SetLineColor(4);
   h2_Vm_withcuts_ZZsignal->SetLineColor(2);
   Vm2D_leg->AddEntry( h2_Vm_withcuts_WWsignal.GetPtr(), "WW", "l" );
   Vm2D_leg->AddEntry( h2_Vm_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
-  Vm2D_leg->AddEntry( h2_Vm_withcuts_bkg.GetPtr(), "bkg", "l" );
-  h2_Vm_withcuts_bkg->Draw("box same");
   h2_Vm_withcuts_WWsignal->Draw("box same");
   h2_Vm_withcuts_ZZsignal->Draw("box same");
-  h2_Vm_withcuts_bkg->GetYaxis()->SetMaxDigits(3);
+  h2_Vm_withcuts_WWsignal->GetYaxis()->SetMaxDigits(3);
   Vm2D_leg->Draw();
   gPad->Modified();
   gPad->Update();
@@ -424,6 +499,286 @@ void aQGCAnalyzer::performAnalysis(){
 
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  unique_ptr<TCanvas> canvas_absCosThetaVstar_final_states_inZZregion (new TCanvas("absCosThetaVstar_final_states_inZZregion", "", 0, 0, 700, 600));
+  canvas_absCosThetaVstar_final_states_inZZregion->SetTopMargin(0.11);
+  canvas_absCosThetaVstar_final_states_inZZregion->SetRightMargin(0.24);
+  unique_ptr<THStack> absCosThetaVstar_stack_inZZregion (new THStack("absCosThetaVstar_inZZregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
+  unique_ptr<THStack> absCosThetaVstar_stack_wSignal_inZZregion (new THStack("absCosThetaVstarsignals_wSignal_inZZregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
+  unique_ptr<TLegend> absCosThetaVstar_leg_signals_inZZregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> absCosThetaVstar_leg_bkgs_inZZregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  absCosThetaVstar_leg_signals_inZZregion->SetHeader("Signals");
+  absCosThetaVstar_leg_bkgs_inZZregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_absCosThetaVstar: bkg_final_state_inZZregion_h1_absCosThetaVstar_withcuts ) {
+    absCosThetaVstar_stack_inZZregion->Add(final_state_absCosThetaVstar.second.GetPtr());
+    absCosThetaVstar_stack_wSignal_inZZregion->Add(final_state_absCosThetaVstar.second.GetPtr());
+    absCosThetaVstar_leg_bkgs_inZZregion->AddEntry( final_state_absCosThetaVstar.second.GetPtr(), final_state_absCosThetaVstar.first.c_str(), "l" );
+  }
+  h1_absCosThetaVstar_withcuts_WWsignal_inZZregion->SetLineColor(4);
+  h1_absCosThetaVstar_withcuts_WWsignal_inZZregion->SetFillColor(4);
+  h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion->SetLineColor(2);
+  h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion->SetFillColor(2);
+  absCosThetaVstar_stack_wSignal_inZZregion->Add(h1_absCosThetaVstar_withcuts_WWsignal_inZZregion.GetPtr());
+  absCosThetaVstar_stack_wSignal_inZZregion->Add(h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion.GetPtr());
+  absCosThetaVstar_leg_signals_inZZregion->AddEntry( h1_absCosThetaVstar_withcuts_WWsignal_inZZregion.GetPtr(), "WW", "l" );
+  absCosThetaVstar_leg_signals_inZZregion->AddEntry( h1_absCosThetaVstar_withcuts_ZZsignal_inZZregion.GetPtr(), "ZZ", "l" );
+  absCosThetaVstar_stack_wSignal_inZZregion->Draw("hist");
+  absCosThetaVstar_stack_inZZregion->Draw("hist pfc plc same");
+  absCosThetaVstar_stack_inZZregion->GetYaxis()->SetMaxDigits(3);
+  absCosThetaVstar_leg_bkgs_inZZregion->Draw();
+  absCosThetaVstar_leg_signals_inZZregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_absCosThetaVstar_final_states_inZZregion->Print( ( this->getOutputDirectory() + "/absCosThetaVstar_ZZregion_stackedbkg.pdf").c_str() );
+  
+  
+  unique_ptr<TCanvas> canvas_VV_m_final_states_inZZregion (new TCanvas("VV_m_final_states_inZZregion", "", 0, 0, 700, 600));
+  canvas_VV_m_final_states_inZZregion->SetTopMargin(0.11);
+  canvas_VV_m_final_states_inZZregion->SetRightMargin(0.24);
+  unique_ptr<THStack> VV_m_stack_inZZregion (new THStack("VV_m_signals_inZZregion", "after cuts, ZZ region; m_{VV}; Events"));
+  unique_ptr<THStack> VV_m_stack_wSignal_inZZregion (new THStack("VV_m_signals_wSignal_inZZregion", "after cuts, ZZ region; m_{VV}; Events"));
+  unique_ptr<TLegend> VV_m_leg_signals_inZZregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> VV_m_leg_bkgs_inZZregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  VV_m_leg_signals_inZZregion->SetHeader("Signals");
+  VV_m_leg_bkgs_inZZregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_VV_m: bkg_final_state_inZZregion_h1_VV_m_withcuts ) {
+    VV_m_stack_inZZregion->Add(final_state_VV_m.second.GetPtr());
+    VV_m_stack_wSignal_inZZregion->Add(final_state_VV_m.second.GetPtr());
+    VV_m_leg_bkgs_inZZregion->AddEntry( final_state_VV_m.second.GetPtr(), final_state_VV_m.first.c_str(), "l" );
+  }
+  h1_VV_m_withcuts_WWsignal_inZZregion->SetLineColor(4);
+  h1_VV_m_withcuts_WWsignal_inZZregion->SetFillColor(4);
+  h1_VV_m_withcuts_ZZsignal_inZZregion->SetLineColor(2);
+  h1_VV_m_withcuts_ZZsignal_inZZregion->SetFillColor(2);
+  VV_m_stack_wSignal_inZZregion->Add(h1_VV_m_withcuts_WWsignal_inZZregion.GetPtr());
+  VV_m_stack_wSignal_inZZregion->Add(h1_VV_m_withcuts_ZZsignal_inZZregion.GetPtr());
+  VV_m_leg_signals_inZZregion->AddEntry( h1_VV_m_withcuts_WWsignal_inZZregion.GetPtr(), "WW", "l" );
+  VV_m_leg_signals_inZZregion->AddEntry( h1_VV_m_withcuts_ZZsignal_inZZregion.GetPtr(), "ZZ", "l" );
+  VV_m_stack_wSignal_inZZregion->Draw("hist"); 
+  VV_m_stack_inZZregion->Draw("hist pfc plc same");
+  VV_m_stack_inZZregion->GetYaxis()->SetMaxDigits(3);
+  VV_m_leg_bkgs_inZZregion->Draw();
+  VV_m_leg_signals_inZZregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_VV_m_final_states_inZZregion->Print( ( this->getOutputDirectory() + "/VV_m_ZZregion_stackedbkg.pdf").c_str() );
+  
+  
+  
+  unique_ptr<TCanvas> canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion (new TCanvas("h1_absCosThetaJetstar_combined_final_states_inZZregion", "", 0, 0, 700, 600));
+  canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion->SetTopMargin(0.11);
+  canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion->SetRightMargin(0.24);
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inZZregion (new THStack("h1_absCosThetaJetstar_combined_signals_inZZregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inZZregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  auto h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal_inZZregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_WWsignal_inZZregion.GetPtr() );
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion->Add( h1_absCosThetaJetstarV1_withcuts_ZZsignal_inZZregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_ZZsignal_inZZregion.GetPtr() );
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_signals_inZZregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_bkgs_inZZregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  h1_absCosThetaJetstar_combined_leg_signals_inZZregion->SetHeader("Signals");
+  h1_absCosThetaJetstar_combined_leg_bkgs_inZZregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  vector<TH1D*> to_delete_inZZregion{};
+  for ( auto & final_state_absCosThetaJetstar_combined: bkg_final_state_inZZregion_h1_absCosThetaJetstar_withcuts ) {
+    auto h1_final_state_absCosThetaJetstar_combined = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+    h1_final_state_absCosThetaJetstar_combined->Add( final_state_absCosThetaJetstar_combined.second.first.GetPtr(), final_state_absCosThetaJetstar_combined.second.second.GetPtr() );
+    h1_absCosThetaJetstar_combined_stack_inZZregion->Add(h1_final_state_absCosThetaJetstar_combined);
+    h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion->Add(h1_final_state_absCosThetaJetstar_combined);
+    h1_absCosThetaJetstar_combined_leg_bkgs_inZZregion->AddEntry( h1_final_state_absCosThetaJetstar_combined, final_state_absCosThetaJetstar_combined.first.c_str(), "l" );
+    to_delete_inZZregion.push_back(h1_final_state_absCosThetaJetstar_combined);
+  }
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion->SetLineColor(4);
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion->SetFillColor(4);
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion->SetLineColor(2);
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion->SetFillColor(2);
+  h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion->Add(h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion);
+  h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion->Add(h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion);
+  h1_absCosThetaJetstar_combined_leg_signals_inZZregion->AddEntry( h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion, "WW", "l" );
+  h1_absCosThetaJetstar_combined_leg_signals_inZZregion->AddEntry( h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion, "ZZ", "l" );
+  
+  h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion->Draw("hist");
+  h1_absCosThetaJetstar_combined_stack_inZZregion->Draw("hist pfc plc same");
+  h1_absCosThetaJetstar_combined_stack_inZZregion->GetYaxis()->SetMaxDigits(3);
+  h1_absCosThetaJetstar_combined_leg_bkgs_inZZregion->Draw();
+  h1_absCosThetaJetstar_combined_leg_signals_inZZregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion->Print( ( this->getOutputDirectory() + "/absCosThetaJetstar_combined_ZZregion_stackedbkg.pdf").c_str() );
+  delete h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion;
+  delete h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion;
+  for (auto & deletable: to_delete_inZZregion) { delete deletable; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  unique_ptr<TCanvas> canvas_absCosThetaVstar_final_states_inWWregion (new TCanvas("absCosThetaVstar_final_states_inWWregion", "", 0, 0, 700, 600));
+  canvas_absCosThetaVstar_final_states_inWWregion->SetTopMargin(0.11);
+  canvas_absCosThetaVstar_final_states_inWWregion->SetRightMargin(0.24);
+  unique_ptr<THStack> absCosThetaVstar_stack_inWWregion (new THStack("absCosThetaVstar_inWWregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
+  unique_ptr<THStack> absCosThetaVstar_stack_wSignal_inWWregion (new THStack("absCosThetaVstarsignals_wSignal_inWWregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
+  unique_ptr<TLegend> absCosThetaVstar_leg_signals_inWWregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> absCosThetaVstar_leg_bkgs_inWWregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  absCosThetaVstar_leg_signals_inWWregion->SetHeader("Signals");
+  absCosThetaVstar_leg_bkgs_inWWregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_absCosThetaVstar: bkg_final_state_inWWregion_h1_absCosThetaVstar_withcuts ) {
+    absCosThetaVstar_stack_inWWregion->Add(final_state_absCosThetaVstar.second.GetPtr());
+    absCosThetaVstar_stack_wSignal_inWWregion->Add(final_state_absCosThetaVstar.second.GetPtr());
+    absCosThetaVstar_leg_bkgs_inWWregion->AddEntry( final_state_absCosThetaVstar.second.GetPtr(), final_state_absCosThetaVstar.first.c_str(), "l" );
+  }
+  h1_absCosThetaVstar_withcuts_WWsignal_inWWregion->SetLineColor(4);
+  h1_absCosThetaVstar_withcuts_WWsignal_inWWregion->SetFillColor(4);
+  h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion->SetLineColor(2);
+  h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion->SetFillColor(2);
+  absCosThetaVstar_stack_wSignal_inWWregion->Add(h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion.GetPtr());
+  absCosThetaVstar_stack_wSignal_inWWregion->Add(h1_absCosThetaVstar_withcuts_WWsignal_inWWregion.GetPtr());
+  absCosThetaVstar_leg_signals_inWWregion->AddEntry( h1_absCosThetaVstar_withcuts_WWsignal_inWWregion.GetPtr(), "WW", "l" );
+  absCosThetaVstar_leg_signals_inWWregion->AddEntry( h1_absCosThetaVstar_withcuts_ZZsignal_inWWregion.GetPtr(), "ZZ", "l" );
+  absCosThetaVstar_stack_wSignal_inWWregion->Draw("hist");
+  absCosThetaVstar_stack_inWWregion->Draw("hist pfc plc same");
+  absCosThetaVstar_stack_inWWregion->GetYaxis()->SetMaxDigits(3);
+  absCosThetaVstar_leg_bkgs_inWWregion->Draw();
+  absCosThetaVstar_leg_signals_inWWregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_absCosThetaVstar_final_states_inWWregion->Print( ( this->getOutputDirectory() + "/absCosThetaVstar_WWregion_stackedbkg.pdf").c_str() );
+  
+  
+  unique_ptr<TCanvas> canvas_VV_m_final_states_inWWregion (new TCanvas("VV_m_final_states_inWWregion", "", 0, 0, 700, 600));
+  canvas_VV_m_final_states_inWWregion->SetTopMargin(0.11);
+  canvas_VV_m_final_states_inWWregion->SetRightMargin(0.24);
+  unique_ptr<THStack> VV_m_stack_inWWregion (new THStack("VV_m_signals_inWWregion", "after cuts, ZZ region; m_{VV}; Events"));
+  unique_ptr<THStack> VV_m_stack_wSignal_inWWregion (new THStack("VV_m_signals_wSignal_inWWregion", "after cuts, ZZ region; m_{VV}; Events"));
+  unique_ptr<TLegend> VV_m_leg_signals_inWWregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> VV_m_leg_bkgs_inWWregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  VV_m_leg_signals_inWWregion->SetHeader("Signals");
+  VV_m_leg_bkgs_inWWregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  for ( auto & final_state_VV_m: bkg_final_state_inWWregion_h1_VV_m_withcuts ) {
+    VV_m_stack_inWWregion->Add(final_state_VV_m.second.GetPtr());
+    VV_m_stack_wSignal_inWWregion->Add(final_state_VV_m.second.GetPtr());
+    VV_m_leg_bkgs_inWWregion->AddEntry( final_state_VV_m.second.GetPtr(), final_state_VV_m.first.c_str(), "l" );
+  }
+  h1_VV_m_withcuts_WWsignal_inWWregion->SetLineColor(4);
+  h1_VV_m_withcuts_WWsignal_inWWregion->SetFillColor(4);
+  h1_VV_m_withcuts_ZZsignal_inWWregion->SetLineColor(2);
+  h1_VV_m_withcuts_ZZsignal_inWWregion->SetFillColor(2);
+  VV_m_stack_wSignal_inWWregion->Add(h1_VV_m_withcuts_ZZsignal_inWWregion.GetPtr());
+  VV_m_stack_wSignal_inWWregion->Add(h1_VV_m_withcuts_WWsignal_inWWregion.GetPtr());
+  VV_m_leg_signals_inWWregion->AddEntry( h1_VV_m_withcuts_WWsignal_inWWregion.GetPtr(), "WW", "l" );
+  VV_m_leg_signals_inWWregion->AddEntry( h1_VV_m_withcuts_ZZsignal_inWWregion.GetPtr(), "ZZ", "l" );
+  VV_m_stack_wSignal_inWWregion->Draw("hist"); 
+  VV_m_stack_inWWregion->Draw("hist pfc plc same");
+  VV_m_stack_inWWregion->GetYaxis()->SetMaxDigits(3);
+  VV_m_leg_bkgs_inWWregion->Draw();
+  VV_m_leg_signals_inWWregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_VV_m_final_states_inWWregion->Print( ( this->getOutputDirectory() + "/VV_m_WWregion_stackedbkg.pdf").c_str() );
+  
+  
+  
+  unique_ptr<TCanvas> canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion (new TCanvas("h1_absCosThetaJetstar_combined_final_states_inWWregion", "", 0, 0, 700, 600));
+  canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion->SetTopMargin(0.11);
+  canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion->SetRightMargin(0.24);
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inWWregion (new THStack("h1_absCosThetaJetstar_combined_signals_inWWregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inWWregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  auto h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal_inWWregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_WWsignal_inWWregion.GetPtr() );
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion->Add( h1_absCosThetaJetstarV1_withcuts_ZZsignal_inWWregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_ZZsignal_inWWregion.GetPtr() );
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_signals_inWWregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  unique_ptr<TLegend> h1_absCosThetaJetstar_combined_leg_bkgs_inWWregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
+  h1_absCosThetaJetstar_combined_leg_signals_inWWregion->SetHeader("Signals");
+  h1_absCosThetaJetstar_combined_leg_bkgs_inWWregion->SetHeader("Bkgs");
+  gStyle->SetPalette(kNeon);
+  vector<TH1D*> to_delete_inWWregion{};
+  for ( auto & final_state_absCosThetaJetstar_combined: bkg_final_state_inWWregion_h1_absCosThetaJetstar_withcuts ) {
+    auto h1_final_state_absCosThetaJetstar_combined = new TH1D("h1_absCosThetaJetstar_combined_withcuts_bkg", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
+    h1_final_state_absCosThetaJetstar_combined->Add( final_state_absCosThetaJetstar_combined.second.first.GetPtr(), final_state_absCosThetaJetstar_combined.second.second.GetPtr() );
+    h1_absCosThetaJetstar_combined_stack_inWWregion->Add(h1_final_state_absCosThetaJetstar_combined);
+    h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion->Add(h1_final_state_absCosThetaJetstar_combined);
+    h1_absCosThetaJetstar_combined_leg_bkgs_inWWregion->AddEntry( h1_final_state_absCosThetaJetstar_combined, final_state_absCosThetaJetstar_combined.first.c_str(), "l" );
+    to_delete_inWWregion.push_back(h1_final_state_absCosThetaJetstar_combined);
+  }
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion->SetLineColor(4);
+  h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion->SetFillColor(4);
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion->SetLineColor(2);
+  h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion->SetFillColor(2);
+  h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion->Add(h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion);
+  h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion->Add(h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion);
+  h1_absCosThetaJetstar_combined_leg_signals_inWWregion->AddEntry( h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion, "WW", "l" );
+  h1_absCosThetaJetstar_combined_leg_signals_inWWregion->AddEntry( h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion, "ZZ", "l" );
+  
+  h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion->Draw("hist");
+  h1_absCosThetaJetstar_combined_stack_inWWregion->Draw("hist pfc plc same");
+  h1_absCosThetaJetstar_combined_stack_inWWregion->GetYaxis()->SetMaxDigits(3);
+  h1_absCosThetaJetstar_combined_leg_bkgs_inWWregion->Draw();
+  h1_absCosThetaJetstar_combined_leg_signals_inWWregion->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion->Print( ( this->getOutputDirectory() + "/absCosThetaJetstar_combined_WWregion_stackedbkg.pdf").c_str() );
+  delete h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion;
+  delete h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion;
+  for (auto & deletable: to_delete_inWWregion) { delete deletable; }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

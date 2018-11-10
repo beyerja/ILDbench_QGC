@@ -9,6 +9,7 @@ namespace VarComb {
   
   
   template<class ValueType> function<ValueType (ValueType, ValueType)> getPlusLambda();
+  template<class ValueType> function<ValueType (ValueType, ValueType)> getMinusLambda();
   template<class ValueType> function<ValueType (ValueType, ValueType)> getMeanLambda();
 }
 

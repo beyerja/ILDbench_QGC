@@ -52,7 +52,7 @@ void Analyzer::findAllFinalStates( TTree *info_chain ) {
       - Then makes RDataFrame count Nevents for each combination
   */
   // TODO THIS WORKS BUT CREATES HUGE OVERHEAD (RDF IS VERY SLOW FOR SOME REASON)
-  // TODO 1. Work out why RDF does not multithread
+  // TODO 1. Work out why RDF does not multithread -> Pretty sure I found it.... DUE TO THREAD SAFETY BASICALLY IMPOSSIBLE WITHIN CLASS!
   // TODO 2. Do this function based entirely on RDF!
   
   if ( !m_final_state_Nevents.empty() ){
