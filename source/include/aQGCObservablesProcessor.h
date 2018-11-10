@@ -145,6 +145,7 @@ private:
   float m_VV_pT {};
   float m_VV_ET {};
   float m_recoil_m {};
+  float m_recoil_cosTheta {};
   
   float m_VV_V_absCosThetaStar {};
   

@@ -4,17 +4,18 @@
 
 void aQGCAnalyzer::performAnalysis(){
   // final cuts:
-  float V_m_min         = 50;
-  float V_m_max         = 110;
-  float V_pT_min        = 10;
-  float V_cosTheta_max  = 0.8;
+  // float V_m_min         = 50;
+  // float V_m_max         = 110;
+  // float V_pT_min        = 10;
+  // float V_cosTheta_max  = 0.8;
   
-  float VV_m_min        = 200;
-  float VV_m_max        = 400;
-  float VV_pT_min       = 10;
-  float VV_ET_min       = 10;
+  // float VV_m_min        = 200;
+  // float VV_m_max        = 400;
+  float VV_pT_min       = 40;
+  float VV_ET_min       = 150;
   
-  float m_recoil_min    = 100;
+  float m_recoil_min    = 200;
+  float recoil_cosTheta_max = 0.99;
   
   float y_34_min        = 0.0001;
   
@@ -22,21 +23,22 @@ void aQGCAnalyzer::performAnalysis(){
   float min_jetNparticles_min   = 2;
   float min_jetNcharged_min     = 3;
   
-  float leadEtrack_cosTheta_max = 2;
-  float leadEtrack_coneE_min    = 0.99;
+  float leadEtrack_cosTheta_max = 0.99;
+  float leadEtrack_coneE_min    = 2;
   
-  auto VMassCut                 = Cuts::getMinMaxCutLambda( V_m_min , V_m_max );
-  auto VpTCut                   = Cuts::getMinCutLambda( V_pT_min );
-  auto VAbsCosThetaCut          = Cuts::getMaxCutLambda( V_cosTheta_max );
-  auto VVMassCut                = Cuts::getMinMaxCutLambda( VV_m_min, VV_m_max );
+  // auto VMassCut                 = Cuts::getMinMaxCutLambda( V_m_min , V_m_max );
+  // auto VpTCut                   = Cuts::getMinCutLambda( V_pT_min );
+  // auto VAbsCosThetaCut          = Cuts::getMaxCutLambda( V_cosTheta_max );
+  // auto VVMassCut                = Cuts::getMinMaxCutLambda( VV_m_min, VV_m_max );
   auto VVpTCut                  = Cuts::getMinCutLambda( VV_pT_min );
   auto VVETCut                  = Cuts::getMinCutLambda( VV_ET_min );
   auto MRecoilCut               = Cuts::getMinCutLambda( m_recoil_min );
+  auto RecoilAbsCosThetaCut     = Cuts::getMinMaxCutLambda( -1.0*recoil_cosTheta_max , recoil_cosTheta_max );
   auto Y34Cut                   = Cuts::getMinCutLambda( y_34_min );
   auto JetECut                  = Cuts::getMinCutLambda( min_jetE_min );
   auto JetNParticlesCut         = Cuts::getMinCutLambda( min_jetNparticles_min );
   auto JetNChargedCut           = Cuts::getMinCutLambda( min_jetNcharged_min );
-  auto LeadETrackAbsCosThetaCut = Cuts::getMaxCutLambda( leadEtrack_cosTheta_max );
+  auto LeadETrackAbsCosThetaCut = Cuts::getMinMaxCutLambda( -1.0*leadEtrack_cosTheta_max , leadEtrack_cosTheta_max );
   auto LeadETrackConeECut       = Cuts::getMinCutLambda( leadEtrack_coneE_min );
   auto IsoLepsCut               = Cuts::getBoolCutLambda( false );
   
@@ -77,14 +79,16 @@ void aQGCAnalyzer::performAnalysis(){
   
   //----------------------------------------------------------------------------
   // Apply all selection cuts
-  auto rdf_data_after_cuts = rdf_with_process_weight.Filter( VMassCut, {"reco.V1_m"} )
-                                    .Filter( VMassCut, {"reco.V2_m"} )
-                                    .Filter( VAbsCosThetaCut, {"reco.V1_cosTheta"} )
-                                    .Filter( VAbsCosThetaCut, {"reco.V2_cosTheta"} )
-                                    .Filter( VVMassCut, {"reco.VV_m"} )
+  auto rdf_data_after_cuts = rdf_with_process_weight
+                                    // .Filter( VMassCut, {"reco.V1_m"} )
+                                    // .Filter( VMassCut, {"reco.V2_m"} )
+                                    // .Filter( VAbsCosThetaCut, {"reco.V1_cosTheta"} )
+                                    // .Filter( VAbsCosThetaCut, {"reco.V2_cosTheta"} )
+                                    // .Filter( VVMassCut, {"reco.VV_m"} )
                                     .Filter( VVpTCut, {"reco.VV_pT"} )
                                     .Filter( VVETCut, {"reco.VV_ET"} )
                                     .Filter( MRecoilCut, {"reco.m_recoil"} )
+                                    .Filter( RecoilAbsCosThetaCut, {"reco.cosTheta_recoil"} )
                                     .Filter( Y34Cut, {"reco.y_34"} )
                                     .Filter( JetECut, {"reco.min_jetE"} )
                                     .Filter( JetNParticlesCut, {"reco.min_jetNparticles"} )
@@ -151,6 +155,14 @@ void aQGCAnalyzer::performAnalysis(){
 
   //----------------------------------------------------------------------------
   // Histograms after cuts
+  auto h1_VmMean_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo1D({"h1_VmMean_withcuts_WWsignal", "w/ cuts; m_{jj,1}+m_{jj,2}/2 [GeV]; Events", 70, 50, 120}, "recoVmMean", "process_weight");
+  auto h1_VmMean_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo1D({"h1_VmMean_withcuts_ZZsignal", "w/ cuts; m_{jj,1}+m_{jj,2}/2 [GeV]; Events", 70, 50, 120}, "recoVmMean", "process_weight");
+  auto h1_VmMean_withcuts_bkg       = rdf_bkg_with_cuts.Histo1D({"h1_VmMean_withcuts_bkg", "w/ cuts; m_{jj,1}+m_{jj,2}/2 [GeV]; Events", 70, 50, 120}, "recoVmMean", "process_weight");
+  
+  auto h2_Vm_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo2D({"h2_Vm_withcuts_WWsignal", "w/ cuts ; m_{jj,1} [GeV]; m_{jj,2} [GeV]; Events", 35, 50, 120, 35, 50, 120}, "reco.V1_m", "reco.V2_m", "process_weight");
+  auto h2_Vm_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo2D({"h2_Vm_withcuts_ZZsignal", "w/ cuts ; m_{jj,1} [GeV]; m_{jj,2} [GeV]; Events", 35, 50, 120, 35, 50, 120}, "reco.V1_m", "reco.V2_m", "process_weight");
+  auto h2_Vm_withcuts_bkg       = rdf_bkg_with_cuts.Histo2D({"h2_Vm_withcuts_bkg", "w/ cuts ; m_{jj,1} [GeV]; m_{jj,2} [GeV]; Events", 35, 50, 120, 35, 50, 120}, "reco.V1_m", "reco.V2_m", "process_weight");
+  
   auto h1_VV_m_withcuts           = rdf_data_after_cuts.Histo1D({"h1_VV_m", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
   auto h1_VV_m_withcuts_WWsignal  = rdf_WWsignal_with_cuts.Histo1D({"h1_VV_m_WWsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
   auto h1_VV_m_withcuts_ZZsignal  = rdf_ZZsignal_with_cuts.Histo1D({"h1_VV_m_ZZsignal", "Di-boson mass after cuts; m_{VV}; Events", 30, 150, 450}, "reco.VV_m", "process_weight");
@@ -368,6 +380,50 @@ void aQGCAnalyzer::performAnalysis(){
   delete h1_absCosThetaJetstar_combined_withcuts_ZZsignal;
   for (auto & deletable: to_delete) { delete deletable; }
   
+  
+  unique_ptr<TCanvas> canvas_VmMean (new TCanvas("VmMean", "", 0, 0, 700, 600));
+  canvas_VmMean->SetTopMargin(0.11);
+  canvas_VmMean->SetRightMargin(0.24);
+  unique_ptr<THStack> VmMean_stack (new THStack("VmMean", "; m_{jj,1}+m_{jj,2}/2 [GeV]; Events"));
+  unique_ptr<TLegend> VmMean_leg (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  VmMean_leg->SetHeader("w/ cuts");
+  h1_VmMean_withcuts_WWsignal->SetLineColor(4);
+  h1_VmMean_withcuts_ZZsignal->SetLineColor(2);
+  VmMean_stack->Add(h1_VmMean_withcuts_WWsignal.GetPtr());
+  VmMean_stack->Add(h1_VmMean_withcuts_ZZsignal.GetPtr());
+  VmMean_stack->Add(h1_VmMean_withcuts_bkg.GetPtr());
+  VmMean_leg->AddEntry( h1_VmMean_withcuts_WWsignal.GetPtr(), "WW", "l" );
+  VmMean_leg->AddEntry( h1_VmMean_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
+  VmMean_leg->AddEntry( h1_VmMean_withcuts_bkg.GetPtr(), "bkg", "l" );
+  VmMean_stack->Draw("hist nostack");
+  VmMean_stack->GetYaxis()->SetMaxDigits(3);
+  VmMean_leg->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_VmMean->Print( ( this->getOutputDirectory() + "/VmMean.pdf").c_str() );
+
+
+
+  unique_ptr<TCanvas> canvas_Vm2D (new TCanvas("Vm2D", "", 0, 0, 700, 600));
+  canvas_Vm2D->SetRightMargin(0.24);
+  unique_ptr<TLegend> Vm2D_leg (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
+  h2_Vm_withcuts_WWsignal->SetLineColor(4);
+  h2_Vm_withcuts_ZZsignal->SetLineColor(2);
+  Vm2D_leg->AddEntry( h2_Vm_withcuts_WWsignal.GetPtr(), "WW", "l" );
+  Vm2D_leg->AddEntry( h2_Vm_withcuts_ZZsignal.GetPtr(), "ZZ", "l" );
+  Vm2D_leg->AddEntry( h2_Vm_withcuts_bkg.GetPtr(), "bkg", "l" );
+  h2_Vm_withcuts_bkg->Draw("box same");
+  h2_Vm_withcuts_WWsignal->Draw("box same");
+  h2_Vm_withcuts_ZZsignal->Draw("box same");
+  h2_Vm_withcuts_bkg->GetYaxis()->SetMaxDigits(3);
+  Vm2D_leg->Draw();
+  gPad->Modified();
+  gPad->Update();
+  canvas_Vm2D->Print( ( this->getOutputDirectory() + "/Vm2D.pdf").c_str() );
+
+
+
+
   
   
   

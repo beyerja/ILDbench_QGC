@@ -23,6 +23,7 @@ void aQGCObservablesProcessor::setObservablesBranches( TTree* tree ){
   tree->Branch( "VV_pT",  &m_VV_pT, "VV_pT/F");
   tree->Branch( "VV_ET",   &m_VV_ET,    "VV_ET/F" );
   tree->Branch( "m_recoil", &m_recoil_m,  "m_recoil/F" );
+  tree->Branch( "cosTheta_recoil", &m_recoil_cosTheta,  "cosTheta_recoil/F" );
   
   // Observables in boosted combined VV frame
   tree->Branch( "VV_V_absCosThetaStar",  &m_VV_V_absCosThetaStar, "VV_V_absCosThetaStar/F");

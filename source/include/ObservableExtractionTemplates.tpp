@@ -59,6 +59,7 @@ void aQGCObservablesProcessor::findVectorBosonObservables( VectorBosonPairFinder
   TLorentzVector collision_system_tlv ( m_com_E*sin(0.014/2.0), 0, 0, m_com_E );
   TLorentzVector recoil_tlv  = collision_system_tlv - VV_tlv;
   m_recoil_m  = recoil_tlv.M();
+  m_recoil_cosTheta = recoil_tlv.CosTheta();
 }
 
 //-------------------------------------------------------------------------------------------------
