@@ -12,6 +12,8 @@ class ThetaMPlotter : public Plotter {
 		add_new_TH2D("m_theta_genlevel", new TH2D("m_theta_genlevel", "generator level ; m_{jj} [GeV];  #theta_{V}", 60, 30, 150, 32, 0, 3.2) );
 		add_new_TH2D("m_theta_nocuts", new TH2D("m_theta_nocuts", "w/o cuts ; m_{jj} [GeV];  #theta_{V}", 60, 30, 150, 32, 0, 3.2) );
 		add_new_TH2D("m_theta", new TH2D("m_theta", "w/ cuts; m_{jj} [GeV];  #theta_{V}", 60, 30, 150, 32, 0, 3.2) );
+		add_new_TH2D("m_theta_WW_peak", new TH2D("m_theta_WW_peak", "w/ cuts; m_{jj} [GeV];  #theta_{V}", 24, 65, 89, 10, 0, 3.2) );
+		add_new_TH2D("m_theta_ZZ_peak", new TH2D("m_theta_ZZ_peak", "w/ cuts; m_{jj} [GeV];  #theta_{V}", 16, 89, 105, 10, 0, 3.2) );
 		add_new_TH2D("m_reco_theta_gen", new TH2D("m_reco_theta_gen", "w/ cuts; m_{jj,reco} [GeV];  #theta_{V,gen}", 60, 30, 150, 32, 0, 3.2) );
 	
 		add_new_TH1D("theta_genlevel", new TH1D("theta_genlevel", "generator level (m not in [65,105]GeV); #theta_{V}; Events", 32, 0, 3.2) );
@@ -39,6 +41,9 @@ class ThetaMPlotter : public Plotter {
 					get_TH1D("theta_gen_mrecocut")->Fill(true_pair1_theta, weight);
 					get_TH2D("m_reco_theta_gen")->Fill(pair1_mass, true_pair1_theta, weight);
 				}
+			} else if ( pass_selection == 1 ) {
+				get_TH2D("m_theta_WW_peak")->Fill(pair1_mass, pair1_theta, weight);
+				get_TH2D("m_theta_ZZ_peak")->Fill(pair1_mass, pair1_theta, weight);
 			}
 
 			if ( ( (pair2_mass < 65) || (pair2_mass > 105) ) ) { // && ( p2 > 100) ) {
@@ -52,6 +57,9 @@ class ThetaMPlotter : public Plotter {
 					get_TH1D("theta_gen_mrecocut")->Fill(true_pair2_theta, weight);
 					get_TH2D("m_reco_theta_gen")->Fill(pair2_mass, true_pair2_theta, weight);
 				}
+			} else if ( pass_selection == 1 ) {
+				get_TH2D("m_theta_WW_peak")->Fill(pair1_mass, pair1_theta, weight);
+				get_TH2D("m_theta_ZZ_peak")->Fill(pair1_mass, pair1_theta, weight);
 			}
 
 
@@ -70,12 +78,31 @@ class ThetaMPlotter : public Plotter {
 			string plot_name_h2 = get_output_directory() + "/" + h2_plot_name[l] + ".pdf";
 			canvas_h2->Print(plot_name_h2.c_str());
 			canvas_h2->Close(); // Avoid memory leaks
+			delete canvas_h2;
 	
 			TCanvas *canvas_h1 = new TCanvas("can_h1", "", 0, 0, 800, 800);
 			get_TH1D(h1_plot_name[l].c_str())->Draw("hist e");
 			string plot_name_h1 = get_output_directory() + "/" + h1_plot_name[l] + ".pdf";
 			canvas_h1->Print(plot_name_h1.c_str());
 			canvas_h1->Close();
+			delete canvas_h1;
 		}
+
+
+		TCanvas *canvas_WW_peak_h2 = new TCanvas("can_h2_WW_peak", "", 0, 0, 800, 800);
+		get_TH2D("m_theta_WW_peak")->Draw("colz");
+		canvas_WW_peak_h2->SetRightMargin(0.22); // Adjust right margin so that color scheme is shown fully
+		string plot_name_WW_peak_h2 = get_output_directory() + "/m_theta_WW_peak.pdf";
+		canvas_WW_peak_h2->Print(plot_name_WW_peak_h2.c_str());
+		canvas_WW_peak_h2->Close(); // Avoid memory leaks
+		delete canvas_WW_peak_h2;
+
+		TCanvas *canvas_ZZ_peak_h2 = new TCanvas("can_h2_ZZ_peak", "", 0, 0, 800, 800);
+		get_TH2D("m_theta_ZZ_peak")->Draw("colz");
+		canvas_ZZ_peak_h2->SetRightMargin(0.22); // Adjust right margin so that color scheme is shown fully
+		string plot_name_ZZ_peak_h2 = get_output_directory() + "/m_theta_ZZ_peak.pdf";
+		canvas_ZZ_peak_h2->Print(plot_name_ZZ_peak_h2.c_str());
+		canvas_ZZ_peak_h2->Close(); // Avoid memory leaks
+		delete canvas_ZZ_peak_h2;
 	};
 };

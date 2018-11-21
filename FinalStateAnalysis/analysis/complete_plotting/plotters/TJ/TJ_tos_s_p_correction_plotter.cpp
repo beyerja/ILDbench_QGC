@@ -4,6 +4,9 @@ class TJSeenTrueOfSeenPCorrectionPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_s_tos_correction");	
+		set_1D_array_reading( true );
+		set_2D_array_reading( true );
+
 	}
 
 	void define_plots(){

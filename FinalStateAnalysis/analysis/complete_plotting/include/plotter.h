@@ -230,7 +230,7 @@ class Plotter {
 	bool need_2D_arrays = false;
 
 	void set_1D_array_reading( bool need ) { need_1D_arrays = need; }
-	void set_2D_array_reading( bool need ) { need_1D_arrays = need; }
+	void set_2D_array_reading( bool need ) { need_2D_arrays = need; }
 
 	/* --------------------------------------------------------*/
 	// All variables that are read out of the tree

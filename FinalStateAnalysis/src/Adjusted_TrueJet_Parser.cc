@@ -303,7 +303,7 @@ int Adjusted_TrueJet_Parser::final_cn( int ijet ) {
    LCObjectVec fcnvec = relfcn->getRelatedToObjects( jets->at(ijet) );
    int fcn ;
    if (fcnvec.size() > 0 ) {
-     fcn=fcnvec[0]->ext<IcnIndex>();
+     fcn=fcnvec[0]->ext<FcnIndex>();
    } else {
      fcn = -1 ;
    }

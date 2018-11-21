@@ -4,6 +4,7 @@ class TJJetMassInvestigationPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_seen_mass_investigation");	
+		set_1D_array_reading( true );
 	}
 
 	void define_plots(){

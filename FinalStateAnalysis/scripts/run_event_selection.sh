@@ -17,7 +17,9 @@ cd ${SELECTOR_DIR}
 
 for rootfile in ${IN_DIR}/*.root; do
 	echo "Running selection on file: "${rootfile}
-	 root -l -b -q 'eventSelector.C("'${rootfile}'", "'${OUT_DIR}'" )'
+	root -l -b -q 'eventSelector.C("'${rootfile}'", "'${OUT_DIR}'" )' &
 done
+
+wait
 
 echo ""

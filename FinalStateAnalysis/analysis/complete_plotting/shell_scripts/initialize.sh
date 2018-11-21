@@ -8,8 +8,10 @@ luminosity="1000"
 e_beam_polarization="-0.8"
 p_beam_polarization="0.3"
 
-input_directory="/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/rootfiles_after_selection"
-output_directory="/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/analysis/complete_plotting/output"
+input_directory="/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/backup_19_05_output/rootfiles_after_selection"
+##input_directory="/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/rootfiles_after_selection"
+output_directory="/afs/desy.de/group/flc/pool/beyerjac/backup/19_05_sample_results/output"
+#output_directory="/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/analysis/complete_plotting/output"
 tree_name="selected_datatrain"
 db_path="/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/scripts/event_file_dictionary.db"
 

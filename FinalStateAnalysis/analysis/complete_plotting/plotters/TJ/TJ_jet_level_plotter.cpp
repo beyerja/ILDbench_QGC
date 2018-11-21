@@ -228,10 +228,14 @@ class TJJetLevelsPlotter : public Plotter {
 				profile_s_t->SetMarkerSize(0.1);
 				legend_profile_s_t->AddEntry(profile_s_t, particle_name.c_str(), "l"); 
 				profile_s_t->Draw("same");
+  				profile_s_t->GetYaxis()->SetTitleOffset(1.38);
 
 			}
 
 			canvas_profile_s_t->cd();
+			canvas_profile_s_t->SetLeftMargin(0.19);
+			canvas_profile_s_t->SetFrameBorderMode(0);
+			gPad->Modified();
 			gPad->Update();
 			double y_max = gPad->GetFrame()->GetY2();
 			if ( y_max > 150 ) { y_max = 150; }

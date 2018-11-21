@@ -3,7 +3,7 @@
 		<processor name="MyAdd4MomCovMatrixCharged"/>
 		<processor name="MyThrustReconstruction"/>
  		<processor name="MyTrueJet"/> 
-		<processor name="MyIsolatedLeptonTaggingProcessor"/>	
+<!--		<processor name="MyIsolatedLeptonTaggingProcessor"/>	-->
 		<processor name="MyOverlayRemovalFastJetProcessor"/>
 		<processor name="MyFastJetProcessor"/>
 		<processor name="MyVBSProcessor"/>

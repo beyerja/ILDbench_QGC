@@ -9,12 +9,32 @@ void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {
   // afterwards write to output info.
   streamlog_out(DEBUG) << "In TJGetInitialCNRecoMasses: Got " << nicn() << " total icns." << std::endl;
   for (int i=0; i<nicn(); i++) {
+
+
+	// Test if icn shows jet to be quark-like
+	bool quark_like = false;
+
     int initial_cn_parent_pdg = pdg_icn_parent(i);
-    if ( initial_cn_parent_pdg == 0 || initial_cn_parent_pdg > 8 ) { continue; }
+    if ( abs(initial_cn_parent_pdg) > 0 && abs(initial_cn_parent_pdg) <= 8 ) { 
+		quark_like = true;
+	} else if ( abs(initial_cn_parent_pdg) > 22 ) {
+		// TJ could have identified it as coming from a Vector Boson (e.g. Z)
+	    const IntVec& _pdg_icn_comps = pdg_icn_comps(i);
+		for ( auto & icn_comp_pdg : _pdg_icn_comps ) {
+			if ( abs(icn_comp_pdg) == 0 || abs(icn_comp_pdg) > 8 ) {
+				quark_like = false;
+				break;
+			}
+			quark_like = true;
+		}
+	}
+
+	if ( ! quark_like ) { continue; }
+
+
     streamlog_out(DEBUG) << "In TJGetInitialCNRecoMasses: Got icn with parent PDG " << initial_cn_parent_pdg << std::endl;
 
     const IntVec& jets_to_icn = jets_of_initial_cn(i);
-
     TLorentzVector icn_reco_tlv = TLorentzVector( 0, 0, 0, 0 );
     for (int j=0; j<jets_to_icn.size(); j++) {
         int jet_i = jets_to_icn[j];

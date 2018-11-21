@@ -73,10 +73,16 @@ class MjjMjjPlotter : public Plotter {
 			draw_mass_line("W", "DBD", "y");
 			draw_mass_line("Z", "DBD", "y");
 
+			canvas_h1->SetLeftMargin(0.19);
+			canvas_h1->SetFrameBorderMode(0);
+  			h1_WW->GetYaxis()->SetTitleOffset(1.38);
+			gPad->Modified();
+			gPad->Update();
+
 			string plot_name_h1 = get_output_directory() + "/m" + level_names[i] + ".pdf";
 			canvas_h1->Print(plot_name_h1.c_str());
 			canvas_h1->Close();
-
+			delete canvas_h1;
 
 			TH2D* h2_WW = get_TH2D("m_m_WW" + level_names[i]);	
 			TH2D* h2_ZZ = get_TH2D("m_m_ZZ" + level_names[i]);
@@ -95,9 +101,16 @@ class MjjMjjPlotter : public Plotter {
 			draw_mass_line("W", "DBD", "y");
 			draw_mass_line("Z", "DBD", "y");
 
+			canvas_h2->SetLeftMargin(0.19);
+			canvas_h2->SetFrameBorderMode(0);
+  			h2_WW->GetYaxis()->SetTitleOffset(1.38);
+			gPad->Modified();
+			gPad->Update();
+
 			string plot_name_h2 = get_output_directory() + "/m_m" + level_names[i] + ".pdf";
 			canvas_h2->Print(plot_name_h2.c_str());
 			canvas_h2->Close();
+			delete canvas_h2;
 		}
 	};
 };

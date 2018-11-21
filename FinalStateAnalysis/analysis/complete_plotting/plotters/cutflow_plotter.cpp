@@ -89,26 +89,28 @@ class CutflowPlotter : public Plotter {
 										"y_34", "miss_mass", "E_T_vis", "p_T_vis", "cosTheta_miss", "cosTheta_EmaxTrack", 
 										"E_10cone_EmaxTrack" };
 
-		TCanvas* c1 = new TCanvas("c_cutflow", "", 0, 0, 900, 950);
+		TCanvas* c1 = new TCanvas("c_cutflow", "", 0, 0, 1400, 1100);
 
 		get_TH1D("cutflow")->SetMinimum(0);
 
 		TAxis* x_axis = get_TH1D("cutflow")->GetXaxis();
 		for (int i = 0; i<cut_labels.size(); i++) {
 			x_axis->SetBinLabel(x_axis->FindBin(i), cut_labels[i].c_str());
-			x_axis->ChangeLabel(x_axis->FindBin(i), 0.8);
 		}
-		x_axis->SetLabelOffset(0.004);
-		x_axis->SetLabelSize(0.03);
+		x_axis->SetLabelOffset(0.005);
+		x_axis->SetLabelSize(0.04);
+		get_TH1D("cutflow")->GetYaxis()->SetTitleOffset(1.3);
 
+		get_TH1D("cutflow")->SetTitle("");
 		get_TH1D("cutflow")->Draw("hist");
 
 		get_TH1D("cutflow_WW")->SetLineColor(4);	
 		get_TH1D("cutflow_ZZ")->SetLineColor(2);	
 
 
-		TLegend* legend = new TLegend(0.7, 0.6, 0.9, 0.9);
-		legend->AddEntry(get_TH1D("cutflow"), "total", "l"); 
+		TLegend* legend = new TLegend(0.6, 0.6, 0.8, 0.9);
+		legend->SetHeader("Cutflow"); 
+		legend->AddEntry(get_TH1D("cutflow"), "WW+ZZ", "l"); 
 		legend->AddEntry(get_TH1D("cutflow_WW"), "WW", "l"); 
 		legend->AddEntry(get_TH1D("cutflow_ZZ"), "ZZ", "l"); 
 		legend->Draw();
@@ -117,7 +119,8 @@ class CutflowPlotter : public Plotter {
 		get_TH1D("cutflow_ZZ")->Draw("hist same");
 
 		c1->SetBottomMargin(0.111);
-		c1->SetRightMargin(0.158);
+		c1->SetRightMargin(0.17);
+		c1->SetLeftMargin(0.2);
 
 		c1->Print((get_output_directory() + "/cutflow.pdf").c_str());
 	};

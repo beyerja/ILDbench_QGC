@@ -6,6 +6,9 @@ class TJPhotonsInJetsPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_photons_in_jets");	
+		set_1D_array_reading( true );
+		set_2D_array_reading( true );
+
 	}
 
 	vector<string> particle_types = {"all_q", "udsc", "b"};

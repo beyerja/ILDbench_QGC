@@ -6,6 +6,9 @@ class TJLeptonsInJetsPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_leptons_in_jets");	
+		set_1D_array_reading( true );
+		set_2D_array_reading( true );
+
 	}
 
 	//TODO Redistribute lowE intervals -> Extra vectors

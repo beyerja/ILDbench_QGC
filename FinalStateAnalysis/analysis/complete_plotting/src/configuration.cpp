@@ -43,11 +43,11 @@ void set_plotters(vector<Plotter*> &plotters) {
 	//plotters.push_back( new RecoMjjVSQuarkPDGPlotter );
 	//plotters.push_back( new IndividualJetsPlotter );
 	//plotters.push_back( new CutflowPlotter );
-	plotters.push_back( new TJJetLevelsPlotter );
+	//plotters.push_back( new TJJetLevelsPlotter );
 	//plotters.push_back( new TJJetMassInvestigationPlotter );
 	//plotters.push_back( new TJLeptonsInJetsPlotter );
 	//plotters.push_back( new TJChargedHadronsInJetsPlotter );
-	//plotters.push_back( new TJNeutralHadronsInJetsPlotter );
+	plotters.push_back( new TJNeutralHadronsInJetsPlotter );
 	//plotters.push_back( new TJPhotonsInJetsPlotter );
 	//plotters.push_back( new TJNParticlesPlotter );
 	//plotters.push_back( new TJSeenTrueOfSeenECorrectionPlotter );
@@ -58,7 +58,7 @@ void set_plotters(vector<Plotter*> &plotters) {
 	//plotters.push_back( new TJQuarkJetsPlusNeutrinosPlotter );
 	//plotters.push_back( new TJTotalEPlotter );
 	//plotters.push_back( new TJObservToICNsPlotter );
-	plotters.push_back( new TJJetEnergyResolutionPlotter );
+	//plotters.push_back( new TJJetEnergyResolutionPlotter );
 	//plotters.push_back( new TJObservToICNsOnlyUDSPlotter );
 	//plotters.push_back( new TJObservToICNsOnlyUDSCPlotter );
 	/* ---------------------------------------------------------------------*/

@@ -6,6 +6,8 @@ class TJNeutralHadronsInJetsPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_neutral_hadrons_in_jets");	
+		set_1D_array_reading( true );
+		set_2D_array_reading( true );
 	}
 
 	vector<string> particle_types = {"all_q", "udsc", "b"};
@@ -31,30 +33,33 @@ class TJNeutralHadronsInJetsPlotter : public Plotter {
 
 	vector<int> nehad_E_classes = {0, 5, 10, 50, 100};
 
-	vector<string> levels = {"fe_tos", "tos_s", "t_tos"};
+	vector<string> levels = {"fe_tos", "tos_s", "t_tos", "t_s"};
 
 	vector<string> level1_descr = {
 		"final elementon", 
 		"detected particles true values",
-		"all particles true values"
+		"all particles true values",
+		"true"
 	};
 	vector<string> level2_descr = {
 		"detected particles true values", 
 		"detected particles reco values",
-		"detected particles true values"
+		"detected particles true values",
+		"reconstructed"
 	};
 
 	vector<string> level_titel = {
 		"final elementon reco",
 		"jet reconstruction",
-		"detector acceptance"
+		"detector acceptance",
+		"Generator to Detector level"
 	};
 
 	vector<string> observables = {"Ejet", "pjet"};
 
 	// Obervables indices of first and second level in different total levels	
-	vector<int> level1_index = { 0, 2, 1};
-	vector<int> level2_index = { 2, 3, 2};
+	vector<int> level1_index = { 0, 2, 1, 1};
+	vector<int> level2_index = { 2, 3, 2, 3};
 
 	vector<vector<float**>> level_i_observables = { 
 		{&TJ_jets_final_elementon_E, &TJ_jets_final_elementon_p},
@@ -106,6 +111,13 @@ class TJNeutralHadronsInJetsPlotter : public Plotter {
 								E_{" + level2_descr[ilevel] + "}^{jet} [GeV]").c_str(),
 								50, 0, 150) ); 
 
+
+				add_new_TProfile((	level +"_"+ obs +"_"+ type+ "_jets_total_E_leq" + Enehad_string ).c_str(),
+					new TProfile((	level +"_"+ obs +"_"+ type+ "_jets_total_E_leq" + Enehad_string ).c_str(),
+								(type + " " + level_titel[ilevel] + ", only jets with E_{nehad}<E_{max};\
+								E_{" + level1_descr[ilevel] + "}^{jet} [GeV]; \
+								E_{" + level2_descr[ilevel] + "}^{jet} [GeV]").c_str(),
+								50, 0, 150) ); 
 			}
 		  }
 		}
@@ -232,8 +244,42 @@ class TJNeutralHadronsInJetsPlotter : public Plotter {
 					}
 				}
 
-				
+				/* ------------------ */
 
+
+				/* ------------------ */
+				// Investigating total E in nehads 
+				float total_nehad_E_in_jet = 0;
+				for (int inehad=0; inehad<max_Nparticles; inehad++) {
+					if ( ! is_good_neutral_hadron( ijet, inehad) ) { continue; }
+					total_nehad_E_in_jet += TJ_MCNeHad_E[ijet][inehad];
+				}
+
+				for (int iEclass=0; iEclass<nehad_E_classes.size(); iEclass++) {
+					float Enehadmax = float(nehad_E_classes[iEclass]); 			
+					string Enehad_string = to_string(nehad_E_classes[iEclass]);
+					if ( total_nehad_E_in_jet > Enehadmax ) { continue; }
+
+					for (int iobs=0; iobs<observables.size(); iobs++) {
+						for (int ilevel=0; ilevel<levels.size(); ilevel++) {
+
+							get_TProfile( (	levels[ilevel] + "_" + observables[iobs] + 
+										"_all_q_jets_total_E_leq" + Enehad_string ).c_str() )
+							->Fill(
+								(*((level_i_observables[level1_index[ilevel]])[iobs]))[ijet],
+								(*((level_i_observables[level2_index[ilevel]])[iobs]))[ijet], 
+								weight );
+
+
+							get_TProfile( (	levels[ilevel] + "_" + observables[iobs] + 
+										"_" + type + "_jets_total_E_leq" + Enehad_string ).c_str() )
+							->Fill(
+								(*((level_i_observables[level1_index[ilevel]])[iobs]))[ijet],
+								(*((level_i_observables[level2_index[ilevel]])[iobs]))[ijet], 
+								weight );
+						}
+					}
+				}
 			}
 							
 
@@ -331,71 +377,149 @@ class TJNeutralHadronsInJetsPlotter : public Plotter {
 			  }
 
 
-			TCanvas* can = new TCanvas( ("can_" + type + "_EnehadMax").c_str(),
-										"", 0, 0, 600, 600);				
-			TPad* pad_up 	= new TPad( ("p1_" + type + "_EnehadMax").c_str(), 
-										"", 0.,0.45,1.,1.,0); 	
-			pad_up->Draw();
-
-			TPad* pad_down 	= new TPad( ("p2_" + type + "_EnehadMax").c_str(), 
-										"", 0.,0.,1.,0.5005,0); 	
-			pad_down->Draw();
-			pad_down->SetTopMargin(0);
-
-			THStack* profile_stack = new THStack(("can_" + type + "_EnehadMax").c_str(),
-								(type+" "+level_titel[ilevel]+", only jets with no nehads_{E>Emax};\
-								;E_{" + level2_descr[ilevel] + "}^{jet} [GeV]").c_str());
-
-			THStack* prjctn_stack = new THStack(("proj_can_EnehadMax_" + type).c_str(),
-										(";	E_{" + level1_descr[ilevel] + "}^{jet} [GeV]; \
-										Events").c_str());
-
-			TLegend* leg = new TLegend(0.25, 0.6, 0.45, 0.9);
-
-			for (int iEclass=0; iEclass<nehad_E_classes.size(); iEclass++) {		
-				string Enehad_string = to_string(nehad_E_classes[iEclass]);
-				
-				TProfile* profile = get_TProfile( 	(level +"_"+ obs +"_"+ type + "_jets_no_E_geq"
-													+ Enehad_string + "_MCnehads").c_str() );	
-				profile->SetLineColor(9100+iEclass);
-				profile->SetMarkerColor(9100+iEclass);
-				//profile->SetMarkerSize(0.1);
-				leg->AddEntry(profile, ("No MCnehad_{E>" + Enehad_string + "}").c_str(), "p");
-				profile_stack->Add(profile);
-
-				TH1D* entries_h1 = new TH1D((string(profile->GetName()) + "_pX").c_str(),
-					(string(" ;") + profile->GetXaxis()->GetTitle() + "; Events" ).c_str(),
-					profile->GetNbinsX(), profile->GetXaxis()->GetXmin(),
-					profile->GetXaxis()->GetXmax() );
-				for (int ibin=0; ibin<profile->GetNbinsX(); ibin++) {
-					entries_h1->SetBinContent(ibin+1, profile->GetBinEntries(ibin+1));
+			{
+				TCanvas* can = new TCanvas( ("can_" + type + "_EnehadMax").c_str(),
+											"", 0, 0, 600, 900);				
+				can->SetTopMargin(0.13);
+				TPad* pad_up 	= new TPad( ("p1_" + type + "_EnehadMax").c_str(), 
+											"", 0.,0.45,1.,1.,0); 	
+				pad_up->Draw();
+	
+				TPad* pad_down 	= new TPad( ("p2_" + type + "_EnehadMax").c_str(), 
+											"", 0.,0.,1.,0.5005,0); 	
+				pad_down->Draw();
+				pad_down->SetTopMargin(0);
+	
+				THStack* profile_stack = new THStack(("can_" + type + "_EnehadMax").c_str(),
+									(type+" "+level_titel[ilevel]+", only jets with no nehads_{E>Emax};\
+									;E_{" + level2_descr[ilevel] + "}^{jet} [GeV]").c_str());
+	
+				THStack* prjctn_stack = new THStack(("proj_can_EnehadMax_" + type).c_str(),
+											(";	E_{" + level1_descr[ilevel] + "}^{jet} [GeV]; \
+											Events").c_str());
+	
+				TLegend* leg = new TLegend(0.25, 0.6, 0.45, 0.9);
+	
+				for (int iEclass=0; iEclass<nehad_E_classes.size(); iEclass++) {		
+					string Enehad_string = to_string(nehad_E_classes[iEclass]);
+					
+					TProfile* profile = get_TProfile( 	(level +"_"+ obs +"_"+ type + "_jets_no_E_geq"
+														+ Enehad_string + "_MCnehads").c_str() );	
+					profile->SetLineColor(9100+iEclass);
+					profile->SetMarkerColor(9100+iEclass);
+					//profile->SetMarkerSize(0.1);
+					leg->AddEntry(profile, ("No MCnehad_{E>" + Enehad_string + "}").c_str(), "p");
+					profile_stack->Add(profile);
+	
+					TH1D* entries_h1 = new TH1D((string(profile->GetName()) + "_pX").c_str(),
+						(string(" ;") + profile->GetXaxis()->GetTitle() + "; Events" ).c_str(),
+						profile->GetNbinsX(), profile->GetXaxis()->GetXmin(),
+						profile->GetXaxis()->GetXmax() );
+					for (int ibin=0; ibin<profile->GetNbinsX(); ibin++) {
+						entries_h1->SetBinContent(ibin+1, profile->GetBinEntries(ibin+1));
+					}
+					entries_h1->SetLineColor(9100+iEclass);
+					entries_h1->SetMarkerColor(9100+iEclass);
+					entries_h1->SetMarkerSize(0.1);
+					prjctn_stack->Add(entries_h1);
+	
 				}
-				entries_h1->SetLineColor(9100+iEclass);
-				entries_h1->SetMarkerColor(9100+iEclass);
-				entries_h1->SetMarkerSize(0.1);
-				prjctn_stack->Add(entries_h1);
-
+	
+				pad_up->cd();
+				profile_stack->Draw("nostack");
+				gPad->GetFrame()->SetY1(0);
+				gPad->Update();
+				float axis_max = gPad->GetFrame()->GetY2();
+				if ( axis_max > 150 ) { axis_max = 150; }
+				TLine* profile_line_Emax = new TLine(0, 0, axis_max, axis_max);
+				profile_line_Emax->SetLineWidth(1); 
+				profile_line_Emax->Draw("same");
+				leg->Draw();
+	
+				pad_down->cd();
+				prjctn_stack->Draw("hist nostack");
+	
+				string plot_name_profile = output_dir + "/" + level +"/"+ obs +"_"+ type 
+													+ "_jets_varying_Emax_MCnehads.pdf";
+				can->Print(plot_name_profile.c_str());
+				can->Close();
+				delete profile_line_Emax;
+	
 			}
 
-			pad_up->cd();
-			profile_stack->Draw("nostack");
-			gPad->GetFrame()->SetY1(0);
-			gPad->Update();
-			float axis_max = gPad->GetFrame()->GetY2();
-			if ( axis_max > 150 ) { axis_max = 150; }
-			TLine* profile_line_Emax = new TLine(0, 0, axis_max, axis_max);
-			profile_line_Emax->SetLineWidth(1); 
-			profile_line_Emax->Draw("same");
-			leg->Draw();
 
-			pad_down->cd();
-			prjctn_stack->Draw("hist nostack");
 
-			string plot_name_profile = output_dir + "/" + level +"/"+ obs +"_"+ type 
-												+ "_jets_varying_Emax_MCnehads.pdf";
-			can->Print(plot_name_profile.c_str());
-			can->Close();
-			delete profile_line_Emax;
+			{
+				TCanvas* can = new TCanvas( ("can_" + type + "_totalEnehadMax").c_str(),
+											"", 0, 0, 600, 900);				
+				can->SetTopMargin(1.5);
+				TPad* pad_up 	= new TPad( ("p1_" + type + "_totalEnehadMax").c_str(), 
+											"", 0.,0.42,1.,1.,0); 	
+				pad_up->Draw();
+				pad_up->SetTopMargin(1.5);
+	
+				TPad* pad_down 	= new TPad( ("p2_" + type + "_totalEnehadMax").c_str(), 
+											"", 0.,0.,1.,0.4705,0); 	
+				pad_down->Draw();
+				pad_down->SetTopMargin(0);
+	
+				THStack* profile_stack = new THStack(("can_" + type + "_totalEnehadMax").c_str(),
+									("#splitline{" + type+"jets, "+level_titel[ilevel]+",}{ only jets with E_{nehad}=<E_{max}};\
+									;E_{" + level2_descr[ilevel] + "}^{jet} [GeV]").c_str());
+	
+				THStack* prjctn_stack = new THStack(("proj_can_totalEnehadMax_" + type).c_str(),
+											(";	E_{" + level1_descr[ilevel] + "}^{jet} [GeV]; \
+											Events").c_str());
+	
+				TLegend* leg = new TLegend(0.22, 0.55, 0.5, 0.9);
+	
+				for (int iEclass=0; iEclass<nehad_E_classes.size(); iEclass++) {		
+					string Enehad_string = to_string(nehad_E_classes[iEclass]);
+					
+					TProfile* profile = get_TProfile( 	(level +"_"+ obs +"_"+ type + "_jets_total_E_leq"
+														+ Enehad_string).c_str() );	
+					profile->SetLineColor(9100+iEclass);
+					profile->SetMarkerColor(9100+iEclass);
+					//profile->SetMarkerSize(0.1);
+					leg->AddEntry(profile, ("E_{nehad}=<" + Enehad_string).c_str(), "p");
+					profile_stack->Add(profile);
+	
+					TH1D* entries_h1 = new TH1D((string(profile->GetName()) + "_pX").c_str(),
+						(string(" ;") + profile->GetXaxis()->GetTitle() + "; Events" ).c_str(),
+						profile->GetNbinsX(), profile->GetXaxis()->GetXmin(),
+						profile->GetXaxis()->GetXmax() );
+					for (int ibin=0; ibin<profile->GetNbinsX(); ibin++) {
+						entries_h1->SetBinContent(ibin+1, profile->GetBinEntries(ibin+1));
+					}
+					entries_h1->SetLineColor(9100+iEclass);
+					entries_h1->SetMarkerColor(9100+iEclass);
+					entries_h1->SetMarkerSize(0.1);
+					prjctn_stack->Add(entries_h1);
+	
+				}
+	
+				pad_up->cd();
+				profile_stack->Draw("nostack");
+				gPad->GetFrame()->SetY1(0);
+				gPad->Update();
+				float axis_max = gPad->GetFrame()->GetY2();
+				if ( axis_max > 150 ) { axis_max = 150; }
+				TLine* profile_line_Emax = new TLine(0, 0, axis_max, axis_max);
+				profile_line_Emax->SetLineWidth(1); 
+				profile_line_Emax->Draw("same");
+				leg->Draw();
+	
+				pad_down->cd();
+				prjctn_stack->Draw("hist nostack");
+	
+				string plot_name_profile = output_dir + "/" + level +"/"+ obs +"_"+ type 
+													+ "_jets_varying_totalEmax_MCnehads.pdf";
+				can->Print(plot_name_profile.c_str());
+				can->Close();
+				delete profile_line_Emax;
+	
+			}
+
 
 		  }
 		}

@@ -6,6 +6,7 @@ class TJObservToICNsOnlyUDSCPlotter : public Plotter {
 
 	void set_plotter_settings() {
 		set_output_folder_name("TJ/TJ_observ_to_icns_udsc_only");
+		set_1D_array_reading( true );
 	}
 
 	void define_plots(){

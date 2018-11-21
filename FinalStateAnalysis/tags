@@ -1054,7 +1054,7 @@ level1_descr	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<int> level1_index = { 1, 0};$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJChargedHadronsInJetsPlotter	file:
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJLeptonsInJetsPlotter	file:
-level1_index	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
+level1_index	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1, 1};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 level1_index	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<int> level1_index = { 0, 2, 1};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 level2	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel level2;$/;"	m	struct:LevelStep	file:
 level2_descr	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<string> level2_descr = {$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
@@ -1065,7 +1065,7 @@ level2_descr	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp
 level2_index	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 1};$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 level2_index	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 3, 2};$/;"	m	class:TJChargedHadronsInJetsPlotter	file:
 level2_index	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 3, 2};$/;"	m	class:TJLeptonsInJetsPlotter	file:
-level2_index	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 3, 2};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
+level2_index	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 3, 2, 3};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 level2_index	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<int> level2_index = { 2, 3, 2};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 level_i_observables	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<vector<float**>> level_i_observables = { $/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 level_i_observables	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<vector<float**>> level_i_observables = { $/;"	m	class:TJChargedHadronsInJetsPlotter	file:
@@ -1080,7 +1080,7 @@ level_titel	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	
 levels	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<string> levels = {"tos_s", "t_tos"};$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 levels	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	vector<string> levels = {"fe_tos", "tos_s", "t_tos"};$/;"	m	class:TJChargedHadronsInJetsPlotter	file:
 levels	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> levels = {"fe_tos", "tos_s", "t_tos"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
-levels	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> levels = {"fe_tos", "tos_s", "t_tos"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
+levels	analysis/complete_plotting/plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp	/^	vector<string> levels = {"fe_tos", "tos_s", "t_tos", "t_s"};$/;"	m	class:TJNeutralHadronsInJetsPlotter	file:
 levels	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<string> levels = {"fe_tos", "tos_s", "t_tos"};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 logging	.ycm_extra_conf.py	/^import logging$/;"	i
 loop_all_events	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		void loop_all_events() {$/;"	f	class:ParameterPointCalculator
@@ -1330,7 +1330,7 @@ seen	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLeve
 seen_partics	include/Adjusted_TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:Adjusted_TrueJet_Parser
 seen_partics	include/TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:TrueJet_Parser
 set_1D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_1D_array_reading( bool need ) { need_1D_arrays = need; }$/;"	f	class:Plotter
-set_2D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_2D_array_reading( bool need ) { need_1D_arrays = need; }$/;"	f	class:Plotter
+set_2D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_2D_array_reading( bool need ) { need_2D_arrays = need; }$/;"	f	class:Plotter
 set_TH1D_result	analysis/parameter_optimization/include/result_class.h	/^		void set_TH1D_result ( TH1D* _TH1D_result ) {$/;"	f	class:ResultStorage
 set_TH2D_result	analysis/parameter_optimization/include/result_class.h	/^		void set_TH2D_result ( TH2D* _TH2D_result ) {$/;"	f	class:ResultStorage
 set_TProfile2D_result	analysis/parameter_optimization/include/result_class.h	/^		void set_TProfile2D_result ( TProfile2D* _TProfile2D_result ) {$/;"	f	class:ResultStorage

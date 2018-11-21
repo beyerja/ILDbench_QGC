@@ -38,32 +38,44 @@ using namespace marlin;
 
 std::vector<MCParticle*> JakobsVBSProcessor::checkMCFinalState(LCCollection* AllMC) {
 	std::vector<MCParticle*> FS_all;
-	int nMC = AllMC->getNumberOfElements();
-	for( int i = 0; i < nMC; i++ ){
-		MCParticle* MC = dynamic_cast< MCParticle* >( AllMC->getElementAt(i) );
-		FS_all.push_back(MC);
+	if ( nullptr != AllMC ) {
+		int nMC;
+	    try{
+			nMC = AllMC->getNumberOfElements();
+		} catch(...) {
+	           nMC = 0;
+		}
+		if ( nMC != 0 ){
+			for( int i = 0; i < nMC; i++ ){
+				MCParticle* MC = dynamic_cast< MCParticle* >( AllMC->getElementAt(i) );
+				FS_all.push_back(MC);
+			}
+		}
+	} else {
+		streamlog_out(WARNING) << "In checkMCFinalState: Collection does not exist!" << std::endl;
 	}
+
 	return(FS_all);
 }
 
 
 std::vector<ReconstructedParticle*> JakobsVBSProcessor::checkPOFinalState(LCCollection* AllPOs) {
-	std::vector<ReconstructedParticle*> FS;
-	int npo;
-    try{
-	   npo = AllPOs->getNumberOfElements();
-	} catch(...) {
-           npo = 0;
-	}
-	if ( npo != 0 ){
-	for( int i = 0; i < npo; i++ ){
-		ReconstructedParticle* po= dynamic_cast< ReconstructedParticle* >( AllPOs->getElementAt(i) );
-		FS.push_back(po);
-	}
+	std::vector<ReconstructedParticle*> FS {};
+	if ( nullptr != AllPOs ) {
+		int npo;
+	    try{
+		   npo = AllPOs->getNumberOfElements();
+		} catch(...) {
+	           npo = 0;
+		}
+		if ( npo != 0 ){
+			for( int i = 0; i < npo; i++ ){
+				ReconstructedParticle* po= dynamic_cast< ReconstructedParticle* >( AllPOs->getElementAt(i) );
+				FS.push_back(po);
+			}
+		}
+	} else {
+		streamlog_out(WARNING) << "In checkPOFinalState: Collection does not exist!" << std::endl;
 	}
 	return(FS);
 }
-
-
-
-
