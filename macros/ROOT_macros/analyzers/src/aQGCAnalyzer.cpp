@@ -20,8 +20,8 @@ void aQGCAnalyzer::performAnalysis(){
   float y_34_min        = 0.0001;
   
   float min_jetE_min            = 10;
-  float min_jetNparticles_min   = 2;
-  float min_jetNcharged_min     = 3;
+  float min_jetNparticles_min   = 3;
+  float min_jetNcharged_min     = 2;
   
   float leadEtrack_cosTheta_max = 0.99;
   float leadEtrack_coneE_min    = 2;
@@ -36,8 +36,8 @@ void aQGCAnalyzer::performAnalysis(){
   auto RecoilAbsCosThetaCut     = Cuts::getMinMaxCutLambda( float(-1.0*recoil_cosTheta_max) , recoil_cosTheta_max );
   auto Y34Cut                   = Cuts::getMinCutLambda( y_34_min );
   auto JetECut                  = Cuts::getMinCutLambda( min_jetE_min );
-  auto JetNParticlesCut         = Cuts::getMinCutLambda( min_jetNparticles_min );
-  auto JetNChargedCut           = Cuts::getMinCutLambda( min_jetNcharged_min );
+  auto JetNParticlesCut         = Cuts::getMinCutLambda( min_jetNparticles_min-1 );
+  auto JetNChargedCut           = Cuts::getMinCutLambda( min_jetNcharged_min-1 );
   auto LeadETrackAbsCosThetaCut = Cuts::getMinMaxCutLambda( float(-1.0*leadEtrack_cosTheta_max) , leadEtrack_cosTheta_max );
   auto LeadETrackConeECut       = Cuts::getMinCutLambda( leadEtrack_coneE_min );
   auto IsoLepsCut               = Cuts::getBoolCutLambda( false );
@@ -93,7 +93,7 @@ void aQGCAnalyzer::performAnalysis(){
                                     .Filter( VVpTCut, {"reco.VV_pT"} )
                                     .Filter( VVETCut, {"reco.VV_ET"} )
                                     .Filter( MRecoilCut, {"reco.m_recoil"} )
-                                    // .Filter( RecoilAbsCosThetaCut, {"reco.cosTheta_recoil"} )
+                                    .Filter( RecoilAbsCosThetaCut, {"reco.cosTheta_recoil"} )
                                     .Filter( Y34Cut, {"reco.y_34"} )
                                     .Filter( JetECut, {"reco.min_jetE"} )
                                     .Filter( JetNParticlesCut, {"reco.min_jetNparticles"} )
@@ -154,11 +154,20 @@ void aQGCAnalyzer::performAnalysis(){
   auto count_WWsignal_inZZregion_with_cuts = rdf_WWsignal_inZZregion_with_cuts.Sum("process_weight");
   
   vector<pair<string, pair<ResultSumDouble, ResultSumDouble>>> bkg_final_state_counts {};
+  
+  vector<pair<string, ResultSumDouble>> bkg_final_state_inZZregion_with_cuts_counts {};
+  vector<pair<string, ResultSumDouble>> bkg_final_state_inWWregion_with_cuts_counts {};
   for ( auto & final_state: this->getFinalStatesSet() ) {
     auto FinalStateTest = Cuts::getStringTestLambda(final_state);
     auto final_state_count_with_cuts = rdf_bkg_with_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
     auto final_state_count_no_cuts = rdf_bkg_no_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
     bkg_final_state_counts.push_back( make_pair(final_state, make_pair(final_state_count_no_cuts, final_state_count_with_cuts)) );
+    
+    auto final_state_inZZregion_count_with_cuts = rdf_bkg_inZZregion_with_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
+    bkg_final_state_inZZregion_with_cuts_counts.push_back( make_pair(final_state, final_state_inZZregion_count_with_cuts) );
+    
+    auto final_state_inWWregion_count_with_cuts = rdf_bkg_inWWregion_with_cuts.Filter(FinalStateTest, {"process_name"}).Sum("process_weight");
+    bkg_final_state_inWWregion_with_cuts_counts.push_back( make_pair(final_state, final_state_inWWregion_count_with_cuts) );
   }
   
   //----------------------------------------------------------------------------
@@ -328,6 +337,18 @@ void aQGCAnalyzer::performAnalysis(){
           << *(final_state_count.second.first) << " | "
           << *(final_state_count.second.second) << " | "
           << *(final_state_count.second.second) / *(final_state_count.second.first) << "\n";
+  }
+  bkg_count_file << "\nIn ZZ region:\n";
+  bkg_count_file << "Final state: After cuts\n";
+  for ( auto & final_state_count: bkg_final_state_inZZregion_with_cuts_counts ){
+    bkg_count_file  << final_state_count.first << " : "
+                    << *(final_state_count.second) << "\n";
+  }
+  bkg_count_file << "\nIn ZZ region:\n";
+  bkg_count_file << "Final state: After cuts\n";
+  for ( auto & final_state_count: bkg_final_state_inWWregion_with_cuts_counts ){
+    bkg_count_file  << final_state_count.first << " : "
+                    << *(final_state_count.second) << "\n";
   }
   bkg_count_file.close();
 
@@ -579,8 +600,8 @@ void aQGCAnalyzer::performAnalysis(){
   unique_ptr<TCanvas> canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion (new TCanvas("h1_absCosThetaJetstar_combined_final_states_inZZregion", "", 0, 0, 700, 600));
   canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion->SetTopMargin(0.11);
   canvas_h1_absCosThetaJetstar_combined_final_states_inZZregion->SetRightMargin(0.24);
-  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inZZregion (new THStack("h1_absCosThetaJetstar_combined_signals_inZZregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
-  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inZZregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inZZregion (new THStack("h1_absCosThetaJetstar_combined_signals_inZZregion", "after cuts, ZZ region; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inZZregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inZZregion", "after cuts, ZZ region; |cos #theta*_{jet}|; 2*Events"));
   auto h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inZZregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   h1_absCosThetaJetstar_combined_withcuts_WWsignal_inZZregion->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal_inZZregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_WWsignal_inZZregion.GetPtr() );
@@ -642,8 +663,8 @@ void aQGCAnalyzer::performAnalysis(){
   unique_ptr<TCanvas> canvas_absCosThetaVstar_final_states_inWWregion (new TCanvas("absCosThetaVstar_final_states_inWWregion", "", 0, 0, 700, 600));
   canvas_absCosThetaVstar_final_states_inWWregion->SetTopMargin(0.11);
   canvas_absCosThetaVstar_final_states_inWWregion->SetRightMargin(0.24);
-  unique_ptr<THStack> absCosThetaVstar_stack_inWWregion (new THStack("absCosThetaVstar_inWWregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
-  unique_ptr<THStack> absCosThetaVstar_stack_wSignal_inWWregion (new THStack("absCosThetaVstarsignals_wSignal_inWWregion", "after cuts, ZZ region; |cos #theta*_{V}|; Events"));
+  unique_ptr<THStack> absCosThetaVstar_stack_inWWregion (new THStack("absCosThetaVstar_inWWregion", "after cuts, WW region; |cos #theta*_{V}|; Events"));
+  unique_ptr<THStack> absCosThetaVstar_stack_wSignal_inWWregion (new THStack("absCosThetaVstarsignals_wSignal_inWWregion", "after cuts, WW region; |cos #theta*_{V}|; Events"));
   unique_ptr<TLegend> absCosThetaVstar_leg_signals_inWWregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
   unique_ptr<TLegend> absCosThetaVstar_leg_bkgs_inWWregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
   absCosThetaVstar_leg_signals_inWWregion->SetHeader("Signals");
@@ -675,8 +696,8 @@ void aQGCAnalyzer::performAnalysis(){
   unique_ptr<TCanvas> canvas_VV_m_final_states_inWWregion (new TCanvas("VV_m_final_states_inWWregion", "", 0, 0, 700, 600));
   canvas_VV_m_final_states_inWWregion->SetTopMargin(0.11);
   canvas_VV_m_final_states_inWWregion->SetRightMargin(0.24);
-  unique_ptr<THStack> VV_m_stack_inWWregion (new THStack("VV_m_signals_inWWregion", "after cuts, ZZ region; m_{VV}; Events"));
-  unique_ptr<THStack> VV_m_stack_wSignal_inWWregion (new THStack("VV_m_signals_wSignal_inWWregion", "after cuts, ZZ region; m_{VV}; Events"));
+  unique_ptr<THStack> VV_m_stack_inWWregion (new THStack("VV_m_signals_inWWregion", "after cuts, WW region; m_{VV}; Events"));
+  unique_ptr<THStack> VV_m_stack_wSignal_inWWregion (new THStack("VV_m_signals_wSignal_inWWregion", "after cuts, WW region; m_{VV}; Events"));
   unique_ptr<TLegend> VV_m_leg_signals_inWWregion (new TLegend( 0.8, 0.76, 1.0, 0.9 ));
   unique_ptr<TLegend> VV_m_leg_bkgs_inWWregion (new TLegend( 0.8, 0.1, 1.0, 0.76 ));
   VV_m_leg_signals_inWWregion->SetHeader("Signals");
@@ -709,8 +730,8 @@ void aQGCAnalyzer::performAnalysis(){
   unique_ptr<TCanvas> canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion (new TCanvas("h1_absCosThetaJetstar_combined_final_states_inWWregion", "", 0, 0, 700, 600));
   canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion->SetTopMargin(0.11);
   canvas_h1_absCosThetaJetstar_combined_final_states_inWWregion->SetRightMargin(0.24);
-  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inWWregion (new THStack("h1_absCosThetaJetstar_combined_signals_inWWregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
-  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inWWregion", "after cuts; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_inWWregion (new THStack("h1_absCosThetaJetstar_combined_signals_inWWregion", "after cuts, WW region; |cos #theta*_{jet}|; 2*Events"));
+  unique_ptr<THStack> h1_absCosThetaJetstar_combined_stack_wSignal_inWWregion (new THStack("h1_absCosThetaJetstar_combined_wSignal_inWWregion", "after cuts, WW region; |cos #theta*_{jet}|; 2*Events"));
   auto h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   auto h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion = new TH1D("h1_absCosThetaJetstar_combined_withcuts_ZZsignal_inWWregion", "jet angle in V system after cuts, both V; |cos #theta*_{jet}|; 2*Events", 20, 0, 1 );
   h1_absCosThetaJetstar_combined_withcuts_WWsignal_inWWregion->Add( h1_absCosThetaJetstarV1_withcuts_WWsignal_inWWregion.GetPtr(), h1_absCosThetaJetstarV2_withcuts_WWsignal_inWWregion.GetPtr() );
