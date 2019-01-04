@@ -29,8 +29,10 @@ Directory for steering files for Marlin and WHIZARD.
   The ```steering_template.xml``` is used as template for all Marlin runs. To start a run, the marked lines in the template must be replaced.
 
 #### Files:
+- ```aQGC_steering_template.xml```: Template for Marlin runs for files produced with WHIZARD2.
 - ```ExampleProcessor.xml```: Simple example of running the processor that should work out-of-the-box. (Unless you're using new software, a different environment, quantum computers, magic, ...) 
 - ```steering_template.xml```: Template for Marlin runs of any process.
+- ```steering_template_with_vertexing_rerun.xml```: Same as ```steering_template.xml```, but reruns LCFIPlus vertexing.
 - (```tmp_...```: Dynamically generated and temporary directories used to start the Marlin runs. Should be remove automatically.)
 
 

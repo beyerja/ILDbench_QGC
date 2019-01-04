@@ -1,6 +1,3 @@
-
-# REMINDER TO MYSELF: READMES NEED TO BE UPDATED!!!
-
 ## ILDbench_QGC
 
 Anomalous quartic gauge coupling measurement
@@ -83,7 +80,7 @@ python3 SetSindarinSimulationFiles.py
   ./run_single_simulation.sh [complete_path_of_simulation_sindarin]
   ```
 
-Additional two steps are required to get event weights for aQGC points:
+Additional three steps are required to get event weights for aQGC points:
 3. Setting the Sindarin steering files.
 ```shell
 python3 SetSindarinRescanningFiles.py
@@ -97,6 +94,10 @@ python3 SetSindarinRescanningFiles.py
   ```shell
   ./run_single_rescan.sh [complete_path_of_rescan_sindarin]
   ```
+5. Converting the weights into ROOT format:
+   ```shell
+   python3 ConvertWeightsToTree.py
+   ```
   
 **Output**:
   - The simulation will create *.slcio* generator level event files in the directory of its respective steering file.
@@ -104,21 +105,37 @@ python3 SetSindarinRescanningFiles.py
 
 #### 2. Running the processor
 
-<!-- What needs to be here: (Not to detailed!) -->
-<!-- Refer to local README -->
-<!-- How do I run over all files? -->
-<!-- What is the output? -->
+Macros to run the Marlin processor for the analysis are contained in `macros/Marlin_macros`.
 
-<!-- TODO -->
+1. Make sure the environment (e.g. energy, software version, ...) is correctly set in `set_simulation_environment.sh`.
+
+2. To run the Marlin processor over the files from the production (DST files) run:
+  ```bash
+  ./run_all_signal_files.sh
+  ```
+  and 
+  ```bash
+  ./run_all_background_files.sh
+  ```
+  To run over the files produced with WHIZARD2 use:
+  ```bash
+  ./run_all_aQGC_files.sh
+  ```
+
 
 #### 3. Analysing the results
 
-<!-- TODO -->
+The macros to analyse the ROOT file ouput from the processor are in `macros/ROOT_macros`.
 
-
-<!-- If you want to provide a lot of details on your analysis, use the doc/Readme.md and point to it from this Readme.md file:
-
-More documentation available here in [doc/Readme.md](doc/Readme.md) ! -->
+1. Manipulate the analyzer of your choice in the `analyzer` subdirectory.
+2. Modify the `TestMacro.cpp` (`aQGCTestMacro.cpp`) so that the analyzer of your choice is executed.
+3. Run: 
+  ```bash
+  ./run_in_new_root.sh TestAnalyzer.cpp
+  ```
+  (`./run_in_new_root.sh aQGCTestMacro.cpp`)
+  
+(The one in brackets is used for the analysis of the files produced with WHIZARD2.)
 
 ### Acknowledgements
 
