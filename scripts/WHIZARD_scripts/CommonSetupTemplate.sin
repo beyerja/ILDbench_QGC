@@ -61,6 +61,12 @@
   alias all_nu    = all_nu_e:all_nu_l
   
   alias final_partons = all_q:all_nu
+  
+  ! The integration and simulation can neglect the quark masses in a 1st approx.
+  ! -> faster integration with flavour sums
+  ms = 0.0 GeV
+  mc = 0.0 GeV
+  mb = 0.0 GeV
 
   ! Make WHIZARD explicitly take care of final state polarizations
   polarized e1, e2 , e3, u, d, c, s, b, n1, n2, n3, E1, E2, E3, U, D, C, S, B, N1, N2, N3, Wp, Wm, Z, A
