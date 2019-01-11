@@ -28,4 +28,4 @@ rescan_file_name=$( basename "${rescan_file_path}"  )
 
 # Submit job to condor 
 cd ${standard_condor_directory}
-condor_submit ${standard_condor_submit} arguments="export PATH=${gcc_path}:\${PATH} \&\& cd ${rescan_file_dir} \&\& whizard ${rescan_file_name}"
+condor_submit ${standard_condor_submit} arguments='export PATH='${gcc_path}':\${PATH} \&\& cd '${rescan_file_dir}' \&\& whizard '${rescan_file_name}

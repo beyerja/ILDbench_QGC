@@ -28,4 +28,4 @@ sim_file_name=$( basename "${sim_file_path}"  )
 
 # Submit job to condor 
 cd ${standard_condor_directory}
-condor_submit ${multithread_condor_submit} arguments="export PATH=${gcc_path}:\${PATH} \&\& cd ${sim_file_dir} \&\& whizard ${sim_file_name}"
+condor_submit ${multithread_condor_submit} arguments='export PATH='${gcc_path}':\${PATH} \&\& cd '${sim_file_dir}' \&\& whizard '${sim_file_name}
