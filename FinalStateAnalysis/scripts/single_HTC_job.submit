@@ -3,7 +3,6 @@
 #
 ##########################################
 
-
 # Script that is supposed to be run
 Executable          = $ENV(PWD)/single_HTC_run.sh 
 
@@ -15,12 +14,13 @@ output              = BIRD_output/$(Cluster).$(Process).out
 error               = BIRD_output/$(Cluster).$(Process).err
 log                 = BIRD_output/$(Cluster).$(Process).log
 
-# Should files be transfered to remote machine? 
+# Should files be transferred to remote machine? 
 should_transfer_files   = NO
 
 # When should the user be notified? Options: Always / Complete / Error / Never
 Notification = Error
 
-
+# Request up to one day of computing time
++RequestRuntime = 86400
 
 Queue 1

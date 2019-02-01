@@ -260,42 +260,59 @@ ReconstructedParticleVec* Adjusted_TrueJet_Parser::getJets(){
     }
     return icns;
 }
-const IntVec&  Adjusted_TrueJet_Parser::final_siblings( int ijet ) {
-  intvec->clear();
-  IntVec* sibl=intvec;
+
+int Adjusted_TrueJet_Parser::type_icn_parent(int iicn){ 
+  if (initialcns->size()>iicn) if (initialcns->at(iicn)->getParticleIDs().size()>0) return initialcns->at(iicn)->getParticleIDs()[0]->getType();
+  streamlog_out(ERROR) << " ERROR In TrueJet::type_icn_parent : Asked for index out of range! Requested icn " << iicn << " but only " << initialcns->size() << " available!" << std::endl;
+  return 0; 
+}
+int Adjusted_TrueJet_Parser::type_fcn_parent(int ifcn){
+  if (finalcns->size()>ifcn)   if (finalcns->at(ifcn)->getParticleIDs().size()>0)   return finalcns->at(ifcn)->getParticleIDs()[0]->getType();
+  streamlog_out(ERROR) << " ERROR In TrueJet::type_fcn_parent : Asked for index out of range! Requested fcn " << ifcn << " but only " << finalcns->size() << " available!" << std::endl;
+  return 0; 
+}
+
+const IntVec  Adjusted_TrueJet_Parser::final_siblings( int ijet ) {
+  // intvec->clear();
+  IntVec sibl {};
+  if (jets->size() < ijet+1) {
+    streamlog_out(ERROR) << "In TrueJet_Parser::final_siblings : ijet out of scope!\n  Asked for ijet " << ijet << " but only " << jets->size() << " exist." << std::endl << std::endl;
+    return sibl;
+  }
+  
   LCObjectVec fcnvec = relfcn->getRelatedToObjects( jets->at(ijet) );
-  int nsibl=0;
   for ( unsigned kk=0 ; kk<fcnvec.size() ; kk++ ) {
     ReconstructedParticleVec jetvec= dynamic_cast<ReconstructedParticle*>(fcnvec[kk])->getParticles();
     for ( unsigned jj=0 ; jj<jetvec.size() ; jj++ ) {
       if ( jetvec[jj] != jets->at(ijet) ) {
         // sibling
         int jjet=jetvec[jj]->ext<JetIndex>();
-        sibl->push_back(jjet);
-        nsibl++;
+        sibl.push_back(jjet);
       }
     }
   }
-  return *sibl;
+  return sibl;
   //
 
 } 
-const IntVec& Adjusted_TrueJet_Parser::initial_siblings( int ijet ){
-  intvec->clear();
-  IntVec* sibl=intvec;
+const IntVec Adjusted_TrueJet_Parser::initial_siblings( int ijet ){
+  // intvec->clear();
+  IntVec sibl {};//intvec;
+  if (jets->size() < ijet+1) {
+    streamlog_out(ERROR) << "In TrueJet_Parser::initial_siblings : ijet out of scope!\n  Asked for ijet " << ijet << " but only " << jets->size() << " exist." << std::endl << std::endl;
+    return sibl;
+  }
   LCObjectVec icnvec = relicn->getRelatedToObjects( jets->at(ijet) );
-  int nsibl=0;
   for ( unsigned kk=0 ; kk<icnvec.size() ; kk++ ) {
     ReconstructedParticleVec jetvec= dynamic_cast<ReconstructedParticle*>(icnvec[kk])->getParticles();
     for ( unsigned jj=0 ; jj<jetvec.size() ; jj++ ) {
       if ( jetvec[jj] != jets->at(ijet) ) {
         int jjet=jetvec[jj]->ext<JetIndex>();
-        sibl->push_back(jjet);
-        nsibl++;
+        sibl.push_back(jjet);
       }
     }
   }
-  return *sibl;
+  return sibl;
   //
 
 } 
@@ -321,33 +338,31 @@ int Adjusted_TrueJet_Parser::initial_cn( int ijet ) {
    return icn;
 } 
 
-const IntVec&  Adjusted_TrueJet_Parser::jets_of_final_cn( int ifcn ) {
-  intvec->clear();
-  IntVec* jets_of_fcn=intvec;
+const IntVec Adjusted_TrueJet_Parser::jets_of_final_cn( int ifcn ) {
+  IntVec jets_of_fcn {};
   // way to find: jet-to-icn link icn->reco : jets, find notthis.
   //  index<->jet : LCExtension
   LCObjectVec jetvec = relfcn->getRelatedFromObjects(  finalcns->at(ifcn) );
     // ReconstructedParticleVec jetvec= dynamic_cast<ReconstructedParticle*>(fcnvec[ifcn])->getParticles();
   for ( unsigned kk=0 ; kk<jetvec.size() ; kk++ ) {
     int jjet=jetvec[kk]->ext<JetIndex>();
-    jets_of_fcn->push_back(jjet);
+    jets_of_fcn.push_back(jjet);
   }
-  return *jets_of_fcn;
+  return jets_of_fcn;
   //
 
 } 
-const IntVec&  Adjusted_TrueJet_Parser::jets_of_initial_cn( int iicn ) {
-  intvec->clear();
-  IntVec* jets_of_icn=intvec;
+const IntVec Adjusted_TrueJet_Parser::jets_of_initial_cn( int iicn ) {
+  IntVec jets_of_icn {};
   // way to find: jet-to-icn link icn->reco : jets, find notthis.
   //  index<->jet : LCExtension
   //LCObjectVec jetvec = relfcn->getRelatedFromObjects(  finalcns->at(ifcn) );
   ReconstructedParticleVec jetvec= dynamic_cast<ReconstructedParticle*>(initialcns->at(iicn))->getParticles();
   for ( unsigned kk=0 ; kk<jetvec.size() ; kk++ ) {
     int jjet=jetvec[kk]->ext<JetIndex>();
-    jets_of_icn->push_back(jjet);
+    jets_of_icn.push_back(jjet);
   }
-  return *jets_of_icn;
+  return jets_of_icn;
   //
 
 } 

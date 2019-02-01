@@ -214,7 +214,7 @@ DD4hep_INCLUDE_DIRS:PATH=/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/DD4hep
 GITCOMMAND:FILEPATH=/usr/bin/git
 
 //Path to a program.
-HGCOMMAND:FILEPATH=/afs/desy.de/products/python/.amd64_rhel60/2.7/bin/hg
+HGCOMMAND:FILEPATH=/usr/bin/hg
 
 //The directory containing a CMake configuration file for ILCUTIL.
 ILCUTIL_DIR:PATH=/cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/ilcutil/v01-05

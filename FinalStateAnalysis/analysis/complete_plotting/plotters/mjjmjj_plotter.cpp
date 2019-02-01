@@ -24,6 +24,12 @@ class MjjMjjPlotter : public Plotter {
 		add_new_TH1D("m_ZZ", new TH1D("m_ZZ", "w/ cuts; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 		add_new_TH2D("m_m_WW", new TH2D("m_m_WW", "w/ cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 		add_new_TH2D("m_m_ZZ", new TH2D("m_m_ZZ", "w/ cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+    
+    add_new_TH1D("m_WW_genlevel_aftercuts", new TH1D("m_WW_genlevel_aftercuts", "generator level, w/ cuts; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+    add_new_TH1D("m_ZZ_genlevel_aftercuts", new TH1D("m_ZZ_genlevel_aftercuts", "generator level, w/ cuts; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+    add_new_TH2D("m_m_WW_genlevel_aftercuts", new TH2D("m_m_WW_genlevel_aftercuts", "generator level, w/ cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+    add_new_TH2D("m_m_ZZ_genlevel_aftercuts", new TH2D("m_m_ZZ_genlevel_aftercuts", "generator level, w/ cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+    
 	}
 
 	void fill_plots(){
@@ -39,6 +45,8 @@ class MjjMjjPlotter : public Plotter {
 				if ( pass_selection == 1 ) {
 					get_TH1D("m_WW")->Fill((pair1_mass+pair2_mass)/2., weight);			
 					get_TH2D("m_m_WW")->Fill(pair1_mass, pair2_mass, weight);			
+          get_TH1D("m_WW_genlevel_aftercuts")->Fill((true_pair1_mass+true_pair2_mass)/2., weight);			
+          get_TH2D("m_m_WW_genlevel_aftercuts")->Fill(true_pair1_mass, true_pair2_mass, weight);			
 				}
 			}
 			else if ( true_evt_type == 2 ) {
@@ -49,6 +57,8 @@ class MjjMjjPlotter : public Plotter {
 				if ( pass_selection == 1 ) {
 					get_TH1D("m_ZZ")->Fill((pair1_mass+pair2_mass)/2., weight);			
 					get_TH2D("m_m_ZZ")->Fill(pair1_mass, pair2_mass, weight);			
+          get_TH1D("m_ZZ_genlevel_aftercuts")->Fill((true_pair1_mass+true_pair2_mass)/2., weight);			
+          get_TH2D("m_m_ZZ_genlevel_aftercuts")->Fill(true_pair1_mass, true_pair2_mass, weight);			
 				}
 			}
 		}

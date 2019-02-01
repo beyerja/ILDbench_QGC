@@ -40,13 +40,6 @@ void eventSelector(string input_rootfile_path, string output_dir) {
 	// Open new root file
 	TFile *outfile = new TFile(output_rootfile_name.c_str(),"RECREATE");
 
-	// Copy the LCTuple 
-	TTree* LCTuple = (TTree*)file->Get("MyLCTuple");
-	//outfile->cd();
-	TTree* LCTuple_copy = LCTuple->CloneTree();
-	LCTuple_copy->SetName("LCTuple");
-	LCTuple_copy->Write();	
-
 	// Create copy of TTree in new .root-file
 	TTree *new_tree = tree->CloneTree(); 
 	file->Close();
@@ -73,7 +66,6 @@ void eventSelector(string input_rootfile_path, string output_dir) {
 
 	// Don't also copy old trees
 	gDirectory->Delete("datatrain;*"); 
-	gDirectory->Delete("MyLCTuple;*"); 
 
 	outfile->Close();
 

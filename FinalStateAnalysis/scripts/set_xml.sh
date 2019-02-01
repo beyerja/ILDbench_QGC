@@ -20,6 +20,7 @@ data_directory=/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/tmp_root
 xml_directory=${DIR}/../xml
 
 template_file=${xml_directory}/template.xml
+compact_file="${lcgeo_DIR}/ILD/compact/ILD_${detector_model}/ILD_${detector_model}.xml"
 
 pol_weight_aux=( ` eval " ${DIR}/get_database_entry.sh  ${class_name} ${final_state} ${polarization} file ${E_COM} ${SW_version} ${detector_model}" ` )
 
@@ -37,14 +38,13 @@ if [[ ! -z ${pol_weight_aux} ]] ; then
 		fi
 		cp ${template_file} ${xml_file}
 		base_name=${data_directory}/${class_name}_${final_state}_${polarization}_${i}
-		lctuple_name=${base_name}_lctuple
 		root_name=${base_name}.root 
 		single_file=` echo -e ${file/'\n'} `
 		# Set the input and output file names in the steering file
-       	# CAREFUL: Line numbers should be decreasing!
-		sed -i "131s\.*\ ${lctuple_name} \  " ${xml_file}
-		sed -i "122s\.*\ ${root_name} \  " ${xml_file}
-		sed -i "20s\.*\ ${single_file}\ " ${xml_file}
+   	# CAREFUL: Line numbers should be decreasing!
+		sed -i "127s\.*\ ${root_name} \  " ${xml_file}
+		sed -i "29s\.*\ ${compact_file} \  " ${xml_file}
+		sed -i "16s\.*\ ${single_file}\ " ${xml_file}
 	done
 	echo "true"
 else

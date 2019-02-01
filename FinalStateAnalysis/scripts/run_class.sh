@@ -16,12 +16,6 @@ detector_model=$CURRENT_ILD_MODEL
 
 DIR=/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/scripts
 
-#if [[ ${class_name} = "2f" ]] ; then
-#	class_name_array="2f_z"
-#	final_state=("l" "bha" "h")
-#elif [[ ${class_name} = "4f" ]] ; then
-#	class_name_array=("4f_ww" "4f_zz" "4f_zzww" "4f_szee" "4f_sznn" "4f_szsw" "4f_sw")
-#	final_state=("sl" "l" "h")
 if [[ ${class_name} = "6f_2l4q" ]] ; then
 	class_name_array=("6f_2l4q")
 	final_state=("vvxyyx" "vvxxxx" "vvyyyy")
@@ -50,8 +44,6 @@ echo ""
 # Loop over all inital states belonging to this event class
 for (( k=0; k<$(( $class_name_length)); k++ ))
 do
-	{ # Sections marked like this can be run parallel (in background) without influencing each other (they are contained)
-
 	current_class_name=${class_name_array[k]}
 
 	# Loop over all final states
@@ -99,10 +91,9 @@ do
 		sleep 1
 		# Call subscript that will do file-merging (using hadd) for this IS- FS combination
 		# Needs the IDs of the condor jobs to check if any are still running (only if Marlin jobs were started)
-		./subscript_class_filemerge.sh ${current_class_name} ${current_final_state} ${info} ${condor_job_IDs} &
+		./subscript_class_filemerge.sh ${current_class_name} ${current_final_state} ${info} ${condor_job_IDs}
 		} &
 	done
-	} &
 done
 
 wait

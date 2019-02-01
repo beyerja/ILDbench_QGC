@@ -11,8 +11,8 @@ class TJObservToICNsOnlyUDSPlotter : public Plotter {
 	}
 
 	void define_plots(){
-		add_new_TH1D("m_WW_uds", new TH1D("m_WW_uds", "using reco of inital cns, w/ cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 35, 50, 120));
-		add_new_TH1D("m_ZZ_uds", new TH1D("m_ZZ_uds", "using reco of inital cns, w/ cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 35, 50, 120));
+		add_new_TH1D("m_WW_uds", new TH1D("m_WW_uds", "using reco of inital cns, w/ cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+		add_new_TH1D("m_ZZ_uds", new TH1D("m_ZZ_uds", "using reco of inital cns, w/ cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 		add_new_TH2D("m_m_WW_uds", new TH2D("m_m_WW_uds", "using reco of inital cns, w/ cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 		add_new_TH2D("m_m_ZZ_uds", new TH2D("m_m_ZZ_uds", "using reco of inital cns, w/ cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 	}

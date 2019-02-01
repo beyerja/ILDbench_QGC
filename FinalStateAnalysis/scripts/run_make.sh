@@ -69,11 +69,13 @@ elif [[ $ILD_model == "o1_v05" ]]; then
 	ILD_gearoutput=${ILD_gearoutputs_dir}/GearOutput_ILD_o1_v05.xml
 elif [[ $ILD_model == "o2_v05" ]]; then
 	ILD_gearoutput=${ILD_gearoutputs_dir}/GearOutput_ILD_o2_v05.xml
-elif [[ $ILD_model == "l5_o1_v02" ]]; then
-  echo "" >/dev/null # do nothing
 else
-	echo "ERROR: not valid ILD model version! Exiting now..."
-	exit
+	echo "Not GearOutput file found for ILD model."
+  echo "" >/dev/null # do nothing
+fi
+
+if [[ $version != "01-17-11" ]]; then
+  ILD_gearoutput=""
 fi
 
 rm ${home_folder}/xml/GearOutput.xml

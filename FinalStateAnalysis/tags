@@ -842,7 +842,7 @@ final_cn_system	include/InformationStorages/TJInformation.h	/^	TJLevelInfo final
 final_elementon	include/InformationStorages/TJTotalSingleJetInformation.h	/^		TrueJetLevel final_elementon;$/;"	m	class:TrueJetSingleJetInfo
 final_elementon	src/Adjusted_TrueJet_Parser.cc	/^MCParticle* Adjusted_TrueJet_Parser::final_elementon(int ijet){$/;"	f	class:Adjusted_TrueJet_Parser
 final_elementon_pdgID	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int final_elementon_pdgID[__max_Njets];$/;"	m	class:TrueJetSingleJetInfo
-final_siblings	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::final_siblings( int ijet ) {$/;"	f	class:Adjusted_TrueJet_Parser
+final_siblings	src/Adjusted_TrueJet_Parser.cc	/^const IntVec  Adjusted_TrueJet_Parser::final_siblings( int ijet ) {$/;"	f	class:Adjusted_TrueJet_Parser
 final_states	analysis/complete_plotting/include/InfoStorage.h	/^	vector<string> 	final_states;$/;"	m	class:InfoStorage
 finalcns	include/Adjusted_TrueJet_Parser.h	/^    ReconstructedParticleVec* finalcns;$/;"	m	class:Adjusted_TrueJet_Parser
 finalcns	include/TrueJet_Parser.h	/^    ReconstructedParticleVec* finalcns;$/;"	m	class:TrueJet_Parser
@@ -1004,7 +1004,7 @@ init	src/JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::init() {$/;"	f	class:J
 initial_cn	src/Adjusted_TrueJet_Parser.cc	/^int Adjusted_TrueJet_Parser::initial_cn( int ijet ) {$/;"	f	class:Adjusted_TrueJet_Parser
 initial_cn_system	include/InformationStorages/TJInformation.h	/^	TJLevelInfo initial_cn_system;$/;"	m	class:TJEventInfo
 initial_elementon	src/Adjusted_TrueJet_Parser.cc	/^MCParticle* Adjusted_TrueJet_Parser::initial_elementon(int ijet){$/;"	f	class:Adjusted_TrueJet_Parser
-initial_siblings	src/Adjusted_TrueJet_Parser.cc	/^const IntVec& Adjusted_TrueJet_Parser::initial_siblings( int ijet ){$/;"	f	class:Adjusted_TrueJet_Parser
+initial_siblings	src/Adjusted_TrueJet_Parser.cc	/^const IntVec Adjusted_TrueJet_Parser::initial_siblings( int ijet ){$/;"	f	class:Adjusted_TrueJet_Parser
 initialcns	include/Adjusted_TrueJet_Parser.h	/^    ReconstructedParticleVec* initialcns;$/;"	m	class:Adjusted_TrueJet_Parser
 initialcns	include/TrueJet_Parser.h	/^    ReconstructedParticleVec* initialcns;$/;"	m	class:TrueJet_Parser
 input_directory	analysis/complete_plotting/include/InfoStorage.h	/^	string input_directory;	$/;"	m	class:InfoStorage
@@ -1039,8 +1039,8 @@ jets	include/InformationStorages/EventInformation.h	/^		JetInfo jets[__Njets];$/
 jets	include/TrueJet_Parser.h	/^    ReconstructedParticleVec* jets;$/;"	m	class:TrueJet_Parser
 jets_E	analysis/complete_plotting/include/plotter.h	/^	float jets_E[4];$/;"	m	class:Plotter
 jets_mass	analysis/complete_plotting/include/plotter.h	/^	float jets_mass[4];$/;"	m	class:Plotter
-jets_of_final_cn	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::jets_of_final_cn( int ifcn ) {$/;"	f	class:Adjusted_TrueJet_Parser
-jets_of_initial_cn	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::jets_of_initial_cn( int iicn ) {$/;"	f	class:Adjusted_TrueJet_Parser
+jets_of_final_cn	src/Adjusted_TrueJet_Parser.cc	/^const IntVec Adjusted_TrueJet_Parser::jets_of_final_cn( int ifcn ) {$/;"	f	class:Adjusted_TrueJet_Parser
+jets_of_initial_cn	src/Adjusted_TrueJet_Parser.cc	/^const IntVec Adjusted_TrueJet_Parser::jets_of_initial_cn( int iicn ) {$/;"	f	class:Adjusted_TrueJet_Parser
 jets_theta	analysis/complete_plotting/include/plotter.h	/^	float jets_theta[4];$/;"	m	class:Plotter
 lep_E_classes	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<int> lep_E_classes = {0, 5, 10, 50, 100};$/;"	m	class:TJLeptonsInJetsPlotter	file:
 lep_class_labels	analysis/complete_plotting/plotters/TJ/TJ_lepton_in_jet_plotter.cpp	/^	vector<string> lep_class_labels = {"E>5GeV", "E<5GeV"};$/;"	m	class:TJLeptonsInJetsPlotter	file:
@@ -1423,11 +1423,11 @@ true_value_of_detectable_jet	include/InformationStorages/TJTotalSingleJetInforma
 type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	char* type;$/;"	m	class:JetParticleTypeInfo
 type_MCs	include/InformationStorages/TJTotalSingleJetInformation.h	/^	TJTypeMC type_MCs;$/;"	m	class:JetParticleTypeInfo
 type_fcn_comps	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::type_fcn_comps(int ifcn) {$/;"	f	class:Adjusted_TrueJet_Parser
-type_fcn_parent	include/Adjusted_TrueJet_Parser.h	/^  int type_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:Adjusted_TrueJet_Parser
 type_fcn_parent	include/TrueJet_Parser.h	/^  int type_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
+type_fcn_parent	src/Adjusted_TrueJet_Parser.cc	/^int Adjusted_TrueJet_Parser::type_fcn_parent(int ifcn){$/;"	f	class:Adjusted_TrueJet_Parser
 type_icn_comps	src/Adjusted_TrueJet_Parser.cc	/^const IntVec&  Adjusted_TrueJet_Parser::type_icn_comps(int iicn) {$/;"	f	class:Adjusted_TrueJet_Parser
-type_icn_parent	include/Adjusted_TrueJet_Parser.h	/^  int type_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:Adjusted_TrueJet_Parser
 type_icn_parent	include/TrueJet_Parser.h	/^  int type_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
+type_icn_parent	src/Adjusted_TrueJet_Parser.cc	/^int Adjusted_TrueJet_Parser::type_icn_parent(int iicn){ $/;"	f	class:Adjusted_TrueJet_Parser
 type_jet	include/Adjusted_TrueJet_Parser.h	/^  int type_jet(int ijet) { return jets->at(ijet)->getParticleIDs()[0]->getType() ; };$/;"	f	class:Adjusted_TrueJet_Parser
 type_jet	include/TrueJet_Parser.h	/^  int type_jet(int ijet) { return jets->at(ijet)->getParticleIDs()[0]->getType() ; };$/;"	f	class:TrueJet_Parser
 visible_tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector visible_tlv;$/;"	m	class:Observables

@@ -64,17 +64,17 @@ class Adjusted_TrueJet_Parser {
   const double* ptrueseen(int ijet) ;
   const double* p4trueseen(int ijet) ;
 
-  const IntVec& final_siblings( int ijet ); 
-  const IntVec& initial_siblings( int ijet ); 
+  const IntVec final_siblings( int ijet ); 
+  const IntVec initial_siblings( int ijet ); 
 
   int final_cn( int ijet ); 
   int initial_cn( int ijet ); 
 
-  const IntVec& jets_of_final_cn( int ifcn ); 
-  const IntVec& jets_of_initial_cn( int iicn ); 
+  const IntVec jets_of_final_cn( int ifcn ); 
+  const IntVec jets_of_initial_cn( int iicn ); 
 
   int nicn() { return icncol->getNumberOfElements(); };
-  int type_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getType() ; };
+  int type_icn_parent(int iicn);
   const IntVec& type_icn_comps(int iicn) ;
   int pdg_icn_parent(int iicn) { return initialcns->at(iicn)->getParticleIDs()[0]->getPDG() ; };
   const IntVec& pdg_icn_comps(int iicn) ;
@@ -84,7 +84,7 @@ class Adjusted_TrueJet_Parser {
   const double* p4_icn(int iicn) ;
 
   int nfcn() { return fcncol->getNumberOfElements(); };
-  int type_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getType() ; };
+  int type_fcn_parent(int ifcn);
   const IntVec& type_fcn_comps(int ifcn) ;
   int pdg_fcn_parent(int ifcn) { return finalcns->at(ifcn)->getParticleIDs()[0]->getPDG() ; };
   const IntVec& pdg_fcn_comps(int ifcn) ;
