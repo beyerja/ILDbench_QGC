@@ -141,15 +141,16 @@ void JakobsVBSProcessor::LevelComparisonIndividualJets(LCRelationNavigator* rela
 	}
 
 	TJGetInitialCNRecoMasses(info);
+  TJGetCustomPairingRecoMasses(info);
 
 
 	for ( int i=0; i<njets(); i++ ) {
 		int ijet = info.TJ_jetinfo.next_jet();
-		streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Treating jet " << ijet   << std::endl;
+		streamlog_out(DEBUG3) << "In LevelComparisonIndividualJets: Treating jet " << ijet   << std::endl;
 
 		SearchSingleTJJetParticles( relation_recoMCtruth, info.TJ_jetinfo );
 
-   		streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet seen 4-momentum." << std::endl;
+ 		streamlog_out(DEBUG2) << "In LevelComparisonIndividualJets: Investigating jet seen 4-momentum." << std::endl;
 		TLorentzVector seen_jet_tlv = TLorentzVector( p4seen(ijet)[1],p4seen(ijet)[2],p4seen(ijet)[3], p4seen(ijet)[0] );
 		float detected_mass = seen_jet_tlv.M();
 		float detected_E	= seen_jet_tlv.E();
@@ -157,14 +158,14 @@ void JakobsVBSProcessor::LevelComparisonIndividualJets(LCRelationNavigator* rela
 
 		// ReconstructedParticleVec ijetPFOs = seen_partics(ijet); // seen_partics(...) is function of TrueJet_Parser, see header
 
-    	streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet true of seen 4-momentum." << std::endl;
+  	streamlog_out(DEBUG2) << "In LevelComparisonIndividualJets: Investigating jet true of seen 4-momentum." << std::endl;
 		TLorentzVector true_of_seen_tlv = TLorentzVector( p4trueseen(ijet)[1], p4trueseen(ijet)[2], p4trueseen(ijet)[3], p4trueseen(ijet)[0]);
 		float true_mass_of_detectable_jet	= true_of_seen_tlv.M();
 		float true_E_of_detectable_jet		= true_of_seen_tlv.E();
 		float true_p_of_detectable_jet		= true_of_seen_tlv.P();
 
 		// The final elementon is the q / g / gamma / ... after parton shower
-    	streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet final elementon 4-momentum." << std::endl;
+  	streamlog_out(DEBUG2) << "In LevelComparisonIndividualJets: Investigating jet final elementon 4-momentum." << std::endl;
 		int final_elementon_pdgID = 0;
 		float final_elementon_mass = 0;
 		float final_elementon_E = 0;
@@ -179,13 +180,13 @@ void JakobsVBSProcessor::LevelComparisonIndividualJets(LCRelationNavigator* rela
 			final_elementon_p = final_elementon_tlv.P();
 		}
 
-    	streamlog_out(DEBUG) << "In LevelComparisonIndividualJets: Investigating jet final true 4-momentum." << std::endl;
+  	streamlog_out(DEBUG2) << "In LevelComparisonIndividualJets: Investigating jet final true 4-momentum." << std::endl;
 		TLorentzVector true_tlv = TLorentzVector( p4true(ijet)[1], p4true(ijet)[2], p4true(ijet)[3], p4true(ijet)[0]);
 		float true_mass	= true_tlv.M();
 		float true_E	= true_tlv.E();
 		float true_p	= true_tlv.P();
 
-		streamlog_out(DEBUG) << "evt: " << _nEvt << " E_t: " << true_E
+		streamlog_out(DEBUG3) << "evt: " << _nEvt << " E_t: " << true_E
 							<< " E_tos: " << true_E_of_detectable_jet
 							<< " E_s: " << detected_E << "\n";
 

@@ -65,14 +65,14 @@ void JakobsVBSProcessor::SearchSingleTJJetMC (
 
 	/* ------------------------------------------------ */
 	/* HERE Functions to act on single TJJet MCParticle */
-	streamlog_out(DEBUG) << "In SearchSingleTJJetMC: Processing Single MC " << std::endl; 
-	streamlog_out(DEBUG) << "In SearchSingleTJJetMC: Looking at leptons. " << std::endl; 
+	streamlog_out(DEBUG1) << "In SearchSingleTJJetMC: Processing Single MC " << std::endl; 
+	streamlog_out(DEBUG1) << "In SearchSingleTJJetMC: Looking at leptons. " << std::endl; 
 	TJProcessSingleTypeMC( MC, relation_recoMCtruth, TJ_jetinfo.jet_leptons );
-  streamlog_out(DEBUG) << "In SearchSingleTJJetMC: Looking at charged hadrons. " << std::endl; 
+  streamlog_out(DEBUG1) << "In SearchSingleTJJetMC: Looking at charged hadrons. " << std::endl; 
 	TJProcessSingleTypeMC( MC, relation_recoMCtruth, TJ_jetinfo.jet_charged_hadrons );
-  streamlog_out(DEBUG) << "In SearchSingleTJJetMC: Looking at neutral hadrons. " << std::endl; 
+  streamlog_out(DEBUG1) << "In SearchSingleTJJetMC: Looking at neutral hadrons. " << std::endl; 
 	TJProcessSingleTypeMC( MC, relation_recoMCtruth, TJ_jetinfo.jet_neutral_hadrons );
-  streamlog_out(DEBUG) << "In SearchSingleTJJetMC: Looking at photons. " << std::endl; 
+  streamlog_out(DEBUG1) << "In SearchSingleTJJetMC: Looking at photons. " << std::endl; 
 	TJProcessSingleTypeMC( MC, relation_recoMCtruth, TJ_jetinfo.jet_photons );
 
 	/* ------------------------------------------------ */
@@ -117,8 +117,6 @@ void JakobsVBSProcessor::SearchSingleTJJetPFO (
 	MCParticleVec MCParticle_vector;
 	GetMCParticlesLinkedToPFO( PFO, relation_recoMCtruth, MCParticle_vector); 
 	
-	streamlog_out(DEBUG) << " NMCs:" << MCParticle_vector.size() << " " ;
-
 	for ( int iMC = 0; iMC<MCParticle_vector.size(); iMC++ ) {
 		// Find lowest level MCParticles and insert them into the set
 		FindLowestLevelMCParticles(MCParticle_vector[iMC], jet_MCs_set);
@@ -152,7 +150,7 @@ void JakobsVBSProcessor::SearchSingleTJJetParticles(
 	std::set<ReconstructedParticle*> jet_recos_set;
 	std::set<MCParticle*> jet_MCs_set;
 
-	streamlog_out(DEBUG) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " recos \n";
+	streamlog_out(DEBUG3) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " recos \n";
 
 	// Search for all (lowest level) reco-particles in the jet
 	if (  seen_partics(ijet).size() > 0 ) {
@@ -169,7 +167,7 @@ void JakobsVBSProcessor::SearchSingleTJJetParticles(
 	}
 
 	// Recos must be treated first because it includes finding the MCs
-	streamlog_out(DEBUG) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " recos \n";
+	streamlog_out(DEBUG3) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " recos \n";
 	// The Iterator is a Pointer to my pointer to a ReconstructedParticle
 	for (	std::set<ReconstructedParticle*>::iterator it=jet_recos_set.begin(); 
 			it!=jet_recos_set.end(); ++it) {
@@ -177,11 +175,11 @@ void JakobsVBSProcessor::SearchSingleTJJetParticles(
 		SearchSingleTJJetPFO( *it, relation_recoMCtruth, jet_MCs_set, TJ_jetinfo );
 	}
 
-	streamlog_out(DEBUG) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " MCs \n";
+	streamlog_out(DEBUG3) << "In SearchSingleTJJetParticles: Start treating jet " << ijet << " MCs \n";
 	// The Iterator is a Pointer to my pointer to an MCParticle
 	for (std::set<MCParticle*>::iterator it=jet_MCs_set.begin(); it!=jet_MCs_set.end(); ++it) {
 		SearchSingleTJJetMC( *it, relation_recoMCtruth, TJ_jetinfo );
 	}
-  streamlog_out(DEBUG) << "In SearchSingleTJJetParticles: Done with jet " << ijet << " MCs \n";
+  streamlog_out(DEBUG3) << "In SearchSingleTJJetParticles: Done with jet " << ijet << " MCs \n";
 
 }  

@@ -1,44 +1,47 @@
 #include "../include/plotter.h"
 
 // Include the plotter source files
-#include "../plotters/test_plotter.cpp"
+//#include "../plotters/test_plotter.cpp"
 #include "../plotters/mjjmjj_plotter.cpp"
-#include "../plotters/theta_m_plotter.cpp"
-#include "../plotters/trueISR_E_over_jetmass.cpp"
-#include "../plotters/tail_plotter.cpp"
-#include "../plotters/all_selected_plotter.cpp"
-#include "../plotters/mjj_reco_quark_pdg_plotter.cpp"
-#include "../plotters/individual_quarks_plotter.cpp"
-#include "../plotters/cutflow_plotter.cpp"
-#include "../plotters/TJ/TJ_jet_level_plotter.cpp"
-#include "../plotters/TJ/TJ_jet_mass_investigation_plotter.cpp"
-#include "../plotters/TJ/TJ_lepton_in_jet_plotter.cpp"
-#include "../plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp"
-#include "../plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp"
-#include "../plotters/TJ/TJ_photon_in_jet_plotter.cpp"
-#include "../plotters/TJ/TJ_Nparticles_plotter.cpp"
-#include "../plotters/TJ/TJ_tos_s_E_correction_plotter.cpp"
-#include "../plotters/TJ/TJ_tos_s_p_correction_plotter.cpp"
-#include "../plotters/TJ/TJ_corrected_jets_plotter.cpp"
-#include "../plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp"
-#include "../plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp"
-#include "../plotters/TJ/TJ_2nus4qs_plotter.cpp"
-#include "../plotters/TJ/TJ_total_E_plotter.cpp"
+#include "../plotters/mjj_vs_SLDecays_plotter.cpp"
+//#include "../plotters/theta_m_plotter.cpp"
+//#include "../plotters/trueISR_E_over_jetmass.cpp"
+//#include "../plotters/tail_plotter.cpp"
+//#include "../plotters/all_selected_plotter.cpp"
+//#include "../plotters/mjj_reco_quark_pdg_plotter.cpp"
+//#include "../plotters/individual_quarks_plotter.cpp"
+//#include "../plotters/cutflow_plotter.cpp"
+//#include "../plotters/TJ/TJ_jet_level_plotter.cpp"
+//#include "../plotters/TJ/TJ_jet_mass_investigation_plotter.cpp"
+//#include "../plotters/TJ/TJ_lepton_in_jet_plotter.cpp"
+//#include "../plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp"
+//#include "../plotters/TJ/TJ_neutral_hadron_in_jet_plotter.cpp"
+//#include "../plotters/TJ/TJ_photon_in_jet_plotter.cpp"
+//#include "../plotters/TJ/TJ_Nparticles_plotter.cpp"
+//#include "../plotters/TJ/TJ_tos_s_E_correction_plotter.cpp"
+//#include "../plotters/TJ/TJ_tos_s_p_correction_plotter.cpp"
+//#include "../plotters/TJ/TJ_corrected_jets_plotter.cpp"
+//#include "../plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp"
+//#include "../plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp"
+//#include "../plotters/TJ/TJ_2nus4qs_plotter.cpp"
+//#include "../plotters/TJ/TJ_total_E_plotter.cpp"
 #include "../plotters/TJ/TJ_observ_to_icns_plotter.cpp"
-#include "../plotters/TJ/TJ_jet_energy_resolution_plotter.cpp"
+//#include "../plotters/TJ/TJ_jet_energy_resolution_plotter.cpp"
 #include "../plotters/TJ/TJ_observ_to_icns_uds_only_plotter.cpp"
-#include "../plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp"
+//#include "../plotters/TJ/TJ_observ_to_icns_udsc_only_plotter.cpp"
+#include "../plotters/separation_curve_plotter.cpp"
 
 void set_plotters(vector<Plotter*> &plotters) {
 
 	/* ---------------------------------------------------------------------*/
 	// INSERT THE PLOTTER MODULES HERE
 
-  // plotters.push_back( new TJObservToICNsPlotter );
+  plotters.push_back( new TJObservToICNsPlotter );
   // plotters.push_back( new TJObservToICNsOnlyUDSPlotter );
   // plotters.push_back( new TJObservToICNsOnlyUDSCPlotter );
 	// plotters.push_back( new TestPlotter );
-	plotters.push_back( new MjjMjjPlotter );
+	// plotters.push_back( new MjjMjjPlotter );
+	// plotters.push_back( new MjjVsSLDecaysPlotter );
 	// plotters.push_back( new ThetaMPlotter );
 	// plotters.push_back( new TrueISRvsMjjPlotter );
 	// plotters.push_back( new TailPlotter );
@@ -61,5 +64,6 @@ void set_plotters(vector<Plotter*> &plotters) {
 	// plotters.push_back( new TJQuarkJetsPlusNeutrinosPlotter );
 	// plotters.push_back( new TJTotalEPlotter );
 	// plotters.push_back( new TJJetEnergyResolutionPlotter );
+	plotters.push_back( new SeparationCurvePlotter );
 	/* ---------------------------------------------------------------------*/
 }

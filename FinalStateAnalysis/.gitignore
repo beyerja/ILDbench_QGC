@@ -6,3 +6,4 @@
 /scripts/old_runners
 /xml/tmp*
 tags
+*.swp

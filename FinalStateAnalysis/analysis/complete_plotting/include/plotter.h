@@ -34,6 +34,7 @@ class Plotter {
 	vector<TProfile*> TProfile_vector;
 	vector<TProfile2D*> TProfile2D_vector;
 	vector<TH3D*> TH3D_vector;
+	vector<TGraph*> TGraph_vector;
 
 	// Maps for comprehensive storage of the diagrams by a name
 	// -> connects index of histogram in vector with its name
@@ -42,6 +43,7 @@ class Plotter {
 	map<string, int> TProfile_map;
 	map<string, int> TProfile2D_map;
 	map<string, int> TH3D_map;
+	map<string, int> TGraph_map;
 
 	// Functions to store and get the histograms by name (copy-paste for new types)
 	void add_new_TH1D (string name, TH1D* hist) {
@@ -74,6 +76,11 @@ class Plotter {
 		TH3D_map.insert( pair<string,int>( name.c_str(), hist_index ) );	// connect index with name
 	}
 
+	void add_new_TGraph (string name, TGraph* hist) {
+		TGraph_vector.push_back(hist);										// push histo into vector
+		int hist_index = TGraph_vector.size() - 1;							// get its index
+		TGraph_map.insert( pair<string,int>( name.c_str(), hist_index ) );	// connect index with name
+	}
 
 	TH1D* get_TH1D (string name) {
 		int hist_index = TH1D_map.find(name.c_str())->second;	// Get the index of hist called name
@@ -100,6 +107,10 @@ class Plotter {
 		return TH3D_vector[hist_index];
 	}
 
+	TGraph* get_TGraph (string name) {
+		int hist_index = TGraph_map.find(name.c_str())->second;	// Get the index of hist called name
+		return TGraph_vector[hist_index];
+	}
 
 	// For looping also allow access by index (bc it's generic)
 	int get_number_TH1Ds() { return TH1D_vector.size(); }
@@ -107,12 +118,14 @@ class Plotter {
 	int get_number_TProfiles() { return TProfile_vector.size(); }
 	int get_number_TProfile2Ds() { return TProfile2D_vector.size(); }
 	int get_number_TH3Ds() { return TH3D_vector.size(); }
+	int get_number_TGraphs() { return TH1D_vector.size(); }
 
 	TH1D* get_TH1D_i (int i) { return TH1D_vector[i]; }
 	TH2D* get_TH2D_i (int i) { return TH2D_vector[i]; }
 	TProfile* get_TProfile_i (int i) { return TProfile_vector[i]; }
 	TProfile2D* get_TProfile2D_i (int i) { return TProfile2D_vector[i]; }
 	TH3D* get_TH3D_i (int i) { return TH3D_vector[i]; }
+	TGraph* get_TGraph_i (int i) { return TGraph_vector[i]; }
 
 	// Functions to automatically save all histograms to a rootfile in the output directory
 	void save_all_TH1Ds_in_rootfile() {
@@ -175,6 +188,17 @@ class Plotter {
 		TH3D_file->Close();
 	}
 
+	//void save_all_TGraphs_in_rootfile() {
+	//	if ( get_number_TGraphs() == 0 ) { return; }	// Do only if histograms available
+	//
+	//	TFile* TGraph_file = new TFile( (get_output_directory() + "/_all_TGraphs.root").c_str() ,"RECREATE");
+	//	for ( int i=0; i<get_number_TGraphs(); i++ ) {
+	//		TGraph* th1d_clone = (TGraph*)get_TGraph_i(i)->Clone();
+	//		th1d_clone->Draw();
+	//	}
+	//	TGraph_file->Write();
+	//	TGraph_file->Close();
+	//}
 
 
 	void save_all_histograms_in_rootfiles() {
@@ -184,6 +208,7 @@ class Plotter {
 		save_all_TProfiles_in_rootfile();
 		save_all_TProfile2Ds_in_rootfile();
 		save_all_TH3Ds_in_rootfile();
+		//save_all_TGraphs_in_rootfile();
 	}
 
 	// Specifics for current file
@@ -268,6 +293,9 @@ class Plotter {
 	float true_nu2_E;
 	float true_nu2_theta;
 
+	int n_BSLD;
+	int n_CSLD;
+
 	int NPFOs_inCorrectJets;
 	int NPFOs_inClusteredJets;
 	int NPFOs_inCorrectJets_notinClusteredJets;
@@ -314,6 +342,8 @@ class Plotter {
 
   float TJ_pair1_mass_from_icn;
   float TJ_pair2_mass_from_icn;
+  float TJ_pair1_mass_from_icn_custom_pairing;
+  float TJ_pair2_mass_from_icn_custom_pairing;
 
 	int max_Nparticles;
 
@@ -389,6 +419,10 @@ class Plotter {
     TBranch* TJ_observ_from_icns = current_tree->GetBranch("masses_cheated_clustering_and_pairing");
     TJ_observ_from_icns->GetLeaf("pair1_mass")->SetAddress(&TJ_pair1_mass_from_icn);
     TJ_observ_from_icns->GetLeaf("pair2_mass")->SetAddress(&TJ_pair2_mass_from_icn); 
+    
+    TBranch* TJ_observ_from_icns_custom_pairing = current_tree->GetBranch("masses_cheated_clustering");
+    TJ_observ_from_icns_custom_pairing->GetLeaf("pair1_mass")->SetAddress(&TJ_pair1_mass_from_icn_custom_pairing);
+    TJ_observ_from_icns_custom_pairing->GetLeaf("pair2_mass")->SetAddress(&TJ_pair2_mass_from_icn_custom_pairing); 
 
 		for (int i=0; i<4; i++) {
 			std::string index_string = std::to_string(i+1);
@@ -399,6 +433,8 @@ class Plotter {
 			true_quark_branch->GetLeaf("E")->SetAddress(&true_quarks_E[i] );
 			true_quark_branch->GetLeaf("theta")->SetAddress(&true_quarks_theta[i] );
 		}
+		current_tree->SetBranchAddress( "nBSLDecays", &n_BSLD );
+		current_tree->SetBranchAddress( "nCSLDecays", &n_CSLD );
 
 		TBranch* true_nu1_branch = current_tree->GetBranch("true_nu1");
 		true_nu1_branch->GetLeaf("pdg_id")->SetAddress(&true_nu1_pdg_id);

@@ -28,6 +28,9 @@ void JakobsVBSProcessor::SetGeneratorLevelBranches( EventInfo &info ) {
 
 	_datatrain->Branch( "true_nu1", &info.gen_level.nu1, true_particle_observables.c_str() ); 
 	_datatrain->Branch( "true_nu2", &info.gen_level.nu2, true_particle_observables.c_str() ); 
+
+	_datatrain->Branch( "nCSLDecays", &info.gen_level.n_CSLDecays, "nCSLDecays/I" );
+	_datatrain->Branch( "nBSLDecays", &info.gen_level.n_BSLDecays, "nBSLDecays/I" );
 }
 
 

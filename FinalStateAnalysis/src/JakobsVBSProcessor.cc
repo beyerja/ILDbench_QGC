@@ -137,7 +137,13 @@ JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {
 			_initialColourNeutralLink,
 			std::string("InitialColourNeutralLink") ) ;
 
-
+	// Read number of semi-leptonic decays
+	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+         	"SemileptonicDecays",
+            "tbd",
+			_colSLDecays,
+			std::string("SLDecays")
+	);
 
 	// Technical
 	// -> e.g. rootfile names
@@ -155,7 +161,7 @@ JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {
 
 void JakobsVBSProcessor::init() {
 
-    streamlog_out(DEBUG) << "   init called  " << std::endl ;
+    streamlog_out(DEBUG4) << "   init called  " << std::endl ;
 
     // usually a good idea to
     printParameters() ;
@@ -208,7 +214,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
   file_info.xsection = evt->getParameters().getFloatVal("CrossSection_fb");
 
   // tj is a pointer to a Trujet_Parser, with the data of this processor object:
-  Adjusted_TrueJet_Parser* tj= this ;
+  tj= this ;
   // this method gets all the collections needed + initialises a few convienent variables.
   tj->getall(evt);
 
@@ -223,7 +229,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
   std::vector<ReconstructedParticleVec> TJ_jetPFOs_allseen;
 
   for (int ijet=0 ; ijet< Njets_correct; ijet++ ) {
-    streamlog_out(DEBUG5) << " Number of PFOs used : " << seen_partics(ijet).size()   << std::endl;
+    streamlog_out(DEBUG3) << " Number of PFOs used : " << seen_partics(ijet).size()   << std::endl;
     if (  seen_partics(ijet).size() > 0 ) {
       ReconstructedParticleVec ijetPFOs_correct = seen_partics(ijet); // seen_partics(...) is function of TrueJet_Parser, see header
       TJ_jetPFOs_allseen.push_back(ijetPFOs_correct);
@@ -276,6 +282,18 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
     colIsoleps = NULL;
   }
 
+  LCCollection* colSLDecays = NULL;
+  try{
+    colSLDecays = evt->getCollection( _colSLDecays );
+  }
+  catch( lcio::DataNotAvailableException e )
+  {
+    streamlog_out(WARNING) << _colSLDecays << " collection not available" << std::endl;
+    colSLDecays = NULL;
+  }
+
+  info.gen_level.n_CSLDecays = colSLDecays->getParameters().getIntVal("nCSLD");
+  info.gen_level.n_BSLDecays = colSLDecays->getParameters().getIntVal("nBSLD");
 
   // this will only be entered if the collection is available
   /**if( colMC != NULL ){
@@ -291,7 +309,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
 
   //-- note: this will not be printed if compiled w/o MARLINDEBUG=1 !
 
-  streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber()
+  streamlog_out(DEBUG4) << "   processing event: " << evt->getEventNumber()
   << "   in run:  " << evt->getRunNumber() << std::endl ;
 
 
@@ -317,7 +335,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
   _datatrain->Fill();
 
   if ( info.TJ_eventinfo.TJjets_from_initital_cn.pair1_mass > 200 && info.gen_level.eventType > 0) {
-    streamlog_out(DEBUG) << "High mass event, pair1mass: " << info.TJ_eventinfo.TJjets_from_initital_cn.pair1_mass << " evtN: " << _nEvt << std::endl;
+    streamlog_out(DEBUG3) << "High mass event, pair1mass: " << info.TJ_eventinfo.TJjets_from_initital_cn.pair1_mass << " evtN: " << _nEvt << std::endl;
   }
   
   // Auto-save tree data every 100th event

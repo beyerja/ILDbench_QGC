@@ -8,6 +8,7 @@
     <processor name="MyIsolatedLeptonTaggingProcessor"/>	
     <processor name="MyOverlayRemovalFastJetProcessor"/>
     <processor name="MyFastJetProcessor"/>
+    <processor name="MySLDFinder"/>
     <processor name="MyVBSProcessor"/>
 	</execute>
 
@@ -117,6 +118,9 @@
 	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
 	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
    </processor>
+
+    <processor name="MySLDFinder" type="SLDecayFinder">
+    </processor>
 
 	<processor name="MyVBSProcessor" type="JakobsVBSProcessor">
 		<parameter name="InputAllPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>

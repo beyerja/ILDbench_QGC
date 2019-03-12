@@ -33,7 +33,7 @@ using namespace marlin;
 
 bool JakobsVBSProcessor::IsIntTypePDGID( int pdgID, float charge, std::string type ) {
 
-	streamlog_out(DEBUG) << " Got: pdgID:" << pdgID << " charge:" << charge
+	streamlog_out(DEBUG0) << " Got: pdgID:" << pdgID << " charge:" << charge
 						<< " searching for: " << type << " ->";
 
 	if(	(type == "lepton") && (
@@ -41,29 +41,29 @@ bool JakobsVBSProcessor::IsIntTypePDGID( int pdgID, float charge, std::string ty
 		fabs(pdgID) == 13 ||
 		fabs(pdgID) == 15 ||
 		fabs(pdgID) == 17 ) )	 {
-			streamlog_out(DEBUG) << " found it.\n";
+			streamlog_out(DEBUG0) << " found it.\n";
 			return true;
 
 	} else if(
 		(type == "chargedhadron") && 
 		(fabs(pdgID) > 37) && // Everything above that should be hadrons in our case
 		(int(charge) != 0) ) { 
-			streamlog_out(DEBUG) << " found it.\n";
+			streamlog_out(DEBUG0) << " found it.\n";
 			return true;
 
 	} else if(
 		(type == "neutralhadron") && 
 		(fabs(pdgID) > 37) && // Everything above that should be hadrons in our case
 		(int(charge) == 0) ) { 
-			streamlog_out(DEBUG) << " found it.\n";
+			streamlog_out(DEBUG0) << " found it.\n";
 			return true;
 	} else if(	
 		(type == "photon") && (	fabs(pdgID) == 22 )	) {
-			streamlog_out(DEBUG) << " found it.\n";
+			streamlog_out(DEBUG0) << " found it.\n";
 			return true;
 
 	} else {
-		streamlog_out(DEBUG) << " did not find it.\n";
+		streamlog_out(DEBUG0) << " did not find it.\n";
 		return false;
 	}
 }

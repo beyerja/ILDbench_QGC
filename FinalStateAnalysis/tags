@@ -353,6 +353,7 @@ M_icn	include/Adjusted_TrueJet_Parser.h	/^  double M_icn(int iicn) {; return ini
 M_icn	include/TrueJet_Parser.h	/^  double M_icn(int iicn) {; return initialcns->at(iicn)->getMass();};$/;"	f	class:TrueJet_Parser
 MakeRelativePathsInFlagsAbsolute	.ycm_extra_conf.py	/^def MakeRelativePathsInFlagsAbsolute(flags, working_directory):$/;"	f
 MjjMjjPlotter	analysis/complete_plotting/plotters/mjjmjj_plotter.cpp	/^class MjjMjjPlotter : public Plotter {$/;"	c	file:
+MjjVsSLDecaysPlotter	analysis/complete_plotting/plotters/mjj_vs_SLDecays_plotter.cpp	/^class MjjVsSLDecaysPlotter : public Plotter {$/;"	c	file:
 Mquark	include/Adjusted_TrueJet_Parser.h	/^  double Mquark(int ijet) {return ( final_elementon(ijet) != NULL ? final_elementon(ijet)->getMass() : 0 );};$/;"	f	class:Adjusted_TrueJet_Parser
 Mquark	include/TrueJet_Parser.h	/^  double Mquark(int ijet) {return ( final_elementon(ijet) != NULL ? final_elementon(ijet)->getMass() : 0 );};$/;"	f	class:TrueJet_Parser
 Mseen	include/Adjusted_TrueJet_Parser.h	/^  double Mseen(int ijet) { return jets->at(ijet)->getMass(); };$/;"	f	class:Adjusted_TrueJet_Parser
@@ -369,8 +370,23 @@ N_PFOs_inLevel1	include/InformationStorages/EventInformation.h	/^		int N_PFOs_in
 N_PFOs_inLevel1_notinLevel2	include/InformationStorages/EventInformation.h	/^		int N_PFOs_inLevel1_notinLevel2;$/;"	m	class:PFOLevelComparison
 N_PFOs_inLevel2	include/InformationStorages/EventInformation.h	/^		int N_PFOs_inLevel2;$/;"	m	class:PFOLevelComparison
 N_PFOs_inLevel2_notinLevel1	include/InformationStorages/EventInformation.h	/^		int N_PFOs_inLevel2_notinLevel1;$/;"	m	class:PFOLevelComparison
+N_correct_ID_WWs_cheatjet	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet, N_correct_ID_ZZs_cheatjet;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_cheatjet_custompairing	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_custompairing, N_correct_ID_ZZs_cheatjet_custompairing;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_cheatjet_custompairing_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_custompairing_perfectbtag, N_correct_ID_ZZs_cheatjet_custompairing_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_cheatjet_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_perfectbtag, N_correct_ID_ZZs_cheatjet_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_genlevel	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_genlevel, N_correct_ID_ZZs_genlevel;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_reco	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_reco, N_correct_ID_ZZs_reco;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_WWs_reco_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_reco_perfectbtag, N_correct_ID_ZZs_reco_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_cheatjet	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet, N_correct_ID_ZZs_cheatjet;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_cheatjet_custompairing	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_custompairing, N_correct_ID_ZZs_cheatjet_custompairing;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_cheatjet_custompairing_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_custompairing_perfectbtag, N_correct_ID_ZZs_cheatjet_custompairing_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_cheatjet_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_cheatjet_perfectbtag, N_correct_ID_ZZs_cheatjet_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_genlevel	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_genlevel, N_correct_ID_ZZs_genlevel;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_reco	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_reco, N_correct_ID_ZZs_reco;$/;"	m	class:SeparationCurvePlotter	file:
+N_correct_ID_ZZs_reco_perfectbtag	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> N_correct_ID_WWs_reco_perfectbtag, N_correct_ID_ZZs_reco_perfectbtag;$/;"	m	class:SeparationCurvePlotter	file:
 N_max	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	int N_max;$/;"	m	struct:NRange	file:
 N_min	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	int N_min;$/;"	m	struct:NRange	file:
+N_steps	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	static const int N_steps = 4400;$/;"	m	class:SeparationCurvePlotter	file:
 Nchhad_class_from_int	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	string Nchhad_class_from_int ( int Nchhad ) {$/;"	f	class:TJChargedHadronsInCorrectedJetsPlotter	file:
 Nchhad_class_from_int	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_jet_plotter.cpp	/^	string Nchhad_class_from_int ( int Nchhad ) {$/;"	f	class:TJChargedHadronsInJetsPlotter	file:
 Nchhad_classes	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	vector<string> Nchhad_classes = 	{"0", 	"1", "2", "3", 	"geq4"};$/;"	m	class:TJChargedHadronsInCorrectedJetsPlotter	file:
@@ -485,6 +501,7 @@ SUFFIXES	build/Makefile	/^SUFFIXES =$/;"	m
 SearchSingleTJJetMC	src/TJRoutines/TJSingleJetAnalysis.cc	/^void JakobsVBSProcessor::SearchSingleTJJetMC ($/;"	f	class:JakobsVBSProcessor
 SearchSingleTJJetPFO	src/TJRoutines/TJSingleJetAnalysis.cc	/^void JakobsVBSProcessor::SearchSingleTJJetPFO ( $/;"	f	class:JakobsVBSProcessor
 SearchSingleTJJetParticles	src/TJRoutines/TJSingleJetAnalysis.cc	/^void JakobsVBSProcessor::SearchSingleTJJetParticles( $/;"	f	class:JakobsVBSProcessor
+SeparationCurvePlotter	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^class SeparationCurvePlotter : public Plotter {$/;"	c	file:
 SetDetectorLevelBranches	src/TreeBranches/DetectorLevelBranches.cc	/^void JakobsVBSProcessor::SetDetectorLevelBranches( EventInfo &info ) {$/;"	f	class:JakobsVBSProcessor
 SetFileInfoBranches	src/TreeBranches/FileInfoBranches.cc	/^void JakobsVBSProcessor::SetFileInfoBranches( FileInfo &file_info ) {$/;"	f	class:JakobsVBSProcessor
 SetGeneralEventInfoBranches	src/TreeBranches/GeneralEventInfoBranches.cc	/^void JakobsVBSProcessor::SetGeneralEventInfoBranches( EventInfo &info ) {$/;"	f	class:JakobsVBSProcessor
@@ -493,6 +510,8 @@ SetTJMCsInJetsBranches	src/TreeBranches/TJMCsInJetsBranches.cc	/^void JakobsVBSP
 SetTJRecosInJetsBranches	src/TreeBranches/TJRecosInJetsBranches.cc	/^void JakobsVBSProcessor::SetTJRecosInJetsBranches(EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 SetTrueJetLevelBranches	src/TreeBranches/TJLevelBranches.cc	/^void JakobsVBSProcessor::SetTrueJetLevelBranches( EventInfo &info ) {$/;"	f	class:JakobsVBSProcessor
 SplitWeight	src/TJRoutines/TJSingleJetAnalysis.cc	/^void JakobsVBSProcessor::SplitWeight( $/;"	f	class:JakobsVBSProcessor
+TGraph_map	analysis/complete_plotting/include/plotter.h	/^	map<string, int> TGraph_map;$/;"	m	class:Plotter
+TGraph_vector	analysis/complete_plotting/include/plotter.h	/^	vector<TGraph*> TGraph_vector;$/;"	m	class:Plotter
 TH1D_map	analysis/complete_plotting/include/plotter.h	/^	map<string, int> TH1D_map;$/;"	m	class:Plotter
 TH1D_result	analysis/parameter_optimization/include/result_class.h	/^	TH1D* TH1D_result;$/;"	m	class:ResultStorage
 TH1D_result_vector	analysis/parameter_optimization/include/result_class.h	/^	vector<TH1D*> TH1D_result_vector;$/;"	m	class:ResultStorage
@@ -509,6 +528,7 @@ TJCheatedObservables	include/InformationStorages/TJInformation.h	/^struct TJChea
 TJCorrectedJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^class TJCorrectedJetsPlotter : public Plotter {$/;"	c	file:
 TJCorrectedLowEJetsPlotter	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^class TJCorrectedLowEJetsPlotter : public Plotter {$/;"	c	file:
 TJEventInfo	include/InformationStorages/TJInformation.h	/^class TJEventInfo {$/;"	c
+TJGetCustomPairingRecoMasses	src/TJRoutines/TJCheatEventSteps.cc	/^void JakobsVBSProcessor::TJGetCustomPairingRecoMasses(EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 TJGetInitialCNRecoMasses	src/TJRoutines/TJCheatEventSteps.cc	/^void JakobsVBSProcessor::TJGetInitialCNRecoMasses(EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 TJINFORMATION_H	include/InformationStorages/TJInformation.h	2;"	d
 TJJetEnergyResolutionPlotter	analysis/complete_plotting/plotters/TJ/TJ_jet_energy_resolution_plotter.cpp	/^class TJJetEnergyResolutionPlotter : public Plotter {$/;"	c	file:
@@ -578,7 +598,9 @@ TJ_jets_true_of_detectable_mass	analysis/complete_plotting/include/plotter.h	/^	
 TJ_jets_true_of_detectable_p	analysis/complete_plotting/include/plotter.h	/^	float* TJ_jets_true_of_detectable_p;$/;"	m	class:Plotter
 TJ_jets_true_p	analysis/complete_plotting/include/plotter.h	/^	float* TJ_jets_true_p;$/;"	m	class:Plotter
 TJ_pair1_mass_from_icn	analysis/complete_plotting/include/plotter.h	/^  float TJ_pair1_mass_from_icn;$/;"	m	class:Plotter
+TJ_pair1_mass_from_icn_custom_pairing	analysis/complete_plotting/include/plotter.h	/^  float TJ_pair1_mass_from_icn_custom_pairing;$/;"	m	class:Plotter
 TJ_pair2_mass_from_icn	analysis/complete_plotting/include/plotter.h	/^  float TJ_pair2_mass_from_icn;$/;"	m	class:Plotter
+TJ_pair2_mass_from_icn_custom_pairing	analysis/complete_plotting/include/plotter.h	/^  float TJ_pair2_mass_from_icn_custom_pairing;$/;"	m	class:Plotter
 TJ_reco_total_E	analysis/complete_plotting/include/plotter.h	/^	float TJ_reco_total_E;$/;"	m	class:Plotter
 TJjets_custom_pairing	include/InformationStorages/TJInformation.h	/^  TJCheatedObservables TJjets_custom_pairing;$/;"	m	class:TJEventInfo
 TJjets_from_initital_cn	include/InformationStorages/TJInformation.h	/^  TJCheatedObservables TJjets_from_initital_cn;$/;"	m	class:TJEventInfo
@@ -617,6 +639,7 @@ _colFastJets	include/JakobsVBSProcessor.h	/^  std::string _colFastJets;$/;"	m	cl
 _colIsoleps	include/JakobsVBSProcessor.h	/^  std::string _colIsoleps;$/;"	m	class:JakobsVBSProcessor
 _colMC	include/JakobsVBSProcessor.h	/^  std::string _colMC;$/;"	m	class:JakobsVBSProcessor
 _colPFOsFromFastJet	include/JakobsVBSProcessor.h	/^  std::string _colPFOsFromFastJet;$/;"	m	class:JakobsVBSProcessor
+_colSLDecays	include/JakobsVBSProcessor.h	/^  std::string _colSLDecays;$/;"	m	class:JakobsVBSProcessor
 _datatrain	include/JakobsVBSProcessor.h	/^  TTree* _datatrain;$/;"	m	class:JakobsVBSProcessor
 _finalColourNeutralCollectionName	include/Adjusted_TrueJet_Parser.h	/^  std::string _finalColourNeutralCollectionName;$/;"	m	class:Adjusted_TrueJet_Parser
 _finalColourNeutralCollectionName	include/TrueJet_Parser.h	/^  std::string _finalColourNeutralCollectionName;$/;"	m	class:TrueJet_Parser
@@ -644,17 +667,22 @@ _trueJetMCParticleLink	include/Adjusted_TrueJet_Parser.h	/^  std::string _trueJe
 _trueJetMCParticleLink	include/TrueJet_Parser.h	/^  std::string _trueJetMCParticleLink ;$/;"	m	class:TrueJet_Parser
 _trueJetPFOLink	include/Adjusted_TrueJet_Parser.h	/^  std::string _trueJetPFOLink ;$/;"	m	class:Adjusted_TrueJet_Parser
 _trueJetPFOLink	include/TrueJet_Parser.h	/^  std::string _trueJetPFOLink ;$/;"	m	class:TrueJet_Parser
+add_ILD_mark	analysis/comparisons/comparison_separation_curves/create_separation_curve_comparison.cpp	/^shared_ptr<TLatex> add_ILD_mark( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.25 ) {$/;"	f
+add_ILD_mark	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^shared_ptr<TLatex> add_ILD_mark( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.25 ) {$/;"	f
 add_TH1D_result	analysis/parameter_optimization/include/result_class.h	/^		void add_TH1D_result ( TH1D* _TH1D_result ) {$/;"	f	class:ResultStorage
 add_TH2D_result	analysis/parameter_optimization/include/result_class.h	/^		void add_TH2D_result ( TH2D* _TH2D_result ) {$/;"	f	class:ResultStorage
 add_TProfile2D_result	analysis/parameter_optimization/include/result_class.h	/^		void add_TProfile2D_result ( TProfile2D* _TProfile2D_result ) {$/;"	f	class:ResultStorage
 add_TProfile_result	analysis/parameter_optimization/include/result_class.h	/^		void add_TProfile_result ( TProfile* _TProfile_result ) {$/;"	f	class:ResultStorage
 add_file_info	analysis/complete_plotting/include/InfoStorage.h	/^		void add_file_info(string filename, string class_name, string final_state, string polarization, float xsection) {$/;"	f	class:InfoStorage
+add_new_TGraph	analysis/complete_plotting/include/plotter.h	/^	void add_new_TGraph (string name, TGraph* hist) {$/;"	f	class:Plotter
 add_new_TH1D	analysis/complete_plotting/include/plotter.h	/^	void add_new_TH1D (string name, TH1D* hist) {$/;"	f	class:Plotter
 add_new_TH2D	analysis/complete_plotting/include/plotter.h	/^	void add_new_TH2D (string name, TH2D* hist) {$/;"	f	class:Plotter
 add_new_TH3D	analysis/complete_plotting/include/plotter.h	/^	void add_new_TH3D (string name, TH3D* hist) {$/;"	f	class:Plotter
 add_new_TProfile	analysis/complete_plotting/include/plotter.h	/^	void add_new_TProfile (string name, TProfile* hist) {$/;"	f	class:Plotter
 add_new_TProfile2D	analysis/complete_plotting/include/plotter.h	/^	void add_new_TProfile2D (string name, TProfile2D* hist) {$/;"	f	class:Plotter
 add_parameter_vector	analysis/parameter_optimization/include/parameter_vector.h	/^		void add_parameter_vector( vector<float> parameter_vector ){$/;"	f	class:ParameterSpaceVector
+add_prelim_mark	analysis/comparisons/comparison_separation_curves/create_separation_curve_comparison.cpp	/^shared_ptr<TLatex> add_prelim_mark( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.2 ) {$/;"	f
+add_prelim_mark	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^shared_ptr<TLatex> add_prelim_mark( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.2 ) {$/;"	f
 analyseEvent	src/VBSAnalysis.cc	/^void JakobsVBSProcessor::analyseEvent(	$/;"	f	class:JakobsVBSProcessor
 analyseGeneratorLevelISR	src/TJRoutines/TJISRAnalysis.cc	/^void JakobsVBSProcessor::analyseGeneratorLevelISR(std::vector<ReconstructedParticleVec> TJ_jetPFOs_fromISR, EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
 analyseGeneratorLevelNeutrinos	src/GeneratorLevelChecks.cc	/^void JakobsVBSProcessor::analyseGeneratorLevelNeutrinos(std::vector<MCParticle*> MCparticles,EventInfo &info) {$/;"	f	class:JakobsVBSProcessor
@@ -670,6 +698,14 @@ calculate_parameter_points	analysis/parameter_optimization/include/parameter_vec
 calculate_polarization_weight	analysis/parameter_optimization/include/fileinfo.h	/^		void calculate_polarization_weight ( float e_pol_sign, float e_pol_percentage, float p_pol_sign, float p_pol_percentage) {$/;"	f	class:FileInfo
 calculate_polarization_weight	analysis/parameter_optimization/src/fileinfo_class.cpp	/^		void calculate_polarization_weight ( float e_pol_sign, float e_pol_percentage, float p_pol_sign, float p_pol_percentage) {$/;"	f	class:FileInfo
 calculate_weight_i	analysis/complete_plotting/include/InfoStorage.h	/^	void calculate_weight_i (int i) {$/;"	f	class:InfoStorage
+cheatjet_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_WW_eff, cheatjet_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_WW_eff, cheatjet_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_custompairing_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_custompairing_WW_eff, cheatjet_custompairing_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_custompairing_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_custompairing_WW_eff, cheatjet_custompairing_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_custompairing_perfectbtag_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_custompairing_perfectbtag_WW_eff, cheatjet_custompairing_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_custompairing_perfectbtag_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_custompairing_perfectbtag_WW_eff, cheatjet_custompairing_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_perfectbtag_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_perfectbtag_WW_eff, cheatjet_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+cheatjet_perfectbtag_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> cheatjet_perfectbtag_WW_eff, cheatjet_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
 check	src/JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::check( LCEvent * evt ) {$/;"	f	class:JakobsVBSProcessor
 checkMCFinalState	src/CollectionReaders.cc	/^std::vector<MCParticle*> JakobsVBSProcessor::checkMCFinalState(LCCollection* AllMC) {$/;"	f	class:JakobsVBSProcessor
 checkPOFinalState	src/CollectionReaders.cc	/^std::vector<ReconstructedParticle*> JakobsVBSProcessor::checkPOFinalState(LCCollection* AllPOs) {$/;"	f	class:JakobsVBSProcessor
@@ -698,12 +734,14 @@ cosTheta_miss	analysis/event_selection/eventClass.C	/^		float cosTheta_miss;$/;"
 cosTheta_miss	include/InformationStorages/EventInformation.h	/^		float cosTheta_miss;$/;"	m	class:Observables
 count	include/InformationStorages/TJTotalSingleJetInformation.h	/^	int count(){$/;"	f	class:Counter
 counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^  int counter;$/;"	m	class:Counter
+create_detector_and_icn_VV_m_comparison	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^void create_detector_and_icn_VV_m_comparison() {$/;"	f
 create_levels	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	void create_levels() {$/;"	f	class:TJNParticlesPlotter	file:
 create_parameter_point_plots	analysis/parameter_optimization/src/specifications.cpp	/^void ParameterPointCalculator::create_parameter_point_plots() {$/;"	f	class:ParameterPointCalculator
 create_performanceplots	Results/also_using_eRpL_samples_WRONG/Results_using_old_GenLevelClassif_noFlavourCheck/ilcsoft_01_17_11/Overlay_removal_performance/performance_forcedEjet_mjet0/create_performanceplots.cc	/^int create_performanceplots() {$/;"	f
 create_performanceplots	Results/also_using_eRpL_samples_WRONG/Results_using_old_GenLevelClassif_noFlavourCheck/ilcsoft_01_17_11/Overlay_removal_performance/performance_recoEjet/create_performanceplots.cc	/^int create_performanceplots() {$/;"	f
 create_performanceplots	analysis/overlay_removal_performance/create_performanceplots.cc	/^int create_performanceplots() {$/;"	f
 create_plots_all_points	analysis/parameter_optimization/src/specifications.cpp	/^void  Calculation::create_plots_all_points() {$/;"	f	class:Calculation
+create_separation_curve_comparison	analysis/comparisons/comparison_separation_curves/create_separation_curve_comparison.cpp	/^void create_separation_curve_comparison() {$/;"	f
 current_event_number	analysis/complete_plotting/include/plotter.h	/^	int current_event_number;$/;"	m	class:Plotter
 current_file	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		float current_file;$/;"	m	class:ParameterPointIterator
 current_file_index	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		int current_file_index = -1;$/;"	m	class:ParameterPointIterator
@@ -711,6 +749,8 @@ current_jet	include/InformationStorages/TJTotalSingleJetInformation.h	/^		int cu
 current_tree	analysis/complete_plotting/include/plotter.h	/^	TTree* current_tree;$/;"	m	class:Plotter
 current_weight	analysis/complete_plotting/include/plotter.h	/^	float current_weight;$/;"	m	class:Plotter
 current_weight	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		float current_weight;$/;"	m	class:ParameterPointCalculator
+cut_max	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	double cut_max = 250;$/;"	m	class:SeparationCurvePlotter	file:
+cut_min	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	double cut_min = 30;$/;"	m	class:SeparationCurvePlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_2nus4qs_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJQuarkJetsPlusNeutrinosPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJNParticlesPlotter	file:
 define_plots	analysis/complete_plotting/plotters/TJ/TJ_charged_hadron_in_corrected_jet_plotter.cpp	/^	void define_plots(){$/;"	f	class:TJChargedHadronsInCorrectedJetsPlotter	file:
@@ -733,7 +773,9 @@ define_plots	analysis/complete_plotting/plotters/all_selected_plotter.cpp	/^	voi
 define_plots	analysis/complete_plotting/plotters/cutflow_plotter.cpp	/^	void define_plots(){$/;"	f	class:CutflowPlotter	file:
 define_plots	analysis/complete_plotting/plotters/individual_quarks_plotter.cpp	/^	void define_plots(){$/;"	f	class:IndividualJetsPlotter	file:
 define_plots	analysis/complete_plotting/plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void define_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+define_plots	analysis/complete_plotting/plotters/mjj_vs_SLDecays_plotter.cpp	/^	void define_plots(){$/;"	f	class:MjjVsSLDecaysPlotter	file:
 define_plots	analysis/complete_plotting/plotters/mjjmjj_plotter.cpp	/^	void define_plots(){$/;"	f	class:MjjMjjPlotter	file:
+define_plots	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	void define_plots(){$/;"	f	class:SeparationCurvePlotter	file:
 define_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void define_plots(){$/;"	f	class:TailPlotter	file:
 define_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void define_plots(){$/;"	f	class:TestPlotter	file:
 define_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void define_plots(){$/;"	f	class:ThetaMPlotter	file:
@@ -770,7 +812,9 @@ draw_plots	analysis/complete_plotting/plotters/all_selected_plotter.cpp	/^	void 
 draw_plots	analysis/complete_plotting/plotters/cutflow_plotter.cpp	/^	void draw_plots(){$/;"	f	class:CutflowPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/individual_quarks_plotter.cpp	/^	void draw_plots(){$/;"	f	class:IndividualJetsPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void draw_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+draw_plots	analysis/complete_plotting/plotters/mjj_vs_SLDecays_plotter.cpp	/^	void draw_plots(){$/;"	f	class:MjjVsSLDecaysPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/mjjmjj_plotter.cpp	/^	void draw_plots(){$/;"	f	class:MjjMjjPlotter	file:
+draw_plots	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	void draw_plots(){$/;"	f	class:SeparationCurvePlotter	file:
 draw_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TailPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void draw_plots(){$/;"	f	class:TestPlotter	file:
 draw_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void draw_plots(){$/;"	f	class:ThetaMPlotter	file:
@@ -832,7 +876,9 @@ fill_plots	analysis/complete_plotting/plotters/all_selected_plotter.cpp	/^	void 
 fill_plots	analysis/complete_plotting/plotters/cutflow_plotter.cpp	/^	void fill_plots(){$/;"	f	class:CutflowPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/individual_quarks_plotter.cpp	/^	void fill_plots(){$/;"	f	class:IndividualJetsPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void fill_plots(){$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+fill_plots	analysis/complete_plotting/plotters/mjj_vs_SLDecays_plotter.cpp	/^	void fill_plots(){$/;"	f	class:MjjVsSLDecaysPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/mjjmjj_plotter.cpp	/^	void fill_plots(){$/;"	f	class:MjjMjjPlotter	file:
+fill_plots	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	void fill_plots(){$/;"	f	class:SeparationCurvePlotter	file:
 fill_plots	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TailPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void fill_plots(){$/;"	f	class:TestPlotter	file:
 fill_plots	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void fill_plots(){$/;"	f	class:ThetaMPlotter	file:
@@ -865,6 +911,8 @@ gamma_E_classes	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.
 gamma_class_labels	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<string> gamma_class_labels = {"E>5GeV", "E<5GeV"};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 gamma_classes	analysis/complete_plotting/plotters/TJ/TJ_photon_in_jet_plotter.cpp	/^	vector<string> gamma_classes = {"highE", "lowE"};$/;"	m	class:TJPhotonsInJetsPlotter	file:
 gen_level	include/InformationStorages/EventInformation.h	/^		Truth gen_level;$/;"	m	class:EventInfo
+genlevel_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> genlevel_WW_eff, genlevel_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+genlevel_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> genlevel_WW_eff, genlevel_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
 getAllVVTo4ParticleCombinations	include/VpairFinder.h	/^void JakobsVBSProcessor::getAllVVTo4ParticleCombinations ( std::vector<LCIOParticleType*> particles, std::vector<std::vector<std::vector<LCIOParticleType*>>> &VV_candidates ) {$/;"	f	class:JakobsVBSProcessor
 getFinalcn	src/Adjusted_TrueJet_Parser.cc	/^ ReconstructedParticleVec* Adjusted_TrueJet_Parser::getFinalcn(){$/;"	f	class:Adjusted_TrueJet_Parser
 getInitialcn	src/Adjusted_TrueJet_Parser.cc	/^ ReconstructedParticleVec* Adjusted_TrueJet_Parser::getInitialcn(){$/;"	f	class:Adjusted_TrueJet_Parser
@@ -873,6 +921,8 @@ getTJAllJets	src/TJRoutines/TrueJetReaders.cc	/^std::vector<ReconstructedParticl
 getTJTrueValueTLVsOfAllJets	src/TJRoutines/TrueJetReaders.cc	/^std::vector<TLorentzVector*> JakobsVBSProcessor::getTJTrueValueTLVsOfAllJets() {$/;"	f	class:JakobsVBSProcessor
 getVVCandidatesMasses	include/VpairFinder.h	/^void JakobsVBSProcessor::getVVCandidatesMasses( std::vector<std::vector<std::vector<LCIOParticleType*>>> VV_candidates, $/;"	f	class:JakobsVBSProcessor
 get_N_parameter_points	analysis/parameter_optimization/include/parameter_vector.h	/^		int get_N_parameter_points() {$/;"	f	class:ParameterSpaceVector
+get_TGraph	analysis/complete_plotting/include/plotter.h	/^	TGraph* get_TGraph (string name) {$/;"	f	class:Plotter
+get_TGraph_i	analysis/complete_plotting/include/plotter.h	/^	TGraph* get_TGraph_i (int i) { return TGraph_vector[i]; }$/;"	f	class:Plotter
 get_TH1D	analysis/complete_plotting/include/plotter.h	/^	TH1D* get_TH1D (string name) {$/;"	f	class:Plotter
 get_TH1D_i	analysis/complete_plotting/include/plotter.h	/^	TH1D* get_TH1D_i (int i) { return TH1D_vector[i]; }$/;"	f	class:Plotter
 get_TH1D_result	analysis/parameter_optimization/include/result_class.h	/^		TH1D* get_TH1D_result() {$/;"	f	class:ResultStorage
@@ -896,6 +946,7 @@ get_TProfile_result	analysis/parameter_optimization/include/result_class.h	/^		T
 get_TProfile_result_by_index	analysis/parameter_optimization/include/result_class.h	/^		TProfile* get_TProfile_result_by_index( int index ) {$/;"	f	class:ResultStorage
 get_TProfile_vector	analysis/parameter_optimization/include/result_class.h	/^		vector<TProfile*> get_TProfile_vector() {$/;"	f	class:ResultStorage
 get_class_name_i	analysis/complete_plotting/include/InfoStorage.h	/^		string get_class_name_i (int i) {$/;"	f	class:InfoStorage
+get_comparison_stack	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^shared_ptr<THStack> get_comparison_stack( string comparison_name, TH1D* level1_m_WW, TH1D* level1_m_ZZ, TH1D* level2_m_WW, TH1D* level2_m_ZZ, TH1D* level3_m_WW = NULL, TH1D* level3_m_ZZ = NULL) {$/;"	f
 get_current_tree	analysis/complete_plotting/include/plotter.h	/^	TTree* get_current_tree(){$/;"	f	class:Plotter
 get_current_weight	analysis/complete_plotting/include/plotter.h	/^	float get_current_weight() { return current_weight; }$/;"	f	class:Plotter
 get_e_polarization_sign_i	analysis/complete_plotting/include/InfoStorage.h	/^		int get_e_polarization_sign_i (int i) {$/;"	f	class:InfoStorage
@@ -911,6 +962,7 @@ get_final_state_i	analysis/complete_plotting/include/InfoStorage.h	/^		string ge
 get_float	analysis/parameter_optimization/include/tree_readout.h	/^		int get_float( string variable_name ) {$/;"	f	class:TTreeReadout
 get_int	analysis/parameter_optimization/include/tree_readout.h	/^		int get_int( string variable_name ) {$/;"	f	class:TTreeReadout
 get_next_event	analysis/complete_plotting/include/plotter.h	/^	bool get_next_event() {$/;"	f	class:Plotter
+get_number_TGraphs	analysis/complete_plotting/include/plotter.h	/^	int get_number_TGraphs() { return TH1D_vector.size(); }$/;"	f	class:Plotter
 get_number_TH1Ds	analysis/complete_plotting/include/plotter.h	/^	int get_number_TH1Ds() { return TH1D_vector.size(); }$/;"	f	class:Plotter
 get_number_TH2Ds	analysis/complete_plotting/include/plotter.h	/^	int get_number_TH2Ds() { return TH2D_vector.size(); }$/;"	f	class:Plotter
 get_number_TH3Ds	analysis/complete_plotting/include/plotter.h	/^	int get_number_TH3Ds() { return TH3D_vector.size(); }$/;"	f	class:Plotter
@@ -925,8 +977,10 @@ get_parameter	analysis/parameter_optimization/include/parameter_point_calculator
 get_parameter_point	analysis/parameter_optimization/include/parameter_point_iterator.h	/^		vector<float> get_parameter_point() {$/;"	f	class:ParameterPointIterator
 get_parameter_point	analysis/parameter_optimization/include/parameter_vector.h	/^		vector<float> get_parameter_point( int point_index ) {$/;"	f	class:ParameterSpaceVector
 get_polarization_string_i	analysis/complete_plotting/include/InfoStorage.h	/^		string get_polarization_string_i (int i) {$/;"	f	class:InfoStorage
+get_ratio_plot	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^TH1D* get_ratio_plot( string ratio_name, TH1D* numerator, TH1D* denominator) {$/;"	f
 get_ratio_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_jets_plotter.cpp	/^	void get_ratio_plot( TH1D* plot, TH1D* ratio_plot ) {$/;"	f	class:TJCorrectedJetsPlotter	file:
 get_ratio_plot	analysis/complete_plotting/plotters/TJ/TJ_corrected_lowE_jets_plotter.cpp	/^	void get_ratio_plot( TH1D* plot, TH1D* ratio_plot ) {$/;"	f	class:TJCorrectedLowEJetsPlotter	file:
+get_ratio_stack	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^shared_ptr<THStack> get_ratio_stack( string ratio_name, TH1D* numerator_m_WW, TH1D* numerator_m_ZZ, TH1D* denominator_m_WW, TH1D* denominator_m_ZZ, string y_title ) {$/;"	f
 get_recoMCTruthLink	include/Adjusted_TrueJet_Parser.h	/^  virtual    std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ;};$/;"	f	class:Adjusted_TrueJet_Parser
 get_recoMCTruthLink	include/JakobsVBSProcessor.h	/^  std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ; } ;$/;"	f	class:JakobsVBSProcessor
 get_recoMCTruthLink	include/TrueJet_Parser.h	/^  virtual    std::string get_recoMCTruthLink(){ return _recoMCTruthLink  ;};$/;"	f	class:TrueJet_Parser
@@ -1097,6 +1151,7 @@ main	build/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int 
 main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 makeNTuple	src/JakobsVBSProcessor.cc	/^void JakobsVBSProcessor::makeNTuple() {$/;"	f	class:JakobsVBSProcessor
+mark_preliminary	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^shared_ptr<TLatex> mark_preliminary( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.25, Float_t text_angle=60 ) {$/;"	f
 mass	include/InformationStorages/EventInformation.h	/^		float mass;$/;"	m	class:JetInfo
 mass	include/InformationStorages/TJTotalSingleJetInformation.h	/^		float mass[__max_Njets];$/;"	m	class:TrueJetLevel
 mass	include/jet_corrections.h	/^double mass ( double E, double p ) {$/;"	f
@@ -1124,6 +1179,10 @@ miss_mass	analysis/parameter_optimization/include/tree_readout.h	/^		float 	miss
 miss_mass	include/InformationStorages/EventInformation.h	/^		float miss_mass; \/\/ Also called: recoil mass$/;"	m	class:Observables
 miss_tlv	include/InformationStorages/EventInformation.h	/^		TLorentzVector miss_tlv;$/;"	m	class:Observables
 myfunc3	analysis/fit_test/other.cpp	/^double myfunc3(double *x, double *par) {$/;"	f
+n_BSLD	analysis/complete_plotting/include/plotter.h	/^	int n_BSLD;$/;"	m	class:Plotter
+n_BSLDecays	include/InformationStorages/EventInformation.h	/^		int n_BSLDecays;$/;"	m	class:Truth
+n_CSLD	analysis/complete_plotting/include/plotter.h	/^	int n_CSLD;$/;"	m	class:Plotter
+n_CSLDecays	include/InformationStorages/EventInformation.h	/^		int n_CSLDecays;$/;"	m	class:Truth
 name	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	string name;$/;"	m	struct:LevelStep	file:
 need_1D_arrays	analysis/complete_plotting/include/plotter.h	/^	bool need_1D_arrays = false;$/;"	m	class:Plotter
 need_2D_arrays	analysis/complete_plotting/include/plotter.h	/^	bool need_2D_arrays = false;$/;"	m	class:Plotter
@@ -1288,7 +1347,11 @@ quarks	include/InformationStorages/EventInformation.h	/^		TrueParticleInfo quark
 ranges	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	vector<NRange> ranges;$/;"	m	class:TJNParticlesPlotter	file:
 re	.ycm_extra_conf.py	/^import re$/;"	i
 reco_E	include/InformationStorages/TJTotalSingleJetInformation.h	/^	float reco_E[__max_Njets][__max_Nparticles];$/;"	m	class:TJRecoParticleAsTypeIDd
+reco_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> reco_WW_eff, reco_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+reco_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> reco_WW_eff, reco_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
 reco_counter	include/InformationStorages/TJTotalSingleJetInformation.h	/^	Counter reco_counter;$/;"	m	class:JetParticleTypeInfo
+reco_perfectbtag_WW_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> reco_perfectbtag_WW_eff, reco_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
+reco_perfectbtag_ZZ_eff	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> reco_perfectbtag_WW_eff, reco_perfectbtag_ZZ_eff;$/;"	m	class:SeparationCurvePlotter	file:
 reco_system	include/InformationStorages/TJInformation.h	/^	TJLevelInfo reco_system;$/;"	m	class:TJEventInfo
 recos_IDd_as_type	include/InformationStorages/TJTotalSingleJetInformation.h	/^	TJRecoParticleAsTypeIDd recos_IDd_as_type;$/;"	m	class:JetParticleTypeInfo
 relfcn	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* relfcn ;$/;"	m	class:Adjusted_TrueJet_Parser
@@ -1305,6 +1368,7 @@ reltjreco	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* reltjreco
 reltjreco	include/TrueJet_Parser.h	/^    LCRelationNavigator* reltjreco ;$/;"	m	class:TrueJet_Parser
 reltrue_tj	include/Adjusted_TrueJet_Parser.h	/^    LCRelationNavigator* reltrue_tj ;$/;"	m	class:Adjusted_TrueJet_Parser
 reltrue_tj	include/TrueJet_Parser.h	/^    LCRelationNavigator* reltrue_tj ;$/;"	m	class:TrueJet_Parser
+renormalize_axis_sizes	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^void renormalize_axis_sizes( shared_ptr<THStack> stack, double canvas_size_ratio ) {$/;"	f
 reset	include/InformationStorages/TJTotalSingleJetInformation.h	/^	void reset(){$/;"	f	class:Counter
 reset_type_counters	include/InformationStorages/TJTotalSingleJetInformation.h	/^	void reset_type_counters() {$/;"	f	class:JetParticleTypeInfo
 result_storage	analysis/parameter_optimization/include/parameter_point_calculator.h	/^		ResultStorage result_storage;$/;"	m	class:ParameterPointCalculator
@@ -1329,6 +1393,7 @@ save_results	analysis/parameter_optimization/src/specifications.cpp	/^void Calcu
 seen	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	JetLevel seen =  		JetLevel("detected particles reco values",$/;"	m	class:TJNParticlesPlotter	file:
 seen_partics	include/Adjusted_TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:Adjusted_TrueJet_Parser
 seen_partics	include/TrueJet_Parser.h	/^  const ReconstructedParticleVec& seen_partics(int ijet) { return jets->at(ijet)->getParticles(); };$/;"	f	class:TrueJet_Parser
+separator_masses	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    vector<double> separator_masses;$/;"	m	class:SeparationCurvePlotter	file:
 set_1D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_1D_array_reading( bool need ) { need_1D_arrays = need; }$/;"	f	class:Plotter
 set_2D_array_reading	analysis/complete_plotting/include/plotter.h	/^	void set_2D_array_reading( bool need ) { need_2D_arrays = need; }$/;"	f	class:Plotter
 set_TH1D_result	analysis/parameter_optimization/include/result_class.h	/^		void set_TH1D_result ( TH1D* _TH1D_result ) {$/;"	f	class:ResultStorage
@@ -1364,7 +1429,9 @@ set_plotter_settings	analysis/complete_plotting/plotters/all_selected_plotter.cp
 set_plotter_settings	analysis/complete_plotting/plotters/cutflow_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:CutflowPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/individual_quarks_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:IndividualJetsPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/mjj_reco_quark_pdg_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:RecoMjjVSQuarkPDGPlotter	file:
+set_plotter_settings	analysis/complete_plotting/plotters/mjj_vs_SLDecays_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:MjjVsSLDecaysPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/mjjmjj_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:MjjMjjPlotter	file:
+set_plotter_settings	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:SeparationCurvePlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/tail_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TailPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/test_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:TestPlotter	file:
 set_plotter_settings	analysis/complete_plotting/plotters/theta_m_plotter.cpp	/^	void set_plotter_settings() {$/;"	f	class:ThetaMPlotter	file:
@@ -1372,7 +1439,10 @@ set_plotter_settings	analysis/complete_plotting/plotters/trueISR_E_over_jetmass.
 set_plotters	analysis/complete_plotting/src/configuration.cpp	/^void set_plotters(vector<Plotter*> &plotters) {$/;"	f
 set_setup	analysis/complete_plotting/include/InfoStorage.h	/^		void set_setup (float _luminosity, float _e_beam_polarization, float _p_beam_polarization) {$/;"	f	class:InfoStorage
 set_tree_adresses	analysis/complete_plotting/include/plotter.h	/^	void set_tree_adresses () {$/;"	f	class:Plotter
+step_size	analysis/complete_plotting/plotters/separation_curve_plotter.cpp	/^    double step_size = (cut_max - cut_min) \/ double(N_steps); $/;"	m	class:SeparationCurvePlotter	file:
 steps	analysis/complete_plotting/plotters/TJ/TJ_Nparticles_plotter.cpp	/^	vector<LevelStep> steps;$/;"	m	class:TJNParticlesPlotter	file:
+string_to_float	analysis/comparisons/comparison_separation_curves/create_separation_curve_comparison.cpp	/^float string_to_float( string str ) {$/;"	f
+string_to_float	analysis/comparisons/comparisons_ls_and_cheated/create_detector_and_icn_VV_m_comparison.cpp	/^float string_to_float( string str ) {$/;"	f
 sum_E_q	analysis/complete_plotting/include/plotter.h	/^	float sum_E_q;$/;"	m	class:Plotter
 sum_E_q	analysis/event_selection/eventClass.C	/^		float sum_E_q;$/;"	m	class:TreeEvent	file:
 sum_E_q	analysis/parameter_optimization/include/tree_readout.h	/^				sum_E_q,        $/;"	m	class:TTreeReadout

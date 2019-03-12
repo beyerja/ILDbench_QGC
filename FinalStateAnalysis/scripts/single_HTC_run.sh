@@ -13,6 +13,7 @@ for possible_lib in $( ls /cvmfs/ilc.desy.de/sw/x*_*_gcc*_sl*/v*/MarlinReco/v*/l
 done
 export MARLIN_DLL=${MARLIN_DLL}:/afs/desy.de/user/b/beyerjac/flc/VBS/LocalMarlinReco/lib/libMarlinReco.so
 
+export MARLIN_DLL=${MARLIN_DLL}:/afs/desy.de/user/b/beyerjac/flc/VBS/Yasser_JERJES/lib/libILDbench_JERandJES.so
 
 cd ${VBSdir}/xml/$1
 Marlin $2

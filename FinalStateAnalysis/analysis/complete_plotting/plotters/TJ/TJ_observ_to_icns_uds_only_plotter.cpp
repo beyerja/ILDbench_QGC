@@ -15,6 +15,11 @@ class TJObservToICNsOnlyUDSPlotter : public Plotter {
 		add_new_TH1D("m_ZZ_uds", new TH1D("m_ZZ_uds", "using reco of inital cns, w/ cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 		add_new_TH2D("m_m_WW_uds", new TH2D("m_m_WW_uds", "using reco of inital cns, w/ cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 		add_new_TH2D("m_m_ZZ_uds", new TH2D("m_m_ZZ_uds", "using reco of inital cns, w/ cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+
+		add_new_TH1D("m_WW_uds_nocuts", new TH1D("m_WW_uds_nocuts", "using reco of inital cns, no cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+		add_new_TH1D("m_ZZ_uds_nocuts", new TH1D("m_ZZ_uds_nocuts", "using reco of inital cns, no cuts, only uds; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+		add_new_TH2D("m_m_WW_uds_nocuts", new TH2D("m_m_WW_uds_nocuts", "using reco of inital cns, no cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+		add_new_TH2D("m_m_ZZ_uds_nocuts", new TH2D("m_m_ZZ_uds_nocuts", "using reco of inital cns, no cuts, only uds; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 	}
 
 	void fill_plots(){
@@ -22,22 +27,28 @@ class TJObservToICNsOnlyUDSPlotter : public Plotter {
 
 		// This is the loop over all events
 		while ( get_next_event() ) {
-			if ( pass_selection == 1 ) {
 
-				bool has_heavy_q = false;
-				for ( int i=0; i<4; i++ ) {
-					if ( fabs(true_quarks_pdg_id[i]) > 3 )  {
-						has_heavy_q = true;
-						break;
-					}
+			bool has_heavy_q = false;
+			for ( int i=0; i<4; i++ ) {
+				if ( fabs(true_quarks_pdg_id[i]) > 3 )  {
+					has_heavy_q = true;
+					break;
 				}
-				if ( has_heavy_q ) { continue; }
+			}
+			if ( has_heavy_q ) { continue; }
 
-				if ( true_evt_type == 1 ) {
+			if ( true_evt_type == 1 ) {
+				get_TH1D("m_WW_uds_nocuts")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
+				get_TH2D("m_m_WW_uds_nocuts")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
+				if ( pass_selection == 1 ) {
 					get_TH1D("m_WW_uds")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
 					get_TH2D("m_m_WW_uds")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
 				}
-				else if ( true_evt_type == 2 ) {
+			}
+			else if ( true_evt_type == 2 ) {
+				get_TH1D("m_ZZ_uds_nocuts")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
+				get_TH2D("m_m_ZZ_uds_nocuts")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
+				if ( pass_selection == 1 ) {
 					get_TH1D("m_ZZ_uds")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
 					get_TH2D("m_m_ZZ_uds")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
 				}

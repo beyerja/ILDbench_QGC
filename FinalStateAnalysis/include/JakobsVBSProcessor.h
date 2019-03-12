@@ -125,6 +125,7 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
 	virtual void calculateTJTotalLevels( EventInfo &info );
 
   void TJGetInitialCNRecoMasses(EventInfo &info); 
+  void TJGetCustomPairingRecoMasses(EventInfo &info); 
 
   /** For TrueJet_Parser -> see its documentation
   */
@@ -159,6 +160,7 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
   std::string _colFastJets;
   std::string _colPFOsFromFastJet;
   std::string _colIsoleps;
+  std::string _colSLDecays;
   std::string _colMC;
 
   std::string _mcpfoRelation;
@@ -188,6 +190,9 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
 
   EventInfo info;
   FileInfo file_info;
+  
+  // tj is a pointer to a Trujet_Parser, with the data of this processor object:
+  Adjusted_TrueJet_Parser* tj {};
 
   /** Output File specifics
    */

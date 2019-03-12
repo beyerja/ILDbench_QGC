@@ -246,6 +246,9 @@ class Truth {
 		TrueParticleInfo nu1;
 		TrueParticleInfo nu2;
 
+		int n_CSLDecays;
+		int n_BSLDecays;
+
 		void init() {
 			eventType = 0;
 
@@ -259,6 +262,8 @@ class Truth {
 			nu1.init();
 			nu2.init();
 
+			n_CSLDecays = 0;
+			n_BSLDecays = 0;
 		} 
 
 };

@@ -193,8 +193,8 @@ class TJJetLevelsPlotter : public Plotter {
 				TProfile* profile_s_tos = get_TProfile(("profile_s_tos_" + variables[j] + "_" + particle_name).c_str());
 				profile_s_tos->SetLineColor(9100+i);
 				profile_s_tos->SetMarkerColor(9100+i);
-				profile_s_tos->SetMarkerSize(0.1);
-				legend_profile_s_tos->AddEntry(profile_s_tos, particle_name.c_str(), "l"); 
+				// profile_s_tos->SetMarkerSize(0.1);
+				legend_profile_s_tos->AddEntry(profile_s_tos, particle_name.c_str(), "lp"); 
 				profile_s_tos->Draw("same");
 
 			}
@@ -225,10 +225,10 @@ class TJJetLevelsPlotter : public Plotter {
 				TProfile* profile_s_t = get_TProfile(("profile_s_t_" + variables[j] + "_" + particle_name).c_str());
 				profile_s_t->SetLineColor(9100+i);
 				profile_s_t->SetMarkerColor(9100+i);
-				profile_s_t->SetMarkerSize(0.1);
-				legend_profile_s_t->AddEntry(profile_s_t, particle_name.c_str(), "l"); 
+				// profile_s_t->SetMarkerSize(0.1);
+				legend_profile_s_t->AddEntry(profile_s_t, particle_name.c_str(), "lp"); 
 				profile_s_t->Draw("same");
-  				profile_s_t->GetYaxis()->SetTitleOffset(1.38);
+				profile_s_t->GetYaxis()->SetTitleOffset(1.38);
 
 			}
 

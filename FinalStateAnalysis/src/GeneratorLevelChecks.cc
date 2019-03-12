@@ -164,7 +164,7 @@ void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles,
 	std::vector<std::vector<std::vector<MCParticle*>>> WW_candidates;
 	findAllowedVVCandidates( all_VV_candidates, WW_candidates, "WW" );
 
-	if ( ( ZZ_candidates.size() != 0) && ( WW_candidates.size() != 0) ) { streamlog_out(DEBUG) << " BOTH NOT EMPTY!!!" << std::endl;}
+	if ( ( ZZ_candidates.size() != 0) && ( WW_candidates.size() != 0) ) { streamlog_out(DEBUG4) << " BOTH NOT EMPTY!!!" << std::endl;}
 
 	if ( ( ZZ_candidates.size() == 0) && ( WW_candidates.size() == 0) ) {
 		// Does not fulfill requirements to be WW or ZZ
