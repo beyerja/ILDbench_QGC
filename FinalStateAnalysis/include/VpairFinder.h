@@ -146,11 +146,14 @@ template<typename LCIOParticleType>
 void JakobsVBSProcessor::findVpair(std::vector<LCIOParticleType*> particles, Observables &observ) {
 	/* In 4 jet topology find the (jet jet)=V (jet jet)=V combination which minimizes
  	some required function, here |mV1-mV2|*/
-
+  
+  streamlog_out(DEBUG3) << "In findVpair: Got " << particles.size() << " particles to be tested for VV pairs." << std::endl;
 	std::vector<std::vector<std::vector<LCIOParticleType*>>> VV_candidates;
 	getAllVVTo4ParticleCombinations( particles, VV_candidates ); 
+  streamlog_out(DEBUG3) << "In findVpair: Found " << VV_candidates.size() << " VV candidates." << std::endl;
 
 	int best_pair_index = findIndexBestPairInVVCandidates( VV_candidates );
+  streamlog_out(DEBUG3) << "In findVpair: Index of best pair: " << best_pair_index << " ." << std::endl;
 
 	std::vector<LCIOParticleType*> V1 = VV_candidates[best_pair_index][0];
 	std::vector<LCIOParticleType*> V2 = VV_candidates[best_pair_index][1];

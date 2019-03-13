@@ -229,7 +229,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
   std::vector<ReconstructedParticleVec> TJ_jetPFOs_allseen;
 
   for (int ijet=0 ; ijet< Njets_correct; ijet++ ) {
-    streamlog_out(DEBUG3) << " Number of PFOs used : " << seen_partics(ijet).size()   << std::endl;
+    streamlog_out(DEBUG2) << " Number of PFOs used : " << seen_partics(ijet).size()   << std::endl;
     if (  seen_partics(ijet).size() > 0 ) {
       ReconstructedParticleVec ijetPFOs_correct = seen_partics(ijet); // seen_partics(...) is function of TrueJet_Parser, see header
       TJ_jetPFOs_allseen.push_back(ijetPFOs_correct);

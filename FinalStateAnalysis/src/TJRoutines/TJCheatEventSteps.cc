@@ -84,7 +84,7 @@ void JakobsVBSProcessor::TJGetCustomPairingRecoMasses(EventInfo &info) {
       // Jet types: 1 string, 2 lepton, 3 cluster, 4 ISR, 5 overlay.
       int jet_type =  type_jet(ijet);
       streamlog_out(DEBUG3) << jet_type;
-      if ( ( jet_type % 100 == 1 ) || ( jet_type % 100 == 3 ) ) {
+      if ( ( jet_type % 100 == 1 ) || ( jet_type % 100 == 3 ) ) { // According to TrueJet marking of hadronic jets
         (TJindices_to_initial_quarks[initial_elementon(ijet)]).push_back(ijet);
         streamlog_out(DEBUG3) << "(hadronic)";
       }
@@ -96,8 +96,9 @@ void JakobsVBSProcessor::TJGetCustomPairingRecoMasses(EventInfo &info) {
   streamlog_out(DEBUG3) << std::endl;
 
   streamlog_out(DEBUG4) << "In TJGetCustomPairingRecoMasses: Found " << TJindices_to_initial_quarks.size() << " initial quark jets." << std::endl;
-  if ( TJindices_to_initial_quarks.size() != 4 ) {
-    streamlog_out(WARNING) << "In TJGetCustomPairingRecoMasses: Not 4 initial quark vectors!" << std::endl;
+  if ( TJindices_to_initial_quarks.size() > 4 ) {
+    // Less than 4 is okay if one did not produce particles detected by detector -> Just use as 0 four-momentum
+    streamlog_out(WARNING) << "In TJGetCustomPairingRecoMasses: More than 4 initial quark vectors!" << std::endl;
     info.TJ_eventinfo.TJjets_custom_pairing.pair1_mass = 0;
     info.TJ_eventinfo.TJjets_custom_pairing.pair2_mass = 0;
     return;
@@ -117,6 +118,19 @@ void JakobsVBSProcessor::TJGetCustomPairingRecoMasses(EventInfo &info) {
     jet_to_initial_quark->setEnergy  (tlv_to_initial_quark.E());
     jet_to_initial_quark->setMass    (tlv_to_initial_quark.M());
     TJrecojets_to_initial_quarks.push_back(dynamic_cast<ReconstructedParticle*> (jet_to_initial_quark));
+  }
+  
+  if ( TJrecojets_to_initial_quarks.size() < 4 ) {
+    streamlog_out(DEBUG4) << "In TJGetCustomPairingRecoMasses: Adding " << 4-TJrecojets_to_initial_quarks.size() << " 0-energy jets to account for unobserved quarks." << std::endl;
+    streamlog_out(DEBUG3) << "In TJGetCustomPairingRecoMasses: Adding empty jet: ";
+    for ( int i_new=0; i_new<5-TJrecojets_to_initial_quarks.size(); i_new++ ){
+      ReconstructedParticleImpl* empty_jet = new ReconstructedParticleImpl;
+      double zero_momentum[3] = {0, 0, 0};
+      empty_jet->setMomentum(zero_momentum); empty_jet->setEnergy(0); empty_jet->setMass(0);
+      TJrecojets_to_initial_quarks.push_back(dynamic_cast<ReconstructedParticle*> (empty_jet));
+      streamlog_out(DEBUG3) << i_new << " ";
+    }
+    streamlog_out(DEBUG3) << std::endl;
   }
   
   Observables initial_quark_jets_observables {};
