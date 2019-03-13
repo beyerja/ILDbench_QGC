@@ -7,3 +7,5 @@
 /xml/tmp*
 tags
 *.swp
+/CMakeLists.txt
+*.ycm_extra_conf.py
