@@ -1,0 +1,34 @@
+<marlin>
+	<execute>
+    <processor name="MyTrueJet"/> 
+    <processor name="MyTJJetRecoParticleFinder"/> 
+	</execute>
+
+	<global>
+		<parameter name="LCIOInputFiles">
+	    /pnfs/desy.de/ilc/prod/ilc/mc-opt-3/ild/dst-merged/1000-B1b_ws/6f_vvWW/ILD_l5_o1_v02/v02-00-02/rv02-00-02.sv02-00-02.mILD_l5_o1_v02.E1000-B1b_ws.I35867.Pvvxyyx.eL.pR.n001.d_dstm_11117_0.slcio
+		</parameter>
+		<parameter name="MaxRecordNumber" value="200" />  
+		<parameter name="SkipNEvents" value="0" />  
+		<parameter name="SupressCheck" value="false" />  
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">DEBUG4</parameter>
+		<parameter name="AllowToModifyEvent" value="true" />
+	</global>
+
+	<!-- Processor that constructs correct jets from PFO links to generator level particles -->
+	<processor name="MyTrueJet" type="TrueJet">
+    <parameter name="MCParticleCollection" type="string" lcioInType="MCParticle"> MCParticle </parameter>
+		<parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">WARNING1</parameter>
+	</processor>
+
+  <processor name="MyTJJetRecoParticleFinder" type="TJJetRecoParticleFinder">
+    <parameter name="RecosFromHadronicJets" type="string" lcioOutType="ReconstructedParticle"> RecosFromHadronicJets </parameter>
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT">DEBUG1</parameter>
+  </processor>
+</marlin>
+
+
+
+
+
+
