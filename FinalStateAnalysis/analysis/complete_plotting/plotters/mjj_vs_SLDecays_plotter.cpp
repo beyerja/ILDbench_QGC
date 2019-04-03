@@ -26,6 +26,9 @@ class MjjVsSLDecaysPlotter : public Plotter {
 		add_new_TH1D("m_WW_icn_noSLD", new TH1D("m_WW_icn_noSLD", "w/ cuts, from icns, no C/B-Had SLDecay; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 		add_new_TH1D("m_ZZ_icn_noSLD", new TH1D("m_ZZ_icn_noSLD", "w/ cuts, from icns, no C/B-Had SLDecay; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 
+		add_new_TH2D("m_m_WW_icn_noSLD", new TH2D("m_m_WW_icn_noSLD", "w/ cuts, from icns, no C/B-Had SLDecay; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+		add_new_TH2D("m_m_ZZ_icn_noSLD", new TH2D("m_m_ZZ_icn_noSLD", "w/ cuts, from icns, no C/B-Had SLDecay; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+
 
 		add_new_TH1D("m_WW_wBSLD", new TH1D("m_WW_wBSLD", "w/ cuts, any B-Had SLDecays; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
 		add_new_TH1D("m_ZZ_wBSLD", new TH1D("m_ZZ_wBSLD", "w/ cuts, any B-Had SLDecays; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
@@ -69,6 +72,7 @@ class MjjVsSLDecaysPlotter : public Plotter {
 						get_TH1D("m_WW_noSLD")->Fill((pair1_mass+pair2_mass)/2., weight);			
 						get_TH2D("m_m_WW_noSLD")->Fill(pair1_mass, pair2_mass, weight);			
 						get_TH1D("m_WW_icn_noSLD")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);			
+						get_TH2D("m_m_WW_icn_noSLD")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);			
 					} else {
 						get_TH1D("m_WW_wSLD")->Fill((pair1_mass+pair2_mass)/2., weight);			
 						get_TH2D("m_m_WW_wSLD")->Fill(pair1_mass, pair2_mass, weight);			
@@ -97,6 +101,7 @@ class MjjVsSLDecaysPlotter : public Plotter {
 						get_TH1D("m_ZZ_noSLD")->Fill((pair1_mass+pair2_mass)/2., weight);			
 						get_TH2D("m_m_ZZ_noSLD")->Fill(pair1_mass, pair2_mass, weight);			
 						get_TH1D("m_ZZ_icn_noSLD")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);			
+						get_TH2D("m_m_ZZ_icn_noSLD")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);			
 					} else {
 						get_TH1D("m_ZZ_wSLD")->Fill((pair1_mass+pair2_mass)/2., weight);			
 						get_TH2D("m_m_ZZ_wSLD")->Fill(pair1_mass, pair2_mass, weight);			

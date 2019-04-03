@@ -115,6 +115,15 @@ shared_ptr<TLatex> mark_preliminary( shared_ptr<TCanvas> canvas, Double_t x0, Do
   return prelim_tex;
 }
 
+void adjust_canvas_left_to_square_pad(shared_ptr<TCanvas> canvas) {
+  double vertical_square_fraction   = 1.0 - canvas->GetTopMargin() - canvas->GetBottomMargin();
+  double width_to_height_ratio      = double(canvas->GetWindowWidth()) / double(canvas->GetWindowHeight()); 
+  double horizontal_square_fraction = vertical_square_fraction / width_to_height_ratio;
+  double left_margin = 1.0 - canvas->GetRightMargin() - horizontal_square_fraction;
+  cout << left_margin <<" " << canvas->GetWindowWidth()<< " "<< canvas->GetWindowHeight()<< std::endl;
+  canvas->SetLeftMargin(left_margin);
+}
+
 void create_detector_and_icn_VV_m_comparison() {
   // Standard ROOT plot setting
   gROOT->Reset();
@@ -127,48 +136,60 @@ void create_detector_and_icn_VV_m_comparison() {
   string s5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02_s5_o1_v02_output"; 
 
   shared_ptr<TFile> file_l5             = make_shared<TFile>( (l5_directory + "/mjjmjj_plots/_all_TH1Ds.root").c_str() ) ;
+  shared_ptr<TFile> file_l5_2D          = make_shared<TFile>( (l5_directory + "/mjjmjj_plots/_all_TH2Ds.root").c_str() ) ;
   shared_ptr<TFile> file_l5_icn         = make_shared<TFile>( (l5_directory + "/TJ/TJ_observ_to_icns/_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_l5_icn_udsonly = make_shared<TFile>( (l5_directory + "/TJ/TJ_observ_to_icns_uds_only/_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_s5             = make_shared<TFile>( (s5_directory + "/mjjmjj_plots/_all_TH1Ds.root").c_str() ) ;
+  shared_ptr<TFile> file_s5_2D          = make_shared<TFile>( (s5_directory + "/mjjmjj_plots/_all_TH2Ds.root").c_str() ) ;
   shared_ptr<TFile> file_s5_icn         = make_shared<TFile>( (s5_directory + "/TJ/TJ_observ_to_icns/_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_s5_icn_udsonly = make_shared<TFile>( (s5_directory + "/TJ/TJ_observ_to_icns_uds_only/_all_TH1Ds.root").c_str() ) ;
 
   shared_ptr<TFile> file_l5_SLDs        = make_shared<TFile>( (l5_directory + "/mjj_vs_SLDecays/_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_s5_SLDs        = make_shared<TFile>( (s5_directory + "/mjj_vs_SLDecays/_all_TH1Ds.root").c_str() ) ;
-  vector<shared_ptr<TFile>> closables {file_l5, file_l5_icn, file_l5_icn_udsonly, file_s5, file_s5_icn, file_s5_icn_udsonly, file_l5_SLDs, file_s5_SLDs};
+  shared_ptr<TFile> file_l5_SLDs_2D     = make_shared<TFile>( (l5_directory + "/mjj_vs_SLDecays/_all_TH2Ds.root").c_str() ) ;
+  shared_ptr<TFile> file_s5_SLDs_2D     = make_shared<TFile>( (s5_directory + "/mjj_vs_SLDecays/_all_TH2Ds.root").c_str() ) ;
+  vector<shared_ptr<TFile>> closables {file_l5, file_l5_icn, file_l5_icn_udsonly, file_s5, file_s5_icn, file_s5_icn_udsonly, file_l5_SLDs, file_s5_SLDs, file_l5_2D, file_s5_2D};
   
   TH1D *m_WW_genlevel  =  (TH1D*)file_l5->Get("m_WW_genlevel") ;  
   TH1D *m_ZZ_genlevel  =  (TH1D*)file_l5->Get("m_ZZ_genlevel") ;  
   
   TH1D *m_WW_l5               =  (TH1D*)file_l5->Get("m_WW_nocuts") ;  
+  TH2D *m_m_WW_l5             =  (TH2D*)file_l5_2D->Get("m_m_WW_nocuts") ;  
   TH1D *m_WW_l5_icn           =  (TH1D*)file_l5_icn->Get("m_WW_nocuts") ;  
   TH1D *m_WW_l5_cheatcluster  =  (TH1D*)file_l5_icn->Get("m_WW_custom_pairing_nocuts") ;  
   TH1D *m_WW_l5_icn_udsonly   =  (TH1D*)file_l5_icn_udsonly->Get("m_WW_uds_nocuts") ;  
   TH1D *m_ZZ_l5               =  (TH1D*)file_l5->Get("m_ZZ_nocuts") ;  
+  TH2D *m_m_ZZ_l5             =  (TH2D*)file_l5_2D->Get("m_m_ZZ_nocuts") ;  
   TH1D *m_ZZ_l5_icn           =  (TH1D*)file_l5_icn->Get("m_ZZ_nocuts") ;  
   TH1D *m_ZZ_l5_cheatcluster  =  (TH1D*)file_l5_icn->Get("m_ZZ_custom_pairing_nocuts") ;  
   TH1D *m_ZZ_l5_icn_udsonly   =  (TH1D*)file_l5_icn_udsonly->Get("m_ZZ_uds_nocuts") ;  
   
   TH1D *m_WW_s5               =  (TH1D*)file_s5->Get("m_WW_nocuts") ;  
+  TH2D *m_m_WW_s5             =  (TH2D*)file_s5_2D->Get("m_m_WW_nocuts") ;  
   TH1D *m_WW_s5_icn           =  (TH1D*)file_s5_icn->Get("m_WW_nocuts") ;  
   TH1D *m_WW_s5_cheatcluster  =  (TH1D*)file_s5_icn->Get("m_WW_custom_pairing_nocuts") ;  
   TH1D *m_WW_s5_icn_udsonly   =  (TH1D*)file_s5_icn_udsonly->Get("m_WW_uds_nocuts") ;  
   TH1D *m_ZZ_s5               =  (TH1D*)file_s5->Get("m_ZZ_nocuts") ;  
+  TH2D *m_m_ZZ_s5             =  (TH2D*)file_s5_2D->Get("m_m_ZZ_nocuts") ;  
   TH1D *m_ZZ_s5_icn           =  (TH1D*)file_s5_icn->Get("m_ZZ_nocuts") ;  
   TH1D *m_ZZ_s5_cheatcluster  =  (TH1D*)file_s5_icn->Get("m_ZZ_custom_pairing_nocuts") ;  
   TH1D *m_ZZ_s5_icn_udsonly   =  (TH1D*)file_s5_icn_udsonly->Get("m_ZZ_uds_nocuts") ;  
   
   TH1D *m_WW_l5_noSLD       =  (TH1D*)file_l5_SLDs->Get("m_WW_noSLD") ;  
   TH1D *m_WW_l5_icn_noSLD   =  (TH1D*)file_l5_SLDs->Get("m_WW_icn_noSLD") ;  
+  TH2D *m_m_WW_l5_icn_noSLD =  (TH2D*)file_l5_SLDs_2D->Get("m_m_WW_icn_noSLD") ;  
   TH1D *m_WW_s5_noSLD       =  (TH1D*)file_s5_SLDs->Get("m_WW_noSLD") ;  
   TH1D *m_WW_s5_icn_noSLD   =  (TH1D*)file_s5_SLDs->Get("m_WW_icn_noSLD") ;  
+  TH2D *m_m_WW_s5_icn_noSLD =  (TH2D*)file_s5_SLDs_2D->Get("m_m_WW_icn_noSLD") ;  
 
   TH1D *m_ZZ_l5_noSLD       =  (TH1D*)file_l5_SLDs->Get("m_ZZ_noSLD") ;  
   TH1D *m_ZZ_l5_icn_noSLD   =  (TH1D*)file_l5_SLDs->Get("m_ZZ_icn_noSLD") ;  
+  TH2D *m_m_ZZ_l5_icn_noSLD =  (TH2D*)file_l5_SLDs_2D->Get("m_m_ZZ_icn_noSLD") ;  
   TH1D *m_ZZ_s5_noSLD       =  (TH1D*)file_s5_SLDs->Get("m_ZZ_noSLD") ;  
   TH1D *m_ZZ_s5_icn_noSLD   =  (TH1D*)file_s5_SLDs->Get("m_ZZ_icn_noSLD") ;  
+  TH2D *m_m_ZZ_s5_icn_noSLD =  (TH2D*)file_s5_SLDs_2D->Get("m_m_ZZ_icn_noSLD") ;  
 
-  vector<TObject*> deletables {m_WW_l5, m_WW_l5_icn, m_WW_l5_icn_udsonly, m_ZZ_l5, m_ZZ_l5_icn, m_ZZ_l5_icn_udsonly, m_WW_s5, m_WW_s5_icn, m_WW_s5_icn_udsonly, m_ZZ_s5, m_ZZ_s5_icn, m_ZZ_s5_icn_udsonly, m_WW_l5_noSLD, m_WW_l5_icn_noSLD, m_WW_s5_noSLD, m_WW_s5_icn_noSLD, m_ZZ_l5_noSLD, m_ZZ_l5_icn_noSLD, m_ZZ_s5_noSLD, m_ZZ_s5_icn_noSLD};
+  vector<TObject*> deletables {m_WW_l5, m_WW_l5_icn, m_WW_l5_icn_udsonly, m_ZZ_l5, m_ZZ_l5_icn, m_ZZ_l5_icn_udsonly, m_WW_s5, m_WW_s5_icn, m_WW_s5_icn_udsonly, m_ZZ_s5, m_ZZ_s5_icn, m_ZZ_s5_icn_udsonly, m_WW_l5_noSLD, m_WW_l5_icn_noSLD, m_WW_s5_noSLD, m_WW_s5_icn_noSLD, m_ZZ_l5_noSLD, m_ZZ_l5_icn_noSLD, m_ZZ_s5_noSLD, m_ZZ_s5_icn_noSLD, m_m_WW_l5, m_m_ZZ_l5, m_m_WW_s5, m_m_ZZ_s5, m_m_WW_l5_icn_noSLD, m_m_WW_s5_icn_noSLD, m_m_ZZ_l5_icn_noSLD, m_m_ZZ_s5_icn_noSLD};
   
   unique_ptr<TColor> weak_blue { new TColor( 9024, 5./256., 113./256., 176./256. ) } ;
   unique_ptr<TColor> dark_blue { new TColor( 9124, 146./256., 197./256., 222./256. ) } ;
@@ -286,9 +307,9 @@ void create_detector_and_icn_VV_m_comparison() {
   
   // ---------------------------------------------------------------------------
   double canvas_l5_comp_cheating_height = 1200;
-  double canvas_l5_comp_cheating_width  = 1600;
+  double canvas_l5_comp_cheating_width  = 1300;
   
-  shared_ptr<TCanvas> canvas_l5_comp_cheating (new TCanvas("canvas_l5_comp_cheating", "", 0, 0, 1200, 1200));
+  shared_ptr<TCanvas> canvas_l5_comp_cheating (new TCanvas("canvas_l5_comp_cheating", "", 0, 0, canvas_l5_comp_cheating_width, canvas_l5_comp_cheating_height));
   shared_ptr<THStack> stack_l5_comp_cheating = make_shared<THStack>( "l5_comp_cheating", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events" );
   
   m_WW_l5->SetLineColor(kBlue);
@@ -343,17 +364,57 @@ void create_detector_and_icn_VV_m_comparison() {
   leg_l5_comp_cheating->Draw();
   
   stack_l5_comp_cheating->Draw("hist nostack same");
-  canvas_l5_comp_cheating->SetLeftMargin( canvas_l5_comp_cheating->GetLeftMargin() * canvas_l5_comp_cheating_width / canvas_l5_comp_cheating_height );
-  stack_l5_comp_cheating->GetYaxis()->SetTitleOffset( stack_l5_comp_cheating->GetYaxis()->GetTitleOffset() * canvas_l5_comp_cheating_width / canvas_l5_comp_cheating_height );
-  stack_l5_comp_cheating->SetMaximum( 1.2 * m_WW_l5_icn->GetMaximum() );
+  double l5_comp_cheating_old_left_margin = canvas_l5_comp_cheating->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_l5_comp_cheating);
+  stack_l5_comp_cheating->GetYaxis()->SetTitleOffset( stack_l5_comp_cheating->GetYaxis()->GetTitleOffset() * canvas_l5_comp_cheating->GetLeftMargin()/l5_comp_cheating_old_left_margin );
+  stack_l5_comp_cheating->SetMaximum( 1.15 * m_WW_l5_icn->GetMaximum() );
   
-  shared_ptr<TLatex> l5_comp_cheating_logo = add_ILD_mark( canvas_l5_comp_cheating, 55, 1600, 0.1);
-  shared_ptr<TLatex> l5_comp_cheating_prelim = add_prelim_mark( canvas_l5_comp_cheating, 71, 1600, 0.07); 
+  shared_ptr<TLatex> l5_comp_cheating_logo = add_ILD_mark( canvas_l5_comp_cheating, 55, 1.03 * m_WW_l5_icn->GetMaximum(), 0.1);
+  shared_ptr<TLatex> l5_comp_cheating_prelim = add_prelim_mark( canvas_l5_comp_cheating, 71, 1.03 * m_WW_l5_icn->GetMaximum(), 0.07); 
   
   string plot_name_l5_comp_cheating = "./l5_comp_cheating";
   canvas_l5_comp_cheating->Print((output_dir + plot_name_l5_comp_cheating + ".pdf").c_str());
   canvas_l5_comp_cheating->Print((output_dir + plot_name_l5_comp_cheating + ".jpg").c_str());
   canvas_l5_comp_cheating->Print((output_dir + plot_name_l5_comp_cheating + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_l5_m_height = 1200;
+  double canvas_l5_m_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_l5_m (new TCanvas("canvas_l5_m", "", 0, 0, canvas_l5_m_width, canvas_l5_m_height));
+  shared_ptr<THStack> stack_l5_m = make_shared<THStack>( "l5_m", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events" );
+  
+  m_WW_l5->SetLineColor(kBlue);
+  m_ZZ_l5->SetLineColor(kRed);
+  m_WW_l5->SetLineStyle(1);
+  m_ZZ_l5->SetLineStyle(1);
+  m_WW_l5->SetLineWidth(3);
+  m_ZZ_l5->SetLineWidth(3);
+
+  stack_l5_m->Add(m_WW_l5);
+  stack_l5_m->Add(m_ZZ_l5);
+  stack_l5_m->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_l5_m (new TLegend(0.6, 0.55, 0.9, 0.8));
+  leg_l5_m->SetHeader("#splitline{IDR-L}{full reconstr.}");
+  leg_l5_m->AddEntry(m_WW_l5,   "#font[12]{WW} signal", "l");
+  leg_l5_m->AddEntry(m_ZZ_l5,   "#font[12]{ZZ} signal", "l");
+  leg_l5_m->Draw();
+  
+  stack_l5_m->Draw("hist nostack same");
+  double l5_m_old_left_margin = canvas_l5_m->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_l5_m);
+  stack_l5_m->GetYaxis()->SetTitleOffset( stack_l5_m->GetYaxis()->GetTitleOffset() * canvas_l5_m->GetLeftMargin()/l5_m_old_left_margin );
+  stack_l5_m->SetMaximum( 1.15 * m_WW_l5->GetMaximum() );
+  
+  shared_ptr<TLatex> l5_m_logo = add_ILD_mark( canvas_l5_m, 55, 1.03 * m_WW_l5->GetMaximum(), 0.1);
+  shared_ptr<TLatex> l5_m_prelim = add_prelim_mark( canvas_l5_m, 71, 1.03 * m_WW_l5->GetMaximum(), 0.07); 
+  
+  string plot_name_l5_m = "./l5_m";
+  canvas_l5_m->Print((output_dir + plot_name_l5_m + ".pdf").c_str());
+  canvas_l5_m->Print((output_dir + plot_name_l5_m + ".jpg").c_str());
+  canvas_l5_m->Print((output_dir + plot_name_l5_m + ".C").c_str());
   // ---------------------------------------------------------------------------
   
   // Should be same for all of these plots
@@ -656,6 +717,229 @@ void create_detector_and_icn_VV_m_comparison() {
  
  
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // IDR FINALISTS
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_ls_comp_rec_monly_height = 1200;
+  double canvas_ls_comp_rec_monly_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_ls_comp_rec_monly (new TCanvas("canvas_ls_comp_rec_monly", "", 0, 0, canvas_ls_comp_rec_monly_width, canvas_ls_comp_rec_monly_height));
+  shared_ptr<THStack> stack_ls_comp_rec_monly = make_shared<THStack>( "ls_comp_rec_monly", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events" );
+  
+  m_WW_l5->SetLineColor(kBlue); m_WW_l5->SetLineStyle(1); m_WW_l5->SetLineWidth(3);
+  m_ZZ_l5->SetLineColor(kRed);  m_ZZ_l5->SetLineStyle(1); m_ZZ_l5->SetLineWidth(3);
+  m_WW_s5->SetLineColor(9024);  m_WW_s5->SetLineStyle(7); m_WW_s5->SetLineWidth(3);
+  m_ZZ_s5->SetLineColor(9023);  m_ZZ_s5->SetLineStyle(7); m_ZZ_s5->SetLineWidth(3);
+
+  stack_ls_comp_rec_monly->Add(m_WW_l5); stack_ls_comp_rec_monly->Add(m_ZZ_l5);
+  stack_ls_comp_rec_monly->Add(m_WW_s5); stack_ls_comp_rec_monly->Add(m_ZZ_s5);
+  
+  stack_ls_comp_rec_monly->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_ls_comp_rec_monly (new TLegend(0.6, 0.5, 0.97, 0.8));
+  TLine *full_line_ls_comp_rec_monly = new TLine(); 
+  TLine *dash_line_ls_comp_rec_monly = new TLine(); 
+  full_line_ls_comp_rec_monly->SetLineStyle(1); full_line_ls_comp_rec_monly->SetLineWidth(3); full_line_ls_comp_rec_monly->SetLineColor(1); full_line_ls_comp_rec_monly->Draw();
+  dash_line_ls_comp_rec_monly->SetLineStyle(7); dash_line_ls_comp_rec_monly->SetLineWidth(3); dash_line_ls_comp_rec_monly->SetLineColor(1); dash_line_ls_comp_rec_monly->Draw();
+  deletables.push_back(full_line_ls_comp_rec_monly);
+  deletables.push_back(dash_line_ls_comp_rec_monly);
+  leg_ls_comp_rec_monly->SetHeader("full reconstr.");
+  leg_ls_comp_rec_monly->AddEntry(full_line_ls_comp_rec_monly,   "IDR-L", "l");
+  leg_ls_comp_rec_monly->AddEntry(dash_line_ls_comp_rec_monly,   "IDR-S", "l");
+  leg_ls_comp_rec_monly->Draw();
+  
+  stack_ls_comp_rec_monly->Draw("axis same"); // Draw only axis
+  
+  stack_ls_comp_rec_monly->Draw("hist nostack same");
+  double ls_comp_rec_monly_old_left_margin = canvas_ls_comp_rec_monly->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_ls_comp_rec_monly);
+  stack_ls_comp_rec_monly->GetYaxis()->SetTitleOffset( stack_ls_comp_rec_monly->GetYaxis()->GetTitleOffset() * canvas_ls_comp_rec_monly->GetLeftMargin()/ls_comp_rec_monly_old_left_margin );
+  stack_ls_comp_rec_monly->SetMaximum( 1.15 * m_WW_l5->GetMaximum() );
+  
+  shared_ptr<TLatex> ls_comp_rec_monly_logo = add_ILD_mark( canvas_ls_comp_rec_monly, 55, 1.03 * m_WW_l5->GetMaximum(), 0.1);
+  shared_ptr<TLatex> ls_comp_rec_monly_prelim = add_prelim_mark( canvas_ls_comp_rec_monly, 71, 1.03 * m_WW_l5->GetMaximum(), 0.07); 
+  
+  string plot_name_ls_comp_rec_monly = "./ls_comp_rec_monly";
+  canvas_ls_comp_rec_monly->Print((output_dir + plot_name_ls_comp_rec_monly + ".pdf").c_str());
+  canvas_ls_comp_rec_monly->Print((output_dir + plot_name_ls_comp_rec_monly + ".jpg").c_str());
+  canvas_ls_comp_rec_monly->Print((output_dir + plot_name_ls_comp_rec_monly + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_m_m_rec_height = 1200;
+  double canvas_m_m_rec_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_m_m_rec (new TCanvas("canvas_m_m_rec", "", 0, 0, canvas_m_m_rec_width, canvas_m_m_rec_height));
+  
+  m_m_WW_l5->SetLineColor(kBlue); m_m_WW_l5->SetLineStyle(1); m_m_WW_l5->SetLineWidth(3); m_m_WW_l5->Scale(1.0/m_m_WW_l5->Integral());
+  m_m_ZZ_l5->SetLineColor(kRed);  m_m_ZZ_l5->SetLineStyle(1); m_m_ZZ_l5->SetLineWidth(3); m_m_ZZ_l5->Scale(1.0/m_m_ZZ_l5->Integral());
+  m_m_ZZ_l5->SetTitle(""); 
+  m_m_ZZ_l5->Draw("box");
+  m_m_WW_l5->Draw("box same");
+  
+  double m_m_rec_old_left_margin = canvas_m_m_rec->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_m_m_rec);
+  m_m_ZZ_l5->GetYaxis()->SetTitleOffset( m_m_ZZ_l5->GetYaxis()->GetTitleOffset() * canvas_m_m_rec->GetLeftMargin()/m_m_rec_old_left_margin );
+  
+  shared_ptr<TLatex> m_m_rec_logo = add_ILD_mark( canvas_m_m_rec, 50, 120.5, 0.1);
+  shared_ptr<TLatex> m_m_rec_prelim = add_prelim_mark( canvas_m_m_rec, 66, 120.5, 0.07); 
+  
+  unique_ptr<TLatex> m_m_rec_description (new TLatex(101,122.5,"#splitline{full reconstr.,}{IDR-L}"));
+  m_m_rec_description->SetTextSize(0.04);
+  m_m_rec_description->Draw();
+  
+  string plot_name_m_m_rec = "./m_m_rec";
+  canvas_m_m_rec->Print((output_dir + plot_name_m_m_rec + ".pdf").c_str());
+  canvas_m_m_rec->Print((output_dir + plot_name_m_m_rec + ".jpg").c_str());
+  canvas_m_m_rec->Print((output_dir + plot_name_m_m_rec + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_ls_comp_icn_noSLD_monly_height = 1200;
+  double canvas_ls_comp_icn_noSLD_monly_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_ls_comp_icn_noSLD_monly (new TCanvas("canvas_ls_comp_icn_noSLD_monly", "", 0, 0, canvas_ls_comp_icn_noSLD_monly_width, canvas_ls_comp_icn_noSLD_monly_height));
+  shared_ptr<THStack> stack_ls_comp_icn_noSLD_monly = make_shared<THStack>( "ls_comp_icn_noSLD_monly", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events" );
+  
+  m_WW_l5_icn_noSLD->SetLineColor(kBlue); m_WW_l5_icn_noSLD->SetLineStyle(1); m_WW_l5_icn_noSLD->SetLineWidth(3);
+  m_ZZ_l5_icn_noSLD->SetLineColor(kRed);  m_ZZ_l5_icn_noSLD->SetLineStyle(1); m_ZZ_l5_icn_noSLD->SetLineWidth(3);
+  m_WW_s5_icn_noSLD->SetLineColor(9024);  m_WW_s5_icn_noSLD->SetLineStyle(7); m_WW_s5_icn_noSLD->SetLineWidth(3);
+  m_ZZ_s5_icn_noSLD->SetLineColor(9023);  m_ZZ_s5_icn_noSLD->SetLineStyle(7); m_ZZ_s5_icn_noSLD->SetLineWidth(3);
+
+  stack_ls_comp_icn_noSLD_monly->Add(m_WW_l5_icn_noSLD); stack_ls_comp_icn_noSLD_monly->Add(m_ZZ_l5_icn_noSLD);
+  stack_ls_comp_icn_noSLD_monly->Add(m_WW_s5_icn_noSLD); stack_ls_comp_icn_noSLD_monly->Add(m_ZZ_s5_icn_noSLD);
+  
+  stack_ls_comp_icn_noSLD_monly->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_ls_comp_icn_noSLD_monly (new TLegend(0.6, 0.5, 0.97, 0.8));
+  TLine *full_line_ls_comp_icn_noSLD_monly = new TLine(); 
+  TLine *dash_line_ls_comp_icn_noSLD_monly = new TLine(); 
+  full_line_ls_comp_icn_noSLD_monly->SetLineStyle(1); full_line_ls_comp_icn_noSLD_monly->SetLineWidth(3); full_line_ls_comp_icn_noSLD_monly->SetLineColor(1); full_line_ls_comp_icn_noSLD_monly->Draw();
+  dash_line_ls_comp_icn_noSLD_monly->SetLineStyle(7); dash_line_ls_comp_icn_noSLD_monly->SetLineWidth(3); dash_line_ls_comp_icn_noSLD_monly->SetLineColor(1); dash_line_ls_comp_icn_noSLD_monly->Draw();
+  deletables.push_back(full_line_ls_comp_icn_noSLD_monly);
+  deletables.push_back(dash_line_ls_comp_icn_noSLD_monly);
+  leg_ls_comp_icn_noSLD_monly->SetHeader("#splitline{cheated boson,}{no semi-lep. decays}");
+  leg_ls_comp_icn_noSLD_monly->AddEntry(full_line_ls_comp_icn_noSLD_monly,   "IDR-L", "l");
+  leg_ls_comp_icn_noSLD_monly->AddEntry(dash_line_ls_comp_icn_noSLD_monly,   "IDR-S", "l");
+  leg_ls_comp_icn_noSLD_monly->Draw();
+  
+  stack_ls_comp_icn_noSLD_monly->Draw("axis same"); // Draw only axis
+  
+  stack_ls_comp_icn_noSLD_monly->Draw("hist nostack same");
+  double ls_comp_icn_noSLD_monly_old_left_margin = canvas_ls_comp_icn_noSLD_monly->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_ls_comp_icn_noSLD_monly);
+  stack_ls_comp_icn_noSLD_monly->GetYaxis()->SetTitleOffset( stack_ls_comp_icn_noSLD_monly->GetYaxis()->GetTitleOffset() * canvas_ls_comp_icn_noSLD_monly->GetLeftMargin()/ls_comp_icn_noSLD_monly_old_left_margin );
+  stack_ls_comp_icn_noSLD_monly->SetMaximum( 1.15 * m_WW_l5_icn_noSLD->GetMaximum() );
+  
+  shared_ptr<TLatex> ls_comp_icn_noSLD_monly_logo = add_ILD_mark( canvas_ls_comp_icn_noSLD_monly, 55, 1.03 * m_WW_l5_icn_noSLD->GetMaximum(), 0.1);
+  shared_ptr<TLatex> ls_comp_icn_noSLD_monly_prelim = add_prelim_mark( canvas_ls_comp_icn_noSLD_monly, 71, 1.03 * m_WW_l5_icn_noSLD->GetMaximum(), 0.07); 
+  
+  string plot_name_ls_comp_icn_noSLD_monly = "./ls_comp_icn_noSLD_monly";
+  canvas_ls_comp_icn_noSLD_monly->Print((output_dir + plot_name_ls_comp_icn_noSLD_monly + ".pdf").c_str());
+  canvas_ls_comp_icn_noSLD_monly->Print((output_dir + plot_name_ls_comp_icn_noSLD_monly + ".jpg").c_str());
+  canvas_ls_comp_icn_noSLD_monly->Print((output_dir + plot_name_ls_comp_icn_noSLD_monly + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_m_m_icn_noSLD_height = 1200;
+  double canvas_m_m_icn_noSLD_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_m_m_icn_noSLD (new TCanvas("canvas_m_m_icn_noSLD", "", 0, 0, canvas_m_m_icn_noSLD_width, canvas_m_m_icn_noSLD_height));
+  
+  m_m_WW_l5_icn_noSLD->SetLineColor(kBlue); m_m_WW_l5_icn_noSLD->SetLineStyle(1); m_m_WW_l5_icn_noSLD->SetLineWidth(3); m_m_WW_l5_icn_noSLD->Scale(1.0/m_m_WW_l5_icn_noSLD->Integral());
+  m_m_ZZ_l5_icn_noSLD->SetLineColor(kRed);  m_m_ZZ_l5_icn_noSLD->SetLineStyle(1); m_m_ZZ_l5_icn_noSLD->SetLineWidth(3); m_m_ZZ_l5_icn_noSLD->Scale(1.0/m_m_ZZ_l5_icn_noSLD->Integral());
+  m_m_ZZ_l5_icn_noSLD->SetTitle(""); 
+  m_m_ZZ_l5_icn_noSLD->Draw("box");
+  m_m_WW_l5_icn_noSLD->Draw("box same");
+  
+  // unique_ptr<TLegend> leg_m_m_icn_noSLD (new TLegend(0.6, 0.5, 0.97, 0.8));
+  // leg_m_m_icn_noSLD->SetHeader("full icn_noSLDonstr., IDR-L");
+  // leg_m_m_icn_noSLD->Draw();
+  
+  double m_m_icn_noSLD_old_left_margin = canvas_m_m_icn_noSLD->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_m_m_icn_noSLD);
+  m_m_ZZ_l5_icn_noSLD->GetYaxis()->SetTitleOffset( m_m_ZZ_l5_icn_noSLD->GetYaxis()->GetTitleOffset() * canvas_m_m_icn_noSLD->GetLeftMargin()/m_m_icn_noSLD_old_left_margin );
+  // stack_m_m_icn_noSLD->SetMaximum( 1.15 * m_WW_l5->GetMaximum() );
+  
+  shared_ptr<TLatex> m_m_icn_noSLD_logo = add_ILD_mark( canvas_m_m_icn_noSLD, 50, 120.5, 0.1);
+  shared_ptr<TLatex> m_m_icn_noSLD_prelim = add_prelim_mark( canvas_m_m_icn_noSLD, 66, 120.5, 0.07); 
+  
+  
+  
+  // double m_m_rec_old_left_margin = canvas_m_m_rec->GetLeftMargin();
+  // adjust_canvas_left_to_square_pad(canvas_m_m_rec);
+  // m_m_ZZ_l5->GetYaxis()->SetTitleOffset( m_m_ZZ_l5->GetYaxis()->GetTitleOffset() * canvas_m_m_rec->GetLeftMargin()/m_m_rec_old_left_margin );
+  // 
+  // shared_ptr<TLatex> m_m_rec_logo = add_ILD_mark( canvas_m_m_rec, 50, 120.5, 0.1);
+  // shared_ptr<TLatex> m_m_rec_prelim = add_prelim_mark( canvas_m_m_rec, 66, 120.5, 0.07); 
+  // 
+  unique_ptr<TLatex> m_m_icn_noSLD_description (new TLatex(97,122.5,"#splitline{cheated boson,}{no l^{#pm}#nu decays, IDR-L}"));
+  m_m_icn_noSLD_description->SetTextSize(0.035);
+  m_m_icn_noSLD_description->Draw();
+  
+  
+  string plot_name_m_m_icn_noSLD = "./m_m_icn_noSLD";
+  canvas_m_m_icn_noSLD->Print((output_dir + plot_name_m_m_icn_noSLD + ".pdf").c_str());
+  canvas_m_m_icn_noSLD->Print((output_dir + plot_name_m_m_icn_noSLD + ".jpg").c_str());
+  canvas_m_m_icn_noSLD->Print((output_dir + plot_name_m_m_icn_noSLD + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_l_ZZ_cheating_steps_height = 1200;
+  double canvas_l_ZZ_cheating_steps_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_l_ZZ_cheating_steps (new TCanvas("canvas_l_ZZ_cheating_steps", "", 0, 0, canvas_l_ZZ_cheating_steps_width, canvas_l_ZZ_cheating_steps_height));
+  shared_ptr<THStack> stack_l_ZZ_cheating_steps = make_shared<THStack>( "l_ZZ_cheating_steps", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; a.u." );
+  
+  m_ZZ_l5_icn_noSLD->SetLineColor(kRed);  m_ZZ_l5_icn_noSLD->SetLineStyle(1); m_ZZ_l5_icn_noSLD->SetLineWidth(3);
+
+  clone_m_ZZ_l5 = (TH1D*)m_ZZ_l5->Clone();                            deletables.push_back(clone_m_ZZ_l5);              clone_m_ZZ_l5->Scale(1.0/clone_m_ZZ_l5->Integral());
+  clone_m_ZZ_l5_cheatcluster = (TH1D*)m_ZZ_l5_cheatcluster->Clone();  deletables.push_back(clone_m_ZZ_l5_cheatcluster); clone_m_ZZ_l5_cheatcluster->Scale(1.0/clone_m_ZZ_l5_cheatcluster->Integral());
+  clone_m_ZZ_l5_icn = (TH1D*)m_ZZ_l5_icn->Clone();                    deletables.push_back(clone_m_ZZ_l5_icn);          clone_m_ZZ_l5_icn->Scale(1.0/clone_m_ZZ_l5_icn->Integral());
+  clone_m_ZZ_l5_icn_noSLD = (TH1D*)m_ZZ_l5_icn_noSLD->Clone();        deletables.push_back(clone_m_ZZ_l5_icn_noSLD);    clone_m_ZZ_l5_icn_noSLD->Scale(1.0/clone_m_ZZ_l5_icn_noSLD->Integral());
+  
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn_noSLD);      clone_m_ZZ_l5_icn_noSLD->SetLineColor(kOrange-3);    clone_m_ZZ_l5_icn_noSLD->SetLineWidth(3);       clone_m_ZZ_l5_icn_noSLD->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn);            clone_m_ZZ_l5_icn->SetLineColor(kOrange+5);          clone_m_ZZ_l5_icn->SetLineWidth(3);             clone_m_ZZ_l5_icn->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_cheatcluster);   clone_m_ZZ_l5_cheatcluster->SetLineColor(kRed-3);    clone_m_ZZ_l5_cheatcluster->SetLineWidth(3);    clone_m_ZZ_l5_cheatcluster->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5);                clone_m_ZZ_l5->SetLineColor(kRed);                   clone_m_ZZ_l5->SetLineWidth(3);                 clone_m_ZZ_l5->SetLineStyle(1);
+  
+  stack_l_ZZ_cheating_steps->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_l_ZZ_cheating_steps (new TLegend(0.25, 0.3, 0.57, 0.8));
+  
+  leg_l_ZZ_cheating_steps->SetHeader("#splitline{IDR-L, ZZ signal}{normalized}");
+  leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_icn_noSLD,    "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
+  leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_icn,          "cheated bosons", "l");
+  leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_cheatcluster, "cheated jets", "l");
+  leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5,              "full reconstr.", "l");
+  leg_l_ZZ_cheating_steps->Draw();
+  
+  stack_l_ZZ_cheating_steps->SetMaximum(clone_m_ZZ_l5_icn_noSLD->GetMaximum() * 1.15);
+  stack_l_ZZ_cheating_steps->Draw("axis same"); // Draw only axis
+  
+  stack_l_ZZ_cheating_steps->Draw("hist nostack same");
+  double l_ZZ_cheating_steps_old_left_margin = canvas_l_ZZ_cheating_steps->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_l_ZZ_cheating_steps);
+  stack_l_ZZ_cheating_steps->GetYaxis()->SetTitleOffset( stack_l_ZZ_cheating_steps->GetYaxis()->GetTitleOffset() * canvas_l_ZZ_cheating_steps->GetLeftMargin()/l_ZZ_cheating_steps_old_left_margin );
+  
+  shared_ptr<TLatex> l_ZZ_cheating_steps_logo = add_ILD_mark( canvas_l_ZZ_cheating_steps, 55, 1.03 * clone_m_ZZ_l5_icn_noSLD->GetMaximum(), 0.1);
+  shared_ptr<TLatex> l_ZZ_cheating_steps_prelim = add_prelim_mark( canvas_l_ZZ_cheating_steps, 71, 1.03 * clone_m_ZZ_l5_icn_noSLD->GetMaximum(), 0.07); 
+  
+  string plot_name_l_ZZ_cheating_steps = "./l_ZZ_cheating_steps";
+  canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".pdf").c_str());
+  canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".jpg").c_str());
+  canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  
   
   for ( auto & deletable: deletables ) { delete deletable; }
   for ( auto & closable: closables ) { closable->Close(); }
