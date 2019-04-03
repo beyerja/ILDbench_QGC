@@ -61,6 +61,20 @@ JakobsVBSProcessor::JakobsVBSProcessor() : Processor("JakobsVBSProcessor") {
             _colPFOsFromFastJet,
             std::string("PFOsFromFastJet")
     );
+    
+    registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+            "InputCheatedNoOverlayJetsCollection",
+            "Name of the jet collection for cheated overlay removal",
+            _colCheatedNoOverlayJets,
+            std::string("CheatedNoOverlayJets")
+    );
+
+    registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+            "InputCheatedNoOverlayJetsPFOsFromFastJetCollection",
+            "Name of the collection holding the PFOs in the FastJets  for cheated overlay removal",
+            _colCheatedNoOverlayJetsPFOsFromFastJet,
+            std::string("CheatedNoOverlayJetsPFOsFromFastJet")
+    );
 
 	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
             "InputIsolepsCollection",
@@ -255,10 +269,12 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
 
 
   // try to get lcio collection (exits if collection is not available which is good bc they definitely should exist!!!))
-  LCCollection* colAllPFOs 			= evt->getCollection( _colAllPFOs 		) ;
-  LCCollection* colFastJets 			= evt->getCollection( _colFastJets 	) ;
-  LCCollection* colPFOsFromFastJet	= evt->getCollection( _colPFOsFromFastJet 	) ;
-  LCCollection* colMC 				= evt->getCollection( _colMC 			) ;
+  LCCollection* colAllPFOs 			     = evt->getCollection( _colAllPFOs 		) ;
+  LCCollection* colFastJets 			   = evt->getCollection( _colFastJets 	) ;
+  LCCollection* colPFOsFromFastJet	 = evt->getCollection( _colPFOsFromFastJet 	) ;
+  LCCollection* colCheatedNoOverlayJets 			           = evt->getCollection( _colCheatedNoOverlayJets 	) ;
+  LCCollection* colCheatedNoOverlayJetsPFOsFromFastJet	 = evt->getCollection( _colCheatedNoOverlayJetsPFOsFromFastJet 	) ;
+  LCCollection* colMC 				       = evt->getCollection( _colMC 			) ;
 
   // Alternativelly if you do not want Marlin to exit in case of a non-existing collection
   // use the following (commented out) code:
@@ -314,6 +330,7 @@ void JakobsVBSProcessor::processEvent( LCEvent * evt ) {
 
 
   analyseEvent(	colMC, colAllPFOs, colFastJets, colPFOsFromFastJet, colIsoleps,
+                colCheatedNoOverlayJets,  colCheatedNoOverlayJetsPFOsFromFastJet,
                 TJ_jetPFOs_correct, TJ_jetPFOs_fromISR,
                 relation_recoMCtruth,
                 info);

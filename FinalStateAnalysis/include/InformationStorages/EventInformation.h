@@ -287,6 +287,8 @@ class EventInfo {
 
 		Observables observ;
 		Observables corr_observ; // After jet corrections
+    Observables observ_cheated_overlay; // Use TJ to remove overlay reco particles but cluster normally
+                                        // -> Cheat only overlay removal, not clustering / pairing
 
 		RecoTruthLink Vpair_link;
 
@@ -308,6 +310,7 @@ class EventInfo {
 	
 			observ.init();
 			corr_observ.init();
+      observ_cheated_overlay.init();
 
 			Vpair_link.init();
 

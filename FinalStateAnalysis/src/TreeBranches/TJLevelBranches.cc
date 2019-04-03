@@ -76,6 +76,8 @@ void JakobsVBSProcessor::SetTrueJetLevelBranches( EventInfo &info ) {
 											"pair1_mass/F:pair2_mass/F");
 	_datatrain->Branch( "masses_cheated_clustering",	&info.TJ_eventinfo.TJjets_custom_pairing,
 											"pair1_mass/F:pair2_mass/F");
+	_datatrain->Branch( "masses_cheated_overlay_removal",	&info.observ_cheated_overlay,
+											"pair1_mass/F:pair2_mass/F");
 }
 
 

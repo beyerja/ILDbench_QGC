@@ -29,14 +29,15 @@ using namespace marlin;
 
 
 void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticle*> PFOs, std::vector<ReconstructedParticle*> jets, 
-												EventInfo &info) {
+												Observables &observ) {
 	/* Function that calculates all parameters from the event 
  	that I later want to make cuts on and writes into the 
 	eventInfo instance.
 	*/
 
 	// Find most VV like 2 x dijet pair combination
-	findVpair(jets, info.observ);
+  streamlog_out(DEBUG4) << "In calculateCutParameters: Searching for VV pairs." << std::endl;
+	findVpair(jets, observ);
 
 	int nJets = jets.size();
 
@@ -48,11 +49,12 @@ void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticl
     int min_num_particles_jet			= 99999;
     int min_num_chargedparticles_jet	= 99999;
 
+  streamlog_out(DEBUG4) << "In calculateCutParameters: Testing jet PFOs." << std::endl;
 	for(int i=0; i<nJets; i++){
 	    TLorentzVector jet_tlv = TLorentzVector( jets[i]->getMomentum(), jets[i]->getEnergy() );
 
-		info.observ.jets[i].tlv = jet_tlv;
-		info.observ.jets[i].process_tlv();
+		observ.jets[i].tlv = jet_tlv;
+		observ.jets[i].process_tlv();
 
 		const ReconstructedParticleVec& jetPFOs = jets[i]->getParticles();
 		int nJetPFOs = jetPFOs.size(); 
@@ -70,13 +72,14 @@ void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticl
 		if ( min_num_chargedparticles_jet > nCharged ) { min_num_chargedparticles_jet = nCharged; }
 	}
 
-	info.observ.min_Ejet = min_Ejet;	
-	info.observ.min_num_particles_jet = min_num_particles_jet;
-	info.observ.min_num_chargedparticles_jet = min_num_chargedparticles_jet;
+	observ.min_Ejet = min_Ejet;	
+	observ.min_num_particles_jet = min_num_particles_jet;
+	observ.min_num_chargedparticles_jet = min_num_chargedparticles_jet;
 
 	
 	// Find highest energy track of the event, from its TLorentzVector calculate
 	// its cos(Theta)
+  streamlog_out(DEBUG4) << "In calculateCutParameters: Looking at total visible event." << std::endl;
 	int nPFOs = PFOs.size();
 	float max_track_E = 0;
 	TLorentzVector maxE_particle_tlv;
@@ -87,7 +90,7 @@ void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticl
 		}	
 	}
 
-	info.observ.cosTheta_EmaxTrack = maxE_particle_tlv.CosTheta();
+	observ.cosTheta_EmaxTrack = maxE_particle_tlv.CosTheta();
 
 	// Find all particles within 10degree cone around highest energy track,
 	// cluster them together and save the combined energy
@@ -102,6 +105,6 @@ void JakobsVBSProcessor::calculateCutParameters(std::vector<ReconstructedParticl
 	// Do not count Emax-track into cone
 	EmaxTrack_10cone_tlv -= maxE_particle_tlv;
 
-	info.observ.E_10cone_EmaxTrack = EmaxTrack_10cone_tlv.E();
+	observ.E_10cone_EmaxTrack = EmaxTrack_10cone_tlv.E();
 
 }       

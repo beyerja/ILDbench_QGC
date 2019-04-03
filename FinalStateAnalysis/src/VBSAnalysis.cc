@@ -31,6 +31,7 @@ using namespace marlin;
 void JakobsVBSProcessor::analyseEvent(	
 		LCCollection* colMC, LCCollection* colPFOs, LCCollection* colJets, LCCollection* colPFOsFromFastJet,
 		LCCollection* colIsoleps, 
+    LCCollection* colCheatedNoOverlayJets,  LCCollection* colCheatedNoOverlayJetsPFOsFromFastJet,
 		std::vector<ReconstructedParticleVec> TJ_jetPFOs_correct, std::vector<ReconstructedParticleVec> TJ_jetPFOs_fromISR,
 		LCRelationNavigator* relation_recoMCtruth,
 		EventInfo &info) {
@@ -40,7 +41,9 @@ void JakobsVBSProcessor::analyseEvent(
 	std::vector<ReconstructedParticle*> PFOs=checkPOFinalState(colPFOs);
 	std::vector<ReconstructedParticle*> jets=checkPOFinalState(colJets);
 	std::vector<ReconstructedParticle*> PFOs_from_jets=checkPOFinalState(colPFOsFromFastJet);
-    std::vector<ReconstructedParticle*> isoleps=checkPOFinalState(colIsoleps);
+  std::vector<ReconstructedParticle*> isoleps=checkPOFinalState(colIsoleps);
+  std::vector<ReconstructedParticle*> jets_cheated_overlay=checkPOFinalState(colCheatedNoOverlayJets);
+  std::vector<ReconstructedParticle*> PFOs_cheated_overlay=checkPOFinalState(colCheatedNoOverlayJetsPFOsFromFastJet);
 
 	// Categorize Event on generator level
 	findTrueEventType(MCparticles, info);
@@ -55,7 +58,7 @@ void JakobsVBSProcessor::analyseEvent(
 	// Calculate Parameters that I later make a cut on,
 	// y_34 has to be done separate because its a parameter of the collection	
 	info.observ.y_34= colJets->getParameters().getFloatVal("y_{n-1,n}");
-	calculateCutParameters( PFOs, jets, info );
+	calculateCutParameters( PFOs, jets, info.observ );
 
 	// nunu+4q FS does not contain isolated leptons
 	// Maybe put into Preselection, but might save time to put earlier
@@ -66,7 +69,7 @@ void JakobsVBSProcessor::analyseEvent(
 	// Also get information about individual jets on each level of reconstruction
 	LevelComparisonIndividualJets(relation_recoMCtruth, info); 
 	calculateTJTotalLevels( info );
-
+  findVpair(jets_cheated_overlay, info.observ_cheated_overlay);
 
 	/* ------------------- OLD ----------------------*/
 	// For optimization purposes: Compare correct Reco-Jets (from TrueJet) with own clustered ones

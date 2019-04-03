@@ -70,7 +70,7 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
 
     /** Subroutines
      */
-    virtual void analyseEvent(LCCollection* colMC, LCCollection* colPFOs, LCCollection* colJets, LCCollection* colPFOsFromFastJet, LCCollection* colIsoLeps, std::vector<ReconstructedParticleVec> TJ_jetPFOs_correct, std::vector<ReconstructedParticleVec> TJ_jetPFOs_fromISR, LCRelationNavigator* relation_recoMCtruth, EventInfo &info);
+    virtual void analyseEvent(LCCollection* colMC, LCCollection* colPFOs, LCCollection* colJets, LCCollection* colPFOsFromFastJet, LCCollection* colIsoLeps, LCCollection* colCheatedNoOverlayJets,  LCCollection* colCheatedNoOverlayJetsPFOsFromFastJet, std::vector<ReconstructedParticleVec> TJ_jetPFOs_correct, std::vector<ReconstructedParticleVec> TJ_jetPFOs_fromISR, LCRelationNavigator* relation_recoMCtruth, EventInfo &info);
 
 	std::vector<MCParticle*> checkMCFinalState(LCCollection* AllMC);
 	std::vector<ReconstructedParticle*> checkPOFinalState(LCCollection* AllPOs) ;
@@ -98,7 +98,7 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
 
 	template<typename LCIOParticleType> void findVpair(std::vector<LCIOParticleType*> jets, Observables &observ);
 
-	virtual void calculateCutParameters(std::vector<ReconstructedParticle*> PFOs, std::vector<ReconstructedParticle*> jets,	EventInfo &info);
+	virtual void calculateCutParameters(std::vector<ReconstructedParticle*> PFOs, std::vector<ReconstructedParticle*> jets,	Observables &observ);
 
 	// Subroutines using TrueJet information
 	template <typename Type> void findVectorDifferences(	std::vector<Type> vector1, std::vector<Type> vector2, std::vector<Type> &out_in1notin2, std::vector<Type> &out_in2notin1 );
@@ -156,17 +156,19 @@ class JakobsVBSProcessor : public Processor , public Adjusted_TrueJet_Parser {
 
   /** Input collection name.
    */
-  std::string _colAllPFOs;
-  std::string _colFastJets;
-  std::string _colPFOsFromFastJet;
-  std::string _colIsoleps;
-  std::string _colSLDecays;
-  std::string _colMC;
+  std::string _colAllPFOs {};
+  std::string _colFastJets {};
+  std::string _colPFOsFromFastJet {};
+  std::string _colCheatedNoOverlayJets {};
+  std::string _colCheatedNoOverlayJetsPFOsFromFastJet {};
+  std::string _colIsoleps {};
+  std::string _colSLDecays {};
+  std::string _colMC {};
 
-  std::string _mcpfoRelation;
+  std::string _mcpfoRelation {};
 
   // Input collections for TrueJet
-  std::string _recoMCTruthLink;
+  std::string _recoMCTruthLink {};
 
   // This are NOT declared here! They are already declared in TrueJet_Parser.h and repeated delaration will lead to error!
   //std::string _trueJetCollectionName;
