@@ -1,7 +1,7 @@
 <marlin>
 	<execute>
     <processor name="InitDD4hep" />
-    <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag"/>
+    <!-- <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag"/> -->
     <processor name="MyAdd4MomCovMatrixCharged"/>
     <processor name="MyThrustReconstruction"/>
     <processor name="MyTrueJet"/> 
@@ -59,7 +59,7 @@
 		<parameter name="DirOfISOElectronWeights" type="string"> /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinReco/v01-25/Analysis/IsolatedLeptonTagging/weights/yyxyev_yyxyyx_500.mILD_l5_o1_v02 </parameter>
 		<parameter name="DirOfISOMuonWeights" type="string"> /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinReco/v01-25/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woYoke_500.mILD_l5_o1_v02 </parameter>
 		<parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
-    <parameter name="InputPrimaryVertexCollection" type="string" lcioInType="ReconstructedParticle">PrimaryVertex_Re </parameter>
+    <parameter name="InputPrimaryVertexCollection" type="string" lcioInType="ReconstructedParticle">PrimaryVertex </parameter>
 		<parameter name="IsSelectingOneIsoLep" type="bool"> false </parameter>
 		<parameter name="MinPForElectron" type="float">5 </parameter>
 		<parameter name="MinPForMuon" type="float">5 </parameter>
