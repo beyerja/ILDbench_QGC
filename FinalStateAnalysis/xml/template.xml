@@ -1,13 +1,15 @@
 <marlin>
 	<execute>
     <processor name="InitDD4hep" />
-    <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag"/>
+    <!-- <processor name="ReprocessVertexFindingAndJetClusteringAndFlavorTag"/> -->
     <processor name="MyAdd4MomCovMatrixCharged"/>
     <processor name="MyThrustReconstruction"/>
     <processor name="MyTrueJet"/> 
     <processor name="MyIsolatedLeptonTaggingProcessor"/>	
     <processor name="MyOverlayRemovalFastJetProcessor"/>
     <processor name="MyFastJetProcessor"/>
+    <processor name="MyTJJetRecoParticleFinder"/> 
+    <processor name="MyCheatedNoOverlayFastJetProcessor"/>
     <processor name="MySLDFinder"/>
     <processor name="MyVBSProcessor"/>
 	</execute>
@@ -59,7 +61,7 @@
 		<parameter name="DirOfISOElectronWeights" type="string"> /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinReco/v01-25/Analysis/IsolatedLeptonTagging/weights/yyxyev_yyxyyx_500.mILD_l5_o1_v02 </parameter>
 		<parameter name="DirOfISOMuonWeights" type="string"> /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/MarlinReco/v01-25/Analysis/IsolatedLeptonTagging/weights/yyxylv_yyxyyx_woYoke_500.mILD_l5_o1_v02 </parameter>
 		<parameter name="InputPandoraPFOsCollection" type="string" lcioInType="ReconstructedParticle"> PandoraPFOs </parameter>
-    <parameter name="InputPrimaryVertexCollection" type="string" lcioInType="ReconstructedParticle">PrimaryVertex_Re </parameter>
+    <parameter name="InputPrimaryVertexCollection" type="string" lcioInType="ReconstructedParticle">PrimaryVertex </parameter>
 		<parameter name="IsSelectingOneIsoLep" type="bool"> false </parameter>
 		<parameter name="MinPForElectron" type="float">5 </parameter>
 		<parameter name="MinPForMuon" type="float">5 </parameter>
@@ -118,6 +120,32 @@
 	  <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
 	  <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
    </processor>
+
+   <processor name="MyTJJetRecoParticleFinder" type="TJJetRecoParticleFinder">
+     <parameter name="RecosFromHadronicJets" type="string" lcioOutType="ReconstructedParticle"> RecosFromHadronicJets </parameter>
+   </processor>
+   
+   <!-- This processor is actually used for jet clustering -->
+   <processor name="MyCheatedNoOverlayFastJetProcessor" type="FastJetProcessor">
+     <!--Using the FastJet library to identify jets-->
+     <!--a list of all reconstructed particles we are searching for jets in.-->
+     <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle"> RecosFromHadronicJets </parameter>
+     <!--The identified jets-->
+     <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle"> CheatedNoOverlayJets </parameter>
+     <!--a list of all reconstructed particles used to make jets. If no value specified collection is not created-->
+     <parameter name="recParticleOut" type="string" lcioOutType="ReconstructedParticle"> CheatedNoOverlayJetsPFOsFromFastJet </parameter>
+     <!--Store the list of particles that were clustered into jets in the recParticleOut collection-->
+     <parameter name="storeParticlesInJets" type="bool"> true </parameter>
+     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+     <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfile after execution.-->
+     <parameter name="algorithm" type="StringVec"> ee_kt_algorithm </parameter>
+     <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
+     <parameter name="clusteringMode" type="StringVec"> ExclusiveNJets 4  </parameter>
+     <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
+     <parameter name="recombinationScheme" type="string"> E_scheme </parameter>
+   </processor>
+
 
     <processor name="MySLDFinder" type="SLDecayFinder">
     </processor>
