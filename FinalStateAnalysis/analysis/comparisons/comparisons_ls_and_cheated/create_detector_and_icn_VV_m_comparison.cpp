@@ -104,7 +104,6 @@ shared_ptr<TLatex> add_prelim_mark( shared_ptr<TCanvas> canvas, Double_t x0, Dou
 
 shared_ptr<TLatex> mark_preliminary( shared_ptr<TCanvas> canvas, Double_t x0, Double_t y0, Float_t text_size=0.25, Float_t text_angle=60 ) {
   canvas->cd();
-  cout << gPad->GetName() << endl;
   shared_ptr<TLatex> prelim_tex (new TLatex(x0,y0,"Preliminary"));
   prelim_tex->SetName( (string(canvas->GetName()) + "_prelim").c_str() );
   prelim_tex->SetTextColorAlpha(17, 0.5);
@@ -120,7 +119,6 @@ void adjust_canvas_left_to_square_pad(shared_ptr<TCanvas> canvas) {
   double width_to_height_ratio      = double(canvas->GetWindowWidth()) / double(canvas->GetWindowHeight()); 
   double horizontal_square_fraction = vertical_square_fraction / width_to_height_ratio;
   double left_margin = 1.0 - canvas->GetRightMargin() - horizontal_square_fraction;
-  cout << left_margin <<" " << canvas->GetWindowWidth()<< " "<< canvas->GetWindowHeight()<< std::endl;
   canvas->SetLeftMargin(left_margin);
 }
 
@@ -157,22 +155,26 @@ void create_detector_and_icn_VV_m_comparison() {
   TH2D *m_m_WW_l5             =  (TH2D*)file_l5_2D->Get("m_m_WW_nocuts") ;  
   TH1D *m_WW_l5_icn           =  (TH1D*)file_l5_icn->Get("m_WW_nocuts") ;  
   TH1D *m_WW_l5_cheatcluster  =  (TH1D*)file_l5_icn->Get("m_WW_custom_pairing_nocuts") ;  
+  TH1D *m_WW_l5_cheatoverlay  =  (TH1D*)file_l5_icn->Get("m_WW_cheated_overlay_nocuts") ;  
   TH1D *m_WW_l5_icn_udsonly   =  (TH1D*)file_l5_icn_udsonly->Get("m_WW_uds_nocuts") ;  
   TH1D *m_ZZ_l5               =  (TH1D*)file_l5->Get("m_ZZ_nocuts") ;  
   TH2D *m_m_ZZ_l5             =  (TH2D*)file_l5_2D->Get("m_m_ZZ_nocuts") ;  
   TH1D *m_ZZ_l5_icn           =  (TH1D*)file_l5_icn->Get("m_ZZ_nocuts") ;  
   TH1D *m_ZZ_l5_cheatcluster  =  (TH1D*)file_l5_icn->Get("m_ZZ_custom_pairing_nocuts") ;  
+  TH1D *m_ZZ_l5_cheatoverlay  =  (TH1D*)file_l5_icn->Get("m_ZZ_cheated_overlay_nocuts") ;  
   TH1D *m_ZZ_l5_icn_udsonly   =  (TH1D*)file_l5_icn_udsonly->Get("m_ZZ_uds_nocuts") ;  
   
   TH1D *m_WW_s5               =  (TH1D*)file_s5->Get("m_WW_nocuts") ;  
   TH2D *m_m_WW_s5             =  (TH2D*)file_s5_2D->Get("m_m_WW_nocuts") ;  
   TH1D *m_WW_s5_icn           =  (TH1D*)file_s5_icn->Get("m_WW_nocuts") ;  
   TH1D *m_WW_s5_cheatcluster  =  (TH1D*)file_s5_icn->Get("m_WW_custom_pairing_nocuts") ;  
+  TH1D *m_WW_s5_cheatoverlay  =  (TH1D*)file_s5_icn->Get("m_WW_cheated_overlay_nocuts") ;  
   TH1D *m_WW_s5_icn_udsonly   =  (TH1D*)file_s5_icn_udsonly->Get("m_WW_uds_nocuts") ;  
   TH1D *m_ZZ_s5               =  (TH1D*)file_s5->Get("m_ZZ_nocuts") ;  
   TH2D *m_m_ZZ_s5             =  (TH2D*)file_s5_2D->Get("m_m_ZZ_nocuts") ;  
   TH1D *m_ZZ_s5_icn           =  (TH1D*)file_s5_icn->Get("m_ZZ_nocuts") ;  
   TH1D *m_ZZ_s5_cheatcluster  =  (TH1D*)file_s5_icn->Get("m_ZZ_custom_pairing_nocuts") ;  
+  TH1D *m_ZZ_s5_cheatoverlay  =  (TH1D*)file_s5_icn->Get("m_ZZ_cheated_overlay_nocuts") ;  
   TH1D *m_ZZ_s5_icn_udsonly   =  (TH1D*)file_s5_icn_udsonly->Get("m_ZZ_uds_nocuts") ;  
   
   TH1D *m_WW_l5_noSLD       =  (TH1D*)file_l5_SLDs->Get("m_WW_noSLD") ;  
@@ -899,13 +901,15 @@ void create_detector_and_icn_VV_m_comparison() {
   m_ZZ_l5_icn_noSLD->SetLineColor(kRed);  m_ZZ_l5_icn_noSLD->SetLineStyle(1); m_ZZ_l5_icn_noSLD->SetLineWidth(3);
 
   clone_m_ZZ_l5 = (TH1D*)m_ZZ_l5->Clone();                            deletables.push_back(clone_m_ZZ_l5);              clone_m_ZZ_l5->Scale(1.0/clone_m_ZZ_l5->Integral());
+  clone_m_ZZ_l5_cheatoverlay = (TH1D*)m_ZZ_l5_cheatoverlay->Clone();  deletables.push_back(clone_m_ZZ_l5_cheatoverlay); clone_m_ZZ_l5_cheatoverlay->Scale(1.0/clone_m_ZZ_l5_cheatoverlay->Integral());
   clone_m_ZZ_l5_cheatcluster = (TH1D*)m_ZZ_l5_cheatcluster->Clone();  deletables.push_back(clone_m_ZZ_l5_cheatcluster); clone_m_ZZ_l5_cheatcluster->Scale(1.0/clone_m_ZZ_l5_cheatcluster->Integral());
   clone_m_ZZ_l5_icn = (TH1D*)m_ZZ_l5_icn->Clone();                    deletables.push_back(clone_m_ZZ_l5_icn);          clone_m_ZZ_l5_icn->Scale(1.0/clone_m_ZZ_l5_icn->Integral());
   clone_m_ZZ_l5_icn_noSLD = (TH1D*)m_ZZ_l5_icn_noSLD->Clone();        deletables.push_back(clone_m_ZZ_l5_icn_noSLD);    clone_m_ZZ_l5_icn_noSLD->Scale(1.0/clone_m_ZZ_l5_icn_noSLD->Integral());
   
-  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn_noSLD);      clone_m_ZZ_l5_icn_noSLD->SetLineColor(kOrange-3);    clone_m_ZZ_l5_icn_noSLD->SetLineWidth(3);       clone_m_ZZ_l5_icn_noSLD->SetLineStyle(1);
-  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn);            clone_m_ZZ_l5_icn->SetLineColor(kOrange+5);          clone_m_ZZ_l5_icn->SetLineWidth(3);             clone_m_ZZ_l5_icn->SetLineStyle(1);
-  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_cheatcluster);   clone_m_ZZ_l5_cheatcluster->SetLineColor(kRed-3);    clone_m_ZZ_l5_cheatcluster->SetLineWidth(3);    clone_m_ZZ_l5_cheatcluster->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn_noSLD);      clone_m_ZZ_l5_icn_noSLD->SetLineColor(kSpring+5);    clone_m_ZZ_l5_icn_noSLD->SetLineWidth(3);       clone_m_ZZ_l5_icn_noSLD->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_icn);            clone_m_ZZ_l5_icn->SetLineColor(kYellow+1);          clone_m_ZZ_l5_icn->SetLineWidth(3);             clone_m_ZZ_l5_icn->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_cheatcluster);   clone_m_ZZ_l5_cheatcluster->SetLineColor(kOrange-3); clone_m_ZZ_l5_cheatcluster->SetLineWidth(3);    clone_m_ZZ_l5_cheatcluster->SetLineStyle(1);
+  stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5_cheatoverlay);   clone_m_ZZ_l5_cheatoverlay->SetLineColor(kOrange+5); clone_m_ZZ_l5_cheatoverlay->SetLineWidth(3);    clone_m_ZZ_l5_cheatoverlay->SetLineStyle(1);
   stack_l_ZZ_cheating_steps->Add(clone_m_ZZ_l5);                clone_m_ZZ_l5->SetLineColor(kRed);                   clone_m_ZZ_l5->SetLineWidth(3);                 clone_m_ZZ_l5->SetLineStyle(1);
   
   stack_l_ZZ_cheating_steps->Draw("axis"); // Draw only axis
@@ -916,6 +920,7 @@ void create_detector_and_icn_VV_m_comparison() {
   leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_icn_noSLD,    "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
   leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_icn,          "cheated bosons", "l");
   leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_cheatcluster, "cheated jets", "l");
+  leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5_cheatoverlay, "cheated overlay", "l");
   leg_l_ZZ_cheating_steps->AddEntry(clone_m_ZZ_l5,              "full reconstr.", "l");
   leg_l_ZZ_cheating_steps->Draw();
   

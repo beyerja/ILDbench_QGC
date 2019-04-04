@@ -344,6 +344,8 @@ class Plotter {
   float TJ_pair2_mass_from_icn;
   float TJ_pair1_mass_from_icn_custom_pairing;
   float TJ_pair2_mass_from_icn_custom_pairing;
+  float TJ_pair1_mass_cheated_overlay;
+  float TJ_pair2_mass_cheated_overlay;
 
 	int max_Nparticles;
 
@@ -423,6 +425,10 @@ class Plotter {
     TBranch* TJ_observ_from_icns_custom_pairing = current_tree->GetBranch("masses_cheated_clustering");
     TJ_observ_from_icns_custom_pairing->GetLeaf("pair1_mass")->SetAddress(&TJ_pair1_mass_from_icn_custom_pairing);
     TJ_observ_from_icns_custom_pairing->GetLeaf("pair2_mass")->SetAddress(&TJ_pair2_mass_from_icn_custom_pairing); 
+    
+    TBranch* TJ_observ_cheated_overlay = current_tree->GetBranch("masses_cheated_overlay_removal");
+    TJ_observ_cheated_overlay->GetLeaf("pair1_mass")->SetAddress(&TJ_pair1_mass_cheated_overlay);
+    TJ_observ_cheated_overlay->GetLeaf("pair2_mass")->SetAddress(&TJ_pair2_mass_cheated_overlay); 
 
 		for (int i=0; i<4; i++) {
 			std::string index_string = std::to_string(i+1);

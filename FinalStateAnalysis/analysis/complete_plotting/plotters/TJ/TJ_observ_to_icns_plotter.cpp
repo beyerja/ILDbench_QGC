@@ -24,6 +24,11 @@ class TJObservToICNsPlotter : public Plotter {
 		add_new_TH2D("m_m_WW_custom_pairing_nocuts", new TH2D("m_m_WW_custom_pairing_nocuts", "using reco of inital cn custom pairing, no cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 		add_new_TH2D("m_m_ZZ_custom_pairing_nocuts", new TH2D("m_m_ZZ_custom_pairing_nocuts", "using reco of inital cn custom pairing, no cuts; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
 
+		add_new_TH1D("m_WW_cheated_overlay_nocuts", new TH1D("m_WW_cheated_overlay_nocuts", "using TJ to cheat overlay removal; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+		add_new_TH1D("m_ZZ_cheated_overlay_nocuts", new TH1D("m_ZZ_cheated_overlay_nocuts", "using TJ to cheat overlay removal; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events", 70, 50, 120));
+		add_new_TH2D("m_m_WW_cheated_overlay_nocuts", new TH2D("m_m_WW_cheated_overlay_nocuts", "using TJ to cheat overlay removal; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+		add_new_TH2D("m_m_ZZ_cheated_overlay_nocuts", new TH2D("m_m_ZZ_cheated_overlay_nocuts", "using TJ to cheat overlay removal; m_{jj,1} [GeV];  m_{jj,2} [GeV]", 35, 50, 120, 35, 50, 120));
+
 	}
 
 	void fill_plots(){
@@ -36,6 +41,8 @@ class TJObservToICNsPlotter : public Plotter {
 				get_TH2D("m_m_WW_nocuts")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
         get_TH1D("m_WW_custom_pairing_nocuts")->Fill((TJ_pair1_mass_from_icn_custom_pairing+TJ_pair2_mass_from_icn_custom_pairing)/2., weight);
 				get_TH2D("m_m_WW_custom_pairing_nocuts")->Fill(TJ_pair1_mass_from_icn_custom_pairing, TJ_pair2_mass_from_icn_custom_pairing, weight);
+        get_TH1D("m_WW_cheated_overlay_nocuts")->Fill((TJ_pair1_mass_cheated_overlay+TJ_pair2_mass_cheated_overlay)/2., weight);
+				get_TH2D("m_m_WW_cheated_overlay_nocuts")->Fill(TJ_pair1_mass_cheated_overlay, TJ_pair2_mass_cheated_overlay, weight);
 				if ( pass_selection == 1 ) {
 					get_TH1D("m_WW")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
 					get_TH2D("m_m_WW")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
@@ -46,6 +53,8 @@ class TJObservToICNsPlotter : public Plotter {
 				get_TH2D("m_m_ZZ_nocuts")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
         get_TH1D("m_ZZ_custom_pairing_nocuts")->Fill((TJ_pair1_mass_from_icn_custom_pairing+TJ_pair2_mass_from_icn_custom_pairing)/2., weight);
         get_TH2D("m_m_ZZ_custom_pairing_nocuts")->Fill(TJ_pair1_mass_from_icn_custom_pairing, TJ_pair2_mass_from_icn_custom_pairing, weight);
+        get_TH1D("m_ZZ_cheated_overlay_nocuts")->Fill((TJ_pair1_mass_cheated_overlay+TJ_pair2_mass_cheated_overlay)/2., weight);
+        get_TH2D("m_m_ZZ_cheated_overlay_nocuts")->Fill(TJ_pair1_mass_cheated_overlay, TJ_pair2_mass_cheated_overlay, weight);
 				if ( pass_selection == 1 ) {
 					get_TH1D("m_ZZ")->Fill((TJ_pair1_mass_from_icn+TJ_pair2_mass_from_icn)/2., weight);
 					get_TH2D("m_m_ZZ")->Fill(TJ_pair1_mass_from_icn, TJ_pair2_mass_from_icn, weight);
