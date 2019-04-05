@@ -122,6 +122,50 @@ void adjust_canvas_left_to_square_pad(shared_ptr<TCanvas> canvas) {
   canvas->SetLeftMargin(left_margin);
 }
 
+void scale_canvas_constant_pad(shared_ptr<TCanvas> canvas, double scale, string side="top") {
+  /** Rescales one side of the canvas while keeping the pad size constant (by adjusting the margins)
+  */
+  
+  // Way to read current canvas size depends on if it was set once before 
+  double current_canvas_width  = canvas->GetXsizeUser();
+  double current_canvas_height = canvas->GetYsizeUser();
+  if ( current_canvas_width == 0 ) {
+    current_canvas_width  = canvas->GetWw();
+    current_canvas_height = canvas->GetWh();
+  }
+  
+  if ( side == "top" ) {
+    double new_top_margin      = 1.0 - 1.0/scale * ( 1.0 - canvas->GetTopMargin() ) ;
+    double new_bottom_margin   = canvas->GetBottomMargin() / scale;
+    canvas->Size(current_canvas_width, current_canvas_height * scale);
+    canvas->SetTopMargin(new_top_margin);
+    canvas->SetBottomMargin(new_bottom_margin);
+  } else if ( side == "bottom" ) {
+    double new_bottom_margin      = 1.0 - 1.0/scale * ( 1.0 - canvas->GetBottomMargin() ) ;
+    double new_top_margin   = canvas->GetTopMargin() / scale;
+    canvas->Size(current_canvas_width, current_canvas_height * scale);
+    canvas->SetBottomMargin(new_bottom_margin);
+    canvas->SetTopMargin(new_top_margin);
+  } else if ( side == "left" ) {
+    double new_left_margin    = 1.0 - 1.0/scale * ( 1.0 - canvas->GetLeftMargin() ) ;
+    double new_right_margin   = canvas->GetRightMargin() / scale;
+    canvas->Size(current_canvas_width * scale, current_canvas_height);
+    canvas->SetLeftMargin(new_left_margin);
+    canvas->SetRightMargin(new_right_margin);
+  } else if ( side == "right" ) {
+    double new_right_margin    = 1.0 - 1.0/scale * ( 1.0 - canvas->GetRightMargin() ) ;
+    double new_left_margin   = canvas->GetLeftMargin() / scale;
+    canvas->Size(current_canvas_width * scale, current_canvas_height);
+    canvas->SetRightMargin(new_right_margin);
+    canvas->SetLeftMargin(new_left_margin);
+  } else {
+    cout << "  WARNING in scale_canvas_constant_pad: Unknown side " << side << endl;
+    return;
+  }
+  gPad->Modified();
+  gPad->Update();
+}
+
 void create_detector_and_icn_VV_m_comparison() {
   // Standard ROOT plot setting
   gROOT->Reset();
@@ -774,7 +818,7 @@ void create_detector_and_icn_VV_m_comparison() {
   
   // ---------------------------------------------------------------------------
   double canvas_m_m_rec_height = 1200;
-  double canvas_m_m_rec_width  = 1250;
+  double canvas_m_m_rec_width  = 1200;
   
   shared_ptr<TCanvas> canvas_m_m_rec (new TCanvas("canvas_m_m_rec", "", 0, 0, canvas_m_m_rec_width, canvas_m_m_rec_height));
   
@@ -784,14 +828,21 @@ void create_detector_and_icn_VV_m_comparison() {
   m_m_ZZ_l5->Draw("box");
   m_m_WW_l5->Draw("box same");
   
+  scale_canvas_constant_pad(canvas_m_m_rec, 1.02, "top");
+  scale_canvas_constant_pad(canvas_m_m_rec, 1.07, "right");
+  
+  double m_m_rec_old_bottom_margin = canvas_m_m_rec->GetBottomMargin();
+  scale_canvas_constant_pad(canvas_m_m_rec, 1.02, "bottom");
+  m_m_ZZ_l5->GetXaxis()->SetTitleOffset( m_m_ZZ_l5->GetXaxis()->GetTitleOffset() * canvas_m_m_rec->GetBottomMargin()/m_m_rec_old_bottom_margin );
+  
   double m_m_rec_old_left_margin = canvas_m_m_rec->GetLeftMargin();
-  adjust_canvas_left_to_square_pad(canvas_m_m_rec);
+  scale_canvas_constant_pad(canvas_m_m_rec, 1.05, "left");
   m_m_ZZ_l5->GetYaxis()->SetTitleOffset( m_m_ZZ_l5->GetYaxis()->GetTitleOffset() * canvas_m_m_rec->GetLeftMargin()/m_m_rec_old_left_margin );
   
-  shared_ptr<TLatex> m_m_rec_logo = add_ILD_mark( canvas_m_m_rec, 50, 120.5, 0.1);
-  shared_ptr<TLatex> m_m_rec_prelim = add_prelim_mark( canvas_m_m_rec, 66, 120.5, 0.07); 
+  shared_ptr<TLatex> m_m_rec_logo = add_ILD_mark( canvas_m_m_rec, 50, 122, 0.1);
+  shared_ptr<TLatex> m_m_rec_prelim = add_prelim_mark( canvas_m_m_rec, 66, 122, 0.07); 
   
-  unique_ptr<TLatex> m_m_rec_description (new TLatex(101,122.5,"#splitline{full reconstr.,}{IDR-L}"));
+  unique_ptr<TLatex> m_m_rec_description (new TLatex(101,123.5,"#splitline{full reconstr.,}{normalized, IDR-L}"));
   m_m_rec_description->SetTextSize(0.04);
   m_m_rec_description->Draw();
   
@@ -859,31 +910,23 @@ void create_detector_and_icn_VV_m_comparison() {
   m_m_ZZ_l5_icn_noSLD->Draw("box");
   m_m_WW_l5_icn_noSLD->Draw("box same");
   
-  // unique_ptr<TLegend> leg_m_m_icn_noSLD (new TLegend(0.6, 0.5, 0.97, 0.8));
-  // leg_m_m_icn_noSLD->SetHeader("full icn_noSLDonstr., IDR-L");
-  // leg_m_m_icn_noSLD->Draw();
+  scale_canvas_constant_pad(canvas_m_m_icn_noSLD, 1.02, "top");
+  scale_canvas_constant_pad(canvas_m_m_icn_noSLD, 1.16, "right");
+  
+  double m_m_icn_noSLD_old_bottom_margin = canvas_m_m_icn_noSLD->GetBottomMargin();
+  scale_canvas_constant_pad(canvas_m_m_icn_noSLD, 1.02, "bottom");
+  m_m_ZZ_l5->GetXaxis()->SetTitleOffset( m_m_ZZ_l5->GetXaxis()->GetTitleOffset() * canvas_m_m_icn_noSLD->GetBottomMargin()/m_m_icn_noSLD_old_bottom_margin );
   
   double m_m_icn_noSLD_old_left_margin = canvas_m_m_icn_noSLD->GetLeftMargin();
-  adjust_canvas_left_to_square_pad(canvas_m_m_icn_noSLD);
-  m_m_ZZ_l5_icn_noSLD->GetYaxis()->SetTitleOffset( m_m_ZZ_l5_icn_noSLD->GetYaxis()->GetTitleOffset() * canvas_m_m_icn_noSLD->GetLeftMargin()/m_m_icn_noSLD_old_left_margin );
-  // stack_m_m_icn_noSLD->SetMaximum( 1.15 * m_WW_l5->GetMaximum() );
+  scale_canvas_constant_pad(canvas_m_m_icn_noSLD, 1.05, "left");
+  m_m_ZZ_l5->GetYaxis()->SetTitleOffset( m_m_ZZ_l5->GetYaxis()->GetTitleOffset() * canvas_m_m_icn_noSLD->GetLeftMargin()/m_m_icn_noSLD_old_left_margin );
   
-  shared_ptr<TLatex> m_m_icn_noSLD_logo = add_ILD_mark( canvas_m_m_icn_noSLD, 50, 120.5, 0.1);
-  shared_ptr<TLatex> m_m_icn_noSLD_prelim = add_prelim_mark( canvas_m_m_icn_noSLD, 66, 120.5, 0.07); 
+  shared_ptr<TLatex> m_m_icn_noSLD_logo = add_ILD_mark( canvas_m_m_icn_noSLD, 50, 122, 0.1);
+  shared_ptr<TLatex> m_m_icn_noSLD_prelim = add_prelim_mark( canvas_m_m_icn_noSLD, 66, 122, 0.07); 
   
-  
-  
-  // double m_m_rec_old_left_margin = canvas_m_m_rec->GetLeftMargin();
-  // adjust_canvas_left_to_square_pad(canvas_m_m_rec);
-  // m_m_ZZ_l5->GetYaxis()->SetTitleOffset( m_m_ZZ_l5->GetYaxis()->GetTitleOffset() * canvas_m_m_rec->GetLeftMargin()/m_m_rec_old_left_margin );
-  // 
-  // shared_ptr<TLatex> m_m_rec_logo = add_ILD_mark( canvas_m_m_rec, 50, 120.5, 0.1);
-  // shared_ptr<TLatex> m_m_rec_prelim = add_prelim_mark( canvas_m_m_rec, 66, 120.5, 0.07); 
-  // 
-  unique_ptr<TLatex> m_m_icn_noSLD_description (new TLatex(97,122.5,"#splitline{cheated boson,}{no l^{#pm}#nu decays, IDR-L}"));
+  unique_ptr<TLatex> m_m_icn_noSLD_description (new TLatex(101,123.5,"#splitline{cheated boson, no l^{#pm}#nu decays,}{normalized, IDR-L}"));
   m_m_icn_noSLD_description->SetTextSize(0.035);
   m_m_icn_noSLD_description->Draw();
-  
   
   string plot_name_m_m_icn_noSLD = "./m_m_icn_noSLD";
   canvas_m_m_icn_noSLD->Print((output_dir + plot_name_m_m_icn_noSLD + ".pdf").c_str());
@@ -939,6 +982,67 @@ void create_detector_and_icn_VV_m_comparison() {
   canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".pdf").c_str());
   canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".jpg").c_str());
   canvas_l_ZZ_cheating_steps->Print((output_dir + plot_name_l_ZZ_cheating_steps + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_l_WW_cheating_steps_height = 1200;
+  double canvas_l_WW_cheating_steps_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_l_WW_cheating_steps (new TCanvas("canvas_l_WW_cheating_steps", "", 0, 0, canvas_l_WW_cheating_steps_width, canvas_l_WW_cheating_steps_height));
+  shared_ptr<THStack> stack_l_WW_cheating_steps = make_shared<THStack>( "l_WW_cheating_steps", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; a.u." );
+  
+  m_WW_l5_icn_noSLD->SetLineColor(kRed);  m_WW_l5_icn_noSLD->SetLineStyle(1); m_WW_l5_icn_noSLD->SetLineWidth(3);
+
+  clone_m_WW_l5 = (TH1D*)m_WW_l5->Clone();                            deletables.push_back(clone_m_WW_l5);              clone_m_WW_l5->Scale(1.0/clone_m_WW_l5->Integral());
+  clone_m_WW_l5_cheatoverlay = (TH1D*)m_WW_l5_cheatoverlay->Clone();  deletables.push_back(clone_m_WW_l5_cheatoverlay); clone_m_WW_l5_cheatoverlay->Scale(1.0/clone_m_WW_l5_cheatoverlay->Integral());
+  clone_m_WW_l5_cheatcluster = (TH1D*)m_WW_l5_cheatcluster->Clone();  deletables.push_back(clone_m_WW_l5_cheatcluster); clone_m_WW_l5_cheatcluster->Scale(1.0/clone_m_WW_l5_cheatcluster->Integral());
+  clone_m_WW_l5_icn = (TH1D*)m_WW_l5_icn->Clone();                    deletables.push_back(clone_m_WW_l5_icn);          clone_m_WW_l5_icn->Scale(1.0/clone_m_WW_l5_icn->Integral());
+  clone_m_WW_l5_icn_noSLD = (TH1D*)m_WW_l5_icn_noSLD->Clone();        deletables.push_back(clone_m_WW_l5_icn_noSLD);    clone_m_WW_l5_icn_noSLD->Scale(1.0/clone_m_WW_l5_icn_noSLD->Integral());
+  
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn_noSLD);      clone_m_WW_l5_icn_noSLD->SetLineColor(kGreen);   clone_m_WW_l5_icn_noSLD->SetLineWidth(3);       clone_m_WW_l5_icn_noSLD->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn);            clone_m_WW_l5_icn->SetLineColor(kTeal-2);           clone_m_WW_l5_icn->SetLineWidth(3);             clone_m_WW_l5_icn->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatcluster);   clone_m_WW_l5_cheatcluster->SetLineColor(kMagenta-4);   clone_m_WW_l5_cheatcluster->SetLineWidth(3);    clone_m_WW_l5_cheatcluster->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatoverlay);   clone_m_WW_l5_cheatoverlay->SetLineColor(kViolet-4);  clone_m_WW_l5_cheatoverlay->SetLineWidth(3);    clone_m_WW_l5_cheatoverlay->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5);                clone_m_WW_l5->SetLineColor(kBlue);                  clone_m_WW_l5->SetLineWidth(3);                 clone_m_WW_l5->SetLineStyle(1);
+  stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn_noSLD);      clone_m_WW_l5_icn_noSLD->SetLineColor(kYellow-6);   clone_m_WW_l5_icn_noSLD->SetLineWidth(3);       clone_m_WW_l5_icn_noSLD->SetLineStyle(1);
+  stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn);            clone_m_WW_l5_icn->SetLineColor(kSpring+10);           clone_m_WW_l5_icn->SetLineWidth(3);             clone_m_WW_l5_icn->SetLineStyle(1);
+  stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatcluster);   clone_m_WW_l5_cheatcluster->SetLineColor(kTeal-5);   clone_m_WW_l5_cheatcluster->SetLineWidth(3);    clone_m_WW_l5_cheatcluster->SetLineStyle(1);
+  stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatoverlay);   clone_m_WW_l5_cheatoverlay->SetLineColor(kCyan+2);  clone_m_WW_l5_cheatoverlay->SetLineWidth(3);    clone_m_WW_l5_cheatoverlay->SetLineStyle(1);
+  stack_l_WW_cheating_steps->Add(clone_m_WW_l5);                clone_m_WW_l5->SetLineColor(kBlue);                  clone_m_WW_l5->SetLineWidth(3);                 clone_m_WW_l5->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn_noSLD);      clone_m_WW_l5_icn_noSLD->SetLineColor(kSpring+10);   clone_m_WW_l5_icn_noSLD->SetLineWidth(3);       clone_m_WW_l5_icn_noSLD->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_icn);            clone_m_WW_l5_icn->SetLineColor(kGreen+2);           clone_m_WW_l5_icn->SetLineWidth(3);             clone_m_WW_l5_icn->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatcluster);   clone_m_WW_l5_cheatcluster->SetLineColor(kTeal+2);   clone_m_WW_l5_cheatcluster->SetLineWidth(3);    clone_m_WW_l5_cheatcluster->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5_cheatoverlay);   clone_m_WW_l5_cheatoverlay->SetLineColor(kAzure+8);  clone_m_WW_l5_cheatoverlay->SetLineWidth(3);    clone_m_WW_l5_cheatoverlay->SetLineStyle(1);
+  // stack_l_WW_cheating_steps->Add(clone_m_WW_l5);                clone_m_WW_l5->SetLineColor(kBlue);                  clone_m_WW_l5->SetLineWidth(3);                 clone_m_WW_l5->SetLineStyle(1);
+  
+  stack_l_WW_cheating_steps->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_l_WW_cheating_steps (new TLegend(0.58, 0.3, 0.9, 0.8));
+  
+  leg_l_WW_cheating_steps->SetHeader("#splitline{IDR-L, WW signal}{normalized}");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_icn_noSLD,    "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_icn,          "cheated bosons", "l");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_cheatcluster, "cheated jets", "l");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_cheatoverlay, "cheated overlay", "l");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5,              "full reconstr.", "l");
+  leg_l_WW_cheating_steps->Draw();
+  
+  stack_l_WW_cheating_steps->SetMaximum(clone_m_WW_l5_icn_noSLD->GetMaximum() * 1.15);
+  stack_l_WW_cheating_steps->Draw("axis same"); // Draw only axis
+  
+  stack_l_WW_cheating_steps->Draw("hist nostack same");
+  adjust_canvas_left_to_square_pad(canvas_l_WW_cheating_steps);
+  double l_WW_cheating_steps_old_left_margin = canvas_l_WW_cheating_steps->GetLeftMargin();
+  stack_l_WW_cheating_steps->GetYaxis()->SetTitleOffset( stack_l_WW_cheating_steps->GetYaxis()->GetTitleOffset() * canvas_l_WW_cheating_steps->GetLeftMargin()/l_WW_cheating_steps_old_left_margin );
+  
+  
+  shared_ptr<TLatex> l_WW_cheating_steps_logo = add_ILD_mark( canvas_l_WW_cheating_steps, 55, 1.03 * clone_m_WW_l5_icn_noSLD->GetMaximum(), 0.1);
+  shared_ptr<TLatex> l_WW_cheating_steps_prelim = add_prelim_mark( canvas_l_WW_cheating_steps, 71, 1.03 * clone_m_WW_l5_icn_noSLD->GetMaximum(), 0.07); 
+  
+  string plot_name_l_WW_cheating_steps = "./l_WW_cheating_steps";
+  canvas_l_WW_cheating_steps->Print((output_dir + plot_name_l_WW_cheating_steps + ".pdf").c_str());
+  canvas_l_WW_cheating_steps->Print((output_dir + plot_name_l_WW_cheating_steps + ".jpg").c_str());
+  canvas_l_WW_cheating_steps->Print((output_dir + plot_name_l_WW_cheating_steps + ".C").c_str());
   // ---------------------------------------------------------------------------
   
   // ---------------------------------------------------------------------------
