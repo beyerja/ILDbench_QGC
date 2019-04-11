@@ -1,7 +1,6 @@
+# TODO: WRITE THIS
 
-
-Quick steps to build the mymarlin example:
-------------------------------------------
+<!-- Quick steps to build the mymarlin example:
 
     . /path/to/ilcsoft/installation/v01-XX/init_ilcsoft.sh
     mkdir build
@@ -12,7 +11,6 @@ Quick steps to build the mymarlin example:
 
 
 Quick steps to load mymarlin example into Marlin:
--------------------------------------------------
 
     export MARLIN_DLL=$PWD/lib/libmymarlin.so
     Marlin -x > mysteer.xml
@@ -21,7 +19,6 @@ Quick steps to load mymarlin example into Marlin:
 
 
 Quick steps to change this example into your own Marlin plugin:
----------------------------------------------------------------
 
     1.) rename source files:
         
@@ -35,13 +32,12 @@ Quick steps to change this example into your own Marlin plugin:
         Check DEPENDENCIES for additional required / optional packages
 
 
-    3.) compile your new plugin and load it into Marlin as described above
+    3.) compile your new plugin and load it into Marlin as described above -->
 
 
 
 
-Infos and support:
-------------------
+<!-- Infos and support:
 
 iLCSoft general documentation:
 http://ilcsoft.desy.de/portal/general_documentation/index_eng.html
@@ -50,5 +46,5 @@ CMake website:
 http://www.cmake.org
 
 The Linear Collider Forum:
-http://forum.linearcollider.org
+http://forum.linearcollider.org -->
 

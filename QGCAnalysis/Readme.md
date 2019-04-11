@@ -1,4 +1,4 @@
-## ILDbench_QGC
+## QGCAnalysis
 
 Anomalous quartic gauge coupling measurement
 
@@ -142,11 +142,6 @@ The macros to analyse the ROOT file ouput from the processor are in `macros/ROOT
 - **WHIZARD macros and steering:** I received a lot of help from the WHIZARD team in setting up my file production and creating useful samples. Special thanks go to Marco Sekulla who provided me with a python template setup which my macros and template are based on.
 
 
-### Issues and contact
-
-For feedback, complaints, ... contact me:
-
-- via the Github issue interface: https://github.com/ILDAnaSoft/ILDbench_QGC/issues
 
 
 
