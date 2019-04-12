@@ -2,9 +2,10 @@
 
 source /afs/desy.de/user/b/beyerjac/flc/load_current_software_versions.sh
 
-VBSdir=/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+VBSdir="${DIR}/.."
 PROJECTNAME=JakobsVBSProcessor
-libname=$VBSdir"/lib/lib$PROJECTNAME"
+libname="${VBSdir}/lib/lib${PROJECTNAME}"
 export MARLIN_DLL=${MARLIN_DLL}:${libname}.so
 export MARLIN_DLL=${MARLIN_DLL}:${VBSdir}/TJJetRecoParticleFinder/lib/libTJJetRecoParticleFinder.so
 

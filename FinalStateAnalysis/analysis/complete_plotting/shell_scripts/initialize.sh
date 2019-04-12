@@ -19,10 +19,10 @@ output_directory="/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02
 # output_directory="/afs/desy.de/group/flc/pool/beyerjac/backup/19_05_sample_results/output"
 
 # input_directory="/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/rootfiles_after_selection"
-# output_directory="/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/analysis/complete_plotting/output"
+# output_directory="${THIS_SCRIPT_DIR}/../output"
 
 tree_name="selected_datatrain"
-db_path="/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/scripts/event_file_dictionary.db"
+db_path="${THIS_SCRIPT_DIR}/../../../scripts/event_file_dictionary.db"
 
 # Get files from input directory
 cd ${input_directory}

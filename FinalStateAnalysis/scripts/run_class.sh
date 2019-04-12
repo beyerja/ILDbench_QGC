@@ -14,7 +14,7 @@ E_COM=1000
 SW_version=$CURRENT_ILCSOFT_VERSION
 detector_model=$CURRENT_ILD_MODEL
 
-DIR=/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/scripts
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [[ ${class_name} = "6f_2l4q" ]] ; then
 	class_name_array=("6f_2l4q")

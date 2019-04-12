@@ -7,7 +7,7 @@ info=${3,,}
 shift 3
 condor_job_IDs=$@
 
-DIR=/afs/desy.de/user/b/beyerjac/flc/VBS/nunu_hadrons/scripts
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 condor_output_directory="${DIR}/BIRD_output"
 

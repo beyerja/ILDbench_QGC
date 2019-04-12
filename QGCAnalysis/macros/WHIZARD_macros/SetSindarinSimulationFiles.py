@@ -5,6 +5,7 @@
 """
 
 import sys
+import os
 import ProcessMaps            as pMaps 
 import GetSindarinParameters  as sinPars
 import SystemHelperFunctions  as sysHelp
@@ -141,7 +142,8 @@ def main(arguments):
     
     # Settings for the simulation
     luminosity  = '1000 / 1 fbarn'
-    ISR_file    = '/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/scripts/WHIZARD_scripts/isr_spectrum_files/ee_Waisty_opt_Jan2012_1000GeV_B1b.circe'
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    ISR_file    = '{}/../../scripts/WHIZARD_scripts/isr_spectrum_files/ee_Waisty_opt_Jan2012_1000GeV_B1b.circe'.format(script_path)
     
     # base_dir must exist and contain two dirs called "signal" and "bkg"
     base_dir        = outDir.getOutputDirectory()

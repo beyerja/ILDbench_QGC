@@ -81,7 +81,7 @@ void EFTTester::performAnalysis(){
 // h1_VV_m_4->Draw("hist same");
 // h1_VV_m_5->Draw("hist same");
 // h1_VV_m_6->Draw("hist same");
-//   canvas_h1->Print("/afs/desy.de/user/b/beyerjac/flc/VBS/aQGC_analysis/macros/ROOT_macros/test_plot_1.pdf");
+//   canvas_h1->Print("./test_plot_1.pdf");
 // 
 // delete canvas_h1;
 
