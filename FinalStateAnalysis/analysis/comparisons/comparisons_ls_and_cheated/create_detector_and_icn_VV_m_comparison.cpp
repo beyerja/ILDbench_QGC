@@ -1031,10 +1031,9 @@ void create_detector_and_icn_VV_m_comparison() {
   stack_l_WW_cheating_steps->Draw("axis same"); // Draw only axis
   
   stack_l_WW_cheating_steps->Draw("hist nostack same");
-  adjust_canvas_left_to_square_pad(canvas_l_WW_cheating_steps);
   double l_WW_cheating_steps_old_left_margin = canvas_l_WW_cheating_steps->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_l_WW_cheating_steps);
   stack_l_WW_cheating_steps->GetYaxis()->SetTitleOffset( stack_l_WW_cheating_steps->GetYaxis()->GetTitleOffset() * canvas_l_WW_cheating_steps->GetLeftMargin()/l_WW_cheating_steps_old_left_margin );
-  
   
   shared_ptr<TLatex> l_WW_cheating_steps_logo = add_ILD_mark( canvas_l_WW_cheating_steps, 55, 1.03 * clone_m_WW_l5_icn_noSLD->GetMaximum(), 0.1);
   shared_ptr<TLatex> l_WW_cheating_steps_prelim = add_prelim_mark( canvas_l_WW_cheating_steps, 71, 1.03 * clone_m_WW_l5_icn_noSLD->GetMaximum(), 0.07); 
