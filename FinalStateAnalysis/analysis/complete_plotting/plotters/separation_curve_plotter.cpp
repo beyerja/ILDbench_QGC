@@ -247,6 +247,8 @@ class SeparationCurvePlotter : public Plotter {
 		get_TGraph("separation_curve_reco")->Write();
 		get_TGraph("separation_curve_cheatjet")->Write();
 		get_TGraph("separation_curve_cheatjet_custompairing")->Write();
+    get_TGraph("separation_curve_cheated_overlay")->Write();
+    get_TGraph("separation_curve_cheatjet_noSLDs")->Write();
 		get_TGraph("separation_curve_reco_perfectbtag")->Write();
 		get_TGraph("separation_curve_cheatjet_perfectbtag")->Write();
 		get_TGraph("separation_curve_cheatjet_custompairing_perfectbtag")->Write();

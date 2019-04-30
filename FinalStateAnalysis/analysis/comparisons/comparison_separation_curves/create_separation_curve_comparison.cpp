@@ -44,11 +44,15 @@ void create_separation_curve_comparison() {
   
   TGraph *sep_curve_genlevel            =  (TGraph*)file_l5->Get("separation_curve_genlevel") ;  
   TGraph *sep_curve_l5_reco             =  (TGraph*)file_l5->Get("separation_curve_reco") ;  
-  TGraph *sep_curve_l5_cheatjet         =  (TGraph*)file_l5->Get("separation_curve_cheatjet") ;  
+  TGraph *sep_curve_l5_cheatoverlay     =  (TGraph*)file_l5->Get("separation_curve_cheated_overlay") ;  
   TGraph *sep_curve_l5_cheatcluster     =  (TGraph*)file_l5->Get("separation_curve_cheatjet_custompairing") ;  
+  TGraph *sep_curve_l5_cheatjet         =  (TGraph*)file_l5->Get("separation_curve_cheatjet") ;  
+  TGraph *sep_curve_l5_cheatjet_noSLDs  =  (TGraph*)file_l5->Get("separation_curve_cheatjet_noSLDs") ;  
   TGraph *sep_curve_s5_reco             =  (TGraph*)file_s5->Get("separation_curve_reco") ;  
-  TGraph *sep_curve_s5_cheatjet         =  (TGraph*)file_s5->Get("separation_curve_cheatjet") ;  
+  TGraph *sep_curve_s5_cheatoverlay     =  (TGraph*)file_s5->Get("separation_curve_cheated_overlay") ;  
   TGraph *sep_curve_s5_cheatcluster     =  (TGraph*)file_s5->Get("separation_curve_cheatjet_custompairing") ;  
+  TGraph *sep_curve_s5_cheatjet         =  (TGraph*)file_s5->Get("separation_curve_cheatjet") ;  
+  TGraph *sep_curve_s5_cheatjet_noSLDs  =  (TGraph*)file_s5->Get("separation_curve_cheatjet_noSLDs") ;  
   TGraph *sep_curve_l5_reco_perfectbtag             =  (TGraph*)file_l5->Get("separation_curve_reco_perfectbtag") ;  
   TGraph *sep_curve_l5_cheatjet_perfectbtag         =  (TGraph*)file_l5->Get("separation_curve_cheatjet_perfectbtag") ;  
   TGraph *sep_curve_l5_cheatcluster_perfectbtag     =  (TGraph*)file_l5->Get("separation_curve_cheatjet_custompairing_perfectbtag") ;  
@@ -305,6 +309,114 @@ void create_separation_curve_comparison() {
   string plot_name_sep_curve_comp_l5 = "./sep_curve_comp_l5";
   canvas_sep_curve_comp_l5->Print((output_dir + plot_name_sep_curve_comp_l5 + ".pdf").c_str());
   canvas_sep_curve_comp_l5->Print((output_dir + plot_name_sep_curve_comp_l5 + ".C").c_str());
+
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  
+  shared_ptr<TCanvas> canvas_sep_curve_comp_l5_IDR (new TCanvas("canvas_sep_curve_comp_l5_IDR", "", 0, 0, 600, 600));
+
+  TMultiGraph *sep_curve_comp_l5_IDR = new TMultiGraph();
+  sep_curve_comp_l5_IDR->SetTitle("; #font[12]{WW} ID eff.; #font[12]{ZZ} ID eff.");
+
+  sep_curve_l5_reco->SetLineColor(kBlue);
+  sep_curve_l5_cheatoverlay->SetLineColor(kBlue-3);
+  sep_curve_l5_cheatcluster->SetLineColor(kBlue-6);
+  sep_curve_l5_cheatjet->SetLineColor(kBlue-5);
+  sep_curve_l5_cheatjet_noSLDs->SetLineColor(kBlue-1);
+
+  sep_curve_l5_reco->SetLineStyle(1);
+  sep_curve_l5_cheatoverlay->SetLineStyle(10);
+  sep_curve_l5_cheatcluster->SetLineStyle(4);
+  sep_curve_l5_cheatjet->SetLineStyle(8);
+  sep_curve_l5_cheatjet_noSLDs->SetLineStyle(6);
+
+  sep_curve_l5_reco->SetLineWidth(4);
+  sep_curve_l5_cheatoverlay->SetLineWidth(4);
+  sep_curve_l5_cheatcluster->SetLineWidth(4);
+  sep_curve_l5_cheatjet->SetLineWidth(4);
+  sep_curve_l5_cheatjet_noSLDs->SetLineWidth(4);
+
+  sep_curve_comp_l5_IDR->Add(sep_curve_l5_reco,"l");
+  sep_curve_comp_l5_IDR->Add(sep_curve_l5_cheatoverlay,"l");
+  sep_curve_comp_l5_IDR->Add(sep_curve_l5_cheatcluster,"l");
+  sep_curve_comp_l5_IDR->Add(sep_curve_l5_cheatjet,"l");
+  sep_curve_comp_l5_IDR->Add(sep_curve_l5_cheatjet_noSLDs,"l");
+ 
+  sep_curve_comp_l5_IDR->Draw("a");
+  sep_curve_comp_l5_IDR->GetXaxis()->SetRangeUser(0,1);
+  sep_curve_comp_l5_IDR->GetYaxis()->SetRangeUser(0,1);
+
+
+  unique_ptr<TLegend> leg_sep_curve_comp_l5_IDR (new TLegend(0.2, 0.23, 0.62, 0.65));
+  leg_sep_curve_comp_l5_IDR->SetHeader("#splitline{IDR-L}{1D cut separation}");
+  leg_sep_curve_comp_l5_IDR->AddEntry(sep_curve_l5_reco,            "full reconstruction", "l");
+  leg_sep_curve_comp_l5_IDR->AddEntry(sep_curve_l5_cheatoverlay,    "cheated overlay", "l");
+  leg_sep_curve_comp_l5_IDR->AddEntry(sep_curve_l5_cheatcluster,    "cheated jets", "l");
+  leg_sep_curve_comp_l5_IDR->AddEntry(sep_curve_l5_cheatjet,        "cheated bosons", "l");
+  leg_sep_curve_comp_l5_IDR->AddEntry(sep_curve_l5_cheatjet_noSLDs, "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
+  leg_sep_curve_comp_l5_IDR->Draw();
+  // 
+  shared_ptr<TLatex> sep_curve_comp_l5_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_l5_IDR, 0.06, 0.65, 0.1);
+  shared_ptr<TLatex> sep_curve_comp_l5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_l5_IDR, 0.28, 0.65, 0.07); 
+  
+  string plot_name_sep_curve_comp_l5_IDR = "./sep_curve_comp_l5_IDR";
+  canvas_sep_curve_comp_l5_IDR->Print((output_dir + plot_name_sep_curve_comp_l5_IDR + ".pdf").c_str());
+  canvas_sep_curve_comp_l5_IDR->Print((output_dir + plot_name_sep_curve_comp_l5_IDR + ".C").c_str());
+
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  
+  shared_ptr<TCanvas> canvas_sep_curve_comp_s5_IDR (new TCanvas("canvas_sep_curve_comp_s5_IDR", "", 0, 0, 600, 600));
+
+  TMultiGraph *sep_curve_comp_s5_IDR = new TMultiGraph();
+  sep_curve_comp_s5_IDR->SetTitle("; #font[12]{WW} ID eff.; #font[12]{ZZ} ID eff.");
+
+  sep_curve_s5_reco->SetLineColor(kRed);
+  sep_curve_s5_cheatoverlay->SetLineColor(kRed-3);
+  sep_curve_s5_cheatcluster->SetLineColor(kRed-6);
+  sep_curve_s5_cheatjet->SetLineColor(kRed-5);
+  sep_curve_s5_cheatjet_noSLDs->SetLineColor(kRed-1);
+
+  sep_curve_s5_reco->SetLineStyle(1);
+  sep_curve_s5_cheatoverlay->SetLineStyle(10);
+  sep_curve_s5_cheatcluster->SetLineStyle(4);
+  sep_curve_s5_cheatjet->SetLineStyle(8);
+  sep_curve_s5_cheatjet_noSLDs->SetLineStyle(6);
+
+  sep_curve_s5_reco->SetLineWidth(4);
+  sep_curve_s5_cheatoverlay->SetLineWidth(4);
+  sep_curve_s5_cheatcluster->SetLineWidth(4);
+  sep_curve_s5_cheatjet->SetLineWidth(4);
+  sep_curve_s5_cheatjet_noSLDs->SetLineWidth(4);
+
+  sep_curve_comp_s5_IDR->Add(sep_curve_s5_reco,"l");
+  sep_curve_comp_s5_IDR->Add(sep_curve_s5_cheatoverlay,"l");
+  sep_curve_comp_s5_IDR->Add(sep_curve_s5_cheatcluster,"l");
+  sep_curve_comp_s5_IDR->Add(sep_curve_s5_cheatjet,"l");
+  sep_curve_comp_s5_IDR->Add(sep_curve_s5_cheatjet_noSLDs,"l");
+ 
+  sep_curve_comp_s5_IDR->Draw("a");
+  sep_curve_comp_s5_IDR->GetXaxis()->SetRangeUser(0,1);
+  sep_curve_comp_s5_IDR->GetYaxis()->SetRangeUser(0,1);
+
+
+  unique_ptr<TLegend> leg_sep_curve_comp_s5_IDR (new TLegend(0.2, 0.23, 0.62, 0.65));
+  leg_sep_curve_comp_s5_IDR->SetHeader("#splitline{IDR-S}{1D cut separation}");
+  leg_sep_curve_comp_s5_IDR->AddEntry(sep_curve_s5_reco,            "full reconstruction", "l");
+  leg_sep_curve_comp_s5_IDR->AddEntry(sep_curve_s5_cheatoverlay,    "cheated overlay", "l");
+  leg_sep_curve_comp_s5_IDR->AddEntry(sep_curve_s5_cheatcluster,    "cheated jets", "l");
+  leg_sep_curve_comp_s5_IDR->AddEntry(sep_curve_s5_cheatjet,        "cheated bosons", "l");
+  leg_sep_curve_comp_s5_IDR->AddEntry(sep_curve_s5_cheatjet_noSLDs, "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
+  leg_sep_curve_comp_s5_IDR->Draw();
+  // 
+  shared_ptr<TLatex> sep_curve_comp_s5_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_s5_IDR, 0.06, 0.65, 0.1);
+  shared_ptr<TLatex> sep_curve_comp_s5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_s5_IDR, 0.28, 0.65, 0.07); 
+  
+  string plot_name_sep_curve_comp_s5_IDR = "./sep_curve_comp_s5_IDR";
+  canvas_sep_curve_comp_s5_IDR->Print((output_dir + plot_name_sep_curve_comp_s5_IDR + ".pdf").c_str());
+  canvas_sep_curve_comp_s5_IDR->Print((output_dir + plot_name_sep_curve_comp_s5_IDR + ".C").c_str());
 
   // ---------------------------------------------------------------------------
   

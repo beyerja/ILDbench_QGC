@@ -463,6 +463,48 @@ void create_detector_and_icn_VV_m_comparison() {
   canvas_l5_m->Print((output_dir + plot_name_l5_m + ".C").c_str());
   // ---------------------------------------------------------------------------
   
+  // ---------------------------------------------------------------------------
+  double canvas_l5_m_icn_noSLD_height = 1200;
+  double canvas_l5_m_icn_noSLD_width  = 1250;
+  
+  shared_ptr<TCanvas> canvas_l5_m_icn_noSLD (new TCanvas("canvas_l5_m_icn_noSLD", "", 0, 0, canvas_l5_m_icn_noSLD_width, canvas_l5_m_icn_noSLD_height));
+  shared_ptr<THStack> stack_l5_m_icn_noSLD = make_shared<THStack>( "l5_m_icn_noSLD", "; (m_{jj,1} + m_{jj,2})/2 [GeV]; Events" );
+  
+  m_WW_l5_icn_udsonly->SetLineColor(kBlue);
+  m_ZZ_l5_icn_udsonly->SetLineColor(kRed);
+  m_WW_l5_icn_udsonly->SetLineStyle(1);
+  m_ZZ_l5_icn_udsonly->SetLineStyle(1);
+  m_WW_l5_icn_udsonly->SetLineWidth(3);
+  m_ZZ_l5_icn_udsonly->SetLineWidth(3);
+
+  stack_l5_m_icn_noSLD->Add(m_WW_l5_icn_udsonly);
+  stack_l5_m_icn_noSLD->Add(m_ZZ_l5_icn_udsonly);
+  stack_l5_m_icn_noSLD->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_l5_m_icn_noSLD (new TLegend(0.25, 0.5, 0.55, 0.8));
+  leg_l5_m_icn_noSLD->SetHeader("#splitline{IDR-L, no l^{#pm}#nu decays,}{cheated boson}");
+  // unique_ptr<TLatex> m_m_icn_noSLD_description (new TLatex(101,123.5,"#splitline{cheated boson, no l^{#pm}#nu decays,}{normalized, IDR-L}"));
+  leg_l5_m_icn_noSLD->AddEntry(m_WW_l5_icn_udsonly,   "#font[12]{WW} signal", "l");
+  leg_l5_m_icn_noSLD->AddEntry(m_ZZ_l5_icn_udsonly,   "#font[12]{ZZ} signal", "l");
+  leg_l5_m_icn_noSLD->Draw();
+  
+  stack_l5_m_icn_noSLD->Draw("hist nostack same");
+  double l5_m_icn_noSLD_old_left_margin = canvas_l5_m_icn_noSLD->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_l5_m_icn_noSLD);
+  stack_l5_m_icn_noSLD->GetYaxis()->SetTitleOffset( stack_l5_m_icn_noSLD->GetYaxis()->GetTitleOffset() * canvas_l5_m_icn_noSLD->GetLeftMargin()/l5_m_icn_noSLD_old_left_margin );
+  stack_l5_m_icn_noSLD->SetMaximum( 1.15 * m_WW_l5_icn_udsonly->GetMaximum() );
+  
+  shared_ptr<TLatex> l5_m_icn_noSLD_logo = add_ILD_mark( canvas_l5_m_icn_noSLD, 55, 1.03 * m_WW_l5_icn_udsonly->GetMaximum(), 0.1);
+  shared_ptr<TLatex> l5_m_icn_noSLD_prelim = add_prelim_mark( canvas_l5_m_icn_noSLD, 71, 1.03 * m_WW_l5_icn_udsonly->GetMaximum(), 0.07); 
+  
+  string plot_name_l5_m_icn_noSLD = "./l5_m_icn_noSLD";
+  canvas_l5_m_icn_noSLD->Print((output_dir + plot_name_l5_m_icn_noSLD + ".pdf").c_str());
+  canvas_l5_m_icn_noSLD->Print((output_dir + plot_name_l5_m_icn_noSLD + ".jpg").c_str());
+  canvas_l5_m_icn_noSLD->Print((output_dir + plot_name_l5_m_icn_noSLD + ".C").c_str());
+  // ---------------------------------------------------------------------------
+
+  
+  
   // Should be same for all of these plots
   int canvas_height = 1600;
   int canvas_width  = 1200;
