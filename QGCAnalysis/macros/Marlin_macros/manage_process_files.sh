@@ -31,7 +31,14 @@ if  [[ ${action} == "--set-steeringfiles" ]]; then
 
   # Do case-insensitive (`-iname`) search in directory (and subdirectories) for relevant DST files 
   # according to convention of DST file naming and print complete paths (->`pwd`).
-  files=$(find `pwd` -iname "*rv${RECONSTRUCTION_SOFTWARE_VERSION}*sv${SIMULATION_SOFTWARE_VERSION}*mILD_${DETECTOR_MODEL_VERSION}*E${COLLIDER_ENERGY}*${final_state}*${e_pol}.${p_pol}*DST*.slcio" -print)
+  # # Additional problem addressed by if statement: New high-Q^2 6f samples are in same main directory as normal files
+  # # => If they are supposed to be used (main directory set as high-Q^2) use them, else ignore that specific directory
+  if [[ ${files_dir} == *"6f_WWS"* ]]; then
+    files=$(find `pwd` -iname "*rv${RECONSTRUCTION_SOFTWARE_VERSION}*sv${SIMULATION_SOFTWARE_VERSION}*mILD_${DETECTOR_MODEL_VERSION}*E${COLLIDER_ENERGY}*${final_state}*${e_pol}.${p_pol}*DST*.slcio" -print)
+  else 
+    ignore_dir="/pnfs/desy.de/ilc/prod/ilc/mc-opt-3/ild/dst-merged/1000-B1b_ws/6f_WWS"
+    files=$(find `pwd` -path "${ignore_dir}" -prune -o -iname "*rv${RECONSTRUCTION_SOFTWARE_VERSION}*sv${SIMULATION_SOFTWARE_VERSION}*mILD_${DETECTOR_MODEL_VERSION}*E${COLLIDER_ENERGY}*${final_state}*${e_pol}.${p_pol}*DST*.slcio" -print)
+  fi
   
   file_steering_paths=() # Collect paths of steering files for job starting
   
