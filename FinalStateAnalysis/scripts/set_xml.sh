@@ -14,7 +14,7 @@ E_COM=${4,,}
 SW_version=${5,,}
 detector_model=${6,,}
 
-DIR=${MA}/scripts
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 data_directory=/nfs/dust/ilc/group/ild/beyerjac/VBS/nunu_hadrons/output/tmp_rootfiles
 
 xml_directory=${DIR}/../xml
