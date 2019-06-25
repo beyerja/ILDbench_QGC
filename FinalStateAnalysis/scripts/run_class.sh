@@ -16,8 +16,8 @@ detector_model=$CURRENT_ILD_MODEL
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if [[ ${class_name} = "6f_2l4q" ]] ; then
-	class_name_array=("6f_2l4q")
+if [[ ${class_name} == "6f_2l4q"* ]] ; then
+	class_name_array=("${class_name}")
 	final_state=("vvxyyx" "vvxxxx" "vvyyyy")
 else
 	echo ""

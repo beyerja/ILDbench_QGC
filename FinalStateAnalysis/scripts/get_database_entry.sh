@@ -2,19 +2,19 @@
 
 
 if [[  $# != 7 ]]  ; then
-	echo "usage: ./get_database_entry.sh input_class_name (4f_WW/4f_ZZ..) final_state (l/sl/e2/e1..) pol (lr/rl/ll/rr) content (file/weight) COM_energy (in GeV) sw_version (01_19_05/...) detector_model (l5/...)"
+	echo "usage: ./get_database_entry.sh class_name (4f_WW/4f_ZZ..) final_state (l/sl/e2/e1..) pol (lr/rl/ll/rr) content (file/weight) COM_energy (in GeV) sw_version (01_19_05/...) detector_model (l5/...)"
 	exit
 fi
 
 if [[  $4 != "file" && $4 != "weight" ]]  ; then
-	echo "usage: ./get_database_entry.sh input_class_name (4f_WW/4f_ZZ..) final_state (l/sl/e2/e1..) pol (lr/rl/ll/rr) content (file/weight) COM_energy (in GeV) sw_version (01_19_05/...) detector_model (l5/...)"
+	echo "usage: ./get_database_entry.sh class_name (4f_WW/4f_ZZ..) final_state (l/sl/e2/e1..) pol (lr/rl/ll/rr) content (file/weight) COM_energy (in GeV) sw_version (01_19_05/...) detector_model (l5/...)"
 	exit
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 # Specifications about physical process in the files
-input_class_name=${1,,}
+class_name=${1,,}
 final_state=${2,,}
 pol=${3,,}
 
@@ -25,13 +25,6 @@ content=${4,,}
 E_COM=${5,,}
 SW_version=${6,,}
 detector_model=${7,,}
-
-
-# Translate readable input into common names
-if [[ ${input_class_name} == "6f_2l4q" ]] ; then
-	class_name="6f_2l4q" 
-fi
-
 
 direction=${DIR}
 if [[ -a ${direction}/event_file_dictionary.db ]] ; then
