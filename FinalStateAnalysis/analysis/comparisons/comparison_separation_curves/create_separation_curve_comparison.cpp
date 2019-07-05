@@ -420,6 +420,72 @@ void create_separation_curve_comparison() {
 
   // ---------------------------------------------------------------------------
   
+  // ---------------------------------------------------------------------------
+  
+  shared_ptr<TCanvas> canvas_sep_curve_comp_ls_IDR (new TCanvas("canvas_sep_curve_comp_ls_IDR", "", 0, 0, 600, 600));
+
+  TMultiGraph *sep_curve_comp_ls_IDR = new TMultiGraph();
+  sep_curve_comp_ls_IDR->SetTitle("; #font[12]{WW} ID eff.; #font[12]{ZZ} ID eff.");
+
+  sep_curve_l5_reco->SetLineColor(kBlue);
+  sep_curve_l5_cheatjet_noSLDs->SetLineColor(kBlue-6);
+  sep_curve_s5_reco->SetLineColor(kRed);
+  sep_curve_s5_cheatjet_noSLDs->SetLineColor(kRed-6);
+  
+  sep_curve_l5_reco->SetLineStyle(1);
+  sep_curve_l5_cheatjet_noSLDs->SetLineStyle(1);
+  sep_curve_s5_reco->SetLineStyle(2);
+  sep_curve_s5_cheatjet_noSLDs->SetLineStyle(2);
+
+  // sep_curve_s5_reco->SetLineStyle(1);
+  // sep_curve_s5_cheatoverlay->SetLineStyle(10);
+  // sep_curve_s5_cheatcluster->SetLineStyle(4);
+  // sep_curve_s5_cheatjet->SetLineStyle(8);
+  // sep_curve_s5_cheatjet_noSLDs->SetLineStyle(6);
+  // 
+  // sep_curve_s5_reco->SetLineWidth(4);
+  // sep_curve_s5_cheatoverlay->SetLineWidth(4);
+  // sep_curve_s5_cheatcluster->SetLineWidth(4);
+  // sep_curve_s5_cheatjet->SetLineWidth(4);
+  // sep_curve_s5_cheatjet_noSLDs->SetLineWidth(4);
+
+  sep_curve_comp_ls_IDR->Add(sep_curve_l5_reco,"l");
+  sep_curve_comp_ls_IDR->Add(sep_curve_l5_cheatjet_noSLDs,"l");
+  sep_curve_comp_ls_IDR->Add(sep_curve_s5_reco,"l");
+  sep_curve_comp_ls_IDR->Add(sep_curve_s5_cheatjet_noSLDs,"l");
+  
+  sep_curve_comp_ls_IDR->Draw("a");
+  sep_curve_comp_ls_IDR->GetXaxis()->SetRangeUser(0,1);
+  sep_curve_comp_ls_IDR->GetYaxis()->SetRangeUser(0,1);
+
+
+  unique_ptr<TLegend> leg_sep_curve_comp_ls_IDR (new TLegend(0.2, 0.45, 0.62, 0.65));
+  leg_sep_curve_comp_ls_IDR->SetHeader("1D cut separation");
+  TLine *full_line_ls_IDR = new TLine(); 
+  TLine *dash_line_ls_IDR = new TLine(); 
+  full_line_ls_IDR->SetLineStyle(1); full_line_ls_IDR->SetLineWidth(5); full_line_ls_IDR->Draw();
+  dash_line_ls_IDR->SetLineStyle(2); dash_line_ls_IDR->SetLineWidth(5); dash_line_ls_IDR->Draw();
+  deletables.push_back(full_line_ls_IDR);
+  deletables.push_back(dash_line_ls_IDR);
+  leg_sep_curve_comp_ls_IDR->AddEntry(full_line_ls_IDR,   "IDR-L", "l");
+  leg_sep_curve_comp_ls_IDR->AddEntry(dash_line_ls_IDR,   "IDR-S", "l");
+  leg_sep_curve_comp_ls_IDR->Draw();
+
+  shared_ptr<TLatex> level_tex_bright (new TLatex(0.06, 0.28,"bright: full reconstruction"));
+  level_tex_bright->SetTextSize(0.04); level_tex_bright->SetTextFont(62); level_tex_bright->SetLineWidth(2); level_tex_bright->Draw();
+  shared_ptr<TLatex> level_tex_dim (new TLatex(0.06, 0.16,"dim: #splitline{cheated bosons,}{no semi-lep. decays}"));
+  level_tex_dim->SetTextSize(0.04); level_tex_dim->SetTextFont(62); level_tex_dim->SetLineWidth(2); level_tex_dim->Draw();
+
+  // 
+  shared_ptr<TLatex> sep_curve_comp_ls_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_ls_IDR, 0.06, 0.65, 0.1);
+  shared_ptr<TLatex> sep_curve_comp_ls_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_ls_IDR, 0.28, 0.65, 0.07); 
+  
+  string plot_name_sep_curve_comp_ls_IDR = "./sep_curve_comp_ls_IDR";
+  canvas_sep_curve_comp_ls_IDR->Print((output_dir + plot_name_sep_curve_comp_ls_IDR + ".pdf").c_str());
+  canvas_sep_curve_comp_ls_IDR->Print((output_dir + plot_name_sep_curve_comp_ls_IDR + ".C").c_str());
+
+  // ---------------------------------------------------------------------------
+  
 
   for ( auto & deletable: deletables ) { delete deletable; }
   for ( auto & closable: closables ) { closable->Close(); }

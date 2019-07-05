@@ -691,7 +691,7 @@ void create_detector_and_icn_VV_m_comparison() {
   m_ZZ_l5->SetLineColorAlpha(kRed, 1.0);
   m_ZZ_s5->SetLineColorAlpha(kRed+1, 0.95);
 
-  stack_comp_final->SetMaximum(1850);
+  stack_comp_final->SetMaximum(m_ZZ_l5_icn->GetMaximum() * 1.15);
   stack_comp_final->Draw("hist nostack");
 
   unique_ptr<TLegend> leg_comp_final (new TLegend(0.6, 0.6, 0.9, 0.8));
@@ -763,7 +763,7 @@ void create_detector_and_icn_VV_m_comparison() {
   m_ZZ_l5_noSLD->SetLineColorAlpha(kRed, 1.0);
   m_ZZ_s5_noSLD->SetLineColorAlpha(kRed+1, 0.95);
 
-  stack_comp_final_noSLD->SetMaximum(1850);
+  stack_comp_final_noSLD->SetMaximum(m_ZZ_l5_icn_noSLD->GetMaximum() * 1.15);
   stack_comp_final_noSLD->Draw("hist nostack");
 
   unique_ptr<TLegend> leg_comp_final_noSLD (new TLegend(0.6, 0.55, 0.9, 0.8));
@@ -829,7 +829,7 @@ void create_detector_and_icn_VV_m_comparison() {
   
   stack_ls_comp_rec_monly->Draw("axis"); // Draw only axis
   
-  unique_ptr<TLegend> leg_ls_comp_rec_monly (new TLegend(0.6, 0.5, 0.97, 0.8));
+  unique_ptr<TLegend> leg_ls_comp_rec_monly (new TLegend(0.25, 0.5, 0.62, 0.8));
   TLine *full_line_ls_comp_rec_monly = new TLine(); 
   TLine *dash_line_ls_comp_rec_monly = new TLine(); 
   full_line_ls_comp_rec_monly->SetLineStyle(1); full_line_ls_comp_rec_monly->SetLineWidth(3); full_line_ls_comp_rec_monly->SetLineColor(1); full_line_ls_comp_rec_monly->Draw();
@@ -918,7 +918,7 @@ void create_detector_and_icn_VV_m_comparison() {
   dash_line_ls_comp_icn_noSLD_monly->SetLineStyle(7); dash_line_ls_comp_icn_noSLD_monly->SetLineWidth(3); dash_line_ls_comp_icn_noSLD_monly->SetLineColor(1); dash_line_ls_comp_icn_noSLD_monly->Draw();
   deletables.push_back(full_line_ls_comp_icn_noSLD_monly);
   deletables.push_back(dash_line_ls_comp_icn_noSLD_monly);
-  leg_ls_comp_icn_noSLD_monly->SetHeader("#splitline{cheated boson,}{no semi-lep. decays}");
+  leg_ls_comp_icn_noSLD_monly->SetHeader("#splitline{cheated boson,}{no semi-lep. dec.}");
   leg_ls_comp_icn_noSLD_monly->AddEntry(full_line_ls_comp_icn_noSLD_monly,   "IDR-L", "l");
   leg_ls_comp_icn_noSLD_monly->AddEntry(dash_line_ls_comp_icn_noSLD_monly,   "IDR-S", "l");
   leg_ls_comp_icn_noSLD_monly->Draw();
@@ -1062,7 +1062,7 @@ void create_detector_and_icn_VV_m_comparison() {
   unique_ptr<TLegend> leg_l_WW_cheating_steps (new TLegend(0.58, 0.3, 0.9, 0.8));
   
   leg_l_WW_cheating_steps->SetHeader("#splitline{IDR-L, WW signal}{normalized}");
-  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_icn_noSLD,    "#splitline{cheated bosons,}{no semi-lep. decays}", "l");
+  leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_icn_noSLD,    "#splitline{cheated bosons,}{no semi-lep. dec.}", "l");
   leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_icn,          "cheated bosons", "l");
   leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_cheatcluster, "cheated jets", "l");
   leg_l_WW_cheating_steps->AddEntry(clone_m_WW_l5_cheatoverlay, "cheated overlay", "l");
