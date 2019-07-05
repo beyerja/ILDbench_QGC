@@ -129,6 +129,7 @@ void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles,
 	/* Identification based on cuts in 2009 ILD Workshop by Ward&Yan and modified
  	to take into which quark flavour final states are possible for W and Z decays*/
 
+
 	/* First exclude neutrinos that could come from Z
 	-> those with combined invariant mass < 100GeV
 	-> those with generations other than electron neutrino bc e->W+nu always ends up with electron neutrino */
@@ -138,9 +139,12 @@ void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles,
 	float m_nunu = (nu1_tlv+nu2_tlv).M();
 	int nu1_pdgID = gen_level_nus[0]->getPDG();
 	int nu2_pdgID = gen_level_nus[1]->getPDG();
+  bool passed_nu_criteria = true;
 	if ( (m_nunu < 100) || (fabs(nu1_pdgID) != 12) || (fabs(nu2_pdgID) != 12) ) {
 		info.gen_level.eventType = 0;
-		return;
+    passed_nu_criteria = false;
+    streamlog_out(DEBUG4) << "Event failed MC neutrino signal requirements." << std::endl;
+		// return;
 	}
 
 	// Based on quark flavour: 
@@ -166,23 +170,27 @@ void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles,
 
 	if ( ( ZZ_candidates.size() != 0) && ( WW_candidates.size() != 0) ) { streamlog_out(DEBUG4) << " BOTH NOT EMPTY!!!" << std::endl;}
 
+  std::vector<std::vector<std::vector<MCParticle*>>> allowed_VV_candidates = all_VV_candidates;
+  int best_pair_index = 0;
+
 	if ( ( ZZ_candidates.size() == 0) && ( WW_candidates.size() == 0) ) {
 		// Does not fulfill requirements to be WW or ZZ
 		info.gen_level.eventType = 0;
-		return;
+    streamlog_out(DEBUG4) << "Event does not have valid MC signal V-pair." << std::endl;
+		// return;
 	}
-	else {
+	else if ( passed_nu_criteria ) {
 		// Is either WW or ZZ.
 		// Now search within all possible pairs for best VV combination (by mass criteria).
 		// -> Then by index check if it was WW or ZZ and fill event information
 
 		// Combine to all allowed VV candidates
-		std::vector<std::vector<std::vector<MCParticle*>>> allowed_VV_candidates;
+    allowed_VV_candidates = {};
 		allowed_VV_candidates.reserve( ZZ_candidates.size() + WW_candidates.size() ); // preallocate memory
 		allowed_VV_candidates.insert( allowed_VV_candidates.end(), ZZ_candidates.begin(), ZZ_candidates.end() );
 		allowed_VV_candidates.insert( allowed_VV_candidates.end(), WW_candidates.begin(), WW_candidates.end() );
 
-		int best_pair_index = findIndexBestPairInVVCandidates( allowed_VV_candidates );
+		best_pair_index = findIndexBestPairInVVCandidates( allowed_VV_candidates );
 
 		if ( best_pair_index < ZZ_candidates.size() ) {
 			info.gen_level.eventType = 2; // is ZZ
@@ -191,9 +199,9 @@ void JakobsVBSProcessor::findTrueEventType(std::vector<MCParticle*> MCparticles,
 			info.gen_level.eventType = 1; // is WW
 		}
 
-		fillVPairInformation(allowed_VV_candidates[best_pair_index][0], allowed_VV_candidates[best_pair_index][1], info.gen_level.observ);
 	}
 	
+  fillVPairInformation(allowed_VV_candidates[best_pair_index][0], allowed_VV_candidates[best_pair_index][1], info.gen_level.observ);
 
 }
 
