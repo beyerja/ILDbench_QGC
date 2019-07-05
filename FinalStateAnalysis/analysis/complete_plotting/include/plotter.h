@@ -269,6 +269,8 @@ class Plotter {
 	float true_pair2_mass;
 	float true_pair1_theta;
 	float true_pair2_theta;
+  float true_pair1_p;
+  float true_pair2_p;
 	float true_miss_mass;
 	float true_sum_E_q;
 	int partner_of_truthV1;
@@ -405,6 +407,8 @@ class Plotter {
 		truth_branch->GetLeaf( "pair2_mass" )->SetAddress(&true_pair2_mass);
 		truth_branch->GetLeaf( "pair1_theta" )->SetAddress(&true_pair1_theta);
 		truth_branch->GetLeaf( "pair2_theta" )->SetAddress(&true_pair2_theta);
+		truth_branch->GetLeaf( "pair1_p" )->SetAddress(&true_pair1_p);
+		truth_branch->GetLeaf( "pair2_p" )->SetAddress(&true_pair2_p);
 		truth_branch->GetLeaf( "miss_mass" )->SetAddress(&true_miss_mass);
 		truth_branch->GetLeaf( "sum_E_q" )->SetAddress(&true_sum_E_q);
 

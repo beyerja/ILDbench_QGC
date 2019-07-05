@@ -15,7 +15,7 @@ class AllSelectedPlotter : public Plotter {
 		add_new_TH1D("true_pair1_theta", new TH1D("true_pair1_theta", "w/ cuts; #theta_{jj1,gen} ; Events", 32, 0, 3.2) );
 		add_new_TH1D("true_pair2_theta", new TH1D("true_pair2_theta", "w/ cuts; #theta_{jj2,gen} ; Events", 32, 0, 3.2) );
 		add_new_TH1D("true_miss_mass", new TH1D("true_miss_mass", "w/ cuts; m_{miss,gen}; Events", 250, 0, 1000) );
-		add_new_TH1D("true_sum_E_q", new TH1D("true_sum_E_q", "w/ cuts; #sum E_{q,gen}; Events", 200, 0, 800) );
+		add_new_TH1D("true_sum_E_q", new TH1D("true_sum_E_q", "w/ cuts; #sum E_{q,gen}; Events", 250, 0, 1000) );
 		add_new_TH1D("true_ISR_inJets_E", new TH1D("true_ISR_inJets_E", "w/ cuts; E_{ISRinJets,gen}; Events", 50, 0, 100) );;
 		add_new_TH1D("true_ISR_inJets_p", new TH1D("true_ISR_inJets_p", "w/ cuts; p_{ISRinJets,gen}; Events", 25, 0, 50) );;
 		add_new_TH1D("true_ISR_inJets_theta", new TH1D("true_ISR_inJets_theta", "w/ cuts; #theta_{ISRinJets,gen} ; Events", 32, 0, 3.2) );
@@ -28,7 +28,7 @@ class AllSelectedPlotter : public Plotter {
 		add_new_TH1D("pair1_theta", new TH1D("pair1_theta", "w/ cuts; #theta_{jj1} ; Events", 32, 0, 3.2) );
 		add_new_TH1D("pair2_theta", new TH1D("pair2_theta", "w/ cuts; #theta_{jj2} ; Events", 32, 0, 3.2) );
 		add_new_TH1D("miss_mass", new TH1D("miss_mass", "w/ cuts; m_{miss}; Events", 250, 0, 1000) );
-		add_new_TH1D("sum_E_q", new TH1D("sum_E_q", "w/ cuts; #sum E_{q}; Events", 200, 0, 800) );
+		add_new_TH1D("sum_E_q", new TH1D("sum_E_q", "w/ cuts; #sum E_{q}; Events", 250, 0, 1000) );
 		add_new_TH1D("pair1_p", new TH1D("pair1_p", "w/ cuts; p_{jj1}; Events", 300, 0, 600 ) );	
 		add_new_TH1D("pair2_p", new TH1D("pair2_p", "w/ cuts; p_{jj2}; Events", 300, 0, 600 ) );	
 		add_new_TH1D("E_T_vis", new TH1D("E_T_vis", "w/ cuts; E_{T,vis}; Events", 500, 0, 1000) );
