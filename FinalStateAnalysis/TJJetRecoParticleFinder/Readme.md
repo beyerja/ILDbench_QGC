@@ -20,7 +20,7 @@ cd scripts
 To use the processor in `Marlin` on must add the path of the compiled library to the `MARLIN_DLL` variable:
 ```shell
 cd ../lib
-MARLIN_DLL=$MARLIN_DLL:$(pwd)/libJakobsVBSProcessor.so
+MARLIN_DLL=$MARLIN_DLL:$(pwd)/libTJJetRecoParticleFinder.so
 ```
 
 ### How to run the processor
