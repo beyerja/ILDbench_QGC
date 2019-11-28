@@ -38,7 +38,7 @@ void set_plotters(vector<Plotter*> &plotters) {
 	// INSERT THE PLOTTER MODULES HERE
 
 
-  plotters.push_back( new AllSignalsPlotter );
+  // plotters.push_back( new AllSignalsPlotter );
   // plotters.push_back( new TJObservToICNsPlotter );
   // plotters.push_back( new TJObservToICNsOnlyUDSPlotter );
   // plotters.push_back( new TJObservToICNsOnlyUDSCPlotter );
@@ -50,7 +50,7 @@ void set_plotters(vector<Plotter*> &plotters) {
 	// plotters.push_back( new TailPlotter );
 	// plotters.push_back( new AllSelectedPlotter );
 	// plotters.push_back( new RecoMjjVSQuarkPDGPlotter );
-	// plotters.push_back( new IndividualJetsPlotter );
+	plotters.push_back( new IndividualJetsPlotter );
 	// plotters.push_back( new CutflowPlotter );
 	// plotters.push_back( new TJJetLevelsPlotter );
 	// plotters.push_back( new TJJetMassInvestigationPlotter );

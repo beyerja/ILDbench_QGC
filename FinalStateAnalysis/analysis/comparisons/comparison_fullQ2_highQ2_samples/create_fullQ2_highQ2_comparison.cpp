@@ -43,18 +43,26 @@ void create_fullQ2_highQ2_comparison() {
 
   string fullQ2_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_l5_o1_v02_output/all_signals_plots/";
   string highQ2_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02_l5_o1_v02_output/all_signals_plots/";
+  string fullQ2_directory_jets = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_l5_o1_v02_output/individual_quarks/";
+  string highQ2_directory_jets = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02_l5_o1_v02_output/individual_quarks/";
   string output_dir   = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/comparisons/comparison_fullQ2_highQ2_samples/";
 
   shared_ptr<TFile> file_fullQ2             = make_shared<TFile>( (fullQ2_directory + "./_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_highQ2             = make_shared<TFile>( (highQ2_directory + "./_all_TH1Ds.root").c_str() ) ;
-  vector<shared_ptr<TFile>> closables {file_fullQ2, file_highQ2};
+  shared_ptr<TFile> file_fullQ2_jets        = make_shared<TFile>( (fullQ2_directory_jets + "./_all_TH1Ds.root").c_str() ) ;
+  shared_ptr<TFile> file_highQ2_jets        = make_shared<TFile>( (highQ2_directory_jets + "./_all_TH1Ds.root").c_str() ) ;
+  vector<shared_ptr<TFile>> closables {file_fullQ2, file_highQ2, file_fullQ2_jets, file_highQ2_jets};
   
   TH1D* true_pair_E_fullQ2 = (TH1D*)file_fullQ2->Get("true_pair_E");
   TH1D* true_pair_E_highQ2 = (TH1D*)file_highQ2->Get("true_pair_E");
   TH1D* true_pair_theta_fullQ2 = (TH1D*)file_fullQ2->Get("true_pair_theta");
   TH1D* true_pair_theta_highQ2 = (TH1D*)file_highQ2->Get("true_pair_theta");
+  TH1D* jet_E_fullQ2 = (TH1D*)file_fullQ2_jets->Get("jet_E_nocuts_signal");
+  TH1D* jet_E_highQ2 = (TH1D*)file_highQ2_jets->Get("jet_E_nocuts_signal");
+  TH1D* jet_theta_fullQ2 = (TH1D*)file_fullQ2_jets->Get("jet_theta_nocuts_signal");
+  TH1D* jet_theta_highQ2 = (TH1D*)file_highQ2_jets->Get("jet_theta_nocuts_signal");
   
-  vector<TObject*> deletables {true_pair_E_fullQ2,true_pair_E_highQ2,true_pair_theta_fullQ2,true_pair_theta_highQ2};
+  vector<TObject*> deletables {true_pair_E_fullQ2,true_pair_E_highQ2,true_pair_theta_fullQ2,true_pair_theta_highQ2,jet_E_fullQ2,jet_E_highQ2,jet_theta_fullQ2,jet_theta_highQ2};
   
   unique_ptr<TColor> orange { new TColor( 9024, 241./256., 163./256., 64./256. ) } ;
   unique_ptr<TColor> violet { new TColor( 9124, 153./256., 142./256., 195./256. ) } ;
@@ -116,7 +124,6 @@ void create_fullQ2_highQ2_comparison() {
   
   unique_ptr<TLegend> leg_comp_true_pair_theta (new TLegend(0.35, 0.63, 0.75, 0.83));
   
-  leg_comp_true_pair_theta->SetHeader("Generator level");
   leg_comp_true_pair_theta->AddEntry(clone_true_pair_theta_fullQ2, "full m_{VV} range", "l");
   leg_comp_true_pair_theta->AddEntry(clone_true_pair_theta_highQ2, "m_{VV} > 500GeV", "l");
   // 
@@ -138,6 +145,84 @@ void create_fullQ2_highQ2_comparison() {
   canvas_comp_true_pair_theta->Print((output_dir + plot_name_comp_true_pair_theta + ".pdf").c_str());
   canvas_comp_true_pair_theta->Print((output_dir + plot_name_comp_true_pair_theta + ".jpg").c_str());
   canvas_comp_true_pair_theta->Print((output_dir + plot_name_comp_true_pair_theta + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_comp_jet_E_height = 1200;
+  double canvas_comp_jet_E_width  = 1250;
+
+  shared_ptr<TCanvas> canvas_comp_jet_E (new TCanvas("canvas_comp_jet_E", "", 0, 0, canvas_comp_jet_E_width, canvas_comp_jet_E_height));
+  shared_ptr<THStack> stack_comp_jet_E = make_shared<THStack>( "comp_jet_E", "; E_{jet} [GeV]; a.u." );
+
+  TH1D* clone_jet_E_fullQ2 = (TH1D*)jet_E_fullQ2->Clone();  clone_jet_E_fullQ2->SetName((string(clone_jet_E_fullQ2->GetName())+"_clone").c_str());  deletables.push_back(clone_jet_E_fullQ2); clone_jet_E_fullQ2->Scale(1.0/clone_jet_E_fullQ2->Integral()); clone_jet_E_fullQ2->Rebin(4);
+  TH1D* clone_jet_E_highQ2 = (TH1D*)jet_E_highQ2->Clone();  clone_jet_E_highQ2->SetName((string(clone_jet_E_highQ2->GetName())+"_clone").c_str());  deletables.push_back(clone_jet_E_highQ2); clone_jet_E_highQ2->Scale(1.0/clone_jet_E_highQ2->Integral()); clone_jet_E_highQ2->Rebin(4);
+  
+  stack_comp_jet_E->Add(clone_jet_E_fullQ2);  clone_jet_E_fullQ2->SetLineColor(9124);    clone_jet_E_fullQ2->SetLineWidth(3);  clone_jet_E_fullQ2->SetLineStyle(1);
+  stack_comp_jet_E->Add(clone_jet_E_highQ2);  clone_jet_E_highQ2->SetLineColor(9024);   clone_jet_E_highQ2->SetLineWidth(3);  clone_jet_E_highQ2->SetLineStyle(1);
+  // stack_comp_jet_E->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_comp_jet_E (new TLegend(0.6, 0.65, 0.9, 0.8));
+  
+  leg_comp_jet_E->AddEntry(clone_jet_E_fullQ2, "full m_{VV} range", "l");
+  leg_comp_jet_E->AddEntry(clone_jet_E_highQ2, "m_{VV} > 500GeV", "l");
+  // 
+  // stack_comp_jet_E->Draw("axis same"); // Draw only axis
+  // 
+  stack_comp_jet_E->Draw("hist nostack");
+  leg_comp_jet_E->Draw();
+  
+  double max_comp_jet_E = std::max(clone_jet_E_fullQ2->GetMaximum(),clone_jet_E_highQ2->GetMaximum());
+  stack_comp_jet_E->SetMaximum( max_comp_jet_E * 1.3 );
+  double comp_jet_E_old_left_margin = canvas_comp_jet_E->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_comp_jet_E);
+  stack_comp_jet_E->GetYaxis()->SetTitleOffset( stack_comp_jet_E->GetYaxis()->GetTitleOffset() * canvas_comp_jet_E->GetLeftMargin()/comp_jet_E_old_left_margin );
+  // 
+  shared_ptr<TLatex> comp_jet_E_logo = add_ILD_mark( canvas_comp_jet_E, 50, 1.13 * max_comp_jet_E, 0.1);
+  shared_ptr<TLatex> comp_jet_E_prelim = add_prelim_mark( canvas_comp_jet_E, 180, 1.13 * max_comp_jet_E, 0.07); 
+
+  string plot_name_comp_jet_E = "./comp_jet_E";
+  canvas_comp_jet_E->Print((output_dir + plot_name_comp_jet_E + ".pdf").c_str());
+  canvas_comp_jet_E->Print((output_dir + plot_name_comp_jet_E + ".jpg").c_str());
+  canvas_comp_jet_E->Print((output_dir + plot_name_comp_jet_E + ".C").c_str());
+  // ---------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
+  double canvas_comp_jet_theta_height = 1200;
+  double canvas_comp_jet_theta_width  = 1250;
+
+  shared_ptr<TCanvas> canvas_comp_jet_theta (new TCanvas("canvas_comp_jet_theta", "", 0, 0, canvas_comp_jet_theta_width, canvas_comp_jet_theta_height));
+  shared_ptr<THStack> stack_comp_jet_theta = make_shared<THStack>( "comp_jet_theta", "; #theta_{jet} [rad]; a.u." );
+
+  TH1D* clone_jet_theta_fullQ2 = (TH1D*)jet_theta_fullQ2->Clone();  clone_jet_theta_fullQ2->SetName((string(clone_jet_theta_fullQ2->GetName())+"_clone").c_str());  deletables.push_back(clone_jet_theta_fullQ2); clone_jet_theta_fullQ2->Scale(1.0/clone_jet_theta_fullQ2->Integral()); clone_jet_theta_fullQ2->Rebin(2);
+  TH1D* clone_jet_theta_highQ2 = (TH1D*)jet_theta_highQ2->Clone();  clone_jet_theta_highQ2->SetName((string(clone_jet_theta_highQ2->GetName())+"_clone").c_str());  deletables.push_back(clone_jet_theta_highQ2); clone_jet_theta_highQ2->Scale(1.0/clone_jet_theta_highQ2->Integral()); clone_jet_theta_highQ2->Rebin(2);
+  
+  stack_comp_jet_theta->Add(clone_jet_theta_fullQ2);  clone_jet_theta_fullQ2->SetLineColor(9124);    clone_jet_theta_fullQ2->SetLineWidth(3);  clone_jet_theta_fullQ2->SetLineStyle(1);
+  stack_comp_jet_theta->Add(clone_jet_theta_highQ2);  clone_jet_theta_highQ2->SetLineColor(9024);   clone_jet_theta_highQ2->SetLineWidth(3);  clone_jet_theta_highQ2->SetLineStyle(1);
+  // stack_comp_jet_theta->Draw("axis"); // Draw only axis
+  
+  unique_ptr<TLegend> leg_comp_jet_theta (new TLegend(0.4, 0.65, 0.7, 0.8));
+  
+  leg_comp_jet_theta->AddEntry(clone_jet_theta_fullQ2, "full m_{VV} range", "l");
+  leg_comp_jet_theta->AddEntry(clone_jet_theta_highQ2, "m_{VV} > 500GeV", "l");
+  // 
+  // stack_comp_jet_theta->Draw("axis same"); // Draw only axis
+  // 
+  stack_comp_jet_theta->Draw("hist nostack");
+  leg_comp_jet_theta->Draw();
+  
+  double max_comp_jet_theta = std::max(clone_jet_theta_fullQ2->GetMaximum(),clone_jet_theta_highQ2->GetMaximum());
+  stack_comp_jet_theta->SetMaximum( max_comp_jet_theta * 1.15 );
+  double comp_jet_theta_old_left_margin = canvas_comp_jet_theta->GetLeftMargin();
+  adjust_canvas_left_to_square_pad(canvas_comp_jet_theta);
+  stack_comp_jet_theta->GetYaxis()->SetTitleOffset( stack_comp_jet_theta->GetYaxis()->GetTitleOffset() * canvas_comp_jet_theta->GetLeftMargin()/comp_jet_theta_old_left_margin );
+  // 
+  shared_ptr<TLatex> comp_jet_theta_logo = add_ILD_mark( canvas_comp_jet_theta, 0.2, 1.02 * max_comp_jet_theta, 0.1);
+  shared_ptr<TLatex> comp_jet_theta_prelim = add_prelim_mark( canvas_comp_jet_theta, 0.9, 1.02 * max_comp_jet_theta, 0.07); 
+
+  string plot_name_comp_jet_theta = "./comp_jet_theta";
+  canvas_comp_jet_theta->Print((output_dir + plot_name_comp_jet_theta + ".pdf").c_str());
+  canvas_comp_jet_theta->Print((output_dir + plot_name_comp_jet_theta + ".jpg").c_str());
+  canvas_comp_jet_theta->Print((output_dir + plot_name_comp_jet_theta + ".C").c_str());
   // ---------------------------------------------------------------------------
   
 

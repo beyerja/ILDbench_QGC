@@ -13,9 +13,14 @@ class IndividualJetsPlotter : public Plotter {
 
 		add_new_TH1D("q_E", new TH1D("q_E", "w/ cuts; E_{q} [GeV]; Events", 500, 0, 500));
 		add_new_TH1D("q_theta", new TH1D("q_theta", "w/ cuts; #theta_{q}; Events", 32, 0, 3.2));
+    
 		add_new_TH1D("q_E_nocuts", new TH1D("q_E_nocuts", "; E_{q} [GeV]; Events", 500, 0, 500));
 		add_new_TH1D("q_theta_nocuts", new TH1D("q_theta_nocuts", "; #theta_{q}; Events", 32, 0, 3.2));
-
+    
+		add_new_TH1D("q_E_nocuts_signal", new TH1D("q_E_nocuts_signal", "; E_{q} [GeV]; Events", 500, 0, 500));
+		add_new_TH1D("q_theta_nocuts_signal", new TH1D("q_theta_nocuts_signal", "; #theta_{q}; Events", 32, 0, 3.2));
+		add_new_TH1D("jet_E_nocuts_signal", new TH1D("jet_E_nocuts_signal", "; E_{jet} [GeV]; Events", 500, 0, 500));
+		add_new_TH1D("jet_theta_nocuts_signal", new TH1D("jet_theta_nocuts_signal", "; #theta_{jet}; Events", 64, 0, 3.2));
 	}
 
 	void fill_plots(){
@@ -27,6 +32,13 @@ class IndividualJetsPlotter : public Plotter {
 			for ( int i=0; i<4; i++ ) {
 				get_TH1D( "q_E_nocuts" )->Fill( true_quarks_E[i] , weight );
 				get_TH1D( "q_theta_nocuts" )->Fill( true_quarks_theta[i] , weight );
+        
+        if (true_evt_type != 0) { 
+  				get_TH1D( "q_E_nocuts_signal" )->Fill( true_quarks_E[i] , weight );
+  				get_TH1D( "q_theta_nocuts_signal" )->Fill( true_quarks_theta[i] , weight );
+          get_TH1D( "jet_E_nocuts_signal" )->Fill( jets_E[i] , weight );
+          get_TH1D( "jet_theta_nocuts_signal" )->Fill( jets_theta[i] , weight );
+        }
 			}
 
 			if ( pass_selection == 0 ) { continue; }
