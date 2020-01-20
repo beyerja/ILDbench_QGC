@@ -34,9 +34,9 @@ void create_separation_curve_comparison() {
   gStyle->SetOptStat(0);
   TH2::SetDefaultSumw2();
 
-  string l5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02_l5_o1_v02_output/separation_curves/";
-  string s5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/v02-00-02_s5_o1_v02_output/separation_curves/";
-  string output_dir   = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/comparisons/comparison_separation_curves/";
+  string l5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_l5_o1_v02_output/separation_curves/";
+  string s5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_s5_o1_v02_output/separation_curves/";
+  string output_dir   = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/comparisons/comparison_separation_curves/";
 
   shared_ptr<TFile> file_l5             = make_shared<TFile>( (l5_directory + "./_all_TGraphs.root").c_str() ) ;
   shared_ptr<TFile> file_s5             = make_shared<TFile>( (s5_directory + "./_all_TGraphs.root").c_str() ) ;
@@ -94,7 +94,7 @@ void create_separation_curve_comparison() {
   int n_points_reco = sep_curve_l5_reco->GetN();
   TGraph *shade_l5_reco = new TGraph(2*n_points_reco);
   TGraph *shade_s5_reco = new TGraph(2*n_points_reco);
-  for (i=0;i<n_points_reco;i++) {
+  for (unsigned int i=0;i<n_points_reco;i++) {
     double shade_x, shade_y;
     sep_curve_l5_reco_perfectbtag->GetPoint(i, shade_x, shade_y);
     shade_l5_reco->SetPoint(i, shade_x, shade_y);
@@ -136,7 +136,7 @@ void create_separation_curve_comparison() {
   leg_sep_curve_comp_reco->Draw();
  
   shared_ptr<TLatex> sep_curve_comp_reco_logo = add_ILD_mark( canvas_sep_curve_comp_reco, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_reco_prelim = add_prelim_mark( canvas_sep_curve_comp_reco, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_reco_prelim = add_prelim_mark( canvas_sep_curve_comp_reco, 0.28, 0.65, 0.07); 
 
   shared_ptr<TLatex> level_tex_reco (new TLatex(0.06, 0.25,"dark: full reconstruction"));
   level_tex_reco->SetName( (string(canvas_sep_curve_comp_reco->GetName()) + "_level_tex_reco").c_str() );
@@ -192,7 +192,7 @@ void create_separation_curve_comparison() {
   int n_points_cheatjet = sep_curve_l5_cheatjet->GetN();
   TGraph *shade_l5_cheatjet = new TGraph(2*n_points_cheatjet);
   TGraph *shade_s5_cheatjet = new TGraph(2*n_points_cheatjet);
-  for (i=0;i<n_points_cheatjet;i++) {
+  for (unsigned int i=0;i<n_points_cheatjet;i++) {
     double shade_x, shade_y;
     sep_curve_l5_cheatjet_perfectbtag->GetPoint(i, shade_x, shade_y);
     shade_l5_cheatjet->SetPoint(i, shade_x, shade_y);
@@ -234,7 +234,7 @@ void create_separation_curve_comparison() {
   leg_sep_curve_comp_cheatjet->Draw();
  
   shared_ptr<TLatex> sep_curve_comp_cheatjet_logo = add_ILD_mark( canvas_sep_curve_comp_cheatjet, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_cheatjet_prelim = add_prelim_mark( canvas_sep_curve_comp_cheatjet, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_cheatjet_prelim = add_prelim_mark( canvas_sep_curve_comp_cheatjet, 0.28, 0.65, 0.07); 
 
   shared_ptr<TLatex> level_tex_cheatjet (new TLatex(0.06, 0.25,"dark: cheated jet finding"));
   level_tex_cheatjet->SetName( (string(canvas_sep_curve_comp_cheatjet->GetName()) + "_level_tex_cheatjet").c_str() );
@@ -304,7 +304,7 @@ void create_separation_curve_comparison() {
   leg_sep_curve_comp_l5->Draw();
   // 
   shared_ptr<TLatex> sep_curve_comp_l5_logo = add_ILD_mark( canvas_sep_curve_comp_l5, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_l5_prelim = add_prelim_mark( canvas_sep_curve_comp_l5, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_l5_prelim = add_prelim_mark( canvas_sep_curve_comp_l5, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_l5 = "./sep_curve_comp_l5";
   canvas_sep_curve_comp_l5->Print((output_dir + plot_name_sep_curve_comp_l5 + ".pdf").c_str());
@@ -358,7 +358,7 @@ void create_separation_curve_comparison() {
   leg_sep_curve_comp_l5_IDR->Draw();
   // 
   shared_ptr<TLatex> sep_curve_comp_l5_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_l5_IDR, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_l5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_l5_IDR, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_l5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_l5_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_l5_IDR = "./sep_curve_comp_l5_IDR";
   canvas_sep_curve_comp_l5_IDR->Print((output_dir + plot_name_sep_curve_comp_l5_IDR + ".pdf").c_str());
@@ -412,7 +412,7 @@ void create_separation_curve_comparison() {
   leg_sep_curve_comp_s5_IDR->Draw();
   // 
   shared_ptr<TLatex> sep_curve_comp_s5_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_s5_IDR, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_s5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_s5_IDR, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_s5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_s5_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_s5_IDR = "./sep_curve_comp_s5_IDR";
   canvas_sep_curve_comp_s5_IDR->Print((output_dir + plot_name_sep_curve_comp_s5_IDR + ".pdf").c_str());
@@ -478,7 +478,7 @@ void create_separation_curve_comparison() {
 
   // 
   shared_ptr<TLatex> sep_curve_comp_ls_IDR_logo = add_ILD_mark( canvas_sep_curve_comp_ls_IDR, 0.06, 0.65, 0.1);
-  shared_ptr<TLatex> sep_curve_comp_ls_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_ls_IDR, 0.28, 0.65, 0.07); 
+  // shared_ptr<TLatex> sep_curve_comp_ls_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_ls_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_ls_IDR = "./sep_curve_comp_ls_IDR";
   canvas_sep_curve_comp_ls_IDR->Print((output_dir + plot_name_sep_curve_comp_ls_IDR + ".pdf").c_str());
