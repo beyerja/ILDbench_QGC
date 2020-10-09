@@ -73,7 +73,7 @@ void set_plotters(vector<Plotter*> &plotters) {
   /* ---------------------------------------------------------------------*/
   // Determine which events to skip
   for (auto plotter: plotters) {
-    plotter.event_skipper.UseLowMVVOnly();
+    plotter->event_skipper.UseLowMVVOnly();
   }
   /* ---------------------------------------------------------------------*/
 }
