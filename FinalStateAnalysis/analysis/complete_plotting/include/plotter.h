@@ -1,5 +1,6 @@
 #ifndef PLOTTER_h
 #define PLOTTER_h
+#include "EventSkipper.h"
 #include "InfoStorage.h"
 #include "../../../include/jet_corrections.h"
 
@@ -27,6 +28,9 @@ class Plotter {
 		// Return the plotter specific output directory
 		return info_storage.get_output_directory() + "/" + get_output_folder_name() ;
 	}
+
+  // Info on which events to skip
+  EventSkipper event_skipper {};
 
 	// Vectors for the possible diagrams (if new type needed: add it)
 	vector<TH1D*> TH1D_vector;
@@ -224,6 +228,11 @@ class Plotter {
 		// If counter within size of tree -> get next event
 		// Otherwise return false -> stop
 		if ( current_event_number < current_tree->GetEntries() ) {
+      // Check if this event ought to be used at all
+      if (event_skipper.should_skip_event(current_tree, current_event_number)) {
+        current_event_number++; // Increment to next event
+        get_next_event();
+      }
 
 			// Get new array sizes
 			current_tree->GetBranch("max_Njets")->GetEntry(current_event_number);

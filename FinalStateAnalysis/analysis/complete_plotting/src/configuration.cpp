@@ -69,4 +69,11 @@ void set_plotters(vector<Plotter*> &plotters) {
 	// plotters.push_back( new TJJetEnergyResolutionPlotter );
 	// plotters.push_back( new SeparationCurvePlotter );
 	/* ---------------------------------------------------------------------*/
+  
+  /* ---------------------------------------------------------------------*/
+  // Determine which events to skip
+  for (auto plotter: plotters) {
+    plotter.event_skipper.UseLowMVVOnly();
+  }
+  /* ---------------------------------------------------------------------*/
 }
