@@ -56,6 +56,7 @@ class Observables {
 		float pair1_p;
 		float pair2_p;
 
+    float VV_mass; // combined mass of both bosons
 		float miss_mass; // Also called: recoil mass
 
 		float sum_E_q; // should be called sum_E_vis ...
@@ -97,6 +98,7 @@ class Observables {
 			pair1_p = -10;
 			pair2_p = -10;
 
+			VV_mass	= -10;
 			miss_mass	= -10;
 
 			sum_E_q		= -10;
@@ -131,6 +133,7 @@ class Observables {
 
 
 			visible_tlv = pair1_tlv + pair2_tlv;
+			VV_mass		= visible_tlv.M();
 			sum_E_q		= visible_tlv.E();
 			E_T_vis		= visible_tlv.Et();
 			p_T_vis		= visible_tlv.Pt();

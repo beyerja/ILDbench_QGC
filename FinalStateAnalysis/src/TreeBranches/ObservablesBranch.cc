@@ -10,6 +10,7 @@ void JakobsVBSProcessor::CreateObservablesBranch( TTree* tree, Observables* obse
 					"pair2_theta/F:" +
 					"pair1_p/F:" +
 					"pair2_p/F:" +
+					"VV_mass/F:" +
 					"miss_mass/F:" +
 					"sum_E_q/F:" +
 					"E_T_vis/F:" +
