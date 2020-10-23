@@ -228,12 +228,6 @@ class Plotter {
 		// If counter within size of tree -> get next event
 		// Otherwise return false -> stop
 		if ( current_event_number < current_tree->GetEntries() ) {
-      // Check if this event ought to be used at all
-      if (event_skipper.should_skip_event(current_tree, current_event_number)) {
-        current_event_number++; // Increment to next event
-        get_next_event();
-      }
-
 			// Get new array sizes
 			current_tree->GetBranch("max_Njets")->GetEntry(current_event_number);
 			current_tree->GetBranch("max_Nparticles")->GetEntry(current_event_number);
@@ -243,8 +237,14 @@ class Plotter {
 			// Includes global GetEntry for all variables
 			set_dynamic_addresses();
 
+      // Check if this event ought to be used at all
+      if (event_skipper.should_skip_event(current_tree, current_event_number)) {
+        current_event_number++; // Increment to next event
+        return get_next_event();
+      } else {
 			current_event_number++; // Increment to next event
 			return true;
+      }
 		} else {
 			return false;
 		}
