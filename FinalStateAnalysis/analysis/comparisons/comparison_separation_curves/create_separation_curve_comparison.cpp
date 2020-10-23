@@ -1,5 +1,9 @@
 // WARNING: Needs to be run with ROOT 6.14 or newer! (Else creating .C files is a meeeeeess)
 
+//------------------------------------------------------------------------------
+#include "../Helpers/Helpers.hpp"
+//------------------------------------------------------------------------------
+
 float string_to_float( string str ) {
   return strtof((str).c_str(),0);
 }
@@ -34,9 +38,12 @@ void create_separation_curve_comparison() {
   gStyle->SetOptStat(0);
   TH2::SetDefaultSumw2();
 
-  string l5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_l5_o1_v02_output/separation_curves/";
-  string s5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_s5_o1_v02_output/separation_curves/";
-  string output_dir   = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/comparisons/comparison_separation_curves/";
+  // string pool_dir = "/afs/desy.de/group/flc/pool/beyerjac"
+  string pool_dir = "/home/jakob/Documents/DESY/MountPoints/POOLMount";
+
+  string l5_directory = pool_dir + "/VBS/nunu_hadron/lowQ2range/v02-00-02_l5_o1_v02_output/separation_curves/";
+  string s5_directory = pool_dir + "/VBS/nunu_hadron/lowQ2range/v02-00-02_s5_o1_v02_output/separation_curves/";
+  string output_dir   = pool_dir + "/VBS/nunu_hadron/lowQ2range/comparisons/comparison_separation_curves/";
 
   shared_ptr<TFile> file_l5             = make_shared<TFile>( (l5_directory + "./_all_TGraphs.root").c_str() ) ;
   shared_ptr<TFile> file_s5             = make_shared<TFile>( (s5_directory + "./_all_TGraphs.root").c_str() ) ;
@@ -160,8 +167,7 @@ void create_separation_curve_comparison() {
   level_tex_reco_area->Draw();
 
   string plot_name_sep_curve_comp_reco = "./sep_curve_comp_reco";
-  canvas_sep_curve_comp_reco->Print((output_dir + plot_name_sep_curve_comp_reco + ".pdf").c_str());
-  canvas_sep_curve_comp_reco->Print((output_dir + plot_name_sep_curve_comp_reco + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_reco, output_dir + plot_name_sep_curve_comp_reco);
 
   // ---------------------------------------------------------------------------
   
@@ -258,8 +264,7 @@ void create_separation_curve_comparison() {
   level_tex_cheatjet_area->Draw();
 
   string plot_name_sep_curve_comp_cheatjet = "./sep_curve_comp_cheatjet";
-  canvas_sep_curve_comp_cheatjet->Print((output_dir + plot_name_sep_curve_comp_cheatjet + ".pdf").c_str());
-  canvas_sep_curve_comp_cheatjet->Print((output_dir + plot_name_sep_curve_comp_cheatjet + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_cheatjet, output_dir + plot_name_sep_curve_comp_cheatjet);
 
   // ---------------------------------------------------------------------------
   
@@ -307,8 +312,7 @@ void create_separation_curve_comparison() {
   // shared_ptr<TLatex> sep_curve_comp_l5_prelim = add_prelim_mark( canvas_sep_curve_comp_l5, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_l5 = "./sep_curve_comp_l5";
-  canvas_sep_curve_comp_l5->Print((output_dir + plot_name_sep_curve_comp_l5 + ".pdf").c_str());
-  canvas_sep_curve_comp_l5->Print((output_dir + plot_name_sep_curve_comp_l5 + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_l5, output_dir + plot_name_sep_curve_comp_l5);
 
   // ---------------------------------------------------------------------------
   
@@ -361,8 +365,7 @@ void create_separation_curve_comparison() {
   // shared_ptr<TLatex> sep_curve_comp_l5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_l5_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_l5_IDR = "./sep_curve_comp_l5_IDR";
-  canvas_sep_curve_comp_l5_IDR->Print((output_dir + plot_name_sep_curve_comp_l5_IDR + ".pdf").c_str());
-  canvas_sep_curve_comp_l5_IDR->Print((output_dir + plot_name_sep_curve_comp_l5_IDR + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_l5_IDR, output_dir + plot_name_sep_curve_comp_l5_IDR);
 
   // ---------------------------------------------------------------------------
   
@@ -415,8 +418,7 @@ void create_separation_curve_comparison() {
   // shared_ptr<TLatex> sep_curve_comp_s5_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_s5_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_s5_IDR = "./sep_curve_comp_s5_IDR";
-  canvas_sep_curve_comp_s5_IDR->Print((output_dir + plot_name_sep_curve_comp_s5_IDR + ".pdf").c_str());
-  canvas_sep_curve_comp_s5_IDR->Print((output_dir + plot_name_sep_curve_comp_s5_IDR + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_s5_IDR, output_dir + plot_name_sep_curve_comp_s5_IDR);
 
   // ---------------------------------------------------------------------------
   
@@ -481,8 +483,7 @@ void create_separation_curve_comparison() {
   // shared_ptr<TLatex> sep_curve_comp_ls_IDR_prelim = add_prelim_mark( canvas_sep_curve_comp_ls_IDR, 0.28, 0.65, 0.07); 
   
   string plot_name_sep_curve_comp_ls_IDR = "./sep_curve_comp_ls_IDR";
-  canvas_sep_curve_comp_ls_IDR->Print((output_dir + plot_name_sep_curve_comp_ls_IDR + ".pdf").c_str());
-  canvas_sep_curve_comp_ls_IDR->Print((output_dir + plot_name_sep_curve_comp_ls_IDR + ".C").c_str());
+  Helpers::saveCanvas(canvas_sep_curve_comp_ls_IDR, output_dir + plot_name_sep_curve_comp_ls_IDR);
 
   // ---------------------------------------------------------------------------
   

@@ -172,10 +172,13 @@ void create_detector_and_icn_VV_m_comparison() {
   gStyle->SetOptStat(0);
   TH2::SetDefaultSumw2();
 
-  string output_dir = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/comparisons/comparisons_ls_and_cheated/";
+  // string pool_dir = "/afs/desy.de/group/flc/pool/beyerjac"
+  string pool_dir = "/home/jakob/Documents/DESY/MountPoints/POOLMount";
 
-  string l5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_l5_o1_v02_output"; 
-  string s5_directory = "/afs/desy.de/group/flc/pool/beyerjac/VBS/nunu_hadron/fullQ2range/v02-00-02_s5_o1_v02_output"; 
+  string output_dir = pool_dir + "/VBS/nunu_hadron/highQ2range/comparisons/comparisons_ls_and_cheated/";
+
+  string l5_directory = pool_dir + "/VBS/nunu_hadron/highQ2range/v02-00-02_l5_o1_v02_output"; 
+  string s5_directory = pool_dir + "/VBS/nunu_hadron/highQ2range/v02-00-02_s5_o1_v02_output"; 
 
   shared_ptr<TFile> file_l5             = make_shared<TFile>( (l5_directory + "/mjjmjj_plots/_all_TH1Ds.root").c_str() ) ;
   shared_ptr<TFile> file_l5_2D          = make_shared<TFile>( (l5_directory + "/mjjmjj_plots/_all_TH2Ds.root").c_str() ) ;
