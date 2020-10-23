@@ -38,35 +38,42 @@ void set_plotters(vector<Plotter*> &plotters) {
 	// INSERT THE PLOTTER MODULES HERE
 
 
-  // plotters.push_back( new AllSignalsPlotter );
-  // plotters.push_back( new TJObservToICNsPlotter );
-  // plotters.push_back( new TJObservToICNsOnlyUDSPlotter );
-  // plotters.push_back( new TJObservToICNsOnlyUDSCPlotter );
-	// plotters.push_back( new TestPlotter );
-	// plotters.push_back( new MjjMjjPlotter );
-	// plotters.push_back( new MjjVsSLDecaysPlotter );
-	// plotters.push_back( new ThetaMPlotter );
-	// plotters.push_back( new TrueISRvsMjjPlotter );
-	// plotters.push_back( new TailPlotter );
-	// plotters.push_back( new AllSelectedPlotter );
-	// plotters.push_back( new RecoMjjVSQuarkPDGPlotter );
+    plotters.push_back( new AllSignalsPlotter );
+    plotters.push_back( new TJObservToICNsPlotter );
+    plotters.push_back( new TJObservToICNsOnlyUDSPlotter );
+    plotters.push_back( new TJObservToICNsOnlyUDSCPlotter );
+	plotters.push_back( new TestPlotter );
+	plotters.push_back( new MjjMjjPlotter );
+	plotters.push_back( new MjjVsSLDecaysPlotter );
+	plotters.push_back( new ThetaMPlotter );
+	plotters.push_back( new TrueISRvsMjjPlotter );
+	plotters.push_back( new TailPlotter );
+	plotters.push_back( new AllSelectedPlotter );
+	plotters.push_back( new RecoMjjVSQuarkPDGPlotter );
 	plotters.push_back( new IndividualJetsPlotter );
-	// plotters.push_back( new CutflowPlotter );
-	// plotters.push_back( new TJJetLevelsPlotter );
-	// plotters.push_back( new TJJetMassInvestigationPlotter );
-	// plotters.push_back( new TJLeptonsInJetsPlotter );
-	// plotters.push_back( new TJChargedHadronsInJetsPlotter );
-	// plotters.push_back( new TJNeutralHadronsInJetsPlotter );
-	// plotters.push_back( new TJPhotonsInJetsPlotter );
-	// plotters.push_back( new TJNParticlesPlotter );
-	// plotters.push_back( new TJSeenTrueOfSeenECorrectionPlotter );
-	// plotters.push_back( new TJSeenTrueOfSeenPCorrectionPlotter );
-	// plotters.push_back( new TJCorrectedJetsPlotter );
-	// plotters.push_back( new TJCorrectedLowEJetsPlotter );
-	// plotters.push_back( new TJChargedHadronsInCorrectedJetsPlotter );
-	// plotters.push_back( new TJQuarkJetsPlusNeutrinosPlotter );
-	// plotters.push_back( new TJTotalEPlotter );
-	// plotters.push_back( new TJJetEnergyResolutionPlotter );
-	// plotters.push_back( new SeparationCurvePlotter );
+	plotters.push_back( new CutflowPlotter );
+	plotters.push_back( new TJJetLevelsPlotter );
+	plotters.push_back( new TJJetMassInvestigationPlotter );
+	plotters.push_back( new TJLeptonsInJetsPlotter );
+	plotters.push_back( new TJChargedHadronsInJetsPlotter );
+	plotters.push_back( new TJNeutralHadronsInJetsPlotter );
+	plotters.push_back( new TJPhotonsInJetsPlotter );
+	plotters.push_back( new TJNParticlesPlotter );
+	plotters.push_back( new TJSeenTrueOfSeenECorrectionPlotter );
+	plotters.push_back( new TJSeenTrueOfSeenPCorrectionPlotter );
+	plotters.push_back( new TJCorrectedJetsPlotter );
+	plotters.push_back( new TJCorrectedLowEJetsPlotter );
+	plotters.push_back( new TJChargedHadronsInCorrectedJetsPlotter );
+	plotters.push_back( new TJQuarkJetsPlusNeutrinosPlotter );
+	plotters.push_back( new TJTotalEPlotter );
+	plotters.push_back( new TJJetEnergyResolutionPlotter );
+	plotters.push_back( new SeparationCurvePlotter );
 	/* ---------------------------------------------------------------------*/
+  
+  /* ---------------------------------------------------------------------*/
+  // Determine which events to skip
+  for (auto plotter: plotters) {
+    plotter->event_skipper.UseLowMVVOnly();
+  }
+  /* ---------------------------------------------------------------------*/
 }
