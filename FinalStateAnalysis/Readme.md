@@ -93,4 +93,6 @@ The input and output paths can be set in `analysis/complete_plotting/shell_scrip
 Using the histograms from the ROOT analysis some comparison plots can be created for different aspects of the analysis.
 The scripts for that are located in `analysis/comparisons` and can be executed with simple `root` execution of the script.
 
+Python is used for the `comparison_separations` code, so it can be simply executed with by running `python CompareGaussianSeparation.py`. This requires a modern python and pyROOT.
+
 
