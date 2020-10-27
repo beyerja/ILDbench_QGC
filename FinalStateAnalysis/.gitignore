@@ -13,6 +13,7 @@
 /xml/tmp*
 */xml/tmp*
 tags
+*__pycache__
 *.pdf
 *.svn
 *.swp
