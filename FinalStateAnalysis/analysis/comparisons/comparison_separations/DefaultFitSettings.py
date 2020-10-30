@@ -84,11 +84,11 @@ default_settings = {
       { 
         "WW":
           FS.FitSetting(SC.DOUBLE_GAUSSIAN, 
-            {"f1" : 0.7,
-            "f_m1" : 1.1,
-            "f_m2" : 0.9,
+            {"f1" : 0.8,
+            "f_m1" : 1.0,
+            "f_m2" : 1.0,
             "f_s1" : 0.5,
-            "f_s2" : 2.0
+            "f_s2" : 1.5
           }), 
         "ZZ":
           FS.FitSetting(SC.DOUBLE_GAUSSIAN, 
