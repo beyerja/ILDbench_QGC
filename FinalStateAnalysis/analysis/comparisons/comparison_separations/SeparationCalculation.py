@@ -85,7 +85,7 @@ def fit_gaussian(hist, integral_perc, setting):
     func.SetParNames("Mean", "Sigma", "Amplitude")
     func.SetParameters(ini_mean,ini_sigma,ini_ampl)
   elif func_type == DOUBLE_GAUSSIAN:
-    func_str = "[0] * ( [1]/[3] * TMath::Gaus(x,[2],[3]) + (1-[1])/[5] * TMath::Gaus(x,[4],[5]) )"
+    func_str = "[0]/sqrt(2.0*3.141593) * ( [1]/[3] * exp(-0.5*pow((x-[2])/[3],2)) + (1-[1])/[5] * exp(-0.5*pow((x-[4])/[5],2)))"
     func = ROOT.TF1(func_name, func_str, x_min, x_max)
     func.SetParNames("Amplitude", "Fraction1", "Mean1", "Sigma1", "Mean2", "Sigma2")
     # Starting values such that first gaussian is expected to be the smaller one
