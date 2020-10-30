@@ -21,7 +21,7 @@ def main():
   integral_perc = 100
   
   # Should the fitted histograms be saved
-  save_fits = False
+  save_fits = True
   
   # Get the default fit settings 
   settings = DFS.default_settings

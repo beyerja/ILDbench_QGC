@@ -9,6 +9,8 @@ import logging as log
 import math
 import ROOT
 
+import FitResultPlotting as FRP
+
 # ------------------------------------------------------------------------------
 
 # Some parameters that should be global in this namespace 
@@ -109,6 +111,18 @@ def fit_gaussian(hist, integral_perc, setting):
 
 # ------------------------------------------------------------------------------
 
+def double_gauss_statistics(fit):
+  """ Return the combined statistics of a double gaussian fit.
+  """
+  fraction = fit.GetParameter("Fraction1")
+  mean1 = fit.GetParameter("Mean1")
+  mean2 = fit.GetParameter("Mean2")
+  mean = fraction * mean1 + (1.0-fraction) * mean2
+  sigma = math.sqrt( fraction * fit.GetParameter("Sigma1")**2 + (1.0-fraction) * fit.GetParameter("Sigma2")**2 + fraction * (1.0-fraction) * (mean1 - mean2)**2 )
+  return mean, sigma
+
+# ------------------------------------------------------------------------------
+
 def get_gauss_pars(fit):
   """ Get the mean and sigma from a fit function that may be a Gaussian or a 
       Double Gaussian.
@@ -119,11 +133,7 @@ def get_gauss_pars(fit):
     mean = fit.GetParameter("Mean")
     sigma = fit.GetParameter("Sigma")
   elif (DOUBLE_GAUSSIAN in fit.GetName()):
-    fraction = fit.GetParameter("Fraction1")
-    mean1 = fit.GetParameter("Mean1")
-    mean2 = fit.GetParameter("Mean2")
-    mean = fraction * mean1 + (1.0-fraction) * mean2
-    sigma = math.sqrt( fraction * fit.GetParameter("Sigma1")**2 + (1.0-fraction) * fit.GetParameter("Sigma2")**2 + fraction * (1.0-fraction) * (mean1 - mean2)**2 )
+    mean, sigma = double_gauss_statistics(fit)
   else:
     raise ValueError("Can't determine fit type from function name".format(fit.GetName()))
     
@@ -141,19 +151,6 @@ def calculate_separation(fit_1,fit_2):
 
 # ------------------------------------------------------------------------------
 
-def save_hist(hist, fit, output_dir, extensions=["pdf","root"],name_add=""):
-  """ Saves the given histogram to the output directory.
-  """
-  hist_name = hist.GetName()
-  canvas = ROOT.TCanvas("c_{}".format(hist_name))
-  hist.Draw("hist")
-  fit.Draw("same")
-  for extension in extensions:
-    name = hist_name if (name_add == "") else hist_name + "_" + name_add
-    canvas.SaveAs("{}/{}.{}".format(output_dir,name,extension))
-
-# ------------------------------------------------------------------------------
-
 def get_separation(path,WW_name,ZZ_name,integral_perc,settings_WW,settings_ZZ,output_dir=None,save_fits=False,name_add=""):
   """ Calculate the separate between the WW and ZZ histgrams (using the 
       innermost percentage given).
@@ -165,8 +162,8 @@ def get_separation(path,WW_name,ZZ_name,integral_perc,settings_WW,settings_ZZ,ou
   fit_ZZ = fit_gaussian(h_ZZ, integral_perc, settings_ZZ)
   
   if save_fits:
-    save_hist(h_WW, fit_WW, output_dir, name_add=name_add)
-    save_hist(h_ZZ, fit_ZZ, output_dir, name_add=name_add)
+    FRP.save_hist(h_WW, fit_WW, output_dir, name_add=name_add)
+    FRP.save_hist(h_ZZ, fit_ZZ, output_dir, name_add=name_add)
   
   file.Close()
   return calculate_separation(fit_WW, fit_ZZ)
